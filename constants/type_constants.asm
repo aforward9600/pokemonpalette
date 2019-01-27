@@ -5,6 +5,7 @@ FLYING   EQU $02
 POISON   EQU $03
 GROUND   EQU $04
 ROCK     EQU $05
+BIRD	 EQU $06	;joenote - added-in this unused type
 BUG      EQU $07
 GHOST    EQU $08
 FIRE     EQU $14

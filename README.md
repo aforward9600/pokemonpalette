@@ -30,6 +30,7 @@ This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
      - this prevents getting stuck in a loop unable to do anything on your turn
   - Blaine will not use a super potion at full HP
   - Move slots cannot be rearranged when transformed (prevents acquiring glitch moves).
+  - The BIRD type has been reinstated and renamed to TYPELESS. It acts as a universally neutral type (particularly for Struggle)
 
 - Move fixes
   - dire hit/focus energy now quadruples crit rate instead of quarters
@@ -52,7 +53,7 @@ This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
   - fixed-damage moves (seismic toss, dragon rage, etc) can no longer critically hit
   - fixed-damage moves now obey type immunities
   - Transform will no longer copy the opponent's Transform move. It's swapped-out for Struggle
-  - Struggle is now dragon type so that it can always damage something
+  - Struggle is now TYPELESS so that it can always neutrally damage something
   - Metronome & mirror move will not increment PP if the user is transformed
      - This prevents adding PP to hidden dummy moves that prevent a pkmn from going into Struggle
      - This also prevents Disable from freezing the game by targeting a dummy move
