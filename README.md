@@ -19,7 +19,7 @@ This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
   - Fixed freeze that occurs in defense stat scaling (def < 4 glitch)
   - Enemy ai ignores type effectiveness for moves that have zero power
   - Enemy ai ignores super-effectiveness for moves that do static amounts of damage
-     - prevents things like spamming agility against bug pokemon
+     - prevents things like spamming agility against poison pokemon
   - Fixed skipping move-learn on level-up glitch. 
      - when gaining multiple levels at a time, each in-between level is incrementaly checked for moves learned
      - this prevents a pkmn from skipping learnable moves if gaining multiple levels in battle

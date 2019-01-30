@@ -221,6 +221,7 @@ SetScrollXForSlidingPlayerBodyLeft:
 
 StartBattle:
 	xor a
+	ld [wUnusedC000], a	;joenote - clear my custom battle bits at battle start
 	ld [wPartyGainExpFlags], a
 	ld [wPartyFoughtCurrentEnemyFlags], a
 	ld [wActionResultOrTookBattleTurn], a

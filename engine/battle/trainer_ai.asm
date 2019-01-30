@@ -701,7 +701,7 @@ TrainerAIPointers:
 	dbw 3,JugglerAI ; juggler
 	dbw 3,GenericAI
 	dbw 3,GenericAI
-	dbw 2,BlackbeltAI ; blackbelt
+	dbw 1,BlackbeltAI ; blackbelt
 	dbw 3,GenericAI
 	dbw 3,GenericAI
 	dbw 1,GenericAI ; chief
@@ -709,14 +709,14 @@ TrainerAIPointers:
 	dbw 1,GiovanniAI ; giovanni
 	dbw 3,GenericAI
 	dbw 2,CooltrainerMAI ; cooltrainerm
-	dbw 1,CooltrainerFAI ; cooltrainerf
+	dbw 2,CooltrainerFAI ; cooltrainerf
 	dbw 2,BrunoAI ; bruno
 	dbw 5,BrockAI ; brock
 	dbw 1,MistyAI ; misty
 	dbw 1,LtSurgeAI ; surge
 	dbw 1,ErikaAI ; erika
 	dbw 2,KogaAI ; koga
-	dbw 2,BlaineAI ; blaine
+	dbw 1,BlaineAI ; blaine
 	dbw 1,SabrinaAI ; sabrina
 	dbw 3,GenericAI
 	dbw 1,Sony2AI ; sony2
@@ -726,137 +726,157 @@ TrainerAIPointers:
 	dbw 2,AgathaAI ; agatha
 	dbw 1,LanceAI ; lance
 
+;joenote - reorganizing these AI routines to jump on carry instead of returning on not-carry
+;also adding recognition of a switch-pkmn bit
+
 JugglerAI:
 	cp $40
-	ret nc
-	jp AISwitchIfEnoughMons
-
+	jp c, AISwitchIfEnoughMons
+	ret
+	
 BlackbeltAI:
 	cp $20
-	ret nc
-	jp AIUseXAttack
-
+	jp c, AIUseDireHit	;now use dire hit instead of x attack
+	ret
+	
 GiovanniAI:
 	cp $40
-	ret nc
-	jp AIUseGuardSpec
+	jp c, AIUseGuardSpec
+	ret
 
-CooltrainerMAI:
+CooltrainerMAI:	;joenote - changed item to x-special and added switching
 	cp $40
-	ret nc
-	jp AIUseXAttack
-
-CooltrainerFAI:
-	cp $40
-	ld a, $A
-	call AICheckIfHPBelowFraction
-	jp c, AIUseHyperPotion
+	jp c, AIUseXSpecial
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	ret nc
-	jp AISwitchIfEnoughMons
-
+	jp c, AISwitchIfEnoughMons
+	ret
+	
+CooltrainerFAI:
+	cp $40
+	jp c, AIUseXAccuracy	;uses x accuracy now
+	ld a, 5
+	call AICheckIfHPBelowFraction
+	jp c, AISwitchIfEnoughMons
+	ret
+	
 BrockAI:
 ; if his active monster has a status condition, use a full heal
 	ld a, [wEnemyMonStatus]
 	and a
-	ret z
-	jp AIUseFullHeal
+	jp nz, AIUseFullHeal
+	ret 
 
 MistyAI:
 	cp $40
-	ret nc
-	jp AIUseXDefend
-
+	jp c, AIUseXDefend
+	ret
+	
 LtSurgeAI:
 	cp $40
-	ret nc
-	jp AIUseXSpeed
-
+	jp c, AIUseXSpeed
+	ret
+	
 ErikaAI:
 	cp $80
-	ret nc
+	jr nc, .erikareturn
 	ld a, $A
 	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseSuperPotion
+	jp c, AIUseSuperPotion
+.erikareturn
+	ret
 
 KogaAI:
 	cp $40
-	ret nc
-	jp AIUseXAttack
-
-BlaineAI:
+	jp c, AIUseXAttack
+	ret
+	
+BlaineAI:	;blaine needs to check HP. this was an oversight	
 	cp $40
-;;;;;;;;;;;;;;;;;;;
-;joenote - adding this to fix an oversight	
-	ret nc
+	jr nc, .blainereturn
 	ld a, $A
 	call AICheckIfHPBelowFraction	
-;;;;;;;;;;;;;;;;;;;
-	ret nc
-	jp AIUseSuperPotion
+	jp c, AIUseHyperPotion	;joenote - changed to hyper potion
+.blainereturn
+	ret
 
 SabrinaAI:
 	cp $40
-	ret nc
+	jr nc, .sabrinareturn
 	ld a, $A
 	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseHyperPotion
+	jp c, AIUseHyperPotion
+.sabrinareturn
+	ret
 
 Sony2AI:
 	cp $20
-	ret nc
+	jr nc, .rival2return
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUsePotion
+	jp c, AIUsePotion
+.rival2return
+	ret
 
 Sony3AI:
 	cp $20
-	ret nc
+	jr nc, .rival3return
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseFullRestore
+	jp c, AIUseFullRestore
+.rival3return
+	ret
 
 LoreleiAI:
 	cp $80
-	ret nc
+	jr nc, .loreleireturn
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseSuperPotion
+	jp c, AIUseSuperPotion
+.loreleireturn
+	ret
 
 BrunoAI:
 	cp $40
-	ret nc
-	jp AIUseXDefend
+	jp c, AIUseXDefend
+	ret
 
 AgathaAI:
 	cp $14
 	jp c, AISwitchIfEnoughMons
 	cp $80
-	ret nc
+	jr nc, .agathareturn
 	ld a, 4
 	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseSuperPotion
+	jp c, AIUseSuperPotion
+.agathareturn
+	ret
 
 LanceAI:
 	cp $80
-	ret nc
+	jr nc, .lancereturn
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	ret nc
-	jp AIUseHyperPotion
+	jp c, AIUseHyperPotion
+.lancereturn
+	ret
 
 GenericAI:
 	and a ; clear carry
+	call CheckSwitchBit
+	jp nz, AISwitchIfEnoughMons	;switch if bit was initially set
 	ret
 
 ; end of individual trainer AI routines
+
+;joenote - added this function to check if the ai switching bit is set
+;need to have 'a' accumulator and flag register freed up to use this function
+CheckSwitchBit:	
+	ld a, [wUnusedC000]
+	bit 0, a	;check a for switch pkmn bit (sets or clears zero flag)
+	res 0, a ; clear the switch pkmn bit (does not affect flags)
+	ld [wUnusedC000], a
+	ret
 
 DecrementAICount:
 	ld hl, wAICount
@@ -960,7 +980,7 @@ AIPrintItemUseAndUpdateHPBar:
 	jp DecrementAICount
 
 AISwitchIfEnoughMons:
-; enemy trainer switches if there are 3 or more unfainted mons in party
+; enemy trainer switches if there are 2 or more unfainted mons in party
 	ld a, [wEnemyPartyCount]
 	ld c, a
 	ld hl, wEnemyMon1HP
@@ -984,7 +1004,7 @@ AISwitchIfEnoughMons:
 	jr nz, .loop
 
 	ld a, d ; how many available monsters are there?
-	cp 2 ; don't bother if only 1 or 2
+	cp 2 ; don't bother if only 1
 	jp nc, SwitchEnemyMon
 	and a
 	ret
@@ -1043,7 +1063,7 @@ AICureStatus:
 	res 0, [hl]
 	ret
 
-AIUseXAccuracy: ; unused
+AIUseXAccuracy: 
 	call AIPlayRestoringSFX
 	ld hl, wEnemyBattleStatus2
 	set 0, [hl]
@@ -1057,7 +1077,7 @@ AIUseGuardSpec:
 	ld a, GUARD_SPEC
 	jp AIPrintItemUse
 
-AIUseDireHit: ; unused
+AIUseDireHit: 
 	call AIPlayRestoringSFX
 	ld hl, wEnemyBattleStatus2
 	set 2, [hl]
