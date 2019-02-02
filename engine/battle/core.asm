@@ -451,9 +451,16 @@ MainInBattleLoop:
 	ld b, 0
 	add hl, bc
 	ld a, [hl]
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - fixing the check for metronome and mirror move
 	cp METRONOME ; a MIRROR MOVE check is missing, might lead to a desync in link battles
 	             ; when combined with multi-turn moves
-	jr nz, .specialMoveNotUsed
+	jr z, .loadMetroOrMirror
+	cp MIRROR_MOVE
+	jr z, .loadMetroOrMirror
+	jr .specialMoveNotUsed
+.loadMetroOrMirror
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [wPlayerSelectedMove], a
 .specialMoveNotUsed
 	callab SwitchEnemyMon
@@ -529,8 +536,17 @@ MainInBattleLoop:
 	call DrawHUDsAndHPBars
 	call CheckNumAttacksLeft
 	jp MainInBattleLoop
-.playerMovesFirst
-	call ExecutePlayerMove
+.playerMovesFirst	;joenote - reorganizing this so enemy AI item use and switching has priority over player moves
+	ld a, $1
+	ld [H_WHOSETURN], a
+	callab TrainerAI
+	jr nc, .playerMoveExecute	;if carry not set, ai did not use item or switch
+	;else carry was set, so set the bit indicating the ai trainer switched or used an item
+	ld a, [wUnusedC000]
+	set 1, a ; sets the already-acted bit
+	ld [wUnusedC000], a
+.playerMoveExecute
+	call ExecutePlayerMove	;this function writes zero to H_WHOSETURN
 	ld a, [wEscapedFromBattle]
 	and a ; was Teleport, Road, or Whirlwind used to escape from battle?
 	ret nz ; if so, return
@@ -540,11 +556,16 @@ MainInBattleLoop:
 	call HandlePoisonBurnLeechSeed
 	jp z, HandlePlayerMonFainted
 	call DrawHUDsAndHPBars
+	;check to see if ai trainer already acted this turn
+	ld a, [wUnusedC000]
+	bit 1, a	;check a for already-acted bit (sets or clears zero flag)
+	res 0, a ; resets the already-acted bit (does not affect flags)
+	ld [wUnusedC000], a
+	jr nz, .AIActionUsedPlayerFirst	;skip executing enemy move if it already acted
+	;else execute the enemy move
 	ld a, $1
 	ld [H_WHOSETURN], a
-	callab TrainerAI
-	jr c, .AIActionUsedPlayerFirst
-	call ExecuteEnemyMove
+	call ExecuteEnemyMove	;this function does not write 1 to H_WHOSETURN
 	ld a, [wEscapedFromBattle]
 	and a ; was Teleport, Road, or Whirlwind used to escape from battle?
 	ret nz ; if so, return
@@ -5552,16 +5573,32 @@ AdjustDamageForMoveType:
 ; this doesn't take into account the effects that dual types can have
 ; (e.g. 4x weakness / resistance, weaknesses and resistances canceling)
 ; the result is stored in [wTypeEffectiveness]
-; ($05 is not very effective, $10 is neutral, $14 is super effective)
+; ($05 is not very effective, $0A is neutral, $14 is super effective)
 ; as far is can tell, this is only used once in some AI code to help decide which move to use
 AIGetTypeEffectiveness:
+;joenote - if 'a' is not preloaded to zero, then do wPlayerMoveType and wEnemyMonType
+;		-also changed neutral value from $10 to $0A since it makes more sense
+;		-and modifying this to take into account both types
+	and a
+	jr z, .enemyMove
+	ld a, [wPlayerMoveType]
+	ld d, a                    ; d = type of player move
+	ld hl, wEnemyMonType
+	ld b, [hl]                 ; b = type 1 of enemy's pokemon
+	inc hl
+	ld c, [hl]                 ; c = type 2 of enemy's pokemon
+	ld a, $0A
+	ld [wTypeEffectiveness], a ; initialize to neutral effectiveness
+	ld hl, TypeEffects
+	jr .loop
+.enemyMove
 	ld a, [wEnemyMoveType]
 	ld d, a                    ; d = type of enemy move
 	ld hl, wBattleMonType
 	ld b, [hl]                 ; b = type 1 of player's pokemon
 	inc hl
 	ld c, [hl]                 ; c = type 2 of player's pokemon
-	ld a, $10
+	ld a, $0A
 	ld [wTypeEffectiveness], a ; initialize to neutral effectiveness
 	ld hl, TypeEffects
 .loop
@@ -5572,17 +5609,38 @@ AIGetTypeEffectiveness:
 	jr nz, .nextTypePair1
 	ld a, [hli]
 	cp b                      ; match with type 1 of pokemon
-	jr z, .done
+	jr z, .AImatchingPairFound
 	cp c                      ; or match with type 2 of pokemon
-	jr z, .done
+	jr z, .AImatchingPairFound
 	jr .nextTypePair2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.AImatchingPairFound
+	ld a, [hl]	;get damage multiplier
+	cp $05	;is it halved?
+	jr nz, .AInothalf	;jump down of not half
+	ld a, [wTypeEffectiveness]	;else get the effectiveness multiplier
+	srl a	;halve the multiplier
+	ld [wTypeEffectiveness], a ; store damage multiplier
+	jr .nextTypePair2	;get next pair in list
+.AInothalf
+	cp $14	;is it double?
+	jr nz, .AImustbezero	;if not double either, it must be zero so skip ahead
+	ld a, [wTypeEffectiveness]	;else get the effectiveness multiplier
+	sla a	;double the multiplier
+	ld [wTypeEffectiveness], a ; store damage multiplier
+	jr .nextTypePair2	;get next pair in list
+.AImustbezero
+	ld a, [wTypeEffectiveness]	;else get the effectiveness multiplier
+	xor a	;clear a to 00
+	jr .done
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .nextTypePair1
 	inc hl
 .nextTypePair2
 	inc hl
 	jr .loop
 .done
-	ld a, [hl]
+	;joenote - removed		ld a, [hl]
 	ld [wTypeEffectiveness], a ; store damage multiplier
 	ret
 

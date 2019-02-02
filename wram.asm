@@ -66,6 +66,7 @@ SECTION "WRAM Bank 0", WRAM0
 wUnusedC000:: ; c000
 ;joenote - use this for battle bit settings
 ;bit 0 - if set, ai should switch pokemon
+;bit 1 - if set, ai already acted by switching or using an item this turn
 	ds 1
 
 wSoundID:: ; c001

@@ -1,6 +1,8 @@
 # Pokémon Shin Red and Blue
 
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
+This is a mostly-vanilla hack that focuses on fixing glitches from the original game.
+Additionally, trainer AI routines are also improved and includes minimal quality-of-life improvements.
 
 #Bugfixes:
 -----------
@@ -28,9 +30,13 @@ This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
   - If player is frozen, the hyperbeam recharge bit is now cleared
      - now matches how enemy mon's recharge bit is cleared upon being frozen
      - this prevents getting stuck in a loop unable to do anything on your turn
-  - Blaine will not use a super potion at full HP
+  - Blaine will not use a healing item at full HP
   - Move slots cannot be rearranged when transformed (prevents acquiring glitch moves).
   - The BIRD type has been reinstated and renamed to TYPELESS. It acts as a universally neutral type (particularly for Struggle)
+  - AI trainers have priority on switching or using a move
+  - AI type effectiveness function now takes type 1 and 2 into account together 
+	 - Before AI would only look at the type it encountered first in a list search
+     - AI will now treat a move as neutral if type 1 makes it supereffective but type 2 makes it not effective
 
 - Move fixes
   - dire hit/focus energy now quadruples crit rate instead of quarters
@@ -57,6 +63,7 @@ This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
   - Metronome & mirror move will not increment PP if the user is transformed
      - This prevents adding PP to hidden dummy moves that prevent a pkmn from going into Struggle
      - This also prevents Disable from freezing the game by targeting a dummy move
+  - Mirror Move is checked against partial trapping moves in a link battle to prevent desync
 
 - Misc. fixes
   - great ball has a ball factor of 12 now
@@ -88,10 +95,17 @@ This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
   - Static damage moves are randomly preferenced 25% of the time to spice things up
 - Trainer ai routine #3 added to the following trainer classes
   - jr trainer M, jr trainer F, hiker, supernerd, engineer, lass, chief, bruno, brock, gentleman, agatha
+- Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
+  - 25% chance to switch if active pkmn is below 1/3 HP
+  - chance to switch based on power of incoming supereffective move
+- Trainer ai routine #4 added to the following trainer classes
+  -lass, jr trainer m/f, pokemaniac, supernerd, hiker, engineer, beauty, psychic, rocker, tamer, birdkeeper, cooltrainer m/f, gentleman
+  -prof.oak, chief, gym leaders, e4
 - Trainer stat DVs are now randomly generated to a degree
   - Attack DV is between 9 and 15 and always odd-numbered.
   - Defense, special, and speed DVs are between 8 and 14 and always even-numbered
   - HP DV is always 8 due to how ai trainer pkmn have their HP values set and HP bars drawn
+- Special trainers, e4, and gym leaders are slightly adjusted in their item use
 - Badge stat-ups are now temporary boosts
   - They are applied upon battle start or switching-in
   - They are not applied at all after stat recalculations, so any stat change on your pkmn cancels all of them

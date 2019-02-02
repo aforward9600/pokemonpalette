@@ -107,7 +107,7 @@ AIMoveChoiceModificationFunctionPointers:
 	dw AIMoveChoiceModification1
 	dw AIMoveChoiceModification2
 	dw AIMoveChoiceModification3
-	dw AIMoveChoiceModification4 ; unused, does nothing
+	dw AIMoveChoiceModification4 ; ;joenote - repurposed unused routine for trainer switching
 
 ; discourages moves that cause no damage but only a status ailment if player's mon already has one
 AIMoveChoiceModification1:
@@ -464,6 +464,7 @@ AIMoveChoiceModification3:
 	push hl
 	push bc
 	push de
+	xor a	;clear a. this makes AIGetTypeEffectiveness compare enemy move to player pkmn types
 	callab AIGetTypeEffectiveness
 	pop de
 	pop bc
@@ -510,10 +511,10 @@ AIMoveChoiceModification3:
 .skipout4
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wTypeEffectiveness]
-	cp $10
+	cp $0A
 	jp z, .nextMove
 	jr c, .notEffectiveMove
-	;at this point, move is effective
+	;at this line, move is super effective
 .givepref	;joenote - added marker
 	dec [hl] ; slightly encourage this move
 	jp .nextMove
@@ -558,7 +559,50 @@ AIMoveChoiceModification3:
 	jp z, .nextMove
 	inc [hl] ; slightly discourage this move
 	jp .nextMove
-AIMoveChoiceModification4:
+	
+AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer switching
+	;use "call SetSwitchBit" to induce the trainer to switch pkmn
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;switch if HP is low. lower HP has higher chance of switching
+	ld a, 3	;
+	call AICheckIfHPBelowFraction
+	jr nc, .skipSwitchHPend	;if hp not below 1/3 then skip to the end of this block
+	call Random	;put a random number in 'a' between 0 and 255
+	and $03	;use only bits 0 & 1 for a random number of 0 to 3
+	jp z, .setSwitch	;if zero flag is set, switch pkmn because 'a' is zero
+.skipSwitchHPend
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;switch if supereffective move is being used against enemy
+	ld a, [wPlayerMovePower]	;get the power of the player's move
+	cp $2	;regular damaging moves have power > 1
+	jr nc, .skipSwitchEffectiveEnd	;skip out if the move is not a normal damaging move
+	push hl
+	push bc
+	push de
+	ld a, $01	;set a to non-zero. this makes AIGetTypeEffectiveness compare player move to enemy pkmn types
+	callab AIGetTypeEffectiveness
+	pop de
+	pop bc
+	pop hl
+	ld a, [wTypeEffectiveness]	;get the multiplier effectiveness for the player's move
+	cp $14	;is it < 20?
+	jr c, .skipSwitchEffectiveEnd	;if so, skip to end of this block
+	push bc
+	ld a, [wPlayerMovePower]	;get the power of the player's move into a
+	srl a	;halve a
+	ld b, a	;put a into b
+	call Random	;put a random number in 'a' 
+	and $FF	;use only bits 0 to 7
+	cp b; see if a < b and set carry if true
+	pop bc
+	jp c, .setSwitch	;if carry flag is set, switch pkmn
+.skipSwitchEffectiveEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	jr .skipSwitchEnd	;jump to the end and get out of this line is reached.
+.setSwitch	;this line will only be reached if a switch is confirmed.
+	call SetSwitchBit
+.skipSwitchEnd
 	ret
 
 ReadMove:
@@ -581,54 +625,55 @@ ReadMove:
 ;1 - Do not use a move that only statuses (e.g., Thunder Wave) if the player's Pokémon already has a status.
 ;2 - On the second turn only the Pokémon is out, prefer a move that heals/buffs/debuffs
 ;3 - Try to do type-matching when selecting attacks
+;4 - switch if active pkmn is in trouble
 TrainerClassMoveChoiceModifications:
 	db 0      ; YOUNGSTER
 	db 1,0    ; BUG CATCHER
-	db 1,3,0    ; LASS
+	db 1,3,4,0    ; LASS
 	db 1,3,0  ; SAILOR
-	db 1,3,0    ; JR_TRAINER_M
-	db 1,3,0    ; JR_TRAINER_F
-	db 1,2,3,0; POKEMANIAC
-	db 1,2,3,0  ; SUPER_NERD
-	db 1,3,0    ; HIKER
+	db 1,3,4,0    ; JR_TRAINER_M
+	db 1,3,4,0    ; JR_TRAINER_F
+	db 1,2,3,4,0; POKEMANIAC
+	db 1,2,3,4,0  ; SUPER_NERD
+	db 1,3,4,0    ; HIKER
 	db 1,0    ; BIKER
 	db 1,3,0  ; BURGLAR
-	db 1,3,0    ; ENGINEER
+	db 1,3,4,0    ; ENGINEER
 	db 1,2,0  ; JUGGLER_X
 	db 1,3,0  ; FISHER
 	db 1,3,0  ; SWIMMER
 	db 0      ; CUE_BALL
 	db 1,0    ; GAMBLER
-	db 1,3,0  ; BEAUTY
-	db 1,2,0  ; PSYCHIC_TR
-	db 1,3,0  ; ROCKER
+	db 1,3,4,0  ; BEAUTY
+	db 1,2,4,0  ; PSYCHIC_TR
+	db 1,3,4,0  ; ROCKER
 	db 1,0    ; JUGGLER
-	db 1,0    ; TAMER
-	db 1,0    ; BIRD_KEEPER
+	db 1,4,0    ; TAMER
+	db 1,4,0    ; BIRD_KEEPER
 	db 1,0    ; BLACKBELT
 	db 1,0    ; SONY1
-	db 1,3,0  ; PROF_OAK
-	db 1,2,3,0  ; CHIEF
+	db 1,3,4,0  ; PROF_OAK
+	db 1,2,3,4,0  ; CHIEF
 	db 1,2,0  ; SCIENTIST
-	db 1,3,0  ; GIOVANNI
+	db 1,3,4,0  ; GIOVANNI
 	db 1,0    ; ROCKET
-	db 1,3,0  ; COOLTRAINER_M
-	db 1,3,0  ; COOLTRAINER_F
-	db 1,3,0    ; BRUNO
-	db 1,3,0    ; BROCK
-	db 1,3,0  ; MISTY
-	db 1,3,0  ; LT_SURGE
-	db 1,3,0  ; ERIKA
-	db 1,3,0  ; KOGA
-	db 1,3,0  ; BLAINE
-	db 1,3,0  ; SABRINA
-	db 1,2,3,0  ; GENTLEMAN
-	db 1,3,0  ; SONY2
-	db 1,3,0  ; SONY3
-	db 1,2,3,0; LORELEI
+	db 1,3,4,0  ; COOLTRAINER_M
+	db 1,3,4,0  ; COOLTRAINER_F
+	db 1,3,4,0    ; BRUNO
+	db 1,3,4,0    ; BROCK
+	db 1,3,4,0  ; MISTY
+	db 1,3,4,0  ; LT_SURGE
+	db 1,3,4,0  ; ERIKA
+	db 1,3,4,0  ; KOGA
+	db 1,3,4,0  ; BLAINE
+	db 1,3,4,0  ; SABRINA
+	db 1,2,3,4,0  ; GENTLEMAN
+	db 1,3,4,0  ; SONY2
+	db 1,3,4,0  ; SONY3
+	db 1,2,3,4,0; LORELEI
 	db 1,0    ; CHANNELER
-	db 1,3,0    ; AGATHA
-	db 1,3,0  ; LANCE
+	db 1,3,4,0    ; AGATHA
+	db 1,3,4,0  ; LANCE
 
 INCLUDE "engine/battle/trainer_pic_money_pointers.asm"
 
@@ -650,6 +695,11 @@ TrainerAI:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - switch if the switch bit is set	
+	call CheckandResetSwitchBit
+	jp nz, AISwitchIfEnoughMons	;switch if bit was initially set
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 	ld a, [wTrainerClass] ; what trainer class is this?
 	dec a
 	ld c, a
@@ -863,18 +913,21 @@ LanceAI:
 
 GenericAI:
 	and a ; clear carry
-	call CheckSwitchBit
-	jp nz, AISwitchIfEnoughMons	;switch if bit was initially set
 	ret
 
 ; end of individual trainer AI routines
 
-;joenote - added this function to check if the ai switching bit is set
+;joenote - added these functions to check if the ai switching bit is set
 ;need to have 'a' accumulator and flag register freed up to use this function
-CheckSwitchBit:	
+CheckandResetSwitchBit:	
 	ld a, [wUnusedC000]
 	bit 0, a	;check a for switch pkmn bit (sets or clears zero flag)
-	res 0, a ; clear the switch pkmn bit (does not affect flags)
+	res 0, a ; resets the switch pkmn bit (does not affect flags)
+	ld [wUnusedC000], a
+	ret
+SetSwitchBit:	
+	ld a, [wUnusedC000]
+	set 0, a ; sets the switch pkmn bit
 	ld [wUnusedC000], a
 	ret
 
