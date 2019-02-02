@@ -454,10 +454,10 @@ AIMoveChoiceModification3:
 	and a	;check if it is zero
 	jr nz, .skipout	;get out of this section if non-zero power
 	call Random	;else get a random number between 0 and 255
-	and $07	;get only bits 0 to 4
+	and $07	;get only bits 0 to 3
 	jp z, .givepref	;if zero (12.5% chance) slightly encourage to spice things up
-	cp $04	;don't set carry flag if number is >= this value
-	jp nc, .notEffectiveMove	;50% chance to slightly discourage and would rather do damage
+	cp $05	;don't set carry flag if number is >= this value
+	jp nc, .notEffectiveMove	;62.5% chance to slightly discourage and would rather do damage
 	jp .nextMove	;else neither encourage nor discourage
 .skipout
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

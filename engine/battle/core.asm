@@ -559,7 +559,7 @@ MainInBattleLoop:
 	;check to see if ai trainer already acted this turn
 	ld a, [wUnusedC000]
 	bit 1, a	;check a for already-acted bit (sets or clears zero flag)
-	res 0, a ; resets the already-acted bit (does not affect flags)
+	res 1, a ; resets the already-acted bit (does not affect flags)
 	ld [wUnusedC000], a
 	jr nz, .AIActionUsedPlayerFirst	;skip executing enemy move if it already acted
 	;else execute the enemy move
