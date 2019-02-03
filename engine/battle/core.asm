@@ -537,30 +537,27 @@ MainInBattleLoop:
 	call CheckNumAttacksLeft
 	jp MainInBattleLoop
 .playerMovesFirst	;joenote - reorganizing this so enemy AI item use and switching has priority over player moves
+;#1 - handle enemy switching or using an item
 	ld a, $1
 	ld [H_WHOSETURN], a
 	callab TrainerAI
-	jr nc, .playerMoveExecute	;if carry not set, ai did not use item or switch
-	;else carry was set, so set the bit indicating the ai trainer switched or used an item
-	ld a, [wUnusedC000]
-	set 1, a ; sets the already-acted bit
-	ld [wUnusedC000], a
-.playerMoveExecute
-	call ExecutePlayerMove	;this function writes zero to H_WHOSETURN
+	call c, SetEnemyActedBit	;if carry was set from TrainerAI, set the bit indicating the ai trainer switched or used an item
+;#2 - handle player using a move
+	call ExecutePlayerMove	;note: this function writes zero to H_WHOSETURN
 	ld a, [wEscapedFromBattle]
 	and a ; was Teleport, Road, or Whirlwind used to escape from battle?
 	ret nz ; if so, return
+	ld a, b
+	and a
+	call z, CheckandResetEnemyActedBit	;reset enemy acted bit if enemy pkmn fainted
 	ld a, b
 	and a
 	jp z, HandleEnemyMonFainted
 	call HandlePoisonBurnLeechSeed
 	jp z, HandlePlayerMonFainted
 	call DrawHUDsAndHPBars
-	;check to see if ai trainer already acted this turn
-	ld a, [wUnusedC000]
-	bit 1, a	;check a for already-acted bit (sets or clears zero flag)
-	res 1, a ; resets the already-acted bit (does not affect flags)
-	ld [wUnusedC000], a
+;#3 - handle enemy using move
+	call CheckandResetEnemyActedBit	;check to see if ai trainer already acted this turn
 	jr nz, .AIActionUsedPlayerFirst	;skip executing enemy move if it already acted
 	;else execute the enemy move
 	ld a, $1
@@ -579,6 +576,21 @@ MainInBattleLoop:
 	call CheckNumAttacksLeft
 	jp MainInBattleLoop
 
+;joenote - function for checking and reseting the AI's already-acted bit
+CheckandResetEnemyActedBit:
+	ld a, [wUnusedC000]
+	bit 1, a	;check a for already-acted bit (sets or clears zero flag)
+	res 1, a ; resets the already-acted bit (does not affect flags)
+	ld [wUnusedC000], a
+	ret 
+
+;joenote - function for setting the AI's already-acted bit
+SetEnemyActedBit:
+	ld a, [wUnusedC000]
+	set 1, a ; sets the already-acted bit
+	ld [wUnusedC000], a
+	ret
+	
 HandlePoisonBurnLeechSeed:
 	ld hl, wBattleMonHP
 	ld de, wBattleMonStatus

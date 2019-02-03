@@ -98,6 +98,7 @@ Additionally, trainer AI routines are also improved and includes minimal quality
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
   - 25% chance to switch if active pkmn is below 1/3 HP
   - chance to switch based on power of incoming supereffective move
+  - 12.5% chance to switch if a move is disabled
 - Trainer ai routine #4 added to the following trainer classes
   -lass, jr trainer m/f, pokemaniac, supernerd, hiker, engineer, beauty, psychic, rocker, tamer, birdkeeper, cooltrainer m/f, gentleman
   -prof.oak, chief, gym leaders, e4

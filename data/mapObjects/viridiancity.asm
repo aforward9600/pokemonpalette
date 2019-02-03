@@ -18,7 +18,7 @@ ViridianCityObject:
 
 	db 7 ; objects
 	object SPRITE_BUG_CATCHER, 13, 20, WALK, 0, 1 ; person
-	object SPRITE_GAMBLER, 30, 8, STAY, NONE, 2 ; person
+	object SPRITE_GAMBLER, 34, 7, STAY, NONE, 2 ; person	;joenote - moved him out of the way just a tad
 	object SPRITE_BUG_CATCHER, 30, 25, WALK, 0, 3 ; person
 	object SPRITE_GIRL, 17, 9, STAY, RIGHT, 4 ; person
 	object SPRITE_LYING_OLD_MAN, 18, 9, STAY, NONE, 5 ; person

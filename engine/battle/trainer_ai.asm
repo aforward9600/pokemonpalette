@@ -599,6 +599,17 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	jp c, .setSwitch	;if carry flag is set, switch pkmn
 .skipSwitchEffectiveEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;slight chance to switch if move disabled
+	ld a, [wEnemyDisabledMove] ; get disabled move (if any)
+	swap a
+	and $f
+	jr z, .skipSwitchDisableEnd	;no disabled moves if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $07	;use only bits 0 to 2 for a random number of 0 to 7
+	jp z, .setSwitch	;if zero flag is set, switch pkmn because 'a' is zero
+.skipSwitchDisableEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jr .skipSwitchEnd	;jump to the end and get out of this line is reached.
 .setSwitch	;this line will only be reached if a switch is confirmed.
 	call SetSwitchBit
@@ -785,8 +796,8 @@ JugglerAI:
 	ret
 	
 BlackbeltAI:
-	cp $20
-	jp c, AIUseDireHit	;now use dire hit instead of x attack
+	cp $80
+	jp c, AIUseXAttack	
 	ret
 	
 GiovanniAI:
