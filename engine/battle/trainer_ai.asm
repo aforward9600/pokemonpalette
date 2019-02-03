@@ -796,11 +796,13 @@ JugglerAI:
 	ret
 	
 BlackbeltAI:
-	cp $80
+	cp $20
 	jp c, AIUseXAttack	
 	ret
 	
 GiovanniAI:
+	cp $20 
+	jp c, AIUseDireHit
 	cp $40
 	jp c, AIUseGuardSpec
 	ret
