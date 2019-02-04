@@ -149,6 +149,14 @@ FuchsiaGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_e84c6
 .asm_adc3b
+;;;;;;;joenote - have a rematch with gym leader?
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .asm_181b6
+;;;;;;;
 	ld hl, KogaExplainToxicText
 	call PrintText
 	jr .asm_e84c6
@@ -169,6 +177,10 @@ FuchsiaGymText1:
 	ld [wGymLeaderNo], a
 	xor a
 	ld [hJoyHeld], a
+;;;;joenote - added for rematch to skip gym leader tm
+	CheckEvent EVENT_GOT_TM06
+	jp nz, TextScriptEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
 	ld [wFuchsiaGymCurScript], a
 .asm_e84c6

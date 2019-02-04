@@ -139,7 +139,12 @@ Additionally, trainer AI routines are also improved and includes minimal quality
 - Can rematch most non gym-leader trainers
 - Rematch with Brock
 - Rematch with Misty
+- Rematch with Surge
+- Rematch with Erika
+- Rematch with Sabrina
+- Rematch with Koga 
 - Rematch with Blaine
+- Giovanni respawns after leaving the gym and can rematch him
 - Blaine has a touched-up battle sprite so he doesn't look like an alien
   - Snagged this off reddit, but original artist unknown (let me know if this is yours)
 - The juggler rosters, especially in fuschia gym, have been slightly altered for flavor

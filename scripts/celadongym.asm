@@ -158,6 +158,14 @@ CeladonGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_48a5b
 .asm_48a25
+;;;;;;;joenote - have a rematch with gym leader?
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .asm_48a2d
+;;;;;;;
 	ld hl, CeladonGymText_48a68
 	call PrintText
 	jr .asm_48a5b
@@ -176,6 +184,10 @@ CeladonGymText1:
 	call InitBattleEnemyParameters
 	ld a, $4
 	ld [wGymLeaderNo], a
+;;;;joenote - added for rematch to skip gym leader tm
+	CheckEvent EVENT_GOT_TM21
+	jp nz, TextScriptEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
 	ld [wCeladonGymCurScript], a
 	ld [wCurMapScript], a
