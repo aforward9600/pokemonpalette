@@ -640,6 +640,16 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 .skipSwitchSeedEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;chance to switch if stuck in a trapping move
+	ld a, [wPlayerBattleStatus1]
+	bit 5, a	;check a for trapping move bit (sets or clears zero flag)
+	jr z, .skipSwitchTrapEnd	;not trapped if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $03	;use only bits 0 to 1 for a random number of 0 to 3
+	jp z, .setSwitch	;switch if zero
+.skipSwitchTrapEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;high chance to switch if afflicted with toxic-style poison
 	ld a, [wEnemyBattleStatus3]
 	bit 0, a	;check a for the toxic bit (sets or clears zero flag)

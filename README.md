@@ -105,6 +105,7 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   - 12.5% chance to switch if a move is disabled
   - 12.5% chance to switch if afflicted with leech seed
   - 50% chance to switch if afflicted with toxic poison
+  - 25% chance to switch if opponent is using a trapping move
   - 25% chance to switch if active pkmn is confused
   - on the lowest stat mod, 12.5% chance to switch per lowered stage
 - Trainer ai routine #4 added to the following trainer classes
