@@ -141,9 +141,29 @@ AIMoveChoiceModification1:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wEnemyMovePower]
 	and a
-	jr nz, .nextMove	;go to next move if the current move is not zero-power
+	jp nz, .nextMove	;go to next move if the current move is not zero-power
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;At this line onward all moves are assumed to be zero power
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Heavily discourage healing moves if HP is full. Encourage if hp is low
+	ld a, [wEnemyMoveEffect]	;load the move effect
+	cp HEAL_EFFECT	;see if it is a healing move
+	jr nz, .notahealingmove	;skip out if move is not a healing move
+	ld a, 1	;
+	call AICheckIfHPBelowFraction
+	jp nc, .heavydiscourage	;if hp not below 1/1 max hp then heavily discourage
+	inc [hl]	;slightly discourage by default (1/2 hp to max-1 hp)
+	ld a, 2	;
+	call AICheckIfHPBelowFraction
+	jp nc, .nextMove	;if hp is 1/2 or more, get next move
+	dec [hl]	;else return preference to neutral (1/3 to 1/2 hp)
+	ld a, 3	;
+	call AICheckIfHPBelowFraction
+	jp nc, .nextMove	;if hp is 1/2 or more, get next move
+	dec [hl]	;else slightly encourage
+	jp .nextMove	;get next move
+.notahealingmove
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use moves that are ineffective against substitute if a substitute is up
@@ -561,7 +581,6 @@ AIMoveChoiceModification3:
 	jp .nextMove
 	
 AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer switching
-	;use "call SetSwitchBit" to induce the trainer to switch pkmn
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;switch if HP is low. lower HP has higher chance of switching
 	ld a, 3	;
@@ -610,12 +629,94 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	jp z, .setSwitch	;if zero flag is set, switch pkmn because 'a' is zero
 .skipSwitchDisableEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;slight chance to switch if afflicted with leech seed
+	ld a, [wEnemyBattleStatus2]
+	bit 7, a	;check a for the leech seed bit (sets or clears zero flag)
+	jr z, .skipSwitchSeedEnd	;not seeded if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $07	;use only bits 0 to 2 for a random number of 0 to 7
+	jp z, .setSwitch	;switch if zero
+.skipSwitchSeedEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;high chance to switch if afflicted with toxic-style poison
+	ld a, [wEnemyBattleStatus3]
+	bit 0, a	;check a for the toxic bit (sets or clears zero flag)
+	jr z, .skipSwitchToxicEnd	;not badly poisoned if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $01	;use only bit 0
+	jp z, .setSwitch	;switch if zero
+.skipSwitchToxicEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;chance to switch if afflicted with confusion
+	ld a, [wEnemyBattleStatus1]
+	bit 7, a	;check a for the confusion bit (sets or clears zero flag)
+	jr z, .skipSwitchConfuseEnd	;not confused if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $03	;use only bits 0 to 1 for a random number of 0 to 3
+	jp z, .setSwitch	;switch if zero
+.skipSwitchConfuseEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;chance to switch if afflicted with non-volatile status
+	ld a, [wEnemyMonStatus]
+	and a	;check for any non-volatile status
+	jr z, .skipSwitchNVstatEnd	;no NV status if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $03	;use only bits 0 to 1 for a random number of 0 to 3
+	jp z, .setSwitch	;switch if zero
+.skipSwitchNVstatEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;chance to switch if stat mods are too low
+	push bc
+	;use b for storage and a for loading
+	ld a, [wEnemyMonAttackMod]	
+	ld b, a 
+	ld a, [wEnemyMonDefenseMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, [wEnemyMonSpeedMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, [wEnemyMonSpecialMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, [wEnemyMonAccuracyMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, [wEnemyMonEvasionMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, b	;but b back into a
+	pop bc
+	cp $07	;is the lowest stat mod the normal vale of 7?
+	jr nc, .skipSwitchModEnd	;lowest stat mod is not negative (value below 7)
+	push bc
+	ld b, a	;put the lowest mod into b
+	ld a, $07	; put 7 into a
+	sub b	;a = 7 - b, so a becomes 6 (-6 stages) to 1 (-1 stage)
+	ld b, a	;put a back into b
+	call Random	;put a random number in 'a' between 0 and 255
+	and $07	;use only bits 0 to 2 for a random number of 0 to 7
+	cp b
+	pop bc
+	jp c, .setSwitch	;switch if random number < mod 1 (-1 stage) to 6 (-6 stages)
+.skipSwitchModEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jr .skipSwitchEnd	;jump to the end and get out of this line is reached.
 .setSwitch	;this line will only be reached if a switch is confirmed.
 	call SetSwitchBit
 .skipSwitchEnd
 	ret
 
+;joenote - function for loading A into B so it can be called conditionally
+CondLDBA:
+	ld b, a
+	ret
+	
 ReadMove:
 	push hl
 	push de

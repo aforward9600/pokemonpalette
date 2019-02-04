@@ -78,7 +78,7 @@ Additionally, trainer AI routines are also improved and includes minimal quality
 -----------
 - Stat-down moves no longer have a 25% miss chance in AI matches.
 - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
-- Trainer ai routine #1 (status recognition) has been modified
+- Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
   - using a move with a dream eater effect is heavily discouraged against non-sleeping opponents
   - using a move with a dream eater effect is slightly encouraged against a sleeping opponent
   - using a zero-power confusion effect move is heavily discouraged against confused opponents
@@ -87,6 +87,10 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   - heavily discourage double-using lightscreen, reflect, mist, substitute, focus energy, and leech seed
   - leech seed won't be used against grass pkmn
   - do not use moves that would be blocked by an active mist effect
+  - rules for using healing moves:
+    - heavily discourage healing if at max hp
+	- slightly encourage healing if below 1/3 hp
+	- slightly discourage healing if above 1/2 hp
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
   - zero-power buffing/debuffing moves are randomly preferenced 12.5% of the time to spice things up
@@ -99,6 +103,10 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   - 25% chance to switch if active pkmn is below 1/3 HP
   - chance to switch based on power of incoming supereffective move
   - 12.5% chance to switch if a move is disabled
+  - 12.5% chance to switch if afflicted with leech seed
+  - 50% chance to switch if afflicted with toxic poison
+  - 25% chance to switch if active pkmn is confused
+  - on the lowest stat mod, 12.5% chance to switch per lowered stage
 - Trainer ai routine #4 added to the following trainer classes
   -lass, jr trainer m/f, pokemaniac, supernerd, hiker, engineer, beauty, psychic, rocker, tamer, birdkeeper, cooltrainer m/f, gentleman
   -prof.oak, chief, gym leaders, e4
