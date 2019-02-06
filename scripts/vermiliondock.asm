@@ -209,7 +209,12 @@ VermilionDock_EraseSSAnne:
 
 VermilionDockTextPointers:
 	dw VermilionDockText1
+	dw VermilionDockText2
 
 VermilionDockText1:
 	TX_FAR _VermilionDockText1
+	db "@"
+
+VermilionDockText2:
+	TX_FAR _VermilionDockText2
 	db "@"

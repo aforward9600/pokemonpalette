@@ -977,6 +977,7 @@ OaksLabText5:
 	ld hl, OaksLabText_1d31d
 	call PrintText
 ;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - prof oak battle
 	CheckEvent EVENT_908	;has elite 4 been beaten?
 	jr z, .dexcheck	;if no then leave this section and do the pokedex check like normal
 	call YesNoChoice	;else call a yes/no choice box
