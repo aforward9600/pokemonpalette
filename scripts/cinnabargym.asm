@@ -200,7 +200,7 @@ CinnabarGymScript_758b7:
 .asm_758d4
 	ld a, $3
 .asm_758d6
-;;;;joenote - added for rematch to skip gym leader tm
+;;;;joenote - rematches should not advance map script pointer
 	CheckEvent EVENT_GOT_TM38
 	jp nz, TextScriptEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -272,6 +272,7 @@ CinnabarGymText2:
 	call CinnabarGymScript_757a0
 	CheckEvent EVENT_BEAT_CINNABAR_GYM_TRAINER_0
 	jr nz, .asm_46bb4
+.cinnabar_rematch0
 	ld hl, CinnabarGymText_7595f
 	call PrintText
 	ld hl, CinnabarGymText_75964
@@ -279,6 +280,17 @@ CinnabarGymText2:
 	call SaveEndBattleTextPointers
 	jp CinnabarGymScript_758b7
 .asm_46bb4
+;;;;;;;joenote - have a rematch with trainer
+	CheckEvent EVENT_GOT_TM38
+	jr z, .rematch0_end
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .cinnabar_rematch0
+.rematch0_end
+;;;;;;;
 	ld hl, CinnabarGymText_75969
 	call PrintText
 	jp TextScriptEnd
@@ -300,6 +312,7 @@ CinnabarGymText3:
 	call CinnabarGymScript_757a0
 	CheckEvent EVENT_BEAT_CINNABAR_GYM_TRAINER_1
 	jr nz, .asm_4b406
+.cinnabar_rematch1
 	ld hl, CinnabarGymText_75994
 	call PrintText
 	ld hl, CinnabarGymText_75999
@@ -307,6 +320,17 @@ CinnabarGymText3:
 	call SaveEndBattleTextPointers
 	jp CinnabarGymScript_758b7
 .asm_4b406
+;;;;;;;joenote - have a rematch with trainer
+	CheckEvent EVENT_GOT_TM38
+	jr z, .rematch1_end
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .cinnabar_rematch1
+.rematch1_end
+;;;;;;;
 	ld hl, CinnabarGymText_7599e
 	call PrintText
 	jp TextScriptEnd
@@ -328,6 +352,7 @@ CinnabarGymText4:
 	call CinnabarGymScript_757a0
 	CheckEvent EVENT_BEAT_CINNABAR_GYM_TRAINER_2
 	jr nz, .asm_c0673
+.cinnabar_rematch2
 	ld hl, CinnabarGymText_759c9
 	call PrintText
 	ld hl, CinnabarGymText_759ce
@@ -335,6 +360,17 @@ CinnabarGymText4:
 	call SaveEndBattleTextPointers
 	jp CinnabarGymScript_758b7
 .asm_c0673
+;;;;;;;joenote - have a rematch with trainer
+	CheckEvent EVENT_GOT_TM38
+	jr z, .rematch2_end
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .cinnabar_rematch2
+.rematch2_end
+;;;;;;;
 	ld hl, CinnabarGymText_759d3
 	call PrintText
 	jp TextScriptEnd
@@ -356,6 +392,7 @@ CinnabarGymText5:
 	call CinnabarGymScript_757a0
 	CheckEvent EVENT_BEAT_CINNABAR_GYM_TRAINER_3
 	jr nz, .asm_5cfd7
+.cinnabar_rematch3
 	ld hl, CinnabarGymText_759fe
 	call PrintText
 	ld hl, CinnabarGymText_75a03
@@ -363,6 +400,17 @@ CinnabarGymText5:
 	call SaveEndBattleTextPointers
 	jp CinnabarGymScript_758b7
 .asm_5cfd7
+;;;;;;;joenote - have a rematch with trainer
+	CheckEvent EVENT_GOT_TM38
+	jr z, .rematch3_end
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .cinnabar_rematch3
+.rematch3_end
+;;;;;;;
 	ld hl, CinnabarGymText_75a08
 	call PrintText
 	jp TextScriptEnd
@@ -384,6 +432,7 @@ CinnabarGymText6:
 	call CinnabarGymScript_757a0
 	CheckEvent EVENT_BEAT_CINNABAR_GYM_TRAINER_4
 	jr nz, .asm_776b4
+.cinnabar_rematch4
 	ld hl, CinnabarGymText_75a33
 	call PrintText
 	ld hl, CinnabarGymText_75a38
@@ -391,6 +440,17 @@ CinnabarGymText6:
 	call SaveEndBattleTextPointers
 	jp CinnabarGymScript_758b7
 .asm_776b4
+;;;;;;;joenote - have a rematch with trainer
+	CheckEvent EVENT_GOT_TM38
+	jr z, .rematch4_end
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .cinnabar_rematch4
+.rematch4_end
+;;;;;;;
 	ld hl, CinnabarGymText_75a3d
 	call PrintText
 	jp TextScriptEnd
@@ -412,6 +472,7 @@ CinnabarGymText7:
 	call CinnabarGymScript_757a0
 	CheckEvent EVENT_BEAT_CINNABAR_GYM_TRAINER_5
 	jr nz, .asm_2f755
+.cinnabar_rematch5
 	ld hl, CinnabarGymText_75a68
 	call PrintText
 	ld hl, CinnabarGymText_75a6d
@@ -419,6 +480,17 @@ CinnabarGymText7:
 	call SaveEndBattleTextPointers
 	jp CinnabarGymScript_758b7
 .asm_2f755
+;;;;;;;joenote - have a rematch with trainer
+	CheckEvent EVENT_GOT_TM38
+	jr z, .rematch5_end
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .cinnabar_rematch5
+.rematch5_end
+;;;;;;;
 	ld hl, CinnabarGymText_75a72
 	call PrintText
 	jp TextScriptEnd
@@ -440,6 +512,7 @@ CinnabarGymText8:
 	call CinnabarGymScript_757a0
 	CheckEvent EVENT_BEAT_CINNABAR_GYM_TRAINER_6
 	jr nz, .asm_d87be
+.cinnabar_rematch6
 	ld hl, CinnabarGymText_75a9d
 	call PrintText
 	ld hl, CinnabarGymText_75aa2
@@ -447,6 +520,17 @@ CinnabarGymText8:
 	call SaveEndBattleTextPointers
 	jp CinnabarGymScript_758b7
 .asm_d87be
+;;;;;;;joenote - have a rematch with trainer
+	CheckEvent EVENT_GOT_TM38
+	jr z, .rematch6_end
+	ld hl, RematchTrainerText
+	call PrintText
+	call NoYesChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .cinnabar_rematch6
+.rematch6_end
+;;;;;;;
 	ld hl, CinnabarGymText_75aa7
 	call PrintText
 	jp TextScriptEnd
