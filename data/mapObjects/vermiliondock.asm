@@ -8,7 +8,7 @@ VermilionDockObject:
 	db 0 ; signs
 
 	db 1 ; objects
-	db SPRITE_GIRL, 4, 27, WALK, 2, 2, OPP_LASS, 18	;joenote - adding orange leage champ special battle 
+	object SPRITE_GIRL, 22, 0, WALK, 2, 2, OPP_LASS, 19	;joenote - adding orange leage champ special battle 
 	
 	; warp-to
 	warp_to 14, 0, VERMILION_DOCK_WIDTH

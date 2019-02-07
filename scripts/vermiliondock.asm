@@ -207,10 +207,11 @@ VermilionDock_EraseSSAnne:
 	call DelayFrames
 	ret
 
+;joenote - adding dialogue
 VermilionDockTextPointers:
 	dw VermilionDockText1
 	dw VermilionDockText2
-
+	
 VermilionDockText1:
 	TX_FAR _VermilionDockText1
 	db "@"
