@@ -3062,6 +3062,9 @@ SelectEnemyMove:
 	ret nz
 	ld a, [wEnemyMonStatus]
 	and SLP | 1 << FRZ ; sleeping or frozen
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	call nz, NoAttackAICall	;joenote - get ai routines. flag register is preserved
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ret nz
 	ld a, [wEnemyBattleStatus1]
 	and (1 << USING_TRAPPING_MOVE) | (1 << STORING_ENERGY) ; using a trapping move like wrap or bide
@@ -3070,6 +3073,9 @@ SelectEnemyMove:
 	bit USING_TRAPPING_MOVE, a ; caught in player's trapping move (e.g. wrap)
 	jr z, .canSelectMove
 .unableToSelectMove
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	call nz, NoAttackAICall	;joenote - get ai routines. flag register is preserved
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $ff
 	jr .done
 .canSelectMove
@@ -3085,6 +3091,7 @@ SelectEnemyMove:
 	ld a, [wIsInBattle]
 	dec a
 	jr z, .chooseRandomMove ; wild encounter
+	xor a	;joenote - zero out a
 	callab AIEnemyTrainerChooseMoves
 .chooseRandomMove
 	push hl
@@ -3121,6 +3128,28 @@ SelectEnemyMove:
 .linkedOpponentUsedStruggle
 	ld a, STRUGGLE
 	jr .done
+
+;calls out to trainer ai routines with no-attack bit set
+;move-choosing ai routines now check for the no-attack bit and kick out if found
+;used so only ai switching checks can run
+NoAttackAICall:
+	push af	;preserve flags on stack
+	ld a, [wIsInBattle]
+	dec a
+	jr z, .NoAttackAICall_exit ; exit if this is a wild encounter
+	;set the no-attack bit
+	ld a, [wUnusedC000]
+	set 2, a 
+	ld [wUnusedC000], a
+	;call ai routines
+	callab AIEnemyTrainerChooseMoves
+	;joenote - reset the no-attack bit
+	ld a, [wUnusedC000]
+	res 2, a 
+	ld [wUnusedC000], a
+.NoAttackAICall_exit
+	pop af ;get flags from stack
+	ret
 
 ; this appears to exchange data with the other gameboy during link battles
 LinkBattleExchangeData:
@@ -5588,11 +5617,12 @@ AdjustDamageForMoveType:
 ; ($05 is not very effective, $0A is neutral, $14 is super effective)
 ; as far is can tell, this is only used once in some AI code to help decide which move to use
 AIGetTypeEffectiveness:
-;joenote - if 'a' is not preloaded to zero, then do wPlayerMoveType and wEnemyMonType
+;joenote - if type-effectiveness bit is set, then do wPlayerMoveType and wEnemyMonType
 ;		-also changed neutral value from $10 to $0A since it makes more sense
 ;		-and modifying this to take into account both types
-	and a
-	jr z, .enemyMove
+	ld a, [wUnusedC000]
+	bit 3, a
+	jr z, .enemyMove	
 	ld a, [wPlayerMoveType]
 	ld d, a                    ; d = type of player move
 	ld hl, wEnemyMonType
@@ -6478,6 +6508,12 @@ LoadEnemyMonData:
 ;	jr z, .storeDVs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;joenote - going to randomly determine trainer DVs (values of 8 to 15)
 	jr nz, .nottrainer	;if not a trainer then skip this part
+	;ld hl, wEnemyMonDVs
+	;ld a, [hli]
+	;add [hl]
+	;jr nz, .nottrainer
+	ld a, MEW	;joedebug
+	call PlayCry
 	call RandTrainerDV
 	ld b, a
 	call RandTrainerDV

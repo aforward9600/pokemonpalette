@@ -64,9 +64,11 @@ ENDM
 SECTION "WRAM Bank 0", WRAM0
 
 wUnusedC000:: ; c000
-;joenote - use this for battle bit settings
+;joenote - use this for battle ai bit settings
 ;bit 0 - if set, ai should switch pokemon
 ;bit 1 - if set, ai already acted by switching or using an item this turn
+;bit 2 - if set, ai can swith or use item but not use a move (only run ai routine 4)
+;bit 3 - used for AIGetTypeEffectiveness
 	ds 1
 
 wSoundID:: ; c001

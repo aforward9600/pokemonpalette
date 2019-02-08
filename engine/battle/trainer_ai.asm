@@ -111,6 +111,12 @@ AIMoveChoiceModificationFunctionPointers:
 
 ; discourages moves that cause no damage but only a status ailment if player's mon already has one
 AIMoveChoiceModification1:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - kick out if no-attack bit is set
+	ld a, [wUnusedC000]
+	bit 2, a
+	ret nz
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wBattleMonStatus]
 	and a
 	;joenote - don't return yet. going to check for dream eater. will do this later
@@ -139,6 +145,27 @@ AIMoveChoiceModification1:
 	jp .nextMove
 .notdreameater	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use moves that are ineffective against substitute if a substitute is up
+	push hl	;save hl register on the stack
+	ld hl, wPlayerBattleStatus2
+	bit HAS_SUBSTITUTE_UP, [hl]	;check hl for substitute bit
+	pop hl	;restore original hl data from the stack
+	jr z, .noSubImm	;if the substitute bit is not set, then skip out of this block
+	ld a, [wEnemyMoveEffect]	;get the move effect into a
+	push hl
+	push de
+	push bc
+	ld hl, SubstituteImmuneEffects
+	ld de, $0001
+	call IsInArray	;see if a is found in the hl array (carry flag set if true)
+	pop bc
+	pop de
+	pop hl
+	jp c, .heavydiscourage	;carry flag means the move effect is blocked by substitute
+	;else continue onward
+.noSubImm	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wEnemyMovePower]
 	and a
 	jp nz, .nextMove	;go to next move if the current move is not zero-power
@@ -164,27 +191,6 @@ AIMoveChoiceModification1:
 	dec [hl]	;else slightly encourage
 	jp .nextMove	;get next move
 .notahealingmove
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - do not use moves that are ineffective against substitute if a substitute is up
-	push hl	;save hl register on the stack
-	ld hl, wPlayerBattleStatus2
-	bit HAS_SUBSTITUTE_UP, [hl]	;check hl for substitute bit
-	pop hl	;restore original hl data from the stack
-	jr z, .noSubImm	;if the substitute bit is not set, then skip out of this block
-	ld a, [wEnemyMoveEffect]	;get the move effect into a
-	push hl
-	push de
-	push bc
-	ld hl, SubstituteImmuneEffects
-	ld de, $0001
-	call IsInArray	;see if a is found in the hl array (carry flag set if true)
-	pop bc
-	pop de
-	pop hl
-	jp c, .heavydiscourage	;carry flag means the move effect is blocked by substitute
-	;else continue onward
-.noSubImm	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use moves that are blocked by mist
@@ -423,6 +429,12 @@ MistBlockEffects:	;joenote - added this table to track for things blocked by mis
 ; in particular, stat-modifying moves and other move effects
 ; that fall in-between
 AIMoveChoiceModification2:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - kick out if no-attack bit is set
+	ld a, [wUnusedC000]
+	bit 2, a
+	ret nz
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wAILayer2Encouragement]
 	cp $1
 	ret nz
@@ -456,6 +468,12 @@ AIMoveChoiceModification2:
 ; discourage damaging moves that are ineffective or not very effective against the player's mon,
 ; unless there's no damaging move that deals at least neutral damage
 AIMoveChoiceModification3:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - kick out if no-attack bit is set
+	ld a, [wUnusedC000]
+	bit 2, a
+	ret nz
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld hl, wBuffer - 1 ; temp move selection array (-1 byte offset)
 	ld de, wEnemyMonMoves ; enemy moves
 	ld b, NUM_MOVES + 1
@@ -484,7 +502,10 @@ AIMoveChoiceModification3:
 	push hl
 	push bc
 	push de
-	xor a	;clear a. this makes AIGetTypeEffectiveness compare enemy move to player pkmn types
+	;reset type-effectiveness bit before calling function
+	ld a, [wUnusedC000]
+	res 3, a 
+	ld [wUnusedC000], a
 	callab AIGetTypeEffectiveness
 	pop de
 	pop bc
@@ -595,11 +616,14 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 ;switch if supereffective move is being used against enemy
 	ld a, [wPlayerMovePower]	;get the power of the player's move
 	cp $2	;regular damaging moves have power > 1
-	jr nc, .skipSwitchEffectiveEnd	;skip out if the move is not a normal damaging move
+	jr c, .skipSwitchEffectiveEnd	;skip out if the move is not a normal damaging move
 	push hl
 	push bc
 	push de
-	ld a, $01	;set a to non-zero. this makes AIGetTypeEffectiveness compare player move to enemy pkmn types
+	;set type-effectiveness bit before calling function
+	ld a, [wUnusedC000]
+	set 3, a 
+	ld [wUnusedC000], a
 	callab AIGetTypeEffectiveness
 	pop de
 	pop bc
