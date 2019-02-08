@@ -158,6 +158,8 @@ JrTrainerMData:
 	db 19,RATTATA,DIGLETT,EKANS,SANDSHREW,0
 ; Route 12
 	db 29,NIDORAN_M,NIDORINO,0
+;joenote - special fight with future trainer red
+	db $FF,83,MUK,85,VENUSAUR,85,CHARIZARD,85,BLASTOISE,87,SNORLAX,88,PIKACHU,0
 ; Unused
 	;db 18,DIGLETT,DIGLETT,SANDSHREW,0
 JrTrainerFData:

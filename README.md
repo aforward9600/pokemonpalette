@@ -156,6 +156,7 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   - minor text change indicating its return
   - the captain's text has been slightly altered for a more generic context
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
+- Trainer Green can be battled next to the ss anne truck after beating the elite 4
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):

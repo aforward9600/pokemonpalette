@@ -217,5 +217,62 @@ VermilionDockText1:
 	db "@"
 
 VermilionDockText2:
-	TX_FAR _VermilionDockText2
+	TX_ASM
+	ld hl, VermilionDockSeigaIntro
+	call PrintText
+	CheckEvent EVENT_908	;has elite 4 been beaten?
+	jr z, .text2end	;jump if not beaten
+	call ManualTextScroll
+	ld hl, VermilionDockSeigaChallenge
+	call PrintText
+	call YesNoChoice	;prompt a yes/no choice
+	ld a, [wCurrentMenuItem]	;load the player choice
+	and a	;check the player choice
+	jr nz, .seigagoodbye	;if no, jump
+	;otherwise begin loading battle
+	ld hl, VermilionDockSeigaPre
+	call PrintText
+	ld hl, wd72d;set the bits for triggering battle
+	set 6, [hl]	;
+	set 7, [hl]	;
+	ld hl, VermilionDockSeigaVictory	;load text for when you win
+	ld de, VermilionDockSeigaDefeat	;load text for when you lose
+	call SaveEndBattleTextPointers	;save the win/lose text
+	ld a, [H_SPRITEINDEX]
+	ld [wSpriteIndex], a
+	call EngageMapTrainer
+	call InitBattleEnemyParameters
+	ld a, $09	;load 9 into the gym leader value to play final battle music 
+	ld [wGymLeaderNo], a
+	xor a
+	ld [hJoyHeld], a
+	jr .text2end
+.seigagoodbye
+	ld hl, VermilionDockSeigaBye
+	call PrintText
+.text2end
+	jp TextScriptEnd
+
+VermilionDockSeigaChallenge:
+	TX_FAR _VermilionDockSeigaChallenge
+	db "@"
+
+VermilionDockSeigaIntro:
+	TX_FAR _VermilionDockSeigaIntro
+	db "@"
+
+VermilionDockSeigaDefeat:
+	TX_FAR _VermilionDockSeigaDefeat
+	db "@"
+	
+VermilionDockSeigaVictory:
+	TX_FAR _VermilionDockSeigaVictory
+	db "@"
+
+VermilionDockSeigaBye:
+	TX_FAR _VermilionDockSeigaBye
+	db "@"
+
+VermilionDockSeigaPre:
+	TX_FAR _VermilionDockSeigaPre
 	db "@"

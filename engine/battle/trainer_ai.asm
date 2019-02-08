@@ -609,7 +609,6 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	jr c, .skipSwitchEffectiveEnd	;if so, skip to end of this block
 	push bc
 	ld a, [wPlayerMovePower]	;get the power of the player's move into a
-	srl a	;halve a
 	ld b, a	;put a into b
 	call Random	;put a random number in 'a' 
 	and $FF	;use only bits 0 to 7

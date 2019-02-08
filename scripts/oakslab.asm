@@ -986,7 +986,7 @@ OaksLabText5:
 	jr z, .dexcheck	;if yes, then check the pokedex like normal
 	ld hl, OaksLabText_challenge	;else ask if you want to challenge prof oak
 	call PrintText	;print the challenge text
-	call YesNoChoice	;prompt a no/yes choice
+	call YesNoChoice	;prompt a yes/no choice
 	ld a, [wCurrentMenuItem]	;load the player choice
 	and a	;check the player choice
 	jp nz, .asm_1d2e7	;if no, jump to generic text about coming to visit and end the conversation
@@ -998,9 +998,9 @@ OaksLabText5:
 	set 7, [hl]	;
 	ld hl, OakVictorySpeech	;load text for when you win
 	ld de, OakDefeatSpeech	;load text for when you lose
-	call SaveEndBattleTextPointers	;save the battle end text
-	ld a, OPP_PROF_OAK	;load the prof oak trainer type
-	ld [wCurOpponent], a	;set him as the current opponent
+	call SaveEndBattleTextPointers	;save the win/lose text
+	ld a, OPP_PROF_OAK	;load the trainer type
+	ld [wCurOpponent], a	;set as the current opponent
 	; select oak's team based on the starter chosen
 	ld a, [wRivalStarter]
 	cp STARTER2	;did rival choose squirtle?
