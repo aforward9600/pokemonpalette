@@ -61,5 +61,5 @@ _VermilionDockSeigaVictory::
 	
 	para "Try searching"
 	line "on the cave's"
-	cont "upper level."
+	cont "lower level."
 	prompt
