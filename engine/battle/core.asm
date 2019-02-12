@@ -221,7 +221,14 @@ SetScrollXForSlidingPlayerBodyLeft:
 
 StartBattle:
 	xor a
-	ld [wUnusedC000], a	;joenote - clear my custom battle bits at battle start
+	ld [wUnusedC000], a	;joenote - clear custom ai bits at battle start
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;clear the AI_Trainer party sent-out bits
+	ld a, [wFontLoaded]
+	and $81	;clear bits 1 to 6 only by ANDing with 1000 0001
+	ld [wFontLoaded], a
+	xor a
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [wPartyGainExpFlags], a
 	ld [wPartyFoughtCurrentEnemyFlags], a
 	ld [wActionResultOrTookBattleTurn], a
@@ -1790,7 +1797,7 @@ LoadBattleMonFromParty:
 	ret
 
 ; copies from enemy party data to current enemy mon data when sending out a new enemy mon
-LoadEnemyMonFromParty:
+LoadEnemyMonFromParty:	;function for link battles
 	ld a, [wWhichPokemon]
 	ld bc, wEnemyMon2 - wEnemyMon1
 	ld hl, wEnemyMons
@@ -2013,7 +2020,7 @@ DrawEnemyHUDAndHPBar:
 	call PrintStatusConditionNotFainted
 	pop hl
 	jr nz, .skipPrintLevel ; if the mon has a status condition, skip printing the level
-	ld a, [wEnemyMonLevel]
+	ld a, [wEnemyMonLevel]	;joedebug - use this for printing bytes instead of enemy level
 	ld [wLoadedMonLevel], a
 	call PrintLevel
 .skipPrintLevel
@@ -4660,16 +4667,32 @@ GetEnemyMonStat:
 	ld a, [wEnemyMonSpecies]
 	ld [wd0b5], a
 	call GetMonHeader
-	ld hl, wEnemyMonDVs
-	ld de, wLoadedMonSpeedExp
-	ld a, [hli]
-	ld [de], a
-	inc de
-	ld a, [hl]
-	ld [de], a
+	;ld hl, wEnemyMonDVs	;joenote - why load this into speedexp? I don't even know like seriously WTF
+	;ld de, wLoadedMonSpeedExp		
+	;ld a, [hli]
+	;ld [de], a
+	;inc de
+	;ld a, [hl]
+	;ld [de], a
 	pop bc
 	ld b, $0
-	ld hl, wLoadedMonSpeedExp - $b ; this base address makes CalcStat look in [wLoadedMonSpeedExp] for DVs
+	;ld hl, wLoadedMonSpeedExp - $b ; this base address makes CalcStat look in [wLoadedMonSpeedExp] for DVs
+	ld hl, wEnemyMonHP	;joenote - I mean come on just read it out of the wEnemyMon battle structure like normal
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - take stat exp into account if this is a trainer AI battle
+	ld a, [wIsInBattle]
+	cp $2 ; is it a trainer battle?
+	jr nz, .nottrainer
+
+	;point hl to the saved position for HPStatExp - 1
+	ld a, [wUnusedD153]
+	ld h, a
+	ld a, [wUnusedD153 + 1]
+	ld l, a
+	
+	ld b, $01	;take stat exp into account
+.nottrainer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call CalcStat
 	pop de
 	ret
@@ -6489,7 +6512,7 @@ GetCurrentMove:
 LoadEnemyMonData:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
-	jp z, LoadEnemyMonFromParty
+	jp z, LoadEnemyMonFromParty	;if link battle, then get out of this function to a different one
 	ld a, [wEnemyMonSpecies2]
 	ld [wEnemyMonSpecies], a
 	ld [wd0b5], a
@@ -6502,22 +6525,40 @@ LoadEnemyMonData:
 	jr nz, .storeDVs
 	ld a, [wIsInBattle]
 	cp $2 ; is it a trainer battle?
-;; fixed DVs for trainer mon
+; fixed DVs for trainer mon
 ;	ld a, $98
 ;	ld b, $88
 ;	jr z, .storeDVs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;joenote - going to randomly determine trainer DVs (values of 8 to 15)
 	jr nz, .nottrainer	;if not a trainer then skip this part
-	;ld hl, wEnemyMonDVs
-	;ld a, [hli]
-	;add [hl]
-	;jr nz, .nottrainer
-	ld a, MEW	;joedebug
-	call PlayCry
+;load whatever default DVs are already there for the pkmn
+	ld hl, wEnemyMon1DVs
+	ld a, [wWhichPokemon]
+	ld bc, wEnemyMon2 - wEnemyMon1
+	call AddNTimes
+	ld a, [hl]
+	inc hl
+	ld b, [hl]
+	dec hl
+;lets see if it's been sent out before
+	push bc
+	ld c, a
+	ld a, [wWhichPokemon]
+	call CheckAISentOut
+	ld a, c
+	pop bc
+	jr nz, .storeDVs	;if bit for that pkmn position is already set, then store its DVs that were just loaded
+;not sent out before, so generate special random DVs
 	call RandTrainerDV
 	ld b, a
 	call RandTrainerDV
-	add $10
+	and $EF	;makes the attack DV even
+	add $10	;makes attack DV odd for +8 hp DVs minimum
+	;save DVs to the party data structure, to which hl is still pointing, so that they can be recalled on a switch-in
+	ld [hl], a
+	inc hl
+	ld [hl], b
+	dec hl
 	jr .storeDVs
 .nottrainer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -6536,6 +6577,55 @@ LoadEnemyMonData:
 	ld b, $0
 	ld hl, wEnemyMonHP
 	push hl
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - assign calculated stat exp to all stats if this is a trainer ai battle 
+
+;is this a trainer battle? Wild pkmn do not have statexp
+	ld a, [wIsInBattle]
+	cp $2 ; is it a trainer battle?
+	jr nz, .nottrainer2
+	
+;this is a trainer battle, so find and save the location of HPStatExp - 1
+	ld hl, wEnemyMon1HPExp	;make hl point to HP statExp
+	ld a, [wWhichPokemon]	;get the party position
+	ld bc, wEnemyMon2 - wEnemyMon1	;get the size to advance between party positions
+	call AddNTimes	;advance the pointer to the correct party position
+	dec hl	;move the pointer back one position
+	;save this position to recall it later
+	ld a, h
+	ld [wUnusedD153], a
+	ld a, l
+	ld [wUnusedD153 + 1], a
+	
+;has this pkmn been sent out before? If so, then it already has statExp values
+	ld a, [wWhichPokemon]	
+	call CheckAISentOut
+	jr nz, .noloops
+	
+;the pkmn is out for the first time, so give it some statExp
+	push de	;preserve de
+	call CalcEnemyStatEXP	;based on the enemy pkmn level, get a stat exp amount into de 
+	inc hl ; move hl forward one position to MSB of first stat exp
+	ld b, $05	;load loops into b to loop through the five stats
+.writeStatExp_loop
+	ld a, d	;set some statExp for MSB
+	ld [hli], a		;load MSB and point hl to the LSB position
+	ld a, e	;set some statExp for LSB
+	ld [hli], a		;load LSB and point hl to MSB of next statexp location
+	dec b
+	jr nz, .writeStatExp_loop
+	pop de	;restore the prior de
+	
+;point hl back to the saved position for HPExp - 1
+	ld a, [wUnusedD153]
+	ld h, a
+	ld a, [wUnusedD153 + 1]
+	ld l, a
+	
+.noloops
+	ld b, $1	;make CalcStats take statExp into account
+.nottrainer2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call CalcStats
 	pop hl
 	ld a, [wIsInBattle]
@@ -6556,13 +6646,32 @@ LoadEnemyMonData:
 ; if it's a trainer mon, copy the HP and status from the enemy party data
 .copyHPAndStatusFromPartyData
 	ld hl, wEnemyMon1HP
-	ld a, [wWhichPokemon]
+	ld a, [wWhichPokemon]	;wWhichPokemon gives roster position in terms of 0,1,2,3,4,5 from first to last pkmn
 	ld bc, wEnemyMon2 - wEnemyMon1
 	call AddNTimes
 	ld a, [hli]
 	ld [wEnemyMonHP], a
 	ld a, [hli]
 	ld [wEnemyMonHP + 1], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - if this is a trainer battle and it's the first time the pkmn is sent out
+;		   then make sure it's current hp = it's max hp
+
+	ld a, [wIsInBattle]
+	cp $2 ; is it a trainer battle?
+	jr nz, .nottrainer3
+	
+	ld a, [wWhichPokemon]	
+	call CheckAISentOut	;has pkmn already been sent out?
+	jr nz, .nottrainer3
+	
+;set hp equal to max hp
+	ld a, [wEnemyMonMaxHP]
+	ld [wEnemyMonHP], a
+	ld a, [wEnemyMonMaxHP+1]
+	ld [wEnemyMonHP + 1], a
+.nottrainer3
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wWhichPokemon]
 	ld [wEnemyMonPartyPos], a
 	inc hl
@@ -6647,6 +6756,17 @@ LoadEnemyMonData:
 	ld b, FLAG_SET
 	ld hl, wPokedexSeen
 	predef FlagActionPredef ; mark this mon as seen in the pokedex
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - if this is a trainer battle, set the pkmn as being sent out
+	push af
+	ld a, [wIsInBattle]
+	cp $2 ; is it a trainer battle?
+	jr nz, .end_set_sendout
+	ld a, [wWhichPokemon]	
+	call SetAISentOut
+.end_set_sendout
+	pop af
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld hl, wEnemyMonLevel
 	ld de, wEnemyMonUnmodifiedLevel
 	ld bc, 1 + NUM_STATS * 2
@@ -6663,9 +6783,115 @@ LoadEnemyMonData:
 ;joenote - custom function for generating random trainer DVs between 8 and 15
 RandTrainerDV:
 	call BattleRandom	;get random number into a
-	and $66		;and a with 0110 0110. want to put zero in bit positions 0, 3, 4, and 7
-	add	$88		;add 1000 1000 to a
+	and $77		;and a with 0111 0111. want to put zero in bit positions 4 and 7
+	;and $EE	;makes the nybbles of a even
+	add	$88		;add 1000 1000 to a to make min DVs 8
 	ret		;return back
+	
+;joenote - custom functions for determining which trainerAI pkmn have already been sent out before
+;a=party position of pkmn (like wWhichPokemon). If checking, zero flag gives bit state (1 means sent out already)
+CheckAISentOut:
+	cp $05
+	jr z, .party5
+	cp $04
+	jr z, .party4
+	cp $03
+	jr z, .party3
+	cp $02
+	jr z, .party2
+	cp $01
+	jr z, .party1
+	jr .party0
+.party5
+	ld a, [wFontLoaded]
+	bit 6, a
+	jr .partyret
+.party4
+	ld a, [wFontLoaded]
+	bit 5, a
+	jr .partyret
+.party3
+	ld a, [wFontLoaded]
+	bit 4, a
+	jr .partyret
+.party2
+	ld a, [wFontLoaded]
+	bit 3, a
+	jr .partyret
+.party1
+	ld a, [wFontLoaded]
+	bit 2, a
+	jr .partyret
+.party0
+	ld a, [wFontLoaded]
+	bit 1, a
+.partyret
+	ret
+	
+SetAISentOut:
+	cp $05
+	jr z, .party5
+	cp $04
+	jr z, .party4
+	cp $03
+	jr z, .party3
+	cp $02
+	jr z, .party2
+	cp $01
+	jr z, .party1
+	jr .party0
+.party5
+	ld a, [wFontLoaded]
+	set 6, a
+	ld [wFontLoaded], a
+	jr .partyret
+.party4
+	ld a, [wFontLoaded]
+	set 5, a
+	ld [wFontLoaded], a
+	jr .partyret
+.party3
+	ld a, [wFontLoaded]
+	set 4, a
+	ld [wFontLoaded], a
+	jr .partyret
+.party2
+	ld a, [wFontLoaded]
+	set 3, a
+	ld [wFontLoaded], a
+	jr .partyret
+.party1
+	ld a, [wFontLoaded]
+	set 2, a
+	ld [wFontLoaded], a
+	jr .partyret
+.party0
+	ld a, [wFontLoaded]
+	set 1, a
+	ld [wFontLoaded], a
+.partyret
+	ret
+
+;joenote - this function puts 648 statexp per enemy pkmn level into de
+;requires a, b, de, and wCurEnemyLVL
+CalcEnemyStatEXP:
+;note that 648 in hex is the two-byte $0288
+	ld a, [wCurEnemyLVL]
+	ld b, a	;put the enemy's level into b. it will be used as a loop counter
+	xor a	;make a = 0
+	ld d, a	;clear d (use for MSB)
+	ld e, a ;clear e (use for LSB)
+.loop
+	ld a, e ;put e into a 
+	add $88	;add $88 to a (if this overflows the c flag is set)
+	ld e, a ;put a back into e
+	ld a, d ;put d into a 
+	adc $02 ;add $02 + carry bit to a (carry bit adds an extra 1 if e overflowed)
+	ld d, a ;put a back into d 
+	dec b; decrement b 
+	jr nz, .loop	;loop back if b is not zero
+	ret
+	
 
 ; calls BattleTransition to show the battle transition animation and initializes some battle variables
 DoBattleTransitionAndInitBattleVariables:

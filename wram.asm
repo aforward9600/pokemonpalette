@@ -18,7 +18,7 @@ box_struct: MACRO
 \1Moves::      ds NUM_MOVES
 \1OTID::       dw
 \1Exp::        ds 3
-\1HPExp::      dw
+\1HPExp::      dw	
 \1AttackExp::  dw
 \1DefenseExp:: dw
 \1SpeedExp::   dw
@@ -26,6 +26,9 @@ box_struct: MACRO
 \1DVs::        ds 2
 \1PP::         ds NUM_MOVES
 ENDM
+
+;		 - <stat>Exp is MSB while <stat>Exp+1 is LSB
+;        - CalcStat function needs hl to point to LSB to take the stat experience into account
 
 party_struct: MACRO
 	box_struct \1
@@ -49,7 +52,7 @@ battle_struct: MACRO
 \1Type2::      db
 \1CatchRate::  db
 \1Moves::      ds NUM_MOVES
-\1DVs::        ds 2
+\1DVs::        ds 2	
 \1Level::      db
 \1Stats::
 \1MaxHP::      dw
@@ -1511,10 +1514,17 @@ wMaxItemQuantity:: ; cf97
 ; LoadMonData copies mon data here
 wLoadedMon:: party_struct wLoadedMon ; cf98
 
-wFontLoaded:: ; cfc4
+wFontLoaded:: ; cfc4	
 ; bit 0: The space in VRAM that is used to store walk animation tile patterns
 ;        for the player and NPCs is in use for font tile patterns.
 ;        This means that NPC movement must be disabled.
+;joenote - use bits 1 to 6 for tracking which trainer ai pkmn have already been sent out
+;bit 1: 1st pkmn (position 0)
+;bit 2: 2nd pkmn (position 1)
+;bit 3: 3rd pkmn (position 2)
+;bit 4: 4th pkmn (position 3)
+;bit 5: 5th pkmn (position 4)
+;bit 6: 6th pkmn (position 5)
 ; The other bits are unused.
 	ds 1
 
@@ -2284,7 +2294,7 @@ wPseudoItemID:: ; d152
 ; that case, this would be ESCAPE_ROPE.
 	ds 1
 
-wUnusedD153:: ; d153
+wUnusedD153:: ; d153	;joenote - use this to hold the pointer for trainerAI statexp
 	ds 1
 
 	ds 2
@@ -2973,11 +2983,16 @@ wWhichDungeonWarp:: ; d71e
 ; which dungeon warp within the source map was used
 	ds 1
 
+;;;;;;;;;;;;;;joenote - use these unused location for debugging
 wUnusedD71F:: ; d71f
 	ds 1
-
-	ds 8
-
+wUnusedD720:: 
+	ds 1
+wUnusedD721:: 
+	ds 1
+wUnusedD722:: 
+	ds 6
+;;;;;;;;;;;;;;
 wd728:: ; d728
 ; bit 0: using Strength outside of battle
 ; bit 1: set by IsSurfingAllowed when surfing's allowed, but the caller resets it after checking the result

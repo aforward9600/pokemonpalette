@@ -112,9 +112,13 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   -lass, jr trainer m/f, pokemaniac, supernerd, hiker, engineer, beauty, psychic, rocker, tamer, birdkeeper, cooltrainer m/f, gentleman
   -prof.oak, chief, gym leaders, e4
 - Trainer stat DVs are now randomly generated to a degree
-  - Attack DV is between 9 and 15 and always odd-numbered.
-  - Defense, special, and speed DVs are between 8 and 14 and always even-numbered
-  - HP DV is always 8 due to how ai trainer pkmn have their HP values set and HP bars drawn
+  - Attack DV is between 9 and 15 and always odd-numbered
+  - Defense, special, and speed DVs are between 8 and 15
+  - HP DV is a minimum of 8 since attack DV is always odd-numbered
+- Trainer AI battles now track which enemy pkmn have already been sent out, so allows for new functionality:
+  - Trainer pkmn DVs are remembered between switching, and new ones won't be generated on every send-out
+  - Trainer pkmn now have stat experience assigned to them that is scaled to their level
+  - These are real DVs and statEXP values that utilize the existing enemy party_struct which is normally unused by trainer AI
 - Special trainers, e4, and gym leaders are slightly adjusted in their item use
 - Badge stat-ups are now temporary boosts
   - They are applied upon battle start or switching-in

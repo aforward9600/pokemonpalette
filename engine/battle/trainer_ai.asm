@@ -844,6 +844,7 @@ TrainerAI:
 ;joenote - switch if the switch bit is set	
 	call CheckandResetSwitchBit
 	jp nz, AISwitchIfEnoughMons	;switch if bit was initially set
+	;jp AISwitchIfEnoughMons	;joedebug - use this to make trainer ai constantly switch
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 	ld a, [wTrainerClass] ; what trainer class is this?
 	dec a

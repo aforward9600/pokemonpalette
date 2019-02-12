@@ -3641,6 +3641,9 @@ CalcStats::
 ; c: stat to calc (HP=1,Atk=2,Def=3,Spd=4,Spc=5)
 ; b: consider stat exp?
 ; hl: base ptr to stat exp values ([hl + 2*c - 1] and [hl + 2*c])
+; have to point hl to *Mon1HPExp - 1
+; if b=0, then hl should point to <battle_struct>HP
+; requires that data be preloaded into wMonHeader using GetMonHeader
 CalcStat::
 	push hl
 	push de
@@ -3684,7 +3687,7 @@ CalcStat::
 	srl c
 	pop hl
 	push bc
-	ld bc, wPartyMon1DVs - (wPartyMon1HPExp - 1) ; also wEnemyMonDVs - wEnemyMonHP
+	ld bc, wPartyMon1DVs - (wPartyMon1HPExp - 1) ; also wEnemyMonDVs - wEnemyMonHP beause the structures are the same size
 	add hl, bc
 	pop bc
 	ld a, c
