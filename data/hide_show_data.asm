@@ -10,7 +10,7 @@ MapHSPointers:
 	dw MapHS02
 	dw MapHS03
 	dw MapHSXX
-	dw MapHSXX
+	dw MapHS05	;joenote - added vermilion city
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
@@ -129,7 +129,7 @@ MapHSPointers:
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
-	dw MapHSXX
+	dw MapHS7C	;joenote - pointer added for celadon mart 3f
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
@@ -573,5 +573,9 @@ MapHSA2:
 	db SEAFOAM_ISLANDS_5,$01,Hide
 	db SEAFOAM_ISLANDS_5,$02,Hide
 	db SEAFOAM_ISLANDS_5,$03,Show
-
+MapHS7C:
+	db CELADON_MART_3,$07,Show	;joenote - blocker for new mart guy
+MapHS05:
+	db VERMILION_CITY,$07,Show	;joenote - replaces bush outside vermilion gym with a lazy pokemon
+	
 	db $FF,$01,Show

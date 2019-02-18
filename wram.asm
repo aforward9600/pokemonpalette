@@ -67,11 +67,15 @@ ENDM
 SECTION "WRAM Bank 0", WRAM0
 
 wUnusedC000:: ; c000
-;joenote - use this for battle ai bit settings
+;joenote - use this for battle ai bit settings and handling other battle flags
 ;bit 0 - if set, ai should switch pokemon
 ;bit 1 - if set, ai already acted by switching or using an item this turn
 ;bit 2 - if set, ai can swith or use item but not use a move (only run ai routine 4)
 ;bit 3 - used for AIGetTypeEffectiveness
+;bit 4 - unused 
+;bit 5 - unused 
+;bit 6 - if set, poison/burn damage algorithm is being called to handle leech seed
+;bit 7 - if set, force Counter to miss (for an opponent hurting itself or its jump kick missing)
 	ds 1
 
 wSoundID:: ; c001
@@ -2110,7 +2114,7 @@ wMoveNum:: ; d0e0
 wMovesString:: ; d0e1
 	ds 56
 
-wUnusedD119:: ; d119
+wUnusedD119:: ; d119	;joenote - use this to backup which turn it is
 	ds 1
 
 wWalkBikeSurfStateCopy:: ; d11a
@@ -2295,9 +2299,9 @@ wPseudoItemID:: ; d152
 	ds 1
 
 wUnusedD153:: ; d153	;joenote - use this to hold the pointer for trainerAI statexp
-	ds 1
-
 	ds 2
+
+	ds 1
 
 wEvoStoneItemID:: ; d156
 	ds 1
@@ -2983,11 +2987,9 @@ wWhichDungeonWarp:: ; d71e
 ; which dungeon warp within the source map was used
 	ds 1
 
-;;;;;;;;;;;;;;joenote - use these unused location for debugging
-wUnusedD71F:: ; d71f
-	ds 1
-wUnusedD720:: 
-	ds 1
+wUnusedD71F:: ; d71f	;joenote - used as a backup address for the wDamage value
+	ds 2
+;;;;;;;;;;;;;;joenote - use these unused locations for debugging
 wUnusedD721:: 
 	ds 1
 wUnusedD722:: 

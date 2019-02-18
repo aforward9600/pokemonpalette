@@ -18,6 +18,10 @@ _TM18ExplanationText::
 	line "Not like the one"
 	cont "I'm leaning on,"
 	cont "mind you!"
+	
+	para "It meets NORMAL"
+	line "or FIGHTING moves"
+	cont "with 2x damage!"
 	done
 
 _TM18NoRoomText::
@@ -95,4 +99,19 @@ _CeladonMart3Text14::
 _CeladonMart3Text15::
 	text "Red and Blue!"
 	line "Both are #MON!"
+	done
+
+_CeladonMart3Blocker::
+	text "This vendor will"
+	line "be open after the"
+	cont "#MON League"
+	cont "Championship."
+	
+	para "Come back to buy"
+	line "rare new items"
+	cont "from SILPH CO."
+	
+	para "Phew!"
+	line "It is really hot"
+	cont "in this costume."
 	done

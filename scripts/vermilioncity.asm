@@ -38,6 +38,16 @@ VermilionCityScriptPointers:
 	dw VermilionCityScript4
 
 VermilionCityScript0:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - remove the pkmn blocking the gym if HM01 has been obtained
+	CheckEvent EVENT_GOT_HM01
+	jr z, .end 	;skip out if not
+	;else remove the blocking sprite
+	ld a, HS_VERMILION_PKMN
+	ld [wMissableObjectIndex], a
+	predef HideObject
+.end
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wSpriteStateData1 + 9]
 	and a ; cp SPRITE_FACING_DOWN
 	ret nz
@@ -130,6 +140,7 @@ VermilionCityTextPointers:
 	dw VermilionCityText11
 	dw VermilionCityText12
 	dw VermilionCityText13
+	dw VermilionPKMNText
 
 VermilionCityText1:
 	TX_FAR _VermilionCityText1
@@ -270,4 +281,8 @@ VermilionCityText12:
 
 VermilionCityText13:
 	TX_FAR _VermilionCityText13
+	db "@"
+
+VermilionPKMNText:
+	TX_FAR _VermilionPKMNText
 	db "@"

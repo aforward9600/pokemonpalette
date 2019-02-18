@@ -134,3 +134,8 @@ _VermilionCityText12::
 _VermilionCityText13::
 	text "VERMILION HARBOR"
 	done
+
+_VermilionPKMNText::
+	text "A lazy #MON"
+	line "is sunbathing."
+	done

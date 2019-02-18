@@ -6,15 +6,6 @@ Additionally, trainer AI routines are also improved and includes minimal quality
 
 #Bugfixes:
 -----------
-- Fixed mistakes in the game text
-  - man in cinnabar won't mention raichu evolving
-  - Koga correctly says soul badge increases speed
-  - Lt. Surge correctly says thunder badge increases defense
-  - correct type effectiveness information & sfx should now be displayed when attacking dual-type pkmn
-  - viridian girl's notebook 2nd page revised for pkmn-catching effectiveness
-  - viridian blackboard BRN info corrected (BRN does not reduce speed)
-  - viridian Blackboard PAR info updated
-  - Made cinnabar mansion notes more true to the original japanese text
 
 - Battle engine fixes
   - moves no longer have a default 1/256 chance to miss
@@ -43,10 +34,12 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   - sleep now normal-chance hits a pkmn recharging from hyperbeam, but has no effect if it's already status-effected
   - the fly/dig invulnerability bit is cleared when a pkmn hurts itself from confusion or is fully paralyzed
   - psywave damage is always min 1 be it an opponent or yourself (prevents desync)
-  - all hp drain moves (including dream eater and leech seed) miss against substitute
-  - substitute will not work if it would bring you to exactly 0 hp
-  - zero power moves that inflict stat-downs, sleep, or paralyze will not affect a substitute
-  - the confusion side-effect of damaging moves is blocked by a substitute
+  - Substitute fixes
+    - all hp drain moves (including dream eater and leech seed) miss against substitute
+    - substitute will not work if it would bring you to exactly 0 hp
+    - zero power moves that inflict stat-downs, sleep, or paralyze will not affect a substitute
+    - the confusion side-effect of damaging moves is blocked by a substitute
+	- recoil damage from jump kicks or hurting oneself in confusion is now applied to user's substitute
   - healing moves work with restoring exactly 255 or 511 hp 
   - light screen and reflect now have a cap of 999
   - haze removing sleep/freeze will not prevent a multi-turn move from getting stuck
@@ -64,18 +57,41 @@ Additionally, trainer AI routines are also improved and includes minimal quality
      - This prevents adding PP to hidden dummy moves that prevent a pkmn from going into Struggle
      - This also prevents Disable from freezing the game by targeting a dummy move
   - Mirror Move is checked against partial trapping moves in a link battle to prevent desync
+  - Bide's accumulated damage bytes are now both set to zero on an enemy faint in order to prevent desync
+  - Jump Kick moves now do the correct recoil damage on a miss
+  - The effects of Leech Seed and Toxic no longer stack
 
 - Misc. fixes
-  - great ball has a ball factor of 12 now
+  - Great ball has a ball factor of 12 now
   - Cinnabar/seafoam islands coast glitch fixed (no more missingo or artificially loading pokemon data)
   - Stone evolutions cannot be triggered via level-up anymore
+  - Catching a transformed pokemon no longer defaults to catching a ditto
 
 - Bugfixes & tweaks involving Counter...oh boy here we go:
-  - now works against all physical types, not just normal & fighting
+  - works against BIRD type, which is now typeless and assigned only to STRUGGLE
+  - To prevent desync, pressing B to get out of the move selection menu zeros-out the ram location for selected move & move power
+  - last damage dealt is zeroed in these cases (also fixes some issues with Bide):
+	- it's the start of the round (fixes most issues since Counter always goes second and fails if opponent also uses Counter)
+	- player/enemy pkmn is fully paralyzed or after hurting itself in confusion
+  - Crash damage from jump kicks and pkmn hurting itself cannot be Countered
 
 
 #TWEAKS:
 -----------
+
+- Fixed mistakes and made adjustments to the game text
+  - Man in cinnabar won't mention raichu evolving
+  - Koga correctly says soul badge increases speed
+  - Lt. Surge correctly says thunder badge increases defense
+  - Correct type effectiveness information & sfx should now be displayed when attacking dual-type pkmn
+  - Viridian girl's notebook 2nd page revised for pkmn-catching effectiveness
+  - Viridian blackboard BRN info corrected (BRN does not reduce speed)
+  - Viridian Blackboard PAR info updated
+  - Made cinnabar mansion notes more true to the original japanese text
+  - TM 18 given an actual explanation 
+  - New student in viridian school explains ohko moves
+  - Cerulean badge-house guy has updated text
+  
 - Stat-down moves no longer have a 25% miss chance in AI matches.
 - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
@@ -120,6 +136,7 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   - Trainer pkmn now have stat experience assigned to them that is scaled to their level
   - These are real DVs and statEXP values that utilize the existing enemy party_struct which is normally unused by trainer AI
 - Special trainers, e4, and gym leaders are slightly adjusted in their item use
+- Badge stat-ups are now only applied in wild pokemon battles to give parity to enemy trainers
 - Badge stat-ups are now temporary boosts
   - They are applied upon battle start or switching-in
   - They are not applied at all after stat recalculations, so any stat change on your pkmn cancels all of them
@@ -138,10 +155,14 @@ Additionally, trainer AI routines are also improved and includes minimal quality
 - Vileplume gains some attacks back via level
 - Victreebel gains some attacks back via level
 - Ditto has its base exp yield increased from 61 to 200
+- Mewtwo can learn Swift by TM 
 - pikachu and kadabra have their catch rates adjusted to yellow version
 - Give haunter/machoke/kadabra/graveler an evo by level option (level 45 to 48)
 - Game corner prize costs re-balanced
+- Bushes moved around so Erika can be battled without CUT
+- The bush blocking the Vermilion gym has been replaced with a blocking pkmn that goes away after the ss anne leaves
 - Can rematch most non gym-leader trainers
+- Rematch with Karate Master
 - Rematch with Brock
 - Rematch with Misty
 - Rematch with Surge
@@ -149,7 +170,7 @@ Additionally, trainer AI routines are also improved and includes minimal quality
 - Rematch with Sabrina
 - Rematch with Koga 
 - Rematch with Blaine
-- Giovanni respawns after leaving the gym and can rematch him
+- Rematch with Giovanni (respawns after leaving the gym)
 - Blaine has a touched-up battle sprite so he doesn't look like an alien
   - Snagged this off reddit, but original artist unknown (let me know if this is yours)
 - The juggler rosters, especially in fuschia gym, have been slightly altered for flavor
@@ -160,7 +181,7 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   - minor text change indicating its return
   - the captain's text has been slightly altered for a more generic context
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
-- Trainer Green can be battled next to the ss anne truck after beating the elite 4
+- Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):
@@ -180,7 +201,6 @@ Additionally, trainer AI routines are also improved and includes minimal quality
 - magmar in pkmn mansion basement in both versions
 - snorlax is a rare find in digletts cave
 - eevee is a rare find in the route 21 grass
-- mew is a rare find in unknown dungeon 2f
 - unknown dungeon changes
   - encounter rates between pokemon slightly re-balanced
   - chansey is rarer
@@ -204,7 +224,9 @@ Additionally, trainer AI routines are also improved and includes minimal quality
 
 #Changes to pokemart inventories:
 - Celadon dept. store has moon stones
-- indigo plateau has fossils/amber
+- Vendor added to Celadon Dept. Store 3F
+  - Sells amber, fossils, exp all, master balls, and rare candy
+  - Only opens up after beating elite 4
 - TMs of all kinds at all stores. All TMs are now re-purchaseable at various stages of the game.
 - pewter city has ethers
 - lavender town has max ethers

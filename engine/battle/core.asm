@@ -376,6 +376,12 @@ EnemyRanText:
 	db "@"
 
 MainInBattleLoop:
+	call ZeroLastDamage	;joenote - prevent counter shenanigans of all sorts
+	;joenote - clear custom battle flags
+	ld a, [wUnusedC000]
+	res 7, a	;reset the bit that causes counter to miss
+	res 6, a	;reset the bit that specifies a leech seed effect
+	ld [wUnusedC000], a 
 	call ReadPlayerMonCurHPAndStatus
 	ld hl, wBattleMonHP
 	ld a, [hli]
@@ -597,6 +603,18 @@ SetEnemyActedBit:
 	set 1, a ; sets the already-acted bit
 	ld [wUnusedC000], a
 	ret
+
+;joenote - this sets the last damage dealt to zero
+;meant for fixing counter glitches
+ZeroLastDamage:
+	push af
+	push hl
+	ld a, $00
+	ld hl, wDamage
+	ld [hli], a
+	ld [hl], a
+	pop hl
+	pop af
 	
 HandlePoisonBurnLeechSeed:
 	ld hl, wBattleMonHP
@@ -634,6 +652,12 @@ HandlePoisonBurnLeechSeed:
 	ld a, [de]
 	add a
 	jr nc, .notLeechSeeded
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - set the bit that indicates leech seed is being handled
+	ld a, [wUnusedC000]
+	set 6, a
+	ld [wUnusedC000], a 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	push hl
 	ld a, [H_WHOSETURN]
 	push af
@@ -676,6 +700,8 @@ HurtByLeechSeedText:
 
 ; decreases the mon's current HP by 1/16 of the Max HP (multiplied by number of toxic ticks if active)
 ; note that the toxic ticks are considered even if the damage is not poison (hence the Leech Seed glitch)
+; joenote - This has been fixed.
+; since a pkmn cannot be both burned and poisoned, burn is unaffected by this problem.
 ; hl: HP pointer
 ; bc (out): total damage
 HandlePoisonBurnLeechSeed_DecreaseOwnHP:
@@ -710,6 +736,14 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 .playersTurn
 	bit BADLY_POISONED, [hl]
 	jr z, .noToxic
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - If this bit is set, this function is being called for leech seed.
+;			Do not do Toxic routines
+	ld a, [wUnusedC000]
+	bit 6, a	;check if this is for leech seed
+	res 6, a 	;(reset the bit without affecting flags)
+	jr nz, .noToxic	;if so, then do not increment the toxic counter or multiply the damage for toxic
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [de]    ; increment toxic counter
 	inc a
 	ld [de], a
@@ -886,6 +920,7 @@ FaintEnemyPokemon:
 ; was congruent to 0 modulo 256.
 	xor a
 	ld [wPlayerBideAccumulatedDamage], a
+	ld [wPlayerBideAccumulatedDamage + 1], a	;joenote - fixing the mentioned bug and zero-ing the low byte
 	ld hl, wEnemyStatsToDouble ; clear enemy statuses
 	ld [hli], a
 	ld [hli], a
@@ -1786,7 +1821,14 @@ LoadBattleMonFromParty:
 	ld bc, 1 + NUM_STATS * 2
 	call CopyData
 	call ApplyBurnAndParalysisPenaltiesToPlayer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - only apply badge stat boosts in wild battles to keep parity with ai trainers
+	ld a, [wIsInBattle]
+	cp $1 ; is it a wild battle?
+	jr nz, .notwild
 	call ApplyBadgeStatBoosts
+.notwild
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $7 ; default stat modifier
 	ld b, NUM_STAT_MODS
 	ld hl, wPlayerMonAttackMod
@@ -2738,6 +2780,17 @@ SelectMenuItem:
 	bit 2, a
 	jp nz, SwapMovesInMenu ; select
 	bit 1, a ; B, but was it reset above?
+	;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote
+	;This is the point where B has been pressed 
+	;to exit out of the move selection menu during battle.
+	;Write 0 to wPlayerMovePower and wPlayerSelectedMove to nullify any previous 
+	;cursor selection when this line is reached. 
+	;This prevents a de-sync and some other Counter shenanigans.
+	ld a, $00
+	ld [wPlayerMovePower], a
+	ld [wPlayerSelectedMove], a
+	;;;;;;;;;;;;;;;;;;;;;;;
 	push af
 	xor a
 	ld [wMenuItemToSwap], a
@@ -3621,6 +3674,7 @@ CheckPlayerStatusConditions:
 	ld a, STATUS_AFFECTED_ANIM
 	call PlayMoveAnimation
 .NotFlyOrChargeEffect
+	call ZeroLastDamage	;joenote - prevent Counter from working on confusion damage
 	ld hl, ExecutePlayerMoveDone
 	jp .returnToHL ; if using a two-turn move, we need to recharge the first turn
 
@@ -3824,6 +3878,12 @@ MoveIsDisabledText:
 	db "@"
 
 HandleSelfConfusionDamage:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - set the bit that indicates a pkmn hurt itself in confusion or took crash damage
+	ld a, [wUnusedC000]
+	set 7, a	;setting this bit causes counter to miss
+	ld [wUnusedC000], a 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld hl, HurtItselfText
 	call PrintText
 	ld hl, wEnemyMonDefense
@@ -4041,9 +4101,17 @@ PrintMoveFailureText:
 	ret nz
 
 	; if you get here, the mon used jump kick or hi jump kick and missed
-	ld hl, wDamage ; since the move missed, wDamage will always contain 0 at this point.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - set the bit that indicates a pkmn hurt itself in confusion or took crash damage
+	ld a, [wUnusedC000]
+	set 7, a	;setting this bit causes counter to miss
+	ld [wUnusedC000], a 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;ld hl, wDamage ; since the move missed, wDamage will always contain 0 at this point.
 	                ; Thus, recoil damage will always be equal to 1
 	                ; even if it was intended to be potential damage/8.
+	ld hl, wUnusedD71F ;joenote - threatened damage now gets put in this address on a miss.
+						;This should fix the issue with the proper recoil damage
 	ld a, [hli]
 	ld b, [hl]
 	srl a
@@ -4958,6 +5026,7 @@ HighCriticalMoves:
 	db $FF
 
 
+;joenote
 ; function to determine if Counter hits and if so, how much damage it does
 HandleCounterMove:
 ; The variables checked by Counter are updated whenever the cursor points to a new move in the battle selection menu.
@@ -4985,19 +5054,28 @@ HandleCounterMove:
 	ld a, [hl]
 	cp COUNTER
 	ret z ; miss if the opponent's last selected move is Counter.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - If this bit is set, the opponent either hurt itself in confusion or took crash damage.
+;			Make Counter miss and reset the bit.
+	ld a, [wUnusedC000]
+	bit 7, a	;check a for Counter miss bit
+	res 7, a ; resets the bit (does not affect flags)
+	ld [wUnusedC000], a
+	ret nz	;return if bit is set causing Counter to miss.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [de]
 	and a
 	ret z ; miss if the opponent's last selected move's Base Power is 0.
 ; check if the move the target last selected was Normal or Fighting type
 	inc de
 	ld a, [de]
-;;;;;;;;;joenote - counter will work on all physical types. comment out some stuff and replace it
-	;and a ; normal type
-	;jr z, .counterableType
-	;cp FIGHTING
-	;jr z, .counterableType
-	cp $08	;physical types have hex values from 00 for normal to 08 for ghost. this does a - $08 and sets c_flag if $08 > a
-	jr nc, .counterableType	;if c is not set, then it's a physical move and it can be countered
+;;;;;;;;;joenote - counter will work on BIRD type since it's now typeless for STRUGGLE instead of normal type
+	and a ; normal type
+	jr z, .counterableType
+	cp FIGHTING
+	jr z, .counterableType
+	cp BIRD
+	jr z, .counterableType
 ;;;;;;;;;
 ; if the move wasn't a valid counterable type, miss
 	xor a
@@ -5103,6 +5181,7 @@ ApplyDamageToEnemyPokemon:
 	jr z, ApplyAttackToEnemyPokemonDone ; we're done if damage is 0
 	ld a, [wEnemyBattleStatus2]
 	bit HAS_SUBSTITUTE_UP, a ; does the enemy have a substitute?
+	ld a, $00	;joenote - preload $00 into register a before potentially jumping to AttackSubstitute (used to control turn differentiation)
 	jp nz, AttackSubstitute
 ; subtract the damage from the pokemon's current HP
 ; also, save the current HP at wHPBarOldHP
@@ -5226,6 +5305,7 @@ ApplyDamageToPlayerPokemon:
 	jr z, ApplyAttackToPlayerPokemonDone ; we're done if damage is 0
 	ld a, [wPlayerBattleStatus2]
 	bit HAS_SUBSTITUTE_UP, a ; does the player have a substitute?
+	ld a, $01	;joenote - preload $01 into register a before potentially jumping to AttackSubstitute (used to control turn differentiation)
 	jp nz, AttackSubstitute
 ; subtract the damage from the pokemon's current HP
 ; also, save the current HP at wHPBarOldHP and the new HP at wHPBarNewHP
@@ -5277,6 +5357,15 @@ AttackSubstitute:
 ; Normal recoil such as from Double-Edge isn't affected by this glitch,
 ; because this function is never called in that case.
 
+;joenote - fixed the above by preloading into 'a' a turn identifier based on where this function was jumped from
+;also a turn switch is involved
+	;joenote - do the turn switch
+	push af
+	ld a, [H_WHOSETURN]
+	ld [wUnusedD119], a	;backup the real turn
+	pop af
+	ld [H_WHOSETURN], a
+
 	ld hl, SubstituteTookDamageText
 	call PrintText
 ; values for player turn
@@ -5297,7 +5386,16 @@ AttackSubstitute:
 	ld a, [de]
 	sub [hl]
 	ld [de], a
-	ret nc
+;	ret nc		;joenote - slight rewrite
+	jr c, .substituteBroke
+	;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - get original turn back
+	push af
+	ld a, [wUnusedD119]
+	ld [H_WHOSETURN], a
+	pop af
+	;;;;;;;;;;;;;;;;;;;;;;
+	ret
 .substituteBroke
 ; If the target's Substitute breaks, wDamage isn't updated with the amount of HP
 ; the Substitute had before being attacked.
@@ -5322,6 +5420,13 @@ AttackSubstitute:
 .nullifyEffect
 	xor a
 	ld [hl], a ; zero the effect of the attacker's move
+	;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - get original turn back
+	push af
+	ld a, [wUnusedD119]
+	ld [H_WHOSETURN], a
+	pop af
+	;;;;;;;;;;;;;;;;;;;;;;
 	jp DrawHUDsAndHPBars
 
 SubstituteTookDamageText:
@@ -5831,6 +5936,15 @@ MoveHitTest:
 .move_hit
 	ret
 .moveMissed
+;;;;;;;;;;;;;;;;;;;;
+;joenote - if a move misses, store the damage it threatened into wUnusedD71F.
+;this is so the Jump Kick effect works correctly
+	ld hl, wUnusedD71F
+	ld a, [wDamage]
+	ld [hli], a
+	ld a, [wDamage + 1]
+	ld [hl], a
+;;;;;;;;;;;;;;;;;;;;
 	xor a
 	ld hl, wDamage ; zero the damage
 	ld [hli], a
@@ -6281,6 +6395,12 @@ CheckEnemyStatusConditions:
 	call BattleRandom
 	cp $80
 	jr c, .checkIfTriedToUseDisabledMove
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - set the bit that indicates a pkmn hurt itself in confusion or took crash damage
+	ld a, [wUnusedC000]
+	set 7, a	;setting this bit causes counter to miss
+	ld [wUnusedC000], a 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld hl, wEnemyBattleStatus1
 	ld a, [hl]
 	and 1 << CONFUSED ; if mon hurts itself, clear every other status from wEnemyBattleStatus1
@@ -6364,6 +6484,7 @@ CheckEnemyStatusConditions:
 	ld a, STATUS_AFFECTED_ANIM
 	call PlayMoveAnimation
 .notFlyOrChargeEffect
+	call ZeroLastDamage	;joenote - prevent Counter from working on confusion damage
 	ld hl, ExecuteEnemyMoveDone
 	jp .enemyReturnToHL ; if using a two-turn move, enemy needs to recharge the first turn
 .checkIfUsingBide

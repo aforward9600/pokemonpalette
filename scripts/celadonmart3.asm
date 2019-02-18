@@ -1,4 +1,14 @@
 CeladonMart3Script:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - remove the blocker for the new vendor if the elite 4 is beaten
+	CheckEvent EVENT_908	;has e4 been beaten?
+	jr z, .end 	;skip out if not
+	;else remove the blocking sprite
+	ld a, HS_CELADON_MART_3_BLOCKER
+	ld [wMissableObjectIndex], a
+	predef HideObject
+.end
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp EnableAutoTextBoxDrawing
 
 CeladonMart3TextPointers:
@@ -19,6 +29,8 @@ CeladonMart3TextPointers:
 	dw CeladonMart3Text15
 	dw CeladonMart3Text16
 	dw CeladonMart3Text17
+	dw CeladonMart3ClerkText
+	dw CeladonMart3BlockerText
 
 CeladonMart3Text1:
 	TX_ASM
@@ -105,4 +117,7 @@ CeladonMart3Text17:
 CeladonMart3Text16:
 CeladonMart3Text15:
 	TX_FAR _CeladonMart3Text15
+	db "@"
+CeladonMart3BlockerText:
+	TX_FAR _CeladonMart3Blocker
 	db "@"

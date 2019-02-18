@@ -8,6 +8,11 @@ _CeruleanHouse2Text_74e77::
 
 	para "Those BADGEs have"
 	line "amazing secrets!"
+	
+	;joenote - adding text to note the change in badge stat boosts
+	para "Some temporarily"
+	line "boost stats when"
+	cont "in wild battles."
 	prompt
 
 _CeruleanHouse2Text_74e7c::

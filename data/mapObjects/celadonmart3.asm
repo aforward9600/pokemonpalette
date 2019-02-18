@@ -20,12 +20,14 @@ CeladonMart3Object:
 	sign 6, 1, 16 ; CeladonMart3Text16
 	sign 10, 1, 17 ; CeladonMart3Text17
 
-	db 5 ; objects
+	db 7 ; objects	;joenote - added a new mart guy & blocker sprite for him
 	object SPRITE_MART_GUY, 16, 5, STAY, NONE, 1 ; person
 	object SPRITE_GAMEBOY_KID_COPY, 11, 6, STAY, RIGHT, 2 ; person
 	object SPRITE_GAMEBOY_KID_COPY, 7, 2, STAY, DOWN, 3 ; person
 	object SPRITE_GAMEBOY_KID_COPY, 8, 2, STAY, DOWN, 4 ; person
 	object SPRITE_YOUNG_BOY, 2, 5, STAY, UP, 5 ; person
+	object SPRITE_MART_GUY, 13, 7, STAY, LEFT, 18 ; person - new mart guy
+	object SPRITE_CLEFAIRY, 11, 7, STAY, NONE, 19; person - blocks new mart guy
 
 	; warp-to
 	warp_to 12, 1, CELADON_MART_3_WIDTH ; CELADON_MART_4

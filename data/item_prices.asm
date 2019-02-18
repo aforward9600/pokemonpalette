@@ -1,5 +1,5 @@
-ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up
-	money 0     ; MASTER_BALL
+ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up/exp all/master ball
+	money 50000     ; MASTER_BALL
 	money 1200  ; ULTRA_BALL
 	money 600   ; GREAT_BALL
 	money 200   ; POKE_BALL
@@ -48,7 +48,7 @@ ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up
 	money 2100  ; LEAF_STONE
 	money 0     ; CARD_KEY
 	money 10000 ; NUGGET
-	money 0		; XXX PP_UP
+	money 0		; XXX PP_UP (not used)
 	money 1000  ; POKE_DOLL
 	money 600   ; FULL_HEAL
 	money 1500  ; REVIVE
@@ -73,7 +73,7 @@ ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up
 	money 0     ; SILPH_SCOPE
 	money 0     ; POKE_FLUTE
 	money 0     ; LIFT_KEY
-	money 0     ; EXP_ALL
+	money 20000     ; EXP_ALL
 	money 0     ; OLD_ROD
 	money 0     ; GOOD_ROD
 	money 0     ; SUPER_ROD
