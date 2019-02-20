@@ -146,6 +146,24 @@ AIMoveChoiceModification1:
 .notdreameater	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use counter against a non-applicable move
+	ld a, [wEnemyMoveNum]	
+	cp COUNTER
+	jr nz, .countercheck_end	;if this move is not counter then jump out
+	ld a, [wPlayerMovePower]
+	and a
+	jp z, .heavydiscourage	;heavily discourage counter if enemy is using zero-power move
+	ld a, [wPlayerMoveType]
+	cp NORMAL
+	jr z, .countercheck_end	; continue on if countering a normal move
+	cp FIGHTING
+	jr z, .countercheck_end	; continue on if countering a fighting move
+	cp BIRD
+	jr z, .countercheck_end	; continue on if countering STRUGGLE or other typeless move
+	jp .heavydiscourage	;else heavily discourage since the player move type is not applicable to counter
+.countercheck_end
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use moves that are ineffective against substitute if a substitute is up
 	push hl	;save hl register on the stack
 	ld hl, wPlayerBattleStatus2
@@ -1211,7 +1229,17 @@ AISwitchIfEnoughMons:
 	ret
 
 SwitchEnemyMon:
-
+;joenote - if player using trapping move, then end their move
+	ld a, [wPlayerBattleStatus1]
+	bit USING_TRAPPING_MOVE, a
+	jr z, .preparewithdraw
+	ld hl, wPlayerBattleStatus1
+	res USING_TRAPPING_MOVE, [hl] 
+	xor a
+	ld [wPlayerNumAttacksLeft], a
+	ld a, $FF
+	ld [wPlayerSelectedMove], a
+.preparewithdraw
 ; prepare to withdraw the active monster: copy hp, number, and status to roster
 
 	ld a, [wEnemyMonPartyPos]

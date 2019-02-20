@@ -70,6 +70,7 @@ AlwaysHappenSideEffects:
 	db RECOIL_EFFECT
 	db TWINEEDLE_EFFECT
 	db RAGE_EFFECT
+	db HYPER_BEAM_EFFECT	;joenote - make hyperbeam recharge if knock out enemy
 	db -1
 SpecialEffects:
 ; Effects from arrays 2, 4, and 5B, minus Twineedle and Rage.
@@ -376,12 +377,21 @@ EnemyRanText:
 	db "@"
 
 MainInBattleLoop:
+;joenote - zero the damage from last round if not using a trapping move
+	ld a, [wEnemyBattleStatus1]
+	bit USING_TRAPPING_MOVE, a
+	jr nz, .no_trapping_moves
+	ld a, [wPlayerBattleStatus1]
+	bit USING_TRAPPING_MOVE, a
+	jr nz, .no_trapping_moves
 	call ZeroLastDamage	;joenote - prevent counter shenanigans of all sorts
-	;joenote - clear custom battle flags
+.no_trapping_moves
+;joenote - clear custom battle flags
 	ld a, [wUnusedC000]
 	res 7, a	;reset the bit that causes counter to miss
 	res 6, a	;reset the bit that specifies a leech seed effect
 	ld [wUnusedC000], a 
+;joenote - back to default flow
 	call ReadPlayerMonCurHPAndStatus
 	ld hl, wBattleMonHP
 	ld a, [hli]
@@ -394,6 +404,24 @@ MainInBattleLoop:
 	call SaveScreenTilesToBuffer1
 	xor a
 	ld [wFirstMonsNotOutYet], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - if raging, reset rage's accuracy here to prevent degradation
+	ld a, [wPlayerBattleStatus2]
+	bit USING_RAGE, a
+	jr z, .not_player_raging
+	ld a, $FF
+	ld [wPlayerMoveAccuracy], a
+.not_player_raging
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - if thrashing, reset the move accuracy here to prevent degradation
+	ld a, [wPlayerBattleStatus1]
+	bit THRASHING_ABOUT, a
+	jr z, .not_player_thrashing
+	ld a, $FF
+	ld [wPlayerMoveAccuracy], a
+.not_player_thrashing
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wPlayerBattleStatus2]
 	and (1 << NEEDS_TO_RECHARGE) | (1 << USING_RAGE) ; check if the player is using Rage or needs to recharge
 	jr nz, .selectEnemyMove
@@ -438,7 +466,7 @@ MainInBattleLoop:
 	call LoadScreenTilesFromBuffer1
 	call DrawHUDsAndHPBars
 	pop af
-	jr nz, MainInBattleLoop ; if the player didn't select a move, jump
+	jp nz, MainInBattleLoop ; if the player didn't select a move, jump
 .selectEnemyMove
 	call SelectEnemyMove
 	ld a, [wLinkState]
@@ -476,7 +504,7 @@ MainInBattleLoop:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [wPlayerSelectedMove], a
 .specialMoveNotUsed
-	callab SwitchEnemyMon
+	callab SwitchEnemyMon	;joedebug - both AI and link enemy use this to switch
 .noLinkBattle
 	ld a, [wPlayerSelectedMove]
 	cp QUICK_ATTACK
@@ -489,16 +517,13 @@ MainInBattleLoop:
 	ld a, [wEnemySelectedMove]
 	cp QUICK_ATTACK
 	jr z, .enemyMovesFirst ; if enemy used Quick Attack and player didn't
-	ld a, [wPlayerSelectedMove]
-	cp COUNTER
+	call CheckLowerPlayerPriority	;joenote - custom function now used
 	jr nz, .playerDidNotUseCounter
-	ld a, [wEnemySelectedMove]
-	cp COUNTER
+	call CheckLowerEnemyPriority	;joenote - custom function now used
 	jr z, .compareSpeed ; if both used Counter
 	jr .enemyMovesFirst ; if player used Counter and enemy didn't
 .playerDidNotUseCounter
-	ld a, [wEnemySelectedMove]
-	cp COUNTER
+	call CheckLowerEnemyPriority	;joenote - custom function now used
 	jr z, .playerMovesFirst ; if enemy used Counter and player didn't
 .compareSpeed
 	ld de, wBattleMonSpeed ; player speed value
@@ -2556,6 +2581,11 @@ PartyMenuOrRockOrRun:
 	call LoadMonFrontSprite
 	jr .enemyMonPicReloaded
 .doEnemyMonAnimation
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - fix from pokemon yellow to prevent glitched graphics when exiting status screen
+	ld a, 1
+	ld [H_WHOSETURN], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld b, BANK(AnimationSubstitute) ; BANK(AnimationMinimizeMon)
 	call Bankswitch
 .enemyMonPicReloaded ; enemy mon pic has been reloaded, so return to the party menu
@@ -2583,7 +2613,20 @@ PartyMenuOrRockOrRun:
 	call GBPalNormal
 ; fall through to SwitchPlayerMon
 
-SwitchPlayerMon:
+SwitchPlayerMon:	;joedebug - this is where the player switches
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - if enemy using trapping move, then end their move
+	ld a, [wEnemyBattleStatus1]
+	bit USING_TRAPPING_MOVE, a
+	jr z, .preparewithdraw
+	ld hl, wEnemyBattleStatus1
+	res USING_TRAPPING_MOVE, [hl] 
+	xor a
+	ld [wEnemyNumAttacksLeft], a
+	ld a, $FF
+	ld [wEnemySelectedMove], a
+.preparewithdraw
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	callab RetreatMon
 	ld c, 50
 	call DelayFrames
@@ -2917,7 +2960,8 @@ AnyMoveToSelect:
 	or c
 	jr .handleDisabledMovePPLoop
 .allMovesChecked
-	and a ; any PP left?
+	;and a ; any PP left?
+	and $3F	;joenote - disregard PP-ups, which reside in the upper two bits of the PP byte
 	ret nz ; return if a move has PP left
 .noMovesLeft
 	ld hl, NoMovesLeftText
@@ -3111,8 +3155,26 @@ SelectEnemyMove:
 	ld b, 0
 	add hl, bc
 	ld a, [hl]
-	jr .done
+	jp .done
 .noLinkBattle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - if raging, reset rage's accuracy here to prevent degradation
+	ld a, [wEnemyBattleStatus2]
+	bit USING_RAGE, a
+	jr z, .not_enemy_raging
+	ld a, $FF
+	ld [wEnemyMoveAccuracy], a
+.not_enemy_raging
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - if thrashing, reset the move accuracy here to prevent degradation
+	ld a, [wEnemyBattleStatus1]
+	bit THRASHING_ABOUT, a
+	jr z, .not_enemy_thrashing
+	ld a, $FF
+	ld [wEnemyMoveAccuracy], a
+.not_enemy_thrashing
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wEnemyBattleStatus2]
 	and (1 << NEEDS_TO_RECHARGE) | (1 << USING_RAGE) ; need to recharge or using rage
 	ret nz
@@ -3419,6 +3481,8 @@ MirrorMoveCheck:
 	call PrintMoveFailureText
 	ld a, [wPlayerMoveEffect]
 	cp EXPLODE_EFFECT ; even if Explosion or Selfdestruct missed, its effect still needs to be activated
+	jr z, .notDone
+	cp HYPER_BEAM_EFFECT ;joenote - hyperbeam effect needs to happen if it misses
 	jr z, .notDone
 	jp ExecutePlayerMoveDone ; otherwise, we're done if the move missed
 .moveDidNotMiss
@@ -5114,6 +5178,8 @@ ApplyAttackToEnemyPokemon:
 	jr z, .superFangEffect
 	cp SPECIAL_DAMAGE_EFFECT
 	jr z, .specialDamage
+	cp TRAPPING_EFFECT	;joenote - clear hyper beam if target hit with trapping effect
+	call ClearHyperBeam
 	ld a, [wPlayerMovePower]
 	and a
 	jp z, ApplyAttackToEnemyPokemonDone ; no attack to apply if base power is 0
@@ -5234,6 +5300,8 @@ ApplyAttackToPlayerPokemon:
 	jr z, .superFangEffect
 	cp SPECIAL_DAMAGE_EFFECT
 	jr z, .specialDamage
+	cp TRAPPING_EFFECT	;joenote - clear hyper beam if target hit with trapping effect
+	call ClearHyperBeam	
 	ld a, [wEnemyMovePower]
 	and a
 	jp z, ApplyAttackToPlayerPokemonDone
@@ -5418,15 +5486,26 @@ AttackSubstitute:
 	jr z, .nullifyEffect
 	ld hl, wEnemyMoveEffect ; value for enemy's turn
 .nullifyEffect
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not nullify certain effects
+	ld a, [hl]
+	cp HYPER_BEAM_EFFECT
+	jr z, .skipnullify
+	cp EXPLODE_EFFECT
+	jr z, .skipnullify
+	cp RECOIL_EFFECT
+	jr z, .skipnullify
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	xor a
 	ld [hl], a ; zero the effect of the attacker's move
-	;;;;;;;;;;;;;;;;;;;;;;
-	;joenote - get original turn back
+.skipnullify
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - get original turn back
 	push af
 	ld a, [wUnusedD119]
 	ld [H_WHOSETURN], a
 	pop af
-	;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp DrawHUDsAndHPBars
 
 SubstituteTookDamageText:
@@ -6248,6 +6327,8 @@ EnemyCheckIfMirrorMoveEffect:
 	call PrintMoveFailureText
 	ld a, [wEnemyMoveEffect]
 	cp EXPLODE_EFFECT
+	jr z, .handleExplosionMiss
+	cp HYPER_BEAM_EFFECT ;joenote - hyperbeam effect needs to happen if it misses
 	jr z, .handleExplosionMiss
 	jp ExecuteEnemyMoveDone
 .moveDidNotMiss
@@ -8164,7 +8245,7 @@ opponentAttacker:
 	ld hl, BurnedText
 	jp PrintText
 .freeze
-; hyper beam bits aren't reseted for opponent's side
+; hyper beam bits aren't reset for opponent's side
 	call ClearHyperBeam ; joenote - adding this to prevent an infinite loop if frozen before recharging
 	ld a, 1 << FRZ
 	ld [wBattleMonStatus], a
@@ -9045,8 +9126,9 @@ TrappingEffect:
 .trappingEffect
 	bit USING_TRAPPING_MOVE, [hl]
 	ret nz
-	call ClearHyperBeam ; since this effect is called before testing whether the move will hit,
+	;call ClearHyperBeam ; since this effect is called before testing whether the move will hit,
                         ; the target won't need to recharge even if the trapping move missed
+						;joenote - will do this later under ApplyAttackToEnemy/Player functions
 	set USING_TRAPPING_MOVE, [hl] ; mon is now using a trapping move
 	call BattleRandom ; 3/8 chance for 2 and 3 attacks, and 1/8 chance for 4 and 5 attacks
 	and $3
@@ -9137,7 +9219,7 @@ HyperBeamEffect:
 	set NEEDS_TO_RECHARGE, [hl] ; mon now needs to recharge
 	ret
 
-ClearHyperBeam:
+ClearHyperBeam:	;for whoever's turn it is, clear their opponent's hyperbeam status
 	push hl
 	ld hl, wEnemyBattleStatus2
 	ld a, [H_WHOSETURN]
@@ -9455,4 +9537,19 @@ PlayBattleAnimationGotID:
 	pop bc
 	pop de
 	pop hl
+	ret
+
+CheckLowerPlayerPriority:	;joenote - custom functions to handle lower move priority. Sets zero flag if priority lowered.
+	ld a, [wPlayerSelectedMove]
+	cp COUNTER
+	ret z
+	ld a, [wPlayerMoveEffect]
+	cp TRAPPING_EFFECT
+	ret
+CheckLowerEnemyPriority:
+	ld a, [wEnemySelectedMove]
+	cp COUNTER
+	ret z
+	ld a, [wEnemyMoveEffect]
+	cp TRAPPING_EFFECT
 	ret

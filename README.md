@@ -3,7 +3,32 @@
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
 This is a mostly-vanilla hack that focuses on fixing glitches from the original game.
 Additionally, trainer AI routines are also improved and includes minimal quality-of-life improvements.
+Think of it as what the Nintendo Virtual Console re-release of red & blue might have been.
 
+
+#Summary
+-----------
+
+- Tons of bugs, glitches, and oversights fixed
+- Trainers are made more difficult not by increasing their team levels, but by doing the following:
+  - Vastly improving the default ai routines
+  - Giving them access to stat experience
+  - Giving them above-average random DVs
+  - Trainers of a smart-enough trainer class will make use of basic pkmn switching
+- All 151 pkmn are available in one version
+  - Though difficult for a select few, each pkmn can be obtained multiple times
+  - The uniquness between red & blue is still preserved in encounter rarity
+- Minor quality-of-life improvements
+  - Nearly all trainers can be rematched just by talking to them
+  - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
+  - Stone evolutions regain some level-up moves
+  - Yellow-version move lists have been integrated
+  - All TMs can be repurchased as they are strategically scattered across all the Kanto pokemarts
+  - After the elite-4, a new vendor opens up in celadon allowing the purchase of normally unique items
+  - Added some special trainer battles as fun little easter eggs
+- Compatible with Pokemon Stadium
+- Can use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
+  
 #Bugfixes:
 -----------
 
@@ -60,12 +85,22 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   - Bide's accumulated damage bytes are now both set to zero on an enemy faint in order to prevent desync
   - Jump Kick moves now do the correct recoil damage on a miss
   - The effects of Leech Seed and Toxic no longer stack
+  - Trapping effects only clear the hyperbeam recharge bit on a hit, preventing its automatic use on a miss
+  - Trapping move PP can no longer underflow due to an opponent switching pkmn
+  - Raging and Thrashing no longer suffers from accuracy degradation
+  - Breaking a substitute does not nullify explosion/self-destruct, hyper beam recharge, or recoil damage
+  - Hyper beam must recharge if it misses or knocks out the opposing pkmn
 
 - Misc. fixes
   - Great ball has a ball factor of 12 now
   - Cinnabar/seafoam islands coast glitch fixed (no more missingo or artificially loading pokemon data)
   - Stone evolutions cannot be triggered via level-up anymore
   - Catching a transformed pokemon no longer defaults to catching a ditto
+  - Returning from the status screen when an opponent is in substitute/minimize no longer glitches the graphics
+  - PP-up uses are disregarded when determining to use STRUGGLE if one or more moves are disabled
+  - PC graphic restored to celadon hotel
+  - A tile in cinnabar mansion 3f is slightly modified to prevent getting permanently stuck
+  - Ether and elixer now account for PP-ups used when determining if move is at full PP
 
 - Bugfixes & tweaks involving Counter...oh boy here we go:
   - works against BIRD type, which is now typeless and assigned only to STRUGGLE
@@ -94,6 +129,9 @@ Additionally, trainer AI routines are also improved and includes minimal quality
   
 - Stat-down moves no longer have a 25% miss chance in AI matches.
 - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+- Trapping moves nerfed big time to prevent the new AI from cheesing them:
+  - switching out of a trapping move ends it immediately and wastes its user's turn
+  - trapping moves have reduced priority like Counter
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
   - using a move with a dream eater effect is heavily discouraged against non-sleeping opponents
   - using a move with a dream eater effect is slightly encouraged against a sleeping opponent
@@ -107,6 +145,7 @@ Additionally, trainer AI routines are also improved and includes minimal quality
     - heavily discourage healing if at max hp
 	- slightly encourage healing if below 1/3 hp
 	- slightly discourage healing if above 1/2 hp
+  - heavily discourage using Counter against a non-applicable move
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
   - zero-power buffing/debuffing moves are randomly preferenced 12.5% of the time to spice things up
