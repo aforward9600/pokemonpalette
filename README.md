@@ -3,6 +3,7 @@
 Version 1.00 release
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
+IPS patches here: https://mega.nz/#!2uYG3aRa!jb7Mk4TRMkDQhrLxsyT8iZnjl80UNQwD4DJhPCT7K88
 
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
 This is a mostly-vanilla hack that focuses on fixing glitches from the original game.
