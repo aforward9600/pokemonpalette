@@ -1,5 +1,9 @@
 # Pokémon Shin Red and Blue
 
+Version 1.00 release
+
+Download the IPS patch file of the version you want and apply it to its respective USA rom.
+
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
 This is a mostly-vanilla hack that focuses on fixing glitches from the original game.
 Additionally, trainer AI routines are also improved and includes minimal quality-of-life improvements.
@@ -101,6 +105,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - PC graphic restored to celadon hotel
   - A tile in cinnabar mansion 3f is slightly modified to prevent getting permanently stuck
   - Ether and elixer now account for PP-ups used when determining if move is at full PP
+  - Vending machine now checks for the correct amount of money
+  - Prevented byte overflow when determining the trash can with 2nd switch in vermillion gym
+  - Hidden nugget in safari entrance now obtainable
 
 - Bugfixes & tweaks involving Counter...oh boy here we go:
   - works against BIRD type, which is now typeless and assigned only to STRUGGLE
@@ -126,7 +133,12 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - TM 18 given an actual explanation 
   - New student in viridian school explains ohko moves
   - Cerulean badge-house guy has updated text
-  
+  - Prof. oak's speech plays the correct Nidorino cry
+  - Text for using a TM/HM now refers to just the "machine" rather than just "TM"
+  - Fixed daycare man capitalization
+  - Clarified "chem" to mean grade in chemistry
+  - Fixed capitalization in safari zone entrance
+ 
 - Stat-down moves no longer have a 25% miss chance in AI matches.
 - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
 - Trapping moves nerfed big time to prevent the new AI from cheesing them:

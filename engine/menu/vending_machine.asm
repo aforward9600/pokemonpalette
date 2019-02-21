@@ -36,11 +36,35 @@ VendingMachineMenu:
 	ld a, [wCurrentMenuItem]
 	cp 3 ; chose Cancel?
 	jr z, .notThirsty
+;joenote - need to account for soda and lemonade
+	cp 2 ; chose lemonade?
+	jr z, .picklemonade
+	cp 1 ; chose soda?
+	jr z, .picksoda
+;else water is being piked
+	jr .pickwater
+.picklemonade
+	ld a, $5
+	ld [hMoney], a
+	xor a
+	ld [hMoney + 2], a
+	ld a, $3
+	ld [hMoney + 1], a
+	jr .checkmoney
+.picksoda
+	xor a
+	ld [hMoney], a
+	ld [hMoney + 2], a
+	ld a, $3
+	ld [hMoney + 1], a
+	jr .checkmoney
+.pickwater
 	xor a
 	ld [hMoney], a
 	ld [hMoney + 2], a
 	ld a, $2
 	ld [hMoney + 1], a
+.checkmoney
 	call HasEnoughMoney
 	jr nc, .enoughMoney
 	ld hl, VendingMachineText4

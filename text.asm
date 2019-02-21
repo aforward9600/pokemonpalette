@@ -1578,8 +1578,8 @@ _PartyMenuBattleText::
 	done
 
 _PartyMenuUseTMText::
-	text "Use TM on which"
-	line "#MON?"
+	text "Use machine on"	;joenote - HMs use this, so made it generic
+	line "which #MON?"
 	done
 
 _PartyMenuSwapMonText::

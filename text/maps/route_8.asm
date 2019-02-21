@@ -1,7 +1,8 @@
 _Route8BattleText1::
 	text "You look good at"
 	line "#MON, but"
-	cont "how's your chem?"
+	cont "how's your grade"
+	cont "in chemistry?"	;joenote - cleaned up translation
 	done
 
 _Route8EndBattleText1::

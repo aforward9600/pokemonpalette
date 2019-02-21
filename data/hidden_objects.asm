@@ -606,7 +606,7 @@ Route13HiddenObjects:
 	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 SafariZoneEntranceHiddenObjects:
-	db $01,$0a,NUGGET
+	db $05,$05,NUGGET	;joenote - moved to within map bounds
 	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 SafariZoneWestHiddenObjects:
