@@ -220,9 +220,10 @@ SetScrollXForSlidingPlayerBodyLeft:
 	jr z, .loop
 	ret
 
-StartBattle:
+StartBattle:	;joedebug - start of the battle
 	xor a
 	ld [wUnusedC000], a	;joenote - clear custom ai bits at battle start
+	ld [wUnusedD155], a	;joenote - clear backup location for how many pkmn recieve exp
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;clear the AI_Trainer party sent-out bits
 	ld a, [wFontLoaded]
@@ -1011,6 +1012,8 @@ FaintEnemyPokemon:
 	push af
 	jr z, .giveExpToMonsThatFought ; if no exp all, then jump
 
+;joedebug - EXP ALL is handled here
+
 ; the player has exp all
 ; first, we halve the values that determine exp gain
 ; the enemy mon base stats are added to stat exp, so they are halved
@@ -1031,6 +1034,38 @@ FaintEnemyPokemon:
 	callab GainExperience
 	pop af
 	ret z ; return if no exp all
+;joenote - the GainExperience function will divide the stored exp further if multiple pkmn took part in battle
+;therefore there is a need to undo the previous division
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;skip all this if only a single battle participant
+	ld a, [wUnusedD155]	
+	dec a
+	jr z, .expallfix_end
+	;else continue on
+	push hl
+	push bc
+	ld hl, wEnemyMonBaseStats	;get first stat
+	ld b, $7
+.exp_stat_loop
+
+	ld a, [wUnusedD155]	
+	ld c, a		;get number of participating pkmn into c
+	xor a	;clear a to zero
+.exp_adder_loop
+	add [hl]	; add the value of the current exp stat to 'a'
+	dec c		; decrement participating pkmn
+	jr nz, .exp_adder_loop
+	ld [hl], a	;stick the exp values, now multiplied by the number of participating pkmn, back into the stat address
+	
+	inc hl	;get next stat 
+	dec b
+	jr nz, .exp_stat_loop
+	pop bc
+	pop hl
+.expallfix_end
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 
 ; the player has exp all
 ; now, set the gain exp flag for every party member
@@ -2087,7 +2122,8 @@ DrawEnemyHUDAndHPBar:
 	call PrintStatusConditionNotFainted
 	pop hl
 	jr nz, .skipPrintLevel ; if the mon has a status condition, skip printing the level
-	ld a, [wEnemyMonLevel]	;joedebug - use this for printing bytes instead of enemy level
+	;ld a, [wEnemyMonLevel]	;joedebug - use this for printing bytes instead of enemy level
+	ld a, [wUnusedD155]	;joedebug - use this for printing bytes instead of enemy level
 	ld [wLoadedMonLevel], a
 	call PrintLevel
 .skipPrintLevel

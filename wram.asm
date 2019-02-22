@@ -2301,7 +2301,8 @@ wPseudoItemID:: ; d152
 wUnusedD153:: ; d153	;joenote - use this to hold the pointer for trainerAI statexp
 	ds 2
 
-	ds 1
+wUnusedD155:: ; d155	;joenote - use this to as a backup for how many pokemon to split exp between (fixing exp all)
+	ds 1				;		-this is a base-1-indexed number (so between 1 and 6 pkmn)
 
 wEvoStoneItemID:: ; d156
 	ds 1

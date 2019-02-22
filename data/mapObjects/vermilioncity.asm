@@ -13,7 +13,7 @@ VermilionCityObject:
 	warp 7, 3, 0, VERMILION_HOUSE_2
 
 	db 7 ; signs
-	sign 27, 3, 7 ; VermilionCityText7
+	sign 27, 3, 15 ; VermilionCityText7	;joenote - v1.01 - text 7 bugged & always goes to 7th object text. cloning into text 15.
 	sign 37, 13, 8 ; VermilionCityText8
 	sign 24, 13, 9 ; MartSignText
 	sign 12, 3, 10 ; PokeCenterSignText
@@ -28,7 +28,7 @@ VermilionCityObject:
 	object SPRITE_GAMBLER, 30, 7, STAY, NONE, 4 ; person
 	object SPRITE_SLOWBRO, 29, 9, WALK, 1, 5 ; person
 	object SPRITE_SAILOR, 25, 27, WALK, 2, 6 ; person
-	object SPRITE_SLOWBRO, 15, 19, STAY, DOWN, 14 ; person	;joenote - replaced bush with a snorlax that goes away after getting CUT
+	object SPRITE_SLOWBRO, 15, 19, STAY, DOWN, 14 ; person	;joenote - replaced bush with an object that goes away after getting CUT
 
 	; warp-to
 	warp_to 11, 3, VERMILION_CITY_WIDTH ; VERMILION_POKECENTER

@@ -56,19 +56,30 @@ TransformEffect_:
 ; type 1, type 2, catch rate, and moves
 	ld bc, $5
 	add hl, bc
-	inc de
-	inc de
-	inc de
-	inc de
-	inc de
+	inc de	;point to hp low byte
+	inc de	;point to hp high byte
+	inc de	;point to party position
+	inc de	;point to status
+	inc de	;point to type 1
 	inc bc
 	inc bc
 	;call CopyData
 	call CopyDataTransform	;joenote - want to do a special copy that doesn't copy the transform move and replaces it
+	;de is now pointing to DVs
 	ld a, [H_WHOSETURN]
 	and a
 	jr z, .next
 ; save enemy mon DVs at wTransformedEnemyMonOriginalDVs
+; joenote - there is a bug here. It assumes the enemy mon is not transformed already.
+; If the enemy has already transformed once before, then the DVs for that form 
+; end up getting written to wTransformedEnemyMonOriginalDVs.
+; This causes the true original untransformed DVs to be overwritten with the DVs of 
+; the prior form. Further transformations will continue to overwrite this with the DVs
+; of the last form  utilized.
+; Therefore, a check is needed to skip this if the enemy is already transformed.
+	ld a, [wEnemyBattleStatus3]
+	bit 3, a 	;check the state of the enemy transformed bit
+	jr nz, .next	;skip ahead if bit is set
 	ld a, [de]
 	ld [wTransformedEnemyMonOriginalDVs], a
 	inc de

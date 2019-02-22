@@ -1,14 +1,15 @@
 # Pokémon Shin Red and Blue
 
-Version 1.00 release
+Version 1.01
 
-Download the IPS patch file of the version you want and apply it to its respective USA rom.
-IPS patches here: https://mega.nz/#!2uYG3aRa!jb7Mk4TRMkDQhrLxsyT8iZnjl80UNQwD4DJhPCT7K88
+Download the IPS patch file of the version you want and apply it to its respective USA rom. 
+IPS patches here: 
+https://mega.nz/#!HugBxaRK!S_eWONiBWn6jr86vx1kiNbJ-esBqlMxknFiLOJxG_II
 
-This is a rom hack of pokemon red & blue based on the Pret team's disassembly.
-This is a mostly-vanilla hack that focuses on fixing glitches from the original game.
-Additionally, trainer AI routines are also improved and includes minimal quality-of-life improvements.
-Think of it as what the Nintendo Virtual Console re-release of red & blue might have been.
+This is a rom hack of pokemon red & blue based on the Pret team's disassembly.  
+This is a mostly-vanilla hack that focuses on fixing glitches from the original game.  
+Additionally, trainer AI routines are also improved and includes minimal quality-of-life improvements.  
+Think of it as what the Nintendo Virtual Console re-release of red & blue might have been.  
 
 
 #Summary
@@ -33,18 +34,24 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Added some special trainer battles as fun little easter eggs
 - Compatible with Pokemon Stadium
 - Can use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
+
+
+#Hack-Induced Bugs fixed in this version:
+-----------
+- Vermilion sign text now displays correctly
+
   
 #Bugfixes:
 -----------
 
 - Battle engine fixes
-  - moves no longer have a default 1/256 chance to miss
+  - Moves no longer have a default 1/256 chance to miss
   - Fixed freeze that occurs in defense stat scaling (def < 4 glitch)
   - Enemy ai ignores type effectiveness for moves that have zero power
+     - prevents things like spamming agility against poison pkmn
   - Enemy ai ignores super-effectiveness for moves that do static amounts of damage
-     - prevents things like spamming agility against poison pokemon
   - Fixed skipping move-learn on level-up glitch. 
-     - when gaining multiple levels at a time, each in-between level is incrementaly checked for moves learned
+     - when gaining multiple levels at a time, each in-between level is incrementally checked for moves learned
      - this prevents a pkmn from skipping learnable moves if gaining multiple levels in battle
   - Burn & Paralyze stat penalties are now properly applied after Speed & Attack stats get updated/recalculated
   - Badge stat-ups don't get stacked anymore
@@ -54,7 +61,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Blaine will not use a healing item at full HP
   - Move slots cannot be rearranged when transformed (prevents acquiring glitch moves).
   - The BIRD type has been reinstated and renamed to TYPELESS. It acts as a universally neutral type (particularly for Struggle)
-  - AI trainers have priority on switching or using a move
+  - AI trainers have priority on switching or using an item
   - AI type effectiveness function now takes type 1 and 2 into account together 
 	 - Before AI would only look at the type it encountered first in a list search
      - AI will now treat a move as neutral if type 1 makes it supereffective but type 2 makes it not effective
@@ -74,7 +81,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - light screen and reflect now have a cap of 999
   - haze removing sleep/freeze will not prevent a multi-turn move from getting stuck
      - Fixed by allowing sleeping/frozen pkmn to use a move after haze restores them
-     - on the plus size, haze now retores both opponent and user's status conditions as was intended in gen 1
+     - on the plus size, haze now restores both opponent and user's status conditions as was intended in gen 1
   - Rest now does the following:
      - clears the toxic bit and toxic counter
      - if burn is removed, attack is doubled to undo its stat detriment (not perfect for atk values < 4)
@@ -109,12 +116,14 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Vending machine now checks for the correct amount of money
   - Prevented byte overflow when determining the trash can with 2nd switch in vermillion gym
   - Hidden nugget in safari entrance now obtainable
+  - EXP All should now dispense the correct exp if multiple pokemon take place in a battle
+  - Enemy DVs can no longer be manipulated by having it use transform multiple times
 
 - Bugfixes & tweaks involving Counter...oh boy here we go:
   - works against BIRD type, which is now typeless and assigned only to STRUGGLE
   - To prevent desync, pressing B to get out of the move selection menu zeros-out the ram location for selected move & move power
   - last damage dealt is zeroed in these cases (also fixes some issues with Bide):
-	- it's the start of the round (fixes most issues since Counter always goes second and fails if opponent also uses Counter)
+	- it's the start of the round without a trapping move active (fixes most issues since Counter always goes second)
 	- player/enemy pkmn is fully paralyzed or after hurting itself in confusion
   - Crash damage from jump kicks and pkmn hurting itself cannot be Countered
 
@@ -225,8 +234,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Rematch with Giovanni (respawns after leaving the gym)
 - Blaine has a touched-up battle sprite so he doesn't look like an alien
   - Snagged this off reddit, but original artist unknown (let me know if this is yours)
-- The juggler rosters, especially in fuschia gym, have been slightly altered for flavor
-- Just for fun, the last juggler in the fuschia gym is replaced with a cameo of Janine
+- The juggler rosters, especially in fuchsia gym, have been slightly altered for flavor
+- Just for fun, the last juggler in the fuchsia gym is replaced with a cameo of Janine
   - Though at this point she's still just a cooltrainer and doesn't have a unique battle sprite
 - Event bit 908 seems to be unused. This bit is now set to indicate the elite 4 have been beaten.
 - S.S. Anne can be re-entered after defeating the elite 4.
@@ -284,3 +293,13 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - lavender town has max ethers
 - saffron city has elixers
 - cinnabar island has max elixers
+
+
+SPECIAL THANKS:
+-----------
+- The Pret team for providing the base disassembly and all the code comments that came with it.
+- The following folks for their great tutorials, glitch videos, and explanations across the internet:
+  - TheFakeMateo 
+  - Crystal_
+  - ChickasaurusGL
+  - v0id19
