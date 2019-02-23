@@ -2122,8 +2122,8 @@ DrawEnemyHUDAndHPBar:
 	call PrintStatusConditionNotFainted
 	pop hl
 	jr nz, .skipPrintLevel ; if the mon has a status condition, skip printing the level
-	;ld a, [wEnemyMonLevel]	;joedebug - use this for printing bytes instead of enemy level
-	ld a, [wUnusedD155]	;joedebug - use this for printing bytes instead of enemy level
+	ld a, [wEnemyMonLevel]
+	;ld a, [wUnusedD155]	;joedebug - use this for printing bytes instead of enemy level
 	ld [wLoadedMonLevel], a
 	call PrintLevel
 .skipPrintLevel

@@ -1,4 +1,4 @@
-Route21Mons:;joenote - added eevee
+Route21Mons:;joenote - added eevee and made adjustments to surfing encounters
 	db $19
 	db 21,PIDGEY
 	db 23,RATTATA
@@ -18,6 +18,6 @@ Route21Mons:;joenote - added eevee
 	db 10,TENTACOOL
 	db 15,TENTACOOL
 	db 20,TENTACOOL
-	db 30,TENTACOOL
-	db 35,TENTACOOL
-	db 40,TENTACOOL
+	db 30,TENTACRUEL	
+	db 35,TENTACRUEL
+	db 40,SEAKING

@@ -1,10 +1,10 @@
 # Pokémon Shin Red and Blue
 
-Version 1.01
+Version 1.02
 
-Download the IPS patch file of the version you want and apply it to its respective USA rom. 
-IPS patches here: 
-https://mega.nz/#!HugBxaRK!S_eWONiBWn6jr86vx1kiNbJ-esBqlMxknFiLOJxG_II
+Download the IPS patch file of the version you want and apply it to its respective USA rom.
+IPS patches here:
+https://mega.nz/#!zy50HKyY!UkVTtwgef7ST7upqSiOVf3c_CwbxZwLRgBTfSLBzKnQ
 
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.  
 This is a mostly-vanilla hack that focuses on fixing glitches from the original game.  
@@ -38,7 +38,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 #Hack-Induced Bugs fixed in this version:
 -----------
-- Vermilion sign text now displays correctly
+- Enemy pokemon levels are displayed correctly
 
   
 #Bugfixes:
@@ -281,6 +281,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - porygon is in the power plant in red version while blue has increased rate of raichu
 - magnemite on route 10
 - ponyta on route 7
+- tentacruel to routes 19, 20, and 21
+- seaking to routes 19, 20, and 21
 
 
 #Changes to pokemart inventories:
@@ -295,7 +297,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - cinnabar island has max elixers
 
 
-SPECIAL THANKS:
+#SPECIAL THANKS:
 -----------
 - The Pret team for providing the base disassembly and all the code comments that came with it.
 - The following folks for their great tutorials, glitch videos, and explanations across the internet:
