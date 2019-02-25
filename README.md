@@ -1,10 +1,10 @@
 # Pokémon Shin Red and Blue
 
-Version 1.02
+Version 1.03
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
-IPS patches here:
-https://mega.nz/#!zy50HKyY!UkVTtwgef7ST7upqSiOVf3c_CwbxZwLRgBTfSLBzKnQ
+
+Download Link: 
 
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.  
 This is a mostly-vanilla hack that focuses on fixing glitches from the original game.  
@@ -36,10 +36,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Can use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
 
 
-#Hack-Induced Bugs fixed in this version:
+#Hack-Induced Bugfixes & Adjustments in this version:
 -----------
-- Enemy pokemon levels are displayed correctly
-
+- buyable moon stones moved to the 3f dept store vendor so they can only be purchased post-game
   
 #Bugfixes:
 -----------
@@ -102,6 +101,13 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Raging and Thrashing no longer suffers from accuracy degradation
   - Breaking a substitute does not nullify explosion/self-destruct, hyper beam recharge, or recoil damage
   - Hyper beam must recharge if it misses or knocks out the opposing pkmn
+  - Bugfixes involving Counter:
+    - works against BIRD type, which is now typeless and assigned only to STRUGGLE
+    - To prevent desync, pressing B to get out of the move selection menu zeros-out the ram location for selected move & move power
+    - last damage dealt is zeroed in these cases (also fixes some issues with Bide):
+	  - it's the start of the round without a trapping move active (fixes most issues since Counter always goes second)
+	  - player/enemy pkmn is fully paralyzed or after hurting itself in confusion
+    - Crash damage from jump kicks and pkmn hurting itself cannot be Countered
 
 - Misc. fixes
   - Great ball has a ball factor of 12 now
@@ -118,14 +124,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Hidden nugget in safari entrance now obtainable
   - EXP All should now dispense the correct exp if multiple pokemon take place in a battle
   - Enemy DVs can no longer be manipulated by having it use transform multiple times
-
-- Bugfixes & tweaks involving Counter...oh boy here we go:
-  - works against BIRD type, which is now typeless and assigned only to STRUGGLE
-  - To prevent desync, pressing B to get out of the move selection menu zeros-out the ram location for selected move & move power
-  - last damage dealt is zeroed in these cases (also fixes some issues with Bide):
-	- it's the start of the round without a trapping move active (fixes most issues since Counter always goes second)
-	- player/enemy pkmn is fully paralyzed or after hurting itself in confusion
-  - Crash damage from jump kicks and pkmn hurting itself cannot be Countered
+  - Fixed a bug where itemfinder can't locate objects with a zero x or y coord
+  - After defeating the cerulean burgler rocket, the guard itself always moves to prevent getting stuck in the front door
 
 
 #TWEAKS:
@@ -222,6 +222,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Game corner prize costs re-balanced
 - Bushes moved around so Erika can be battled without CUT
 - The bush blocking the Vermilion gym has been replaced with a blocking pkmn that goes away after the ss anne leaves
+- The surfboard, a nugget, and TM 15 are hidden items added to the vermilion dock
 - Can rematch most non gym-leader trainers
 - Rematch with Karate Master
 - Rematch with Brock
@@ -243,6 +244,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - the captain's text has been slightly altered for a more generic context
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
 - Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
+- Move deleter & relearner added to the saffron house below COPYCAT's house
+  - Code comes from Mateo's Red++ hack. It's simply the best gen-1 implementation and I cannot come up with something better.
+  - Talk to the little girl to delete moves.
+  - Talk to her tutor to relearn moves.
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):
@@ -286,9 +291,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 
 #Changes to pokemart inventories:
-- Celadon dept. store has moon stones
 - Vendor added to Celadon Dept. Store 3F
-  - Sells amber, fossils, exp all, master balls, and rare candy
+  - Sells moon stones, amber, fossils, exp all, master balls, and rare candy
   - Only opens up after beating elite 4
 - TMs of all kinds at all stores. All TMs are now re-purchaseable at various stages of the game.
 - pewter city has ethers
@@ -297,9 +301,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - cinnabar island has max elixers
 
 
-#SPECIAL THANKS:
+#CREDITS / SPECIAL THANKS:
 -----------
 - The Pret team for providing the base disassembly and all the code comments that came with it.
+- Rangi for the tool Polished Map
+- Move deleter/relearner coded by TheFakeMateo for Pokemon Red++
 - The following folks for their great tutorials, glitch videos, and explanations across the internet:
   - TheFakeMateo 
   - Crystal_

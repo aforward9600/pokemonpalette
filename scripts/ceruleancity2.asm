@@ -14,3 +14,12 @@ CeruleanHideRocket:
 	predef HideObject
 	call GBFadeInFromBlack
 	ret
+
+CeruleanMoveGuardOnly:	;joenote - this only moves the guard to prevent getting permanently stuck in the front door
+	ld a, HS_CERULEAN_GUARD_1
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	ld a, HS_CERULEAN_GUARD_2
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ret

@@ -513,4 +513,4 @@ WriteMonMoves_ShiftMoveData:
 Evolution_FlagAction:
 	predef_jump FlagActionPredef
 
-INCLUDE "data/evos_moves.asm"
+

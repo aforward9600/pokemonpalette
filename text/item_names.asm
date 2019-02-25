@@ -5,7 +5,7 @@ ItemNames:
 	db "POKé BALL@"
 	db "TOWN MAP@"
 	db "BICYCLE@"
-	db "?????@"
+	db "SURFBOARD@"	;joenote - give the surfboard it's fan name instead of ?????
 	db "SAFARI BALL@"
 	db "POKéDEX@"
 	db "MOON STONE@"

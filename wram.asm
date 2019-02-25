@@ -616,6 +616,9 @@ wSwitchPartyMonTempBuffer:: ; cc97
 ; temporary buffer when swapping party mon data
 	ds 10
 
+;joenote - Use the fat block at cca1 as a buffer for  moves
+wMoveBuffer::
+
 wNumStepsToTake:: ; cca1
 ; used in Pallet Town scripted movement
 	ds 49

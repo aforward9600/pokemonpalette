@@ -304,6 +304,7 @@ CeruleanCityText2:
 	jr c, .Success
 	ld hl, TM28NoRoomText
 	call PrintText
+	callba CeruleanMoveGuardOnly	;joenote - move just the guard to prevent getting stuck in the front door
 	jr .Done
 .Success
 	ld a, $1
