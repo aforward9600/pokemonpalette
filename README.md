@@ -11,6 +11,14 @@ This is a mostly-vanilla hack that focuses on fixing glitches from the original 
 Additionally, trainer AI routines are also improved and includes minimal quality-of-life improvements.  
 Think of it as what the Nintendo Virtual Console re-release of red & blue might have been.  
 
+![Title Screen](/screenshots/bgb00001.bmp?raw=true)
+
+![Rematches](/screenshots/bgb00003.bmp?raw=true)
+
+![TrainerAI](/screenshots/bgb00004.bmp?raw=true)
+
+![Marts](/screenshots/bgb00011.bmp?raw=true)
+
 
 #Summary
 -----------
