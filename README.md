@@ -1,6 +1,6 @@
 # Pokémon Shin Red and Blue
 
-Version 1.03d
+Version 1.04
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -44,8 +44,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
-- wrong level-up moves caused by move relearner
-- Move relearner removed until it can be fixed
+- Move relearner back in place
+- Some stuff shuffled to another memory bank to free up Bank $0E
+- Polywrath missing an evos_moves terminating zero
   
 #Bugfixes:
 -----------
@@ -224,6 +225,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Victreebel gains some attacks back via level
 - Ditto has its base exp yield increased from 61 to 200
 - Mewtwo can learn Swift by TM 
+- Kakuna and Metapod learn harden by level-up
 - pikachu and kadabra have their catch rates adjusted to yellow version
 - Give haunter/machoke/kadabra/graveler an evo by level option (level 45 to 48)
 - Game corner prize costs re-balanced
@@ -251,9 +253,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - the captain's text has been slightly altered for a more generic context
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
 - Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
-- Move relearner added to the saffron house below COPYCAT's house
+- Move deleter/relearner added to the saffron house below COPYCAT's house
   - Code comes from Mateo's Red++ hack. It's simply the best gen-1 implementation and I cannot come up with something better.
   - Talk to the little girl to delete moves.
+  - Talk to her tutor to relearn moves.
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):

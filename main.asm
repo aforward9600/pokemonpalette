@@ -896,14 +896,15 @@ INCLUDE "engine/battle/scroll_draw_trainer_pic.asm"
 INCLUDE "engine/battle/trainer_ai.asm"
 INCLUDE "engine/battle/draw_hud_pokeball_gfx.asm"
 
-TradingAnimationGraphics:
-INCBIN "gfx/game_boy.2bpp"
-INCBIN "gfx/link_cable.2bpp"
-TradingAnimationGraphicsEnd:
+;joenote - moved trading graphics to empty bank
+;TradingAnimationGraphics:
+;INCBIN "gfx/game_boy.2bpp"
+;INCBIN "gfx/link_cable.2bpp"
+;TradingAnimationGraphicsEnd:
 
-; Pokeball traveling through the link cable.
-TradingAnimationGraphics2: INCBIN "gfx/trade2.2bpp"
-TradingAnimationGraphics2End:
+;; Pokeball traveling through the link cable.
+;TradingAnimationGraphics2: INCBIN "gfx/trade2.2bpp"
+;TradingAnimationGraphics2End:
 
 INCLUDE "engine/evos_moves.asm"
 INCLUDE "engine/battle/moveEffects/heal_effect.asm"
@@ -2090,3 +2091,15 @@ INCLUDE "engine/evolution.asm"
 INCLUDE "engine/overworld/elevator.asm"
 
 INCLUDE "engine/items/tm_prices.asm"
+
+
+SECTION "bank2D",ROMX,BANK[$2D]	;joenote - This is a known empty bank. Going to start moving stuff here
+
+TradingAnimationGraphics:
+INCBIN "gfx/game_boy.2bpp"
+INCBIN "gfx/link_cable.2bpp"
+TradingAnimationGraphicsEnd:
+
+; Pokeball traveling through the link cable.
+TradingAnimationGraphics2: INCBIN "gfx/trade2.2bpp"
+TradingAnimationGraphics2End:

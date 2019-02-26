@@ -1412,6 +1412,7 @@ PoliwrathEvosMoves:
 	db 27, DOUBLESLAP
 	db 35, BODY_SLAM
 	db 53, HYDRO_PUMP
+	db 0
 
 WeedleEvosMoves:
 ; Evolutions
@@ -1420,11 +1421,12 @@ WeedleEvosMoves:
 ; Learnset
 	db 0
 
-KakunaEvosMoves:
+KakunaEvosMoves:	;joenote - gave harden
 ; Evolutions
 	db EV_LEVEL, 10, BEEDRILL
 	db 0
 ; Learnset
+	db 7, HARDEN
 	db 0
 
 BeedrillEvosMoves:
@@ -1519,18 +1521,19 @@ MissingNo7AEvosMoves:
 ; Learnset
 	db 0
 
-CaterpieEvosMoves:
+CaterpieEvosMoves:	
 ; Evolutions
 	db EV_LEVEL, 7, METAPOD
 	db 0
 ; Learnset
 	db 0
 
-MetapodEvosMoves:
+MetapodEvosMoves: ;joenote - gave harden
 ; Evolutions
 	db EV_LEVEL, 10, BUTTERFREE
 	db 0
 ; Learnset
+	db 7, HARDEN
 	db 0
 
 ButterfreeEvosMoves:
@@ -1808,7 +1811,6 @@ StarmieEvosMoves:
 	db 36, SWIFT
 	db 46, LIGHT_SCREEN
 	db 51, HYDRO_PUMP
-	db 0
 	db 0
 
 BulbasaurEvosMoves:
