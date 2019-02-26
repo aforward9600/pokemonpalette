@@ -596,11 +596,11 @@ MainInBattleLoop:
 	jp z, HandlePlayerMonFainted
 	call DrawHUDsAndHPBars
 ;#3 - handle enemy using move
+	ld a, $1
+	ld [H_WHOSETURN], a
 	call CheckandResetEnemyActedBit	;check to see if ai trainer already acted this turn
 	jr nz, .AIActionUsedPlayerFirst	;skip executing enemy move if it already acted
 	;else execute the enemy move
-	ld a, $1
-	ld [H_WHOSETURN], a
 	call ExecuteEnemyMove	;this function does not write 1 to H_WHOSETURN
 	ld a, [wEscapedFromBattle]
 	and a ; was Teleport, Road, or Whirlwind used to escape from battle?
@@ -641,6 +641,7 @@ ZeroLastDamage:
 	ld [hl], a
 	pop hl
 	pop af
+	ret
 	
 HandlePoisonBurnLeechSeed:
 	ld hl, wBattleMonHP
