@@ -1,6 +1,6 @@
 # Pokémon Shin Red and Blue
 
-Version 1.03
+Version 1.03d
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -44,7 +44,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
-- buyable moon stones moved to the 3f dept store vendor so they can only be purchased post-game
+- wrong level-up moves caused by move relearner
+- Move relearner removed until it can be fixed
   
 #Bugfixes:
 -----------
@@ -250,10 +251,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - the captain's text has been slightly altered for a more generic context
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
 - Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
-- Move deleter & relearner added to the saffron house below COPYCAT's house
+- Move relearner added to the saffron house below COPYCAT's house
   - Code comes from Mateo's Red++ hack. It's simply the best gen-1 implementation and I cannot come up with something better.
   - Talk to the little girl to delete moves.
-  - Talk to her tutor to relearn moves.
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):

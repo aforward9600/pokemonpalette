@@ -39,9 +39,10 @@ MoveRelearnerText1:
 	ld a, [wWhichPokemon]
 	ld b, a
 	push bc
-	ld hl, PrepareRelearnableMoveList
-	ld b, Bank(PrepareRelearnableMoveList)
-	call Bankswitch
+	;ld hl, PrepareRelearnableMoveList
+	;ld b, Bank(PrepareRelearnableMoveList)
+	;call Bankswitch
+	call PrepareRelearnableMoveList
 	ld a, [wMoveBuffer]
 	and a
 	jr nz, .chooseMove
@@ -105,6 +106,7 @@ MoveRelearnerText1:
 	call PrintText
 	jp TextScriptEnd
 
+;joenote - custom function by Mateo for move relearner
 PrepareRelearnableMoveList:	
 ; Loads relearnable move list to wRelearnableMoves.
 ; Input: party mon index = [wWhichPokemon]
@@ -206,6 +208,7 @@ PrepareRelearnableMoveList:
 	ld hl, wMoveBuffer
 	ld [hl], c
 	ret
+	
 
 MoveRelearnerGreetingText:
 	TX_FAR _MoveRelearnerGreetingText
@@ -231,4 +234,3 @@ MoveRelearnerNoMovesText:
 	TX_FAR _MoveRelearnerNoMovesText
 	db "@"
 
-INCLUDE "data/evos_moves.asm"
