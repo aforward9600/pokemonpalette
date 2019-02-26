@@ -131,7 +131,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - EXP All should now dispense the correct exp if multiple pokemon take place in a battle
   - Enemy DVs can no longer be manipulated by having it use transform multiple times
   - Fixed a bug where itemfinder can't locate objects with a zero x or y coord
-  - After defeating the cerulean burgler rocket, the guard itself always moves to prevent getting stuck in the front door
+  - After defeating the cerulean burglar rocket, the guard itself always moves to prevent getting stuck in the front door
 
 
 #TWEAKS:
