@@ -1,6 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text eol=lf
-* text2 eol=crlf
 
 # Explicitly declare text files you want to always be normalized and converted
 # to native line endings on checkout.
@@ -17,4 +16,4 @@
 *.wav binary
 *.blk binary
 *.pic binary
-*.ips text2
+*.ips binary
