@@ -564,6 +564,11 @@ ItemUseBall:
 	ld hl, ItemUseBallText08
 .printTransferredToPCText
 	call PrintText
+;joenote - add reminder that box is now full
+	ld a, [wNumInBox] ; is box full?
+	cp MONS_PER_BOX
+	ld hl, BoxFullReminderTXT
+	call PrintText
 	jr .done
 
 .oldManCaughtMon
@@ -2398,6 +2403,11 @@ BoxFullCannotThrowBallText:
 	TX_FAR _BoxFullCannotThrowBallText
 	db "@"
 
+;joenote - add a reminder that the box is full
+BoxFullReminderTXT:
+	TX_FAR _BoxIsFullReminderText
+	db "@"
+	
 ItemUseText00:
 	TX_FAR _ItemUseText001
 	TX_LINE

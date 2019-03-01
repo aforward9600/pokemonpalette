@@ -140,6 +140,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 -----------
 
 - Fixed mistakes and made adjustments to the game text
+  - When a pkmn is caught and fills the box, a reminder is printed that the box is full
   - Man in cinnabar won't mention raichu evolving
   - Koga correctly says soul badge increases speed
   - Lt. Surge correctly says thunder badge increases defense
