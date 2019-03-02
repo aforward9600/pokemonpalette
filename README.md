@@ -1,6 +1,6 @@
 # Pokémon Shin Red and Blue
 
-Version 1.04 beta3
+Version 1.04 beta2
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -47,8 +47,6 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Move relearner back in place
 - Some stuff shuffled to another memory bank to free up bankE
 - Polywrath missing an evos_moves terminating zero
-- CalcEnemyStatEXP moved to a different file and set to bankE to free space in bankF
-- SetAISentOut moved to a different file and set to bankE to free space in bankF
 
   
 #Bugfixes:
@@ -166,7 +164,6 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Trapping moves nerfed big time to prevent the new AI from cheesing them:
   - switching out of a trapping move ends it immediately and wastes its user's turn
   - trapping moves have reduced priority like Counter
-- Multi-hit moves like double kick and fury attack now calculate damage and critical hits for each attack
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
   - using a move with a dream eater effect is heavily discouraged against non-sleeping opponents
   - using a move with a dream eater effect is slightly encouraged against a sleeping opponent
