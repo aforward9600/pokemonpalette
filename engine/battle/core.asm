@@ -3547,6 +3547,22 @@ MirrorMoveCheck:
 	ld a, [wPlayerNumAttacksLeft]
 	dec a
 	ld [wPlayerNumAttacksLeft], a
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joedebug - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
+	push af	
+	push bc
+	push de
+	push hl
+	call CriticalHitTest
+	call GetDamageVarsForPlayerAttack
+	call CalculateDamage
+	call AdjustDamageForMoveType
+	call RandomizeDamage
+	pop hl
+	pop de
+	pop bc
+	pop af
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp nz, getPlayerAnimationType ; for multi-hit moves, apply attack until PlayerNumAttacksLeft hits 0 or the enemy faints.
 	                             ; damage calculation and accuracy tests only happen for the first hit
 	res ATTACKING_MULTIPLE_TIMES, [hl] ; clear attacking multiple times status when all attacks are over
@@ -6393,6 +6409,24 @@ EnemyCheckIfMirrorMoveEffect:
 	ld hl, wEnemyNumAttacksLeft
 	dec [hl]
 	pop hl
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joedebug - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
+	push af	;joedebug
+	push bc
+	push de
+	push hl
+	call CriticalHitTest
+	call SwapPlayerAndEnemyLevels
+	call GetDamageVarsForEnemyAttack
+	call SwapPlayerAndEnemyLevels
+	call CalculateDamage
+	call AdjustDamageForMoveType
+	call RandomizeDamage
+	pop hl
+	pop de
+	pop bc
+	pop af
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp nz, GetEnemyAnimationType
 	res ATTACKING_MULTIPLE_TIMES, [hl] ; mon is no longer hitting multiple times
 	ld hl, HitXTimesText
@@ -6843,7 +6877,7 @@ LoadEnemyMonData:
 	
 ;the pkmn is out for the first time, so give it some statExp
 	push de	;preserve de
-	call CalcEnemyStatEXP	;based on the enemy pkmn level, get a stat exp amount into de 
+	call CalcEnemyStatEXP	;based on the enemy pkmn level, get a stat exp amount into de (function in unused_stats_functions.asm)
 	inc hl ; move hl forward one position to MSB of first stat exp
 	ld b, $05	;load loops into b to loop through the five stats
 .writeStatExp_loop
@@ -7002,7 +7036,7 @@ LoadEnemyMonData:
 	cp $2 ; is it a trainer battle?
 	jr nz, .end_set_sendout
 	ld a, [wWhichPokemon]	
-	call SetAISentOut
+	call SetAISentOut	;joenote - custom function in unused_stats_functions.asm
 .end_set_sendout
 	pop af
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7026,111 +7060,6 @@ RandTrainerDV:
 	;and $EE	;makes the nybbles of a even
 	add	$88		;add 1000 1000 to a to make min DVs 8
 	ret		;return back
-	
-;joenote - custom functions for determining which trainerAI pkmn have already been sent out before
-;a=party position of pkmn (like wWhichPokemon). If checking, zero flag gives bit state (1 means sent out already)
-CheckAISentOut:
-	cp $05
-	jr z, .party5
-	cp $04
-	jr z, .party4
-	cp $03
-	jr z, .party3
-	cp $02
-	jr z, .party2
-	cp $01
-	jr z, .party1
-	jr .party0
-.party5
-	ld a, [wFontLoaded]
-	bit 6, a
-	jr .partyret
-.party4
-	ld a, [wFontLoaded]
-	bit 5, a
-	jr .partyret
-.party3
-	ld a, [wFontLoaded]
-	bit 4, a
-	jr .partyret
-.party2
-	ld a, [wFontLoaded]
-	bit 3, a
-	jr .partyret
-.party1
-	ld a, [wFontLoaded]
-	bit 2, a
-	jr .partyret
-.party0
-	ld a, [wFontLoaded]
-	bit 1, a
-.partyret
-	ret
-	
-SetAISentOut:
-	cp $05
-	jr z, .party5
-	cp $04
-	jr z, .party4
-	cp $03
-	jr z, .party3
-	cp $02
-	jr z, .party2
-	cp $01
-	jr z, .party1
-	jr .party0
-.party5
-	ld a, [wFontLoaded]
-	set 6, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party4
-	ld a, [wFontLoaded]
-	set 5, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party3
-	ld a, [wFontLoaded]
-	set 4, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party2
-	ld a, [wFontLoaded]
-	set 3, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party1
-	ld a, [wFontLoaded]
-	set 2, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party0
-	ld a, [wFontLoaded]
-	set 1, a
-	ld [wFontLoaded], a
-.partyret
-	ret
-
-;joenote - this function puts 648 statexp per enemy pkmn level into de
-;requires a, b, de, and wCurEnemyLVL
-CalcEnemyStatEXP:
-;note that 648 in hex is the two-byte $0288
-	ld a, [wCurEnemyLVL]
-	ld b, a	;put the enemy's level into b. it will be used as a loop counter
-	xor a	;make a = 0
-	ld d, a	;clear d (use for MSB)
-	ld e, a ;clear e (use for LSB)
-.loop
-	ld a, e ;put e into a 
-	add $88	;add $88 to a (if this overflows the c flag is set)
-	ld e, a ;put a back into e
-	ld a, d ;put d into a 
-	adc $02 ;add $02 + carry bit to a (carry bit adds an extra 1 if e overflowed)
-	ld d, a ;put a back into d 
-	dec b; decrement b 
-	jr nz, .loop	;loop back if b is not zero
-	ret
-	
 
 ; calls BattleTransition to show the battle transition animation and initializes some battle variables
 DoBattleTransitionAndInitBattleVariables:
