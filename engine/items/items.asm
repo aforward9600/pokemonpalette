@@ -567,6 +567,7 @@ ItemUseBall:
 ;joenote - add reminder that box is now full
 	ld a, [wNumInBox] ; is box full?
 	cp MONS_PER_BOX
+	jr nz, .done
 	ld hl, BoxFullReminderTXT
 	call PrintText
 	jr .done
