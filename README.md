@@ -1,6 +1,6 @@
 # Pokémon Shin Red and Blue
 
-Version 1.04 beta2
+Version 1.05 beta0
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -31,6 +31,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Though difficult for a select few, each pkmn can be obtained multiple times
   - The uniquness between red & blue is still preserved in encounter rarity
 - Minor quality-of-life improvements
+  - Move relearner and deleter
   - Nearly all trainers can be rematched just by talking to them
   - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
   - Stone evolutions regain some level-up moves
@@ -39,14 +40,18 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - After the elite-4, a new vendor opens up in celadon allowing the purchase of normally unique items
   - Added some special trainer battles as fun little easter eggs
 - Compatible with Pokemon Stadium
-- Can use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
+- Might be possible to use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
 
 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
-- Move relearner back in place
-- Some stuff shuffled to another memory bank to free up bankE
-- Polywrath missing an evos_moves terminating zero
+- Some custom functions shuffled into bank2D to free memory in bankF
+- unused_stats_functions.asm renamed and put to actual use for custom functions
+
+
+#New features from last version:
+-----------
+- Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
 
   
 #Bugfixes:
@@ -161,6 +166,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
  
 - Stat-down moves no longer have a 25% miss chance in AI matches
 - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+- Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
 - Trapping moves nerfed big time to prevent the new AI from cheesing them:
   - switching out of a trapping move ends it immediately and wastes its user's turn
   - trapping moves have reduced priority like Counter

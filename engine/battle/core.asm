@@ -2124,7 +2124,7 @@ DrawEnemyHUDAndHPBar:
 	pop hl
 	jr nz, .skipPrintLevel ; if the mon has a status condition, skip printing the level
 	ld a, [wEnemyMonLevel]
-	;ld a, [wUnusedD155]	;joedebug - use this for printing bytes instead of enemy level
+	;ld a, [wAudioROMBank]	;joedebug - use this for printing bytes instead of enemy level
 	ld [wLoadedMonLevel], a
 	call PrintLevel
 .skipPrintLevel
@@ -3548,20 +3548,20 @@ MirrorMoveCheck:
 	dec a
 	ld [wPlayerNumAttacksLeft], a
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joedebug - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
-	;push af	
-	;push bc
-	;push de
-	;push hl
-	;call CriticalHitTest
-	;call GetDamageVarsForPlayerAttack
-	;call CalculateDamage
-	;call AdjustDamageForMoveType
-	;call RandomizeDamage
-	;pop hl
-	;pop de
-	;pop bc
-	;pop af
+	;joedebug1 - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
+	push af	
+	push bc
+	push de
+	push hl
+	call CriticalHitTest
+	call GetDamageVarsForPlayerAttack
+	call CalculateDamage
+	call AdjustDamageForMoveType
+	call RandomizeDamage
+	pop hl
+	pop de
+	pop bc
+	pop af
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp nz, getPlayerAnimationType ; for multi-hit moves, apply attack until PlayerNumAttacksLeft hits 0 or the enemy faints.
 	                             ; damage calculation and accuracy tests only happen for the first hit
@@ -6410,22 +6410,22 @@ EnemyCheckIfMirrorMoveEffect:
 	dec [hl]
 	pop hl
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joedebug - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
-	;push af	;joedebug
-	;push bc
-	;push de
-	;push hl
-	;call CriticalHitTest
-	;call SwapPlayerAndEnemyLevels
-	;call GetDamageVarsForEnemyAttack
-	;call SwapPlayerAndEnemyLevels
-	;call CalculateDamage
-	;call AdjustDamageForMoveType
-	;call RandomizeDamage
-	;pop hl
-	;pop de
-	;pop bc
-	;pop af
+	;joedebug1 - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
+	push af	
+	push bc
+	push de
+	push hl
+	call CriticalHitTest
+	call SwapPlayerAndEnemyLevels
+	call GetDamageVarsForEnemyAttack
+	call SwapPlayerAndEnemyLevels
+	call CalculateDamage
+	call AdjustDamageForMoveType
+	call RandomizeDamage
+	pop hl
+	pop de
+	pop bc
+	pop af
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp nz, GetEnemyAnimationType
 	res ATTACKING_MULTIPLE_TIMES, [hl] ; mon is no longer hitting multiple times
@@ -6816,8 +6816,14 @@ LoadEnemyMonData:
 ;lets see if it's been sent out before
 	push bc
 	ld c, a
-	ld a, [wWhichPokemon]
-	call CheckAISentOut
+	
+	
+	push bc
+	push hl
+	callba CheckAISentOut
+	pop hl
+	pop bc
+	
 	ld a, c
 	pop bc
 	jr nz, .storeDVs	;if bit for that pkmn position is already set, then store its DVs that were just loaded
@@ -6871,8 +6877,12 @@ LoadEnemyMonData:
 	ld [wUnusedD153 + 1], a
 	
 ;has this pkmn been sent out before? If so, then it already has statExp values
-	ld a, [wWhichPokemon]	
-	call CheckAISentOut
+	
+	push bc
+	push hl
+	callba CheckAISentOut
+	pop hl
+	pop bc
 	jr nz, .noloops
 	
 ;the pkmn is out for the first time, so give it some statExp
@@ -6934,8 +6944,12 @@ LoadEnemyMonData:
 	cp $2 ; is it a trainer battle?
 	jr nz, .nottrainer3
 	
-	ld a, [wWhichPokemon]	
-	call CheckAISentOut	;has pkmn already been sent out?
+	;has pkmn already been sent out?
+	push bc
+	push hl
+	callba CheckAISentOut
+	pop hl
+	pop bc
 	jr nz, .nottrainer3
 	
 ;set hp equal to max hp
@@ -7035,8 +7049,7 @@ LoadEnemyMonData:
 	ld a, [wIsInBattle]
 	cp $2 ; is it a trainer battle?
 	jr nz, .end_set_sendout
-	ld a, [wWhichPokemon]	
-	call SetAISentOut	;joenote - custom function 
+	callba SetAISentOut	;joenote - custom function
 .end_set_sendout
 	pop af
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7164,7 +7177,7 @@ LoadPlayerBackPic:
 	coord hl, 1, 5
 	predef_jump CopyUncompressedPicToTilemap
 
-; does nothing since no stats are ever selected (barring glitches)
+; does nothing since no stats are ever selected (barring glitches)	joenote - removed since it's taking up space
 DoubleOrHalveSelectedStats:
 	callab DoubleSelectedStats
 	jpab HalveSelectedStats
@@ -9512,89 +9525,7 @@ CheckLowerEnemyPriority:
 	cp TRAPPING_EFFECT
 	ret
 	
-;joenote - custom functions for determining which trainerAI pkmn have already been sent out before
-;a=party position of pkmn (like wWhichPokemon). If checking, zero flag gives bit state (1 means sent out already)
-CheckAISentOut:
-	cp $05
-	jr z, .party5
-	cp $04
-	jr z, .party4
-	cp $03
-	jr z, .party3
-	cp $02
-	jr z, .party2
-	cp $01
-	jr z, .party1
-	jr .party0
-.party5
-	ld a, [wFontLoaded]
-	bit 6, a
-	jr .partyret
-.party4
-	ld a, [wFontLoaded]
-	bit 5, a
-	jr .partyret
-.party3
-	ld a, [wFontLoaded]
-	bit 4, a
-	jr .partyret
-.party2
-	ld a, [wFontLoaded]
-	bit 3, a
-	jr .partyret
-.party1
-	ld a, [wFontLoaded]
-	bit 2, a
-	jr .partyret
-.party0
-	ld a, [wFontLoaded]
-	bit 1, a
-.partyret
-	ret
-	
-SetAISentOut:
-	cp $05
-	jr z, .party5
-	cp $04
-	jr z, .party4
-	cp $03
-	jr z, .party3
-	cp $02
-	jr z, .party2
-	cp $01
-	jr z, .party1
-	jr .party0
-.party5
-	ld a, [wFontLoaded]
-	set 6, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party4
-	ld a, [wFontLoaded]
-	set 5, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party3
-	ld a, [wFontLoaded]
-	set 4, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party2
-	ld a, [wFontLoaded]
-	set 3, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party1
-	ld a, [wFontLoaded]
-	set 2, a
-	ld [wFontLoaded], a
-	jr .partyret
-.party0
-	ld a, [wFontLoaded]
-	set 1, a
-	ld [wFontLoaded], a
-.partyret
-	ret
+
 
 ;joenote - this function puts 648 statexp per enemy pkmn level into de
 ;requires a, b, de, and wCurEnemyLVL

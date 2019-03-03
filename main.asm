@@ -891,7 +891,7 @@ SECTION "bankE",ROMX,BANK[$E]
 INCLUDE "data/moves.asm"
 BaseStats: INCLUDE "data/base_stats.asm"
 INCLUDE "data/cries.asm"
-INCLUDE "engine/battle/unused_stats_functions.asm"
+;INCLUDE "engine/battle/unused_stats_functions.asm" ;joenote - putting this back into use and moving to bank 2d
 INCLUDE "engine/battle/scroll_draw_trainer_pic.asm"
 INCLUDE "engine/battle/trainer_ai.asm"
 INCLUDE "engine/battle/draw_hud_pokeball_gfx.asm"
@@ -2095,6 +2095,8 @@ INCLUDE "engine/items/tm_prices.asm"
 
 SECTION "bank2D",ROMX,BANK[$2D]	;joenote - This is a known empty bank. Going to start moving stuff here
 
+INCLUDE "engine/battle/stats_functions.asm"	
+
 TradingAnimationGraphics:
 INCBIN "gfx/game_boy.2bpp"
 INCBIN "gfx/link_cable.2bpp"
@@ -2103,3 +2105,4 @@ TradingAnimationGraphicsEnd:
 ; Pokeball traveling through the link cable.
 TradingAnimationGraphics2: INCBIN "gfx/trade2.2bpp"
 TradingAnimationGraphics2End:
+
