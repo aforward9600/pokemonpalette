@@ -32,6 +32,29 @@ GainExperience:
 	ld b, a ; enemy mon base stat
 	ld a, [de] ; stat exp
 	add b ; add enemy mon base state to stat exp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - bonus statexp
+	;if enemy level > 100, give 255 stat exp
+	push bc
+	ld c, a
+	ld a, [wEnemyMonLevel]
+	cp 101
+	ld a, c
+	pop bc
+	jr c, .nobonus1
+	ld a, $FF
+.nobonus1
+	;if trainer battle, give double stat exp
+	push bc
+	ld c, a
+	ld a, [wIsInBattle]
+	dec a ; is it a trainer battle?
+	ld a, c
+	pop bc
+	jr z, .nobonus2
+	add b
+.nobonus2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [de], a
 	jr nc, .nextBaseStat
 ; if there was a carry, increment the upper byte
@@ -58,6 +81,19 @@ GainExperience:
 	ld [H_MULTIPLICAND], a
 	ld [H_MULTIPLICAND + 1], a
 	ld a, [wEnemyMonBaseExp]
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - bonus exp
+	;if enemy level > 100, it has a base exp yield of 255
+	push bc
+	ld c, a
+	ld a, [wEnemyMonLevel]
+	cp 101
+	ld a, c
+	pop bc
+	jr c, .nobonus3
+	ld a, $FF
+.nobonus3
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [H_MULTIPLICAND + 2], a
 	ld a, [wEnemyMonLevel]
 	ld [H_MULTIPLIER], a

@@ -47,12 +47,13 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 -----------
 - Some custom functions shuffled into bank2D to free memory in bankF
 - unused_stats_functions.asm renamed and put to actual use for custom functions
+- Trainer pkmn give double stat exp
+- pkmn with levels > 100 give 255 stat exp for each stat
 
-
-#New features from last version:
+#New features & adjustments from last version:
 -----------
 - Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
-
+- Ditto base exp yield back to 61
   
 #Bugfixes:
 -----------
@@ -231,7 +232,6 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Exeggcutor gains some attacks back via level
 - Vileplume gains some attacks back via level
 - Victreebel gains some attacks back via level
-- Ditto has its base exp yield increased from 61 to 200
 - Mewtwo can learn Swift by TM 
 - Kakuna and Metapod learn harden by level-up
 - pikachu and kadabra have their catch rates adjusted to yellow version
@@ -265,6 +265,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Code comes from Mateo's Red++ hack. It's simply the best gen-1 implementation and I cannot come up with something better.
   - Talk to the little girl to delete moves.
   - Talk to her tutor to relearn moves.
+- Trainer pkmn give double stat exp
+- Pkmn with levels > 100 give 255 stat exp for each stat
+- Pkmn with levels > 100 have 255 base exp yield
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):

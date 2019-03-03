@@ -7,7 +7,7 @@ db 48 ; base special
 db NORMAL ; species type 1
 db NORMAL ; species type 2
 db 35 ; catch rate
-db 200 ; base exp yield
+db 61 ; base exp yield
 INCBIN "pic/bmon/ditto.pic",0,1 ; 55, sprite dimensions
 dw DittoPicFront
 dw DittoPicBack
