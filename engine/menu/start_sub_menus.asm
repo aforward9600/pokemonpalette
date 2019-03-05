@@ -340,6 +340,8 @@ StartMenu_Item:
 	ld a, [wcf91]
 	cp BICYCLE
 	jp z, .useOrTossItem
+	cp SURFBOARD	;joenote - fixing surfboard glitch freeze
+	jp z, .useOrTossItem
 .notBicycle1
 	ld a, USE_TOSS_MENU_TEMPLATE
 	ld [wTextBoxID], a
@@ -369,8 +371,11 @@ StartMenu_Item:
 	call GetItemName
 	call CopyStringToCF4B ; copy name to wcf4b
 	ld a, [wcf91]
+	cp SURFBOARD	;joenote - fixing surfboard glitch freeze, and cannot use surfboard if being forced to ride bike
+	jr z, .is_surfboard
 	cp BICYCLE
 	jr nz, .notBicycle2
+.is_surfboard
 	ld a, [wd732]
 	bit 5, a
 	jr z, .useItem_closeMenu

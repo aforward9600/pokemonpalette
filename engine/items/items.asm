@@ -1286,6 +1286,17 @@ ItemUseMedicine:
 	jr nc, .noCarry2
 	inc h
 .noCarry2
+	CheckEvent EVENT_908	;joenote - has elite 4 been beaten?
+	jr z, .e4notbeaten 	;if not, do default compare
+	;else remove the vitamin limiter
+	ld a, 10
+	ld b, a
+	ld a, [hl] ; a = MSB of stat experience of the appropriate stat
+	cp $F5 ; is there already at least 62720 stat experience?
+	jr nc, .vitaminNoEffect ; if so, vitamins can't add any more
+	add b ; add 2560 (256 * 10) stat experience
+	jr .noCarry3	;carry should be impossible here
+.e4notbeaten
 	ld a, 10
 	ld b, a
 	ld a, [hl] ; a = MSB of stat experience of the appropriate stat

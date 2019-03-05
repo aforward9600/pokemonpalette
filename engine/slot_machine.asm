@@ -276,7 +276,7 @@ SlotMachine_StopOrAnimWheel3:
 	ld de, wSlotMachineWheel3Offset
 	ld a, [de]
 	rra
-	jr nc, .animWheel ; check that a symbol is centred in the wheel
+	jr nc, .animWheel ; check that a symbol is centered in the wheel
 ; wheel 3 stops as soon as possible
 	scf
 	ret
@@ -304,7 +304,8 @@ SlotMachine_StopWheel1Early:
 .loop
 	ld a, [hli]
 	cp SLOTS7 >> 8
-	jr c, .stopWheel ; condition never true
+	;jr c, .stopWheel ; condition never true
+	;joenote - making this true
 	dec c
 	jr nz, .loop
 	ret

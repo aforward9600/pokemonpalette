@@ -2311,18 +2311,23 @@ TalkToTrainer::
 	and a
 	jr z, .trainerNotYetFought     ; test trainer's flag
 ;;;;;;;joenote - have a rematch with most trainers?
+	CheckEvent EVENT_909
+	jr nz, .skip_rematch_choice
 	ld hl, RematchTrainerText
 	call PrintText
 	call NoYesChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .trainerNotYetFought
+.skip_rematch_choice
+	ResetEvent EVENT_909
 ;;;;;;;
 	ld a, $6
 	call ReadTrainerHeaderInfo     ; print after battle text
 	jp PrintText
 	
 .trainerNotYetFought
+	SetEvent EVENT_909	;joenote - make it so you cannot rematch a defeated trainer until talking to any defeated trainer
 	ld a, $4
 	call ReadTrainerHeaderInfo     ; print before battle text
 	call PrintText
@@ -2600,13 +2605,14 @@ TrainerEndBattleText::
 ; only engage withe trainer if the player is not already
 ; engaged with another trainer
 ; XXX unused?
-CheckIfAlreadyEngaged::
-	ld a, [wFlags_0xcd60]
-	bit 0, a
-	ret nz
-	call EngageMapTrainer
-	xor a
-	ret
+;CheckIfAlreadyEngaged::
+;	ld a, [wFlags_0xcd60]
+;	bit 0, a
+;	ret nz
+;	call EngageMapTrainer
+;	xor a
+;	ret
+;joenote - removing to free up space
 
 PlayTrainerMusic::
 	ld a, [wEngagedTrainerClass]
@@ -3033,12 +3039,13 @@ YesNoChoicePokeCenter::
 	lb bc, 8, 12
 	jr DisplayYesNoChoice
 
-WideYesNoChoice:: ; unused
-	call SaveScreenTilesToBuffer1
-	ld a, WIDE_YES_NO_MENU
-	ld [wTwoOptionMenuID], a
-	coord hl, 12, 7
-	lb bc, 8, 13
+;WideYesNoChoice:: ; unused
+;	call SaveScreenTilesToBuffer1
+;	ld a, WIDE_YES_NO_MENU
+;	ld [wTwoOptionMenuID], a
+;	coord hl, 12, 7
+;	lb bc, 8, 13
+;joenote - removing to free up space
 
 DisplayYesNoChoice::
 	ld a, TWO_OPTION_MENU

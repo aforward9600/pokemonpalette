@@ -1315,6 +1315,26 @@ AIUseDireHit:
 
 AICheckIfHPBelowFraction:
 ; return carry if enemy trainer's current HP is below 1 / a of the maximum
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - handle an 'a' value of 1
+	cp 1
+	jr nz, .not_one
+	push bc
+	ld a, [wEnemyMonMaxHP]
+	ld b, a
+	ld a, [wEnemyMonHP]
+	cp b	;a = HP MSB an b = MAXHP MSB so do a - b and set carry if negative
+	pop bc
+	ret c
+	push bc
+	ld a, [wEnemyMonMaxHP + 1]
+	ld b, a
+	ld a, [wEnemyMonHP + 1]
+	cp b	;a = HP LSB an b = MAXHP LSB so do a - b and set carry if negative
+	pop bc
+	ret
+.not_one
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [H_DIVISOR], a
 	ld hl, wEnemyMonMaxHP
 	ld a, [hli]

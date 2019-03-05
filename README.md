@@ -31,14 +31,21 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Though difficult for a select few, each pkmn can be obtained multiple times
   - The uniquness between red & blue is still preserved in encounter rarity
 - Minor quality-of-life improvements
+  - When a pkmn is caught and fills the box, a reminder is printed that the box is full
   - Move relearner and deleter
-  - Nearly all trainers can be rematched just by talking to them
+  - Nearly all trainers can be rematched just by talking to them a 2nd time after their most recent defeat
+  - Due to on-demand rematches, you could do a pseudo-"new game+" by boxing your pkmn and rematching everyone in order
   - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
   - Stone evolutions regain some level-up moves
   - Yellow-version move lists have been integrated
   - All TMs can be repurchased as they are strategically scattered across all the Kanto pokemarts
   - After the elite-4, a new vendor opens up in celadon allowing the purchase of normally unique items
   - Added some special trainer battles as fun little easter eggs
+  - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+  - Trapping moves now have reduced priority and they end (using up the turn) if the target switches
+    - Prevents PP underflow glitch
+	- A necessary change with the trainer improvements
+	- Prevents merciless abuse of wrap by ekans trainers that caused unwinnable battles without level-grinding
 - Compatible with Pokemon Stadium
 - Might be possible to use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
 
@@ -47,13 +54,30 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 -----------
 - Some custom functions shuffled into bank2D to free memory in bankF
 - unused_stats_functions.asm renamed and put to actual use for custom functions
-- Trainer pkmn give double stat exp
-- pkmn with levels > 100 give 255 stat exp for each stat
+- trainer stat exp calculation function made more efficient
+- On most trainers, the rematch text now only plays the second time after talking to a defeated generic trainer
+  - Example: after defeating a lass and talking to her, she will play her post-battle text. 
+    - Talk to her again to get the rematch option.
+  - Example: after defeating a lass, talking to a different defeated youngster will play his post-battle text. 
+    - Talk to either of them again to get the rematch text
+  - This is done so that the rematch text does not interfere with post-battle text that plays automatically.
+- The AICheckIfHPBelowFraction now handles a fraction of 1/1, preventing giving Lorelei's dewgong tons of hp every turn
+ 
 
 #New features & adjustments from last version:
 -----------
 - Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
 - Ditto base exp yield back to 61
+- Game corner reel bug fixed
+- Trainer pkmn give double stat exp
+- Pkmn with levels > 100 give 255 stat exp for each stat and have a base exp yield of 255
+- Surfboard bugfixes:
+  - cannot use the surfboard if being forced to ride the bicycle
+  - no longer freezes the game when using it from the item menu to get back on land
+  - the menu text will glitch a little, but only for a split-second and does not impact gameplay
+- The move relearner has been expanded to detect default level-0 moves
+- The limiter on vitamins is raised to a max of 62720 stat exp after the elite 4 have been beaten
+
   
 #Bugfixes:
 -----------
@@ -141,6 +165,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Enemy DVs can no longer be manipulated by having it use transform multiple times
   - Fixed a bug where itemfinder can't locate objects with a zero x or y coord
   - After defeating the cerulean burglar rocket, the guard itself always moves to prevent getting stuck in the front door
+  - Game corner reel bug fixed
+  - Surfboard bugfixes:
+	  - cannot use the surfboard if being forced to ride the bicycle
+	  - no longer freezes the game when using it from the item menu to get back on land
+	  - the menu text will glitch a little, but only for a split-second and does not impact gameplay
 
 
 #TWEAKS:
@@ -160,7 +189,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - New student in viridian school explains ohko moves
   - Cerulean badge-house guy has updated text
   - Prof. oak's speech plays the correct Nidorino cry
-  - Text for using a TM/HM now refers to just the "machine" rather than just "TM"
+  - Text for using a TM/HM now refers to the "machine" rather than just "TM"
   - Fixed daycare man capitalization
   - Clarified "chem" to mean grade in chemistry
   - Fixed capitalization in safari zone entrance
@@ -265,6 +294,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Code comes from Mateo's Red++ hack. It's simply the best gen-1 implementation and I cannot come up with something better.
   - Talk to the little girl to delete moves.
   - Talk to her tutor to relearn moves.
+  - I have expanded Mateo's code so that it also detects default level-0 moves from the baseStats header files.
+- The limiter on vitamins is raised to a max of 62720 stat exp after the elite 4 have been beaten
 - Trainer pkmn give double stat exp
 - Pkmn with levels > 100 give 255 stat exp for each stat
 - Pkmn with levels > 100 have 255 base exp yield
