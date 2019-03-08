@@ -615,33 +615,6 @@ MainInBattleLoop:
 	call CheckNumAttacksLeft
 	jp MainInBattleLoop
 
-;joenote - function for checking and reseting the AI's already-acted bit
-CheckandResetEnemyActedBit:
-	ld a, [wUnusedC000]
-	bit 1, a	;check a for already-acted bit (sets or clears zero flag)
-	res 1, a ; resets the already-acted bit (does not affect flags)
-	ld [wUnusedC000], a
-	ret 
-
-;joenote - function for setting the AI's already-acted bit
-SetEnemyActedBit:
-	ld a, [wUnusedC000]
-	set 1, a ; sets the already-acted bit
-	ld [wUnusedC000], a
-	ret
-
-;joenote - this sets the last damage dealt to zero
-;meant for fixing counter glitches
-ZeroLastDamage:
-	push af
-	push hl
-	ld a, $00
-	ld hl, wDamage
-	ld [hli], a
-	ld [hl], a
-	pop hl
-	pop af
-	ret
 	
 HandlePoisonBurnLeechSeed:
 	ld hl, wBattleMonHP
@@ -2662,6 +2635,7 @@ SwitchPlayerMon:	;joedebug - this is where the player switches
 	ld [wEnemyNumAttacksLeft], a
 	ld a, $FF
 	ld [wEnemySelectedMove], a
+	call SetEnemyActedBit
 .preparewithdraw
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	callab RetreatMon
@@ -9512,19 +9486,23 @@ PlayBattleAnimationGotID:
 
 CheckLowerPlayerPriority:	;joenote - custom functions to handle lower move priority. Sets zero flag if priority lowered.
 	ld a, [wPlayerSelectedMove]
-	cp COUNTER
-	ret z
-	ld a, [wPlayerMoveEffect]
-	cp TRAPPING_EFFECT
+	call LowPriorityMoves
 	ret
 CheckLowerEnemyPriority:
 	ld a, [wEnemySelectedMove]
+	call LowPriorityMoves
+	ret
+LowPriorityMoves:
 	cp COUNTER
 	ret z
-	ld a, [wEnemyMoveEffect]
-	cp TRAPPING_EFFECT
+	cp BIND
+	ret z
+	cp WRAP
+	ret z
+	cp FIRE_SPIN
+	ret z
+	cp CLAMP
 	ret
-	
 
 
 ;joenote - this function puts statexp per enemy pkmn level into de
@@ -9587,3 +9565,31 @@ RandTrainerDV:
 	;and $EE	;makes the nybbles of a even
 	add	$88		;add 1000 1000 to a to make min DVs 8
 	ret		;return back
+
+;joenote - function for checking and reseting the AI's already-acted bit
+CheckandResetEnemyActedBit:
+	ld a, [wUnusedC000]
+	bit 1, a	;check a for already-acted bit (sets or clears zero flag)
+	res 1, a ; resets the already-acted bit (does not affect flags)
+	ld [wUnusedC000], a
+	ret 
+
+;joenote - function for setting the AI's already-acted bit
+SetEnemyActedBit:
+	ld a, [wUnusedC000]
+	set 1, a ; sets the already-acted bit
+	ld [wUnusedC000], a
+	ret
+
+;joenote - this sets the last damage dealt to zero
+;meant for fixing counter glitches
+ZeroLastDamage:
+	push af
+	push hl
+	ld a, $00
+	ld hl, wDamage
+	ld [hli], a
+	ld [hl], a
+	pop hl
+	pop af
+	ret

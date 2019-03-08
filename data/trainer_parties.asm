@@ -472,6 +472,8 @@ ProfOakData:
 	db $FF,66,TAUROS,67,EXEGGUTOR,68,ARCANINE,69,CHARIZARD,70,GYARADOS,0
 ChiefData:
 ; none
+;joenote - special fight with the silph chief
+	db $FF,72,KANGASKHAN,73,RHYDON,73,GOLDUCK,74,PINSIR,74,SCYTHER,76,TAUROS,0
 ScientistData:
 ; Silph Co. 2F
 	db 26,GRIMER,WEEZING,KOFFING,WEEZING,0
@@ -622,6 +624,8 @@ GentlemanData:
 	db 23,PIKACHU,0
 ; SS Anne 2F Rooms
 	db 17,GROWLITHE,PONYTA,0
+;joenote - special fight with mr fuji
+	db $FF,69,MAROWAK,70,OMASTAR,70,KABUTOPS,71,AERODACTYL,73,ARCANINE,100,DITTO,0
 ; Unused
 	;db 48,PRIMEAPE,0
 Green2Data:

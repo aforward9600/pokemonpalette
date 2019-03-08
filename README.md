@@ -1,4 +1,4 @@
-# Pokémon Shin Red and Blue
+# Shin Pokémon Red and Blue
 
 Version 1.05 beta0
 
@@ -61,8 +61,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Example: after defeating a lass, talking to a different defeated youngster will play his post-battle text. 
     - Talk to either of them again to get the rematch text
   - This is done so that the rematch text does not interfere with post-battle text that plays automatically.
-- The AICheckIfHPBelowFraction now handles a fraction of 1/1, preventing giving Lorelei's dewgong tons of hp every turn
- 
+- The AICheckIfHPBelowFraction now handles a fraction of 1/1, preventing giving Lorelei's dewgong tons of hp every turn.
+- Trapping move changes & turn priority now being applied correctly in trainer battles.
 
 #New features & adjustments from last version:
 -----------
