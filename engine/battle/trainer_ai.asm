@@ -621,6 +621,99 @@ AIMoveChoiceModification3:
 	
 AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer switching
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;high chance to switch if afflicted with toxic-style poison
+	ld a, [wEnemyBattleStatus3]
+	bit 0, a	;check a for the toxic bit (sets or clears zero flag)
+	jr z, .skipSwitchToxicEnd	;not badly poisoned if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $01	;use only bit 0
+	jp z, .setSwitch	;switch if zero
+.skipSwitchToxicEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;chance to switch if stuck in a trapping move
+	ld a, [wPlayerBattleStatus1]
+	bit 5, a	;check a for trapping move bit (sets or clears zero flag)
+	jr z, .skipSwitchTrapEnd	;not trapped if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $03	;use only bits 0 to 1 for a random number of 0 to 3
+	jp z, .setSwitch	;switch if zero
+.skipSwitchTrapEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;chance to switch if afflicted with confusion
+	ld a, [wEnemyBattleStatus1]
+	bit 7, a	;check a for the confusion bit (sets or clears zero flag)
+	jr z, .skipSwitchConfuseEnd	;not confused if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $03	;use only bits 0 to 1 for a random number of 0 to 3
+	jp z, .setSwitch	;switch if zero
+.skipSwitchConfuseEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;slight chance to switch if afflicted with leech seed
+	ld a, [wEnemyBattleStatus2]
+	bit 7, a	;check a for the leech seed bit (sets or clears zero flag)
+	jr z, .skipSwitchSeedEnd	;not seeded if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $07	;use only bits 0 to 2 for a random number of 0 to 7
+	jp z, .setSwitch	;switch if zero
+.skipSwitchSeedEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;slight chance to switch if move disabled
+	ld a, [wEnemyDisabledMove] ; get disabled move (if any)
+	swap a
+	and $f
+	jr z, .skipSwitchDisableEnd	;no disabled moves if zero flag set
+	call Random	;put a random number in 'a' between 0 and 255
+	and $07	;use only bits 0 to 2 for a random number of 0 to 7
+	jp z, .setSwitch	;if zero flag is set, switch pkmn because 'a' is zero
+.skipSwitchDisableEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;chance to switch if stat mods are too low
+	push bc
+	;use b for storage and a for loading
+	ld a, [wEnemyMonAttackMod]	
+	ld b, a 
+	ld a, [wEnemyMonDefenseMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, [wEnemyMonSpeedMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, [wEnemyMonSpecialMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, [wEnemyMonAccuracyMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, [wEnemyMonEvasionMod]
+	cp b
+	call c, CondLDBA	;if a < b, then load a into b
+	ld a, b	;but b back into a
+	pop bc
+	cp $07	;is the lowest stat mod the normal vale of 7?
+	jr nc, .skipSwitchModEnd	;lowest stat mod is not negative (value below 7)
+	push bc
+	ld b, a	;put the lowest mod into b
+	ld a, $07	; put 7 into a
+	sub b	;a = 7 - b, so a becomes 6 (-6 stages) to 1 (-1 stage)
+	ld b, a	;put a back into b
+	call Random	;put a random number in 'a' between 0 and 255
+	and $07	;use only bits 0 to 2 for a random number of 0 to 7
+	cp b
+	pop bc
+	jp c, .setSwitch	;switch if random number < mod 1 (-1 stage) to 6 (-6 stages)
+.skipSwitchModEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;do not switch if this pkmn has been switched out before (trapping moves & other stuff prioritized above this)
+	callba CheckAISwitched
+	jp nz, .skipSwitchEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;switch if HP is low. lower HP has higher chance of switching
 	ld a, 3	;
 	call AICheckIfHPBelowFraction
@@ -660,57 +753,6 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 .skipSwitchEffectiveEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;slight chance to switch if move disabled
-	ld a, [wEnemyDisabledMove] ; get disabled move (if any)
-	swap a
-	and $f
-	jr z, .skipSwitchDisableEnd	;no disabled moves if zero flag set
-	call Random	;put a random number in 'a' between 0 and 255
-	and $07	;use only bits 0 to 2 for a random number of 0 to 7
-	jp z, .setSwitch	;if zero flag is set, switch pkmn because 'a' is zero
-.skipSwitchDisableEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;slight chance to switch if afflicted with leech seed
-	ld a, [wEnemyBattleStatus2]
-	bit 7, a	;check a for the leech seed bit (sets or clears zero flag)
-	jr z, .skipSwitchSeedEnd	;not seeded if zero flag set
-	call Random	;put a random number in 'a' between 0 and 255
-	and $07	;use only bits 0 to 2 for a random number of 0 to 7
-	jp z, .setSwitch	;switch if zero
-.skipSwitchSeedEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;chance to switch if stuck in a trapping move
-	ld a, [wPlayerBattleStatus1]
-	bit 5, a	;check a for trapping move bit (sets or clears zero flag)
-	jr z, .skipSwitchTrapEnd	;not trapped if zero flag set
-	call Random	;put a random number in 'a' between 0 and 255
-	and $03	;use only bits 0 to 1 for a random number of 0 to 3
-	jp z, .setSwitch	;switch if zero
-.skipSwitchTrapEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;high chance to switch if afflicted with toxic-style poison
-	ld a, [wEnemyBattleStatus3]
-	bit 0, a	;check a for the toxic bit (sets or clears zero flag)
-	jr z, .skipSwitchToxicEnd	;not badly poisoned if zero flag set
-	call Random	;put a random number in 'a' between 0 and 255
-	and $01	;use only bit 0
-	jp z, .setSwitch	;switch if zero
-.skipSwitchToxicEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;chance to switch if afflicted with confusion
-	ld a, [wEnemyBattleStatus1]
-	bit 7, a	;check a for the confusion bit (sets or clears zero flag)
-	jr z, .skipSwitchConfuseEnd	;not confused if zero flag set
-	call Random	;put a random number in 'a' between 0 and 255
-	and $03	;use only bits 0 to 1 for a random number of 0 to 3
-	jp z, .setSwitch	;switch if zero
-.skipSwitchConfuseEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;chance to switch if afflicted with non-volatile status
 	ld a, [wEnemyMonStatus]
 	and a	;check for any non-volatile status
@@ -719,43 +761,6 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	and $03	;use only bits 0 to 1 for a random number of 0 to 3
 	jp z, .setSwitch	;switch if zero
 .skipSwitchNVstatEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;chance to switch if stat mods are too low
-	push bc
-	;use b for storage and a for loading
-	ld a, [wEnemyMonAttackMod]	
-	ld b, a 
-	ld a, [wEnemyMonDefenseMod]
-	cp b
-	call c, CondLDBA	;if a < b, then load a into b
-	ld a, [wEnemyMonSpeedMod]
-	cp b
-	call c, CondLDBA	;if a < b, then load a into b
-	ld a, [wEnemyMonSpecialMod]
-	cp b
-	call c, CondLDBA	;if a < b, then load a into b
-	ld a, [wEnemyMonAccuracyMod]
-	cp b
-	call c, CondLDBA	;if a < b, then load a into b
-	ld a, [wEnemyMonEvasionMod]
-	cp b
-	call c, CondLDBA	;if a < b, then load a into b
-	ld a, b	;but b back into a
-	pop bc
-	cp $07	;is the lowest stat mod the normal vale of 7?
-	jr nc, .skipSwitchModEnd	;lowest stat mod is not negative (value below 7)
-	push bc
-	ld b, a	;put the lowest mod into b
-	ld a, $07	; put 7 into a
-	sub b	;a = 7 - b, so a becomes 6 (-6 stages) to 1 (-1 stage)
-	ld b, a	;put a back into b
-	call Random	;put a random number in 'a' between 0 and 255
-	and $07	;use only bits 0 to 2 for a random number of 0 to 7
-	cp b
-	pop bc
-	jp c, .setSwitch	;switch if random number < mod 1 (-1 stage) to 6 (-6 stages)
-.skipSwitchModEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jr .skipSwitchEnd	;jump to the end and get out of this line is reached.
 .setSwitch	;this line will only be reached if a switch is confirmed.
@@ -1240,6 +1245,7 @@ SwitchEnemyMon:
 	ld a, $FF
 	ld [wPlayerSelectedMove], a
 .preparewithdraw
+	callba SetAISwitched ;joenote - track the pkmn as being switched out
 ; prepare to withdraw the active monster: copy hp, number, and status to roster
 
 	ld a, [wEnemyMonPartyPos]
@@ -1262,7 +1268,6 @@ SwitchEnemyMon:
 	callab EnemySendOut
 	xor a
 	ld [wFirstMonsNotOutYet], a
-
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z

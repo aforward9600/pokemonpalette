@@ -221,6 +221,19 @@ SetScrollXForSlidingPlayerBodyLeft:
 	ret
 
 StartBattle:	;joedebug - start of the battle
+;joedebug - animation to play when wild mon shows up
+;ld a, [wIsInBattle]
+;dec a
+;jr nz, .clearstuff
+;ld a, [H_WHOSETURN]
+;xor 1
+;ld [H_WHOSETURN], a
+;ld a, REFLECT
+;call PlayMoveAnimation
+;ld a, [H_WHOSETURN]
+;xor 1
+;ld [H_WHOSETURN], a
+;.clearstuff
 	xor a
 	ld [wUnusedC000], a	;joenote - clear custom ai bits at battle start
 	ld [wUnusedD155], a	;joenote - clear backup location for how many pkmn recieve exp
@@ -229,6 +242,9 @@ StartBattle:	;joedebug - start of the battle
 	ld a, [wFontLoaded]
 	and $81	;clear bits 1 to 6 only by ANDing with 1000 0001
 	ld [wFontLoaded], a
+	ld a, [wUnusedD366]
+	and $81	;clear bits 1 to 6 only by ANDing with 1000 0001
+	ld [wUnusedD366], a
 	xor a
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [wPartyGainExpFlags], a
@@ -1629,6 +1645,15 @@ EnemySendOutFirstMon:
 	ld [hStartTileID], a
 	coord hl, 15, 6
 	predef AnimateSendingOutMon
+;joedebug - animation when enemy trainer mon sent out
+;ld a, [H_WHOSETURN]
+;xor 1
+;ld [H_WHOSETURN], a
+;ld a, REFLECT
+;call PlayMoveAnimation
+;ld a, [H_WHOSETURN]
+;xor 1
+;ld [H_WHOSETURN], a
 	ld a, [wEnemyMonSpecies2]
 	call PlayCry
 	call DrawEnemyHUDAndHPBar
@@ -1966,6 +1991,13 @@ SendOutMon:
 	call PlayMoveAnimation
 	coord hl, 4, 11
 	predef AnimateSendingOutMon
+;joedebug - animation when player mon sent out
+;ld a, $0
+;ld [H_WHOSETURN], a
+;ld a, REFLECT
+;call PlayMoveAnimation
+;ld a, $1
+;ld [H_WHOSETURN], a
 	ld a, [wcf91]
 	call PlayCry
 	call PrintEmptyString
@@ -3522,7 +3554,7 @@ MirrorMoveCheck:
 	dec a
 	ld [wPlayerNumAttacksLeft], a
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joedebug1 - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
+	;joenote - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
 	push af	
 	push bc
 	push de
@@ -6384,7 +6416,7 @@ EnemyCheckIfMirrorMoveEffect:
 	dec [hl]
 	pop hl
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joedebug1 - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
+	;joenote - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
 	push af	
 	push bc
 	push de

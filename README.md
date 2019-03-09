@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.05 beta0
+Version 1.05 beta1
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -77,6 +77,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - the menu text will glitch a little, but only for a split-second and does not impact gameplay
 - The move relearner has been expanded to detect default level-0 moves
 - The limiter on vitamins is raised to a max of 62720 stat exp after the elite 4 have been beaten
+- Switched out AI pkmn are tracked, and the following are ignored for determining if they will be switched out subsequent times:
+  - low HP
+  - having a non-volatile status condition
+  - a super-effective move is being used against it
 
   
 #Bugfixes:
