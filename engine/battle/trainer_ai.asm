@@ -134,6 +134,12 @@ AIMoveChoiceModification1:
 	inc de
 	call ReadMove
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use effects that end battle because this is a trainer battle and they do not work
+	ld a, [wEnemyMoveEffect]	;load the move effect
+	cp SWITCH_AND_TELEPORT_EFFECT	;see if it is a battle-ending effect
+	jp z, .heavydiscourage	;heavily discourage if so
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use dream eater if enemy not asleep, otherwise encourage it
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp DREAM_EATER_EFFECT	;see if it is dream eater
@@ -510,10 +516,10 @@ AIMoveChoiceModification3:
 	and a	;check if it is zero
 	jr nz, .skipout	;get out of this section if non-zero power
 	call Random	;else get a random number between 0 and 255
-	and $07	;get only bits 0 to 3
+	and $07	;get only bits 0 to 2
 	jp z, .givepref	;if zero (12.5% chance) slightly encourage to spice things up
-	cp $05	;don't set carry flag if number is >= this value
-	jp nc, .notEffectiveMove	;62.5% chance to slightly discourage and would rather do damage
+	cp $03	;don't set carry flag if number is >= this value
+	jp nc, .notEffectiveMove	;75% chance to slightly discourage and would rather do damage
 	jp .nextMove	;else neither encourage nor discourage
 .skipout
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

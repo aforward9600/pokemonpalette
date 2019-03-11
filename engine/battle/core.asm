@@ -221,19 +221,12 @@ SetScrollXForSlidingPlayerBodyLeft:
 	ret
 
 StartBattle:	;joedebug - start of the battle
-;joedebug - animation to play when wild mon shows up
-;ld a, [wIsInBattle]
-;dec a
-;jr nz, .clearstuff
-;ld a, [H_WHOSETURN]
-;xor 1
-;ld [H_WHOSETURN], a
-;ld a, REFLECT
-;call PlayMoveAnimation
-;ld a, [H_WHOSETURN]
-;xor 1
-;ld [H_WHOSETURN], a
-;.clearstuff
+;joedebug - animation when wild mon shows up
+	ld a, [wIsInBattle]
+	dec a
+	jr nz, .clearstuff
+	callba CheckEnemyShinyDVs
+.clearstuff
 	xor a
 	ld [wUnusedC000], a	;joenote - clear custom ai bits at battle start
 	ld [wUnusedD155], a	;joenote - clear backup location for how many pkmn recieve exp
@@ -1646,14 +1639,8 @@ EnemySendOutFirstMon:
 	coord hl, 15, 6
 	predef AnimateSendingOutMon
 ;joedebug - animation when enemy trainer mon sent out
-;ld a, [H_WHOSETURN]
-;xor 1
-;ld [H_WHOSETURN], a
-;ld a, REFLECT
-;call PlayMoveAnimation
-;ld a, [H_WHOSETURN]
-;xor 1
-;ld [H_WHOSETURN], a
+	callba CheckEnemyShinyDVs
+	
 	ld a, [wEnemyMonSpecies2]
 	call PlayCry
 	call DrawEnemyHUDAndHPBar
@@ -1992,12 +1979,8 @@ SendOutMon:
 	coord hl, 4, 11
 	predef AnimateSendingOutMon
 ;joedebug - animation when player mon sent out
-;ld a, $0
-;ld [H_WHOSETURN], a
-;ld a, REFLECT
-;call PlayMoveAnimation
-;ld a, $1
-;ld [H_WHOSETURN], a
+	callba CheckPlayerShinyDVs
+
 	ld a, [wcf91]
 	call PlayCry
 	call PrintEmptyString
@@ -6852,6 +6835,11 @@ LoadEnemyMonData:
 	ld b, a
 	call BattleRandom
 .storeDVs
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joedebug automatically do shiny DVs
+;	ld a, $FA
+;	ld b, $AA
+;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld hl, wEnemyMonDVs
 	ld [hli], a
 	ld [hl], b
@@ -9625,3 +9613,18 @@ ZeroLastDamage:
 	pop hl
 	pop af
 	ret
+
+;joenote - play an animation for shiny DVs
+PlayShinyAnimation:
+	ld a, [H_WHOSETURN]
+	push af
+	ld a, d
+	ld [H_WHOSETURN], a
+	ld a, REFLECT
+	call PlayMoveAnimation
+	pop af
+	ld [H_WHOSETURN], a
+	ret 
+
+
+

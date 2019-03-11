@@ -233,3 +233,58 @@ SetAISwitched:
 	ld [wUnusedD366], a
 .partyret
 	ret
+	
+SwapTurn:
+	ld a, [H_WHOSETURN]
+	and a
+	jr z, .make_one
+	xor a
+	jr .leave
+.make_one
+	inc a
+.leave
+	ld [H_WHOSETURN], a
+	ret
+
+;joenote - check if enemy mon has gen2 shiny DVs	
+CheckEnemyShinyDVs:
+	push hl
+	ld hl, wEnemyMonDVs
+	ld a, [hl]	;load MSB
+	bit 5, a	;bit 5 of the MSB need to be a 1 for shininess
+	jr z, .end
+	and $0F	;now mask out the lesser nybble of the MSB
+	cp $0A	;need to be a DV of 10 for shininess
+	jr nz, .end
+	inc hl
+	ld a, [hl]	;load LSB
+	cp a, $AA	;need to be a DVs of 10 for shininess
+	jr nz, .end
+	push de
+	ld d, $01
+	callba PlayShinyAnimation
+	pop de
+.end
+	pop hl
+	ret
+
+CheckPlayerShinyDVs:
+	push hl
+	ld hl, wBattleMonDVs
+	ld a, [hl]	;load MSB
+	bit 5, a	;bit 5 of the MSB need to be a 1 for shininess
+	jr z, .end
+	and $0F	;now mask out the lesser nybble of the MSB
+	cp $0A	;need to be a DV of 10 for shininess
+	jr nz, .end
+	inc hl
+	ld a, [hl]	;load LSB
+	cp a, $AA	;need to be a DVs of 10 for shininess
+	jr nz, .end
+	push de
+	ld d, $00
+	callba PlayShinyAnimation
+	pop de
+.end
+	pop hl
+	ret

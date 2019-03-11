@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.05 beta1
+Version 1.05 beta2
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -16,6 +16,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 ![TrainerAI](/screenshots/bgb00004.bmp?raw=true)
 
 ![Marts](/screenshots/bgb00011.bmp?raw=true)
+
+![Shiny Animation](/screenshots/bgb00012.bmp?raw=true)
 
 
 #Summary
@@ -46,7 +48,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
     - Prevents PP underflow glitch
 	- A necessary change with the trainer improvements
 	- Prevents merciless abuse of wrap by ekans trainers that caused unwinnable battles without level-grinding
-- Compatible with Pokemon Stadium
+- You can hunt for shiny pokemon
+  - DVs are checked to see if a pokemon would be shiny in the gen 2 games
+  - If a pokemon has shiny DVs, then it will play the Reflect animation when entering battle
+- Potentially compatible with Pokemon Stadium 1 & 2
 - Might be possible to use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
 
 
@@ -63,6 +68,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - This is done so that the rematch text does not interfere with post-battle text that plays automatically.
 - The AICheckIfHPBelowFraction now handles a fraction of 1/1, preventing giving Lorelei's dewgong tons of hp every turn.
 - Trapping move changes & turn priority now being applied correctly in trainer battles.
+
 
 #New features & adjustments from last version:
 -----------
@@ -81,6 +87,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - low HP
   - having a non-volatile status condition
   - a super-effective move is being used against it
+- If a pkmn has DVs that would make it shiny in Gen 2, the Reflect animation plays when it enters battle
+- AI routine 1 will heavily discourage roar, teleport, & whirlwind
+- Readjusted prioritization of buff/debuff moves in AI routine 3
 
   
 #Bugfixes:
@@ -218,6 +227,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 	- slightly encourage healing if below 1/3 hp
 	- slightly discourage healing if above 1/2 hp
   - heavily discourage using Counter against a non-applicable move
+  - heavily discourage roar, teleport, & whirlwind
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
   - zero-power buffing/debuffing moves are randomly preferenced 12.5% of the time to spice things up
@@ -303,6 +313,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Trainer pkmn give double stat exp
 - Pkmn with levels > 100 give 255 stat exp for each stat
 - Pkmn with levels > 100 have 255 base exp yield
+- If a pkmn has DVs that would make it shiny in Gen 2, the Reflect animation plays when it enters battle
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):
