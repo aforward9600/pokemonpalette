@@ -33,25 +33,48 @@ SetPal_Battle:
 	ld a, [wPlayerBattleStatus3]
 	ld hl, wBattleMonSpecies
 	call DeterminePaletteID
-	ld b, a
+	ld b, a		;player mon pal in b
 	ld a, [wEnemyBattleStatus3]
 	ld hl, wEnemyMonSpecies2
 	call DeterminePaletteID
-	ld c, a
+	ld c, a		;enemy mon pal in c
 	ld hl, wPalPacket + 1
 	ld a, [wPlayerHPBarColor]
 	add PAL_GREENBAR
+	;now at wPalPacket + 1
 	ld [hli], a
 	inc hl
 	ld a, [wEnemyHPBarColor]
 	add PAL_GREENBAR
+	;now at wPalPacket + 3
 	ld [hli], a
 	inc hl
 	ld a, b
+	;now at wPalPacket + 5
 	ld [hli], a
 	inc hl
 	ld a, c
-	ld [hl], a
+	;now at wPalPacket + 7
+	ld [hl], a	
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;load shiny palette in battle
+	ld a, [wUnusedD366]
+	bit 7, a
+	jr z, .noshinyenemy
+	callba CheckEnemyShinyDVs
+	jr z, .noshinyenemy
+	callba ShinyEnemyMon
+.noshinyenemy
+	ld a, [wUnusedD366]
+	bit 0, a
+	jr z, .noshinyplayer
+	callba CheckPlayerShinyDVs
+	jr z, .noshinyplayer
+	callba ShinyPlayerMon
+.noshinyplayer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 	ld hl, wPalPacket
 	ld de, BlkPacket_Battle
 	ld a, SET_PAL_BATTLE
@@ -83,6 +106,15 @@ SetPal_StatusScreen:
 	inc hl
 	pop af
 	ld [hl], a
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;load shiny palette on status screen
+	callba CheckLoadedShinyDVs
+	jr z, .noshiny
+	callba ShinyStatusScreen
+.noshiny
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 	ld hl, wPalPacket
 	ld de, BlkPacket_StatusScreen
 	ret

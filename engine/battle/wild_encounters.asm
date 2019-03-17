@@ -64,7 +64,7 @@ TryDoWildEncounter:
 ; determine which wild pokemon (grass or water) can appear in the half-block we're standing in
 	ld c, [hl]
 	ld hl, wGrassMons
-	aCoord 9, 9 ;joenote - change this to (9,9) to refer to bottom righ tile instead of bottom left (8,9 as originally)
+	aCoord 9, 9 ;joenote - change this to (9,9) to refer to bottom right tile instead of bottom left (8,9 as originally)
 	cp $14 ; is the bottom right tile (9,9) of the half-block we're standing in a water tile?
 	jr nz, .gotWildEncounterType ; if not, it's treated as a grass tile by default
 	ld hl, wWaterMons

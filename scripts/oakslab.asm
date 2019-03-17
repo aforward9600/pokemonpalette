@@ -997,7 +997,7 @@ OaksLabText5:
 	set 6, [hl]	;
 	set 7, [hl]	;
 	ld hl, OakVictorySpeech	;load text for when you win
-	ld de, OakDefeatSpeech	;load text for when you lose
+	ld de, OakVictorySpeech	;load text for when you lose
 	call SaveEndBattleTextPointers	;save the win/lose text
 	ld a, OPP_PROF_OAK	;load the trainer type
 	ld [wCurOpponent], a	;set as the current opponent
@@ -1288,8 +1288,4 @@ OaksLabText_prebattle:
 	
 OakVictorySpeech:
 	TX_FAR _OakVictorySpeech
-	db "@"
-
-OakDefeatSpeech:
-	TX_FAR _OakDefeatSpeech
 	db "@"

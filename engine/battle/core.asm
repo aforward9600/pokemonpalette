@@ -221,25 +221,7 @@ SetScrollXForSlidingPlayerBodyLeft:
 	ret
 
 StartBattle:	;joedebug - start of the battle
-;joedebug - animation when wild mon shows up
-	ld a, [wIsInBattle]
-	dec a
-	jr nz, .clearstuff
-	callba CheckEnemyShinyDVs
-.clearstuff
 	xor a
-	ld [wUnusedC000], a	;joenote - clear custom ai bits at battle start
-	ld [wUnusedD155], a	;joenote - clear backup location for how many pkmn recieve exp
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;clear the AI_Trainer party sent-out bits
-	ld a, [wFontLoaded]
-	and $81	;clear bits 1 to 6 only by ANDing with 1000 0001
-	ld [wFontLoaded], a
-	ld a, [wUnusedD366]
-	and $81	;clear bits 1 to 6 only by ANDing with 1000 0001
-	ld [wUnusedD366], a
-	xor a
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [wPartyGainExpFlags], a
 	ld [wPartyFoughtCurrentEnemyFlags], a
 	ld [wActionResultOrTookBattleTurn], a
@@ -387,6 +369,10 @@ EnemyRanText:
 	db "@"
 
 MainInBattleLoop:
+;joenote - check for player shiny & play animation
+	callba ShinyPlayerAnimation
+;joenote - check for enemy shiny & play animation
+	callba ShinyEnemyAnimation
 ;joenote - zero the damage from last round if not using a trapping move
 	ld a, [wEnemyBattleStatus1]
 	bit USING_TRAPPING_MOVE, a
@@ -450,7 +436,8 @@ MainInBattleLoop:
 	and a
 	ret nz ; return if pokedoll was used to escape from battle
 	ld a, [wBattleMonStatus]
-	and (1 << FRZ) | SLP ; is mon frozen or asleep?
+	;and (1 << FRZ) | SLP ; is mon frozen or asleep?
+	and (1 << FRZ)  ; is mon frozen?	;joedebug - sleep won't waste turn
 	jr nz, .selectEnemyMove ; if so, jump
 	ld a, [wPlayerBattleStatus1]
 	and (1 << STORING_ENERGY) | (1 << USING_TRAPPING_MOVE) ; check player is using Bide or using a multi-turn attack like wrap
@@ -527,13 +514,13 @@ MainInBattleLoop:
 	ld a, [wEnemySelectedMove]
 	cp QUICK_ATTACK
 	jr z, .enemyMovesFirst ; if enemy used Quick Attack and player didn't
-	call CheckLowerPlayerPriority	;joenote - custom function now used
+	callba CheckLowerPlayerPriority	;joenote - custom function now used
 	jr nz, .playerDidNotUseCounter
-	call CheckLowerEnemyPriority	;joenote - custom function now used
+	callba CheckLowerEnemyPriority	;joenote - custom function now used
 	jr z, .compareSpeed ; if both used Counter
 	jr .enemyMovesFirst ; if player used Counter and enemy didn't
 .playerDidNotUseCounter
-	call CheckLowerEnemyPriority	;joenote - custom function now used
+	callba CheckLowerEnemyPriority	;joenote - custom function now used
 	jr z, .playerMovesFirst ; if enemy used Counter and player didn't
 .compareSpeed
 	ld de, wBattleMonSpeed ; player speed value
@@ -904,6 +891,7 @@ HandleEnemyMonFainted:
 	jp MainInBattleLoop
 
 FaintEnemyPokemon:
+	callba DoEnemyShinybit ;joenote - reset shiny checker bits
 	call ReadPlayerMonCurHPAndStatus
 	ld a, [wIsInBattle]
 	dec a
@@ -1210,6 +1198,7 @@ HandlePlayerMonFainted:
 
 ; resets flags, slides mon's pic down, plays cry, and prints fainted message
 RemoveFaintedPlayerMon:
+	callba DoPlayerShinybit ;joenote - reset shiny checker bits
 	ld a, [wPlayerMonNumber]
 	ld c, a
 	ld hl, wPartyGainExpFlags
@@ -1638,9 +1627,6 @@ EnemySendOutFirstMon:
 	ld [hStartTileID], a
 	coord hl, 15, 6
 	predef AnimateSendingOutMon
-;joedebug - animation when enemy trainer mon sent out
-	callba CheckEnemyShinyDVs
-	
 	ld a, [wEnemyMonSpecies2]
 	call PlayCry
 	call DrawEnemyHUDAndHPBar
@@ -1978,9 +1964,6 @@ SendOutMon:
 	call PlayMoveAnimation
 	coord hl, 4, 11
 	predef AnimateSendingOutMon
-;joedebug - animation when player mon sent out
-	callba CheckPlayerShinyDVs
-
 	ld a, [wcf91]
 	call PlayCry
 	call PrintEmptyString
@@ -2639,6 +2622,7 @@ PartyMenuOrRockOrRun:
 ; fall through to SwitchPlayerMon
 
 SwitchPlayerMon:	;joedebug - this is where the player switches
+	callba DoPlayerShinybit ;joenote - reset shiny checker bits
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - if enemy using trapping move, then end their move
 	ld a, [wEnemyBattleStatus1]
@@ -3209,7 +3193,8 @@ SelectEnemyMove:
 	and (1 << CHARGING_UP) | (1 << THRASHING_ABOUT) ; using a charging move or thrash/petal dance
 	ret nz
 	ld a, [wEnemyMonStatus]
-	and SLP | 1 << FRZ ; sleeping or frozen
+	;and SLP | 1 << FRZ ; sleeping or frozen
+	and (1 << FRZ)	;joedebug - sleep won't waste turn
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call nz, NoAttackAICall	;joenote - get ai routines. flag register is preserved
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3650,6 +3635,7 @@ CheckPlayerStatusConditions:
 .WakeUp
 	ld hl, WokeUpText
 	call PrintText
+	jr z, .FrozenCheck	;joedebug - sleep won't waste turn
 .sleepDone
 	xor a
 	ld [wPlayerUsedMove], a
@@ -4327,7 +4313,7 @@ CheckForDisobedience:
 ; what level might disobey?
 	ld hl, wObtainedBadges
 	bit 7, [hl]
-	ld a, 101
+	ld a, 255	;joenote - upped to 255
 	jr nz, .next
 	bit 5, [hl]
 	ld a, 70
@@ -6461,6 +6447,7 @@ CheckEnemyStatusConditions:
 .wokeUp
 	ld hl, WokeUpText
 	call PrintText
+	jr z, .checkIfFrozen	;joedebug - sleep won't waste turn
 .sleepDone
 	xor a
 	ld [wEnemyUsedMove], a
@@ -7539,6 +7526,17 @@ PlayMoveAnimation:
 	predef_jump MoveAnimation
 
 InitBattle:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	xor a
+	ld [wUnusedC000], a	;joenote - clear custom ai bits at battle start
+	ld [wUnusedD155], a	;joenote - clear backup location for how many pkmn recieve exp
+	ld [wUnusedD366], a ;joenote - clear ai switch tracker bits
+	;clear AI_Trainer switching bits
+	ld a, [wFontLoaded]
+	and $81	;clear bits 1 to 6 only by ANDing with 1000 0001
+	ld [wFontLoaded], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
 	ld a, [wCurOpponent]
 	and a
 	jr z, DetermineWildOpponent
@@ -9504,26 +9502,6 @@ PlayBattleAnimationGotID:
 	pop hl
 	ret
 
-CheckLowerPlayerPriority:	;joenote - custom functions to handle lower move priority. Sets zero flag if priority lowered.
-	ld a, [wPlayerSelectedMove]
-	call LowPriorityMoves
-	ret
-CheckLowerEnemyPriority:
-	ld a, [wEnemySelectedMove]
-	call LowPriorityMoves
-	ret
-LowPriorityMoves:
-	cp COUNTER
-	ret z
-	cp BIND
-	ret z
-	cp WRAP
-	ret z
-	cp FIRE_SPIN
-	ret z
-	cp CLAMP
-	ret
-
 
 ;joenote - this function puts statexp per enemy pkmn level into de
 ;requires a, b, de, and wCurEnemyLVL
@@ -9620,6 +9598,8 @@ PlayShinyAnimation:
 	push af
 	ld a, d
 	ld [H_WHOSETURN], a
+	xor a
+	ld [wAnimationType], a
 	ld a, REFLECT
 	call PlayMoveAnimation
 	pop af

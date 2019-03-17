@@ -500,21 +500,12 @@ _OakVictorySpeech::
 	para "I forgot how much"
 	line "fun battling is."
 	cont "A splendid match!"
-	prompt
-;	para "You know MR.FUJI?"
-;	line "He used to study"
-;	cont "powerful #MON."
-	
-;	para "You should visit"
-;	line "him. He retired"
-;	cont "to LAVENDER TOWN."
-;	prompt
 
-_OakDefeatSpeech::
-	text "Ah! Such"
-	line "a rush!"
-	
-	para "I forgot how much"
-	line "fun battling is."
-	cont "A splendid match!"
+	para "You know MR.FUJI?"
+	line "He used to study"
+	cont "powerful #MON."
+
+	para "You should visit"
+	line "him. He retired"
+	cont "to LAVENDER TOWN."
 	prompt

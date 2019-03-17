@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.05 beta2
+Version 1.05 beta3
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -44,13 +44,17 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - After the elite-4, a new vendor opens up in celadon allowing the purchase of normally unique items
   - Added some special trainer battles as fun little easter eggs
   - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+- Minimal changes to battle mechanics necessitated by AI improvements
   - Trapping moves now have reduced priority and they end (using up the turn) if the target switches
     - Prevents PP underflow glitch
-	- A necessary change with the trainer improvements
 	- Prevents merciless abuse of wrap by ekans trainers that caused unwinnable battles without level-grinding
+  - Adjustment to the sleep condition
+    - Sleep does not prevent choosing a move
+	- Waking up from sleep does not waste the turn and the chosen move is used
 - You can hunt for shiny pokemon
   - DVs are checked to see if a pokemon would be shiny in the gen 2 games
   - If a pokemon has shiny DVs, then it will play the Reflect animation when entering battle
+  - If playing on a super gameboy, shiny pkmn will have a palette swap on the status screen and also change color in battle
 - Potentially compatible with Pokemon Stadium 1 & 2
 - Might be possible to use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
 
@@ -68,7 +72,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - This is done so that the rematch text does not interfere with post-battle text that plays automatically.
 - The AICheckIfHPBelowFraction now handles a fraction of 1/1, preventing giving Lorelei's dewgong tons of hp every turn.
 - Trapping move changes & turn priority now being applied correctly in trainer battles.
-
+- AI trainer movesets are now structured per yellow version, so all moves of all party pkmn can be set for any trainer
+- Made shiny animations more stable
+- Clearing custom bits nows happens at the InitBattle function
 
 #New features & adjustments from last version:
 -----------
@@ -88,9 +94,12 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - having a non-volatile status condition
   - a super-effective move is being used against it
 - If a pkmn has DVs that would make it shiny in Gen 2, the Reflect animation plays when it enters battle
+- If playing on a super gameboy, shiny pkmn will have a palette swap on the status screen and also change color in battle
 - AI routine 1 will heavily discourage roar, teleport, & whirlwind
 - Readjusted prioritization of buff/debuff moves in AI routine 3
-
+- Waking from the sleep condition no longer wastes a turn
+- Can battle Mr. Fuji after beating the elite 4
+- Gym leaders and elite 4 have their rosters & movesets slightly tweaked for gradual difficulty
   
 #Bugfixes:
 -----------
@@ -213,6 +222,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Trapping moves nerfed big time to prevent the new AI from cheesing them:
   - switching out of a trapping move ends it immediately and wastes its user's turn
   - trapping moves have reduced priority like Counter
+- Adjustment to the sleep condition
+  - Sleep does not prevent choosing a move
+  - Waking up from sleep does not waste the turn and the chosen move is used
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
   - using a move with a dream eater effect is heavily discouraged against non-sleeping opponents
   - using a move with a dream eater effect is slightly encouraged against a sleeping opponent
@@ -283,6 +295,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Bushes moved around so Erika can be battled without CUT
 - The bush blocking the Vermilion gym has been replaced with a blocking pkmn that goes away after the ss anne leaves
 - The surfboard, a nugget, and TM 15 are hidden items added to the vermilion dock
+- Gym leaders and elite 4 have their rosters, levels, & movesets slightly tweaked for gradual difficulty
 - Can rematch most non gym-leader trainers
 - Rematch with Karate Master
 - Rematch with Brock
@@ -304,6 +317,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - the captain's text has been slightly altered for a more generic context
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
 - Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
+- Can battle Mr. Fuji after beating the elite 4
 - Move deleter/relearner added to the saffron house below COPYCAT's house
   - Code comes from Mateo's Red++ hack. It's simply the best gen-1 implementation and I cannot come up with something better.
   - Talk to the little girl to delete moves.
@@ -314,6 +328,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Pkmn with levels > 100 give 255 stat exp for each stat
 - Pkmn with levels > 100 have 255 base exp yield
 - If a pkmn has DVs that would make it shiny in Gen 2, the Reflect animation plays when it enters battle
+- If playing on a super gameboy, shiny pkmn will have a palette swap on the status screen and also change color in battle
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):
