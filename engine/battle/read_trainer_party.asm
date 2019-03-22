@@ -14,6 +14,7 @@ ReadTrainer:
 	dec a
 	ld [hl], a
 
+
 ; get the pointer to trainer data for this class
 	;ld a, [wCurOpponent]
 	;sub $C9 ; convert value from pokemon to trainer
@@ -48,6 +49,15 @@ ReadTrainer:
 ; - if [wLoneAttackNo] != 0, one pokemon on the team has a special move ;joenote - not applicable to the Yellow method
 ; else the first byte is the level of every pokemon on the team
 .IterateTrainer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joedebug - get a random 6 pkmn roster based on 1st party mon's level
+	CheckEvent EVENT_90A
+	jr z, .not_rand_roster
+	callba GetRandRoster
+	ResetEvent EVENT_90A
+	jp z, .FinishUp
+.not_rand_roster
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [hli]
 	cp $FF ; is the trainer special?
 	jr z, .SpecialTrainer ; if so, check for special moves

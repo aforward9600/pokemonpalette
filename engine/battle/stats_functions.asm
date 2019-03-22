@@ -276,6 +276,46 @@ SwapTurn:
 	ret
 
 	
+
+
+DetermineWildMonDVs:
+	ld a, [wFontLoaded]
+	bit 7, a
+	jr z, .do_random
+	ld a, $FA
+	ld b, $AA
+	jr .load
+.do_random
+	call Random
+	ld b, a
+	call Random
+.load
+	push hl
+	ld hl, wEnemyMonDVs
+	ld [hli], a
+	ld [hl], b
+	pop hl
+	ld a, [wFontLoaded]
+	res 7, a 
+	ld [wFontLoaded], a
+	ret
+
+ShinyAttractFunction:
+;only if the party leader is lvl 100 or more
+	ld a, [wPartyMon1Level]
+	cp 99
+	ret nc
+;and only if it's a chansey
+	ld a, [wPartyMon1Species]
+	cp CHANSEY
+	ret nz
+;make a 1 in 255 chance to force shiny DVs on a wild pokemon 
+	call Random
+	ret nz
+	ld a, [wFontLoaded]
+	set 7, a 
+	ld [wFontLoaded], a
+	ret
 	
 	
 	
@@ -416,7 +456,7 @@ ShinyDVConvert:	;'a' holds the default value
 .next1
 	cp PAL_BLUEMON
 	jr nz, .next2
-	ld a, PAL_REDMON
+	ld a, PAL_MEWMON
 	jr .endConvert
 	
 .next2
@@ -440,7 +480,7 @@ ShinyDVConvert:	;'a' holds the default value
 .next5
 	cp PAL_BROWNMON
 	jr nz, .next6
-	ld a, PAL_MEWMON
+	ld a, PAL_REDMON
 	jr .endConvert
 
 .next6
@@ -485,6 +525,74 @@ CheckIfPkmnReal:
 	pop bc
 	pop de
 	pop hl
+
+;This function loads a random trainer class (value of $01 to $2F)
+GetRandTrainer:
+.reroll
+	call Random
+	and $30
+	cp $30
+	jr z, .reroll
+	push bc
+	ld b, a
+	call Random
+	and $0F
+	add b
+	pop bc
+	and a
+	jr z, .reroll
+	add $C8
+	ld [wEngagedTrainerClass], a
+	ld a, 1
+	ld [wEngagedTrainerSet], a
+	ret
+
+;gets a random pokemon
+GetRandMon:
+	push hl
+	push bc
+	ld hl, ListRealPkmn
+	call Random
+	ld b, a
+.loop
+	ld a, b
+	and a
+	jr z, .endloop
+	inc hl
+	dec b
+	ld a, [hl]
+	and a
+	jr nz, .loop
+	ld hl, ListRealPkmn
+	jr .loop
+.endloop
+	ld a, [hl]
+	pop bc
+	pop hl
+	ret
+	
+;generates a randomized 6-party enemy trainer roster
+GetRandRoster:
+	ld a, [wPartyMon1Level]
+	ld [wCurEnemyLVL], a
+	push bc
+	ld b, 6
+.loop	
+	push bc
+	call GetRandMon
+	ld [wcf91], a
+	ld a, ENEMY_PARTY_DATA
+	ld [wMonDataLocation], a
+	push hl
+	call AddPartyMon
+	pop hl
+	pop bc
+	dec b
+	jr nz, .loop
+;end of loop
+	pop bc
+	xor a	;set the zero flag before returning
+	ret
 	
 ListRealPkmn:
 	db RHYDON       ; $01
@@ -638,3 +746,5 @@ ListRealPkmn:
 	db BELLSPROUT   ; $BC
 	db WEEPINBELL   ; $BD
 	db VICTREEBEL   ; $BE
+	db $00
+	

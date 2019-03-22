@@ -6818,9 +6818,13 @@ LoadEnemyMonData:
 .nottrainer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; random DVs for wild mon
-	call BattleRandom
-	ld b, a
-	call BattleRandom
+;joenote - custom function for determining and storing them
+;		- allows for more memory space and control over wild mon DVs
+	;call BattleRandom
+	;ld b, a
+	;call BattleRandom
+	callba DetermineWildMonDVs
+	jr .wildDVstored
 .storeDVs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joedebug automatically do shiny DVs
@@ -6830,6 +6834,7 @@ LoadEnemyMonData:
 	ld hl, wEnemyMonDVs
 	ld [hli], a
 	ld [hl], b
+.wildDVstored
 	ld de, wEnemyMonLevel
 	ld a, [wCurEnemyLVL]
 	ld [de], a

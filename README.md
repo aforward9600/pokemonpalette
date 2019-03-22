@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.05 beta3
+Version 1.05 beta4
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -37,6 +37,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Move relearner and deleter
   - Nearly all trainers can be rematched just by talking to them a 2nd time after their most recent defeat
   - Due to on-demand rematches, you could do a pseudo-"new game+" by boxing your pkmn and rematching everyone in order
+  - There is an NPC that generates a trainer battle with a randomized roster
   - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
   - Stone evolutions regain some level-up moves
   - Yellow-version move lists have been integrated
@@ -75,6 +76,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - AI trainer movesets are now structured per yellow version, so all moves of all party pkmn can be set for any trainer
 - Made shiny animations more stable
 - Clearing custom bits nows happens at the InitBattle function
+- Wild pokemon DV generation was moved to bank2D to allow more space for manipulation and expansion
 
 #New features & adjustments from last version:
 -----------
@@ -100,6 +102,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Waking from the sleep condition no longer wastes a turn
 - Can battle Mr. Fuji after beating the elite 4
 - Gym leaders and elite 4 have their rosters & movesets slightly tweaked for gradual difficulty
+- There is a new NPC in the route 7 underground path entrance that generates random battles after the elite 4 are beaten
   
 #Bugfixes:
 -----------
@@ -217,11 +220,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Fixed capitalization in safari zone entrance
  
 - Stat-down moves no longer have a 25% miss chance in AI matches
-- A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
 - Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
 - Trapping moves nerfed big time to prevent the new AI from cheesing them:
   - switching out of a trapping move ends it immediately and wastes its user's turn
   - trapping moves have reduced priority like Counter
+  - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
 - Adjustment to the sleep condition
   - Sleep does not prevent choosing a move
   - Waking up from sleep does not waste the turn and the chosen move is used
@@ -278,6 +281,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Pay Day upped to 8x multiplier instead of 2x
   - It's 5x in later generations, but amulet coin doesn't exist in gen 1. 8x is a compromise.
 - Pokemon have gained their TMs and Moves from yellow
+- Kadabra & Alakazam can access Kinesis via the move relearner
 - Raichu gains some attacks back via level
 - Arcanine gains some attacks back via level
 - Ninetails gains some attacks back via level
@@ -315,6 +319,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - S.S. Anne can be re-entered after defeating the elite 4.
   - minor text change indicating its return
   - the captain's text has been slightly altered for a more generic context
+- There is a new NPC in the route 7 underground path entrance that generates random battles after beating the elite 4
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
 - Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
 - Can battle Mr. Fuji after beating the elite 4
@@ -329,6 +334,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Pkmn with levels > 100 have 255 base exp yield
 - If a pkmn has DVs that would make it shiny in Gen 2, the Reflect animation plays when it enters battle
 - If playing on a super gameboy, shiny pkmn will have a palette swap on the status screen and also change color in battle
+- If a level 100 chansey is first in your roster:
+  - Shiny wild random encounters are much more common (1 in 256)
+  - Repel effects will not block shiny encounters
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):

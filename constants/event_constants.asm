@@ -2314,7 +2314,7 @@ const_value = 0
 	const ELITE4_CHAMPION_EVENTS_END                 ; 907, (D867, bit 7)
 	const EVENT_908    ;Elite 4 have been beaten     ; 908, (D868, bit 0)
 	const EVENT_909    ;Rematch Delay		         ; 909, (D868, bit 1)
-	const EVENT_90A                                  ; 90A, (D868, bit 2)
+	const EVENT_90A    ;random trainer               ; 90A, (D868, bit 2)
 	const EVENT_90B                                  ; 90B, (D868, bit 3)
 	const EVENT_90C                                  ; 90C, (D868, bit 4)
 	const EVENT_90D                                  ; 90D, (D868, bit 5)

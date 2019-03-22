@@ -1932,6 +1932,14 @@ RodResponse:
 	dec a ; is there a bite?
 	jr nz, .next
 	; if yes, store level and species data
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - check for shiny DV attract conditions
+	push af
+	push bc
+	callba ShinyAttractFunction
+	pop bc
+	pop af
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 	ld a, 1
 	ld [wMoveMissed], a
 	ld a, b ; level

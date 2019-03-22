@@ -1532,7 +1532,7 @@ wFontLoaded:: ; cfc4
 ;bit 4: 4th pkmn (position 3)
 ;bit 5: 5th pkmn (position 4)
 ;bit 6: 6th pkmn (position 5)
-; The other bits are unused.
+;bit 7: force a wild pokemon with shiny DVs if set
 	ds 1
 
 wWalkCounter:: ; cfc5
@@ -2426,14 +2426,14 @@ wLastMap:: ; d365
 
 wUnusedD366:: ; d366	;joenote - use this to track which ai pokemon have switched out
 	ds 1
-;bit 0: unused
+;bit 0: set if player mon shiny
 ;bit 1: 1st pkmn (position 0)
 ;bit 2: 2nd pkmn (position 1)
 ;bit 3: 3rd pkmn (position 2)
 ;bit 4: 4th pkmn (position 3)
 ;bit 5: 5th pkmn (position 4)
 ;bit 6: 6th pkmn (position 5)
-;bit 7: unused
+;bit 7: set if enemy mon shiny
 
 wCurMapTileset:: ; d367
 	ds 1
