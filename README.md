@@ -62,7 +62,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
-- 
+- Fixing issues with cinnabar gym
 
 
 #New features & adjustments from last version:
