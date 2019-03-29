@@ -8,10 +8,8 @@ UndergroundPathEntranceRoute7Object:
 
 	db 0 ; signs
 
-	db 2 ; objects
+	db 1 ; objects
 	object SPRITE_FAT_BALD_GUY, 2, 4, STAY, NONE, 1 ; person
-	;joenote - adding a guy for random trainer battles
-	object SPRITE_BIKE_SHOP_GUY, 4, 2, STAY, DOWN, 2, OPP_YOUNGSTER, 1 ; person (youngster #1 is a dummy value for the trainer)
 
 
 	; warp-to

@@ -1951,6 +1951,7 @@ INCLUDE "text/maps/daycare_2.asm"
 INCLUDE "text/maps/underground_path_route_6_entrance.asm"
 INCLUDE "text/maps/underground_path_route_7_entrance.asm"
 INCLUDE "text/maps/underground_path_route_7_entrance_unused.asm"
+INCLUDE "text/maps/underground_path_we.asm"	;joenote - added this file for custom npc
 INCLUDE "text/maps/underground_path_route_8_entrance.asm"
 INCLUDE "text/maps/rock_tunnel_pokecenter.asm"
 INCLUDE "text/maps/rock_tunnel_b1f.asm"

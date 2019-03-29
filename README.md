@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.05 beta4
+Version 1.05 release
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.
 
@@ -102,7 +102,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Waking from the sleep condition no longer wastes a turn
 - Can battle Mr. Fuji after beating the elite 4
 - Gym leaders and elite 4 have their rosters & movesets slightly tweaked for gradual difficulty
-- There is a new NPC in the route 7 underground path entrance that generates random battles after the elite 4 are beaten
+- There is a new NPC in the west-east underground path that generates random battles after the elite 4 are beaten
   
 #Bugfixes:
 -----------

@@ -7,7 +7,9 @@ UndergroundPathWEObject:
 
 	db 0 ; signs
 
-	db 0 ; objects
+	;joenote - adding a guy for random trainer battles
+	db 1 ; objects
+	object SPRITE_BIKE_SHOP_GUY, 24, 1, STAY, DOWN, 1, OPP_YOUNGSTER, 1 ; person (youngster #1 is a dummy value for the trainer)
 
 	; warp-to
 	warp_to 2, 5, UNDERGROUND_PATH_WE_WIDTH ; PATH_ENTRANCE_ROUTE_7

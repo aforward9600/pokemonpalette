@@ -125,7 +125,7 @@ _FujiTextVictorySpeech::
 	cont "who can ease"
 	cont "MEWTWO's anger."
 
-	para "SILPH's CHIEF is"
-	line "an old friend, so"
-	cont "battle him too."
+	;para "SILPH's CHIEF is"
+	;line "an old friend, so"
+	;cont "battle him too."
 	prompt
