@@ -194,7 +194,7 @@ CinnabarGymScript_758b7:
 	set 7, [hl]
 ;;;;joenote - rematches should not advance map script pointer
 	CheckEvent EVENT_GOT_TM38
-	jp nz, .asm_758d4
+	jp nz, TextScriptEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wSpriteIndex]
 	cp $1
