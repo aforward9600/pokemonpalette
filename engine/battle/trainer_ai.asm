@@ -1347,6 +1347,7 @@ AICheckIfHPBelowFraction:
 	ret
 .not_one
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	push hl	;joenote - added this
 	ld [H_DIVISOR], a
 	ld hl, wEnemyMonMaxHP
 	ld a, [hli]
@@ -1363,6 +1364,7 @@ AICheckIfHPBelowFraction:
 	ld a, [hld]
 	ld e, a
 	ld a, [hl]
+	pop hl	;joenote - added this
 	ld d, a
 	ld a, d
 	sub b

@@ -304,7 +304,7 @@ ViridianGymText1:
 	ld a, $8
 	ld [wGymLeaderNo], a
 ;;;;joenote - added for rematch to skip gym leader tm
-	CheckEvent EVENT_GOT_TM06
+	CheckEvent EVENT_GOT_TM27
 	jp nz, TextScriptEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
