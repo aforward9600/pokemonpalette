@@ -1,10 +1,10 @@
 # Shin Pokémon Red and Blue
 
-Version 1.05 release
+Version 1.06 beta0
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
-Always apply patches to a fresh USA ROM or else stranges glitches will occur.
+Always apply patches to a fresh USA ROM or else stranges glitches will occur.  
 
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.  
 This is a mostly-vanilla hack that focuses on fixing glitches from the original game.  
@@ -64,51 +64,12 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
-- Some custom functions shuffled into bank2D to free memory in bankF
-- unused_stats_functions.asm renamed and put to actual use for custom functions
-- trainer stat exp calculation function made more efficient
-- On most trainers, the rematch text now only plays the second time after talking to a defeated generic trainer
-  - Example: after defeating a lass and talking to her, she will play her post-battle text. 
-    - Talk to her again to get the rematch option.
-  - Example: after defeating a lass, talking to a different defeated youngster will play his post-battle text. 
-    - Talk to either of them again to get the rematch text
-  - This is done so that the rematch text does not interfere with post-battle text that plays automatically.
-- The AICheckIfHPBelowFraction now handles a fraction of 1/1, preventing giving Lorelei's dewgong tons of hp every turn.
-- Trapping move changes & turn priority now being applied correctly in trainer battles.
-- AI trainer movesets are now structured per yellow version, so all moves of all party pkmn can be set for any trainer
-- Made shiny animations more stable
-- Clearing custom bits nows happens at the InitBattle function
-- Wild pokemon DV generation was moved to bank2D to allow more space for manipulation and expansion
-- Fixed issued with cinnabar & viridian gyms
-- More fixes for pkmn with recover moves having excessive hp
+- 
 
 
 #New features & adjustments from last version:
 -----------
-- Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
-- Ditto base exp yield back to 61
-- Game corner reel bug fixed
-- Trainer pkmn give double stat exp
-- Pkmn with levels > 100 give 255 stat exp for each stat and have a base exp yield of 255
-- Surfboard bugfixes:
-  - cannot use the surfboard if being forced to ride the bicycle
-  - no longer freezes the game when using it from the item menu to get back on land
-  - the menu text will glitch a little, but only for a split-second and does not impact gameplay
-- The move relearner has been expanded to detect default level-0 moves
-- The limiter on vitamins is raised to a max of 62720 stat exp after the elite 4 have been beaten
-- Switched out AI pkmn are tracked, and the following are ignored for determining if they will be switched out subsequent times:
-  - low HP
-  - having a non-volatile status condition
-  - a super-effective move is being used against it
-- If a pkmn has DVs that would make it shiny in Gen 2, the Reflect animation plays when it enters battle
-- If playing on a super gameboy, shiny pkmn will have a palette swap on the status screen and also change color in battle
-- AI routine 1 will heavily discourage roar, teleport, & whirlwind
-- Readjusted prioritization of buff/debuff moves in AI routine 3
-- Waking from the sleep condition no longer wastes a turn
-- Can battle Mr. Fuji after beating the elite 4
-- Gym leaders and elite 4 have their rosters & movesets slightly tweaked for gradual difficulty
-- There is a new NPC in the west-east underground path that generates random battles after the elite 4 are beaten
-- Putting a lvl-100 chansey at the head of the party greatly increases shiny encounters
+- trainer ai routine 1 prevents using disable on a disabled pkmn
 
   
 #Bugfixes:
@@ -250,6 +211,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 	- slightly discourage healing if above 1/2 hp
   - heavily discourage using Counter against a non-applicable move
   - heavily discourage roar, teleport, & whirlwind
+  - heavily discourage disable against a pkmn already disabled
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
   - zero-power buffing/debuffing moves are randomly preferenced 12.5% of the time to spice things up

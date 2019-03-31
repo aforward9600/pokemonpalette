@@ -140,6 +140,16 @@ AIMoveChoiceModification1:
 	jp z, .heavydiscourage	;heavily discourage if so
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use disable on a pkmn that is already disabled
+	ld a, [wEnemyMoveEffect]	;load the move effect
+	cp DISABLE_EFFECT
+	jr nz, .notdisable
+	ld a, [wPlayerDisabledMove]	
+	and a
+	jp nz, .heavydiscourage	
+.notdisable
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use dream eater if enemy not asleep, otherwise encourage it
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp DREAM_EATER_EFFECT	;see if it is dream eater
