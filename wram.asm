@@ -3237,6 +3237,14 @@ wBoxMonNicksEnd:: ; dee2
 
 wBoxDataEnd::
 
+;joenote - exp bar wram values
+wEXPBarPixelLength::  ds 1
+wEXPBarBaseEXP::      ds 3
+wEXPBarCurEXP::       ds 3
+wEXPBarNeededEXP::    ds 3
+wEXPBarKeepFullFlag:: ds 1
+
+; deed
 
 SECTION "Stack", WRAM0[$df00]
 	ds $ff

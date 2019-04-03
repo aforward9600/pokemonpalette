@@ -2311,16 +2311,8 @@ TalkToTrainer::
 	and a
 	jr z, .trainerNotYetFought     ; test trainer's flag
 ;;;;;;;joenote - have a rematch with most trainers?
-	CheckEvent EVENT_909
-	jr nz, .skip_rematch_choice
-	ld hl, RematchTrainerText
-	call PrintText
-	call NoYesChoice
-	ld a, [wCurrentMenuItem]
-	and a
+	callba TrainerRematch
 	jr nz, .trainerNotYetFought
-.skip_rematch_choice
-	ResetEvent EVENT_909
 ;;;;;;;
 	ld a, $6
 	call ReadTrainerHeaderInfo     ; print after battle text
@@ -3161,12 +3153,25 @@ LoadHpBarAndStatusTilePatterns::
 	ld de, vChars2 + $620
 	ld bc, HpBarAndStatusGraphicsEnd - HpBarAndStatusGraphics
 	ld a, BANK(HpBarAndStatusGraphics)
-	jp FarCopyData2 ; if LCD is off, transfer all at once
+;joenote - load exp bar
+	;jp FarCopyData2 ; if LCD is off, transfer all at once
+	call FarCopyData2
+	ld hl, EXPBarGraphics
+	ld de, vChars1 + $400
+	ld bc, EXPBarGraphicsEnd - EXPBarGraphics
+	ld a, BANK(EXPBarGraphics)
+	jp FarCopyData2
 .on
 	ld de, HpBarAndStatusGraphics
 	ld hl, vChars2 + $620
 	lb bc, BANK(HpBarAndStatusGraphics), (HpBarAndStatusGraphicsEnd - HpBarAndStatusGraphics) / $10
-	jp CopyVideoData ; if LCD is on, transfer during V-blank
+;joenote - load exp bar
+	;jp CopyVideoData ; if LCD is on, transfer during V-blank
+	call CopyVideoData
+	ld de,EXPBarGraphics
+	ld hl, vChars1 + $400
+	lb bc, BANK(EXPBarGraphics), (EXPBarGraphicsEnd - EXPBarGraphics) / $10
+	jp CopyVideoData
 
 
 FillMemory::

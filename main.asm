@@ -205,6 +205,9 @@ INCLUDE "engine/battle/moveEffects/haze_effect.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/random.asm"
 
+;joenote - adding exp bar
+EXPBarGraphics:  INCBIN "gfx/exp_bar.2bpp"
+EXPBarGraphicsEnd:
 
 SECTION "NPC Sprites 2", ROMX, BANK[NPC_SPRITES_2]
 
@@ -2096,6 +2099,7 @@ INCLUDE "engine/items/tm_prices.asm"
 SECTION "bank2D",ROMX,BANK[$2D]	;joenote - This is a known empty bank. Going to start moving stuff here
 
 INCLUDE "engine/battle/stats_functions.asm"	
+INCLUDE "engine/battle/exp_bar_print.asm"	
 
 TradingAnimationGraphics:
 INCBIN "gfx/game_boy.2bpp"

@@ -15,7 +15,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 ![Rematches](/screenshots/bgb00003.bmp?raw=true)
 
-![TrainerAI](/screenshots/bgb00004.bmp?raw=true)
+![TrainerAI, Shiny SGB palette, & Exp Bar](/screenshots/bgb00013.bmp?raw=true)
 
 ![Marts](/screenshots/bgb00011.bmp?raw=true)
 
@@ -34,19 +34,22 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - All 151 pkmn are available in one version
   - Though difficult for a select few, each pkmn can be obtained multiple times
   - The uniquness between red & blue is still preserved in encounter rarity
-- Minor quality-of-life improvements
+- Minor quality-of-life improvements during battle
   - When a pkmn is caught and fills the box, a reminder is printed that the box is full
+  - Exp bar in battle
+  - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+- Minor quality-of-life improvements outside of battle
+  - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
   - Move relearner and deleter
   - Nearly all trainers can be rematched just by talking to them a 2nd time after their most recent defeat
   - Due to on-demand rematches, you could do a pseudo-"new game+" by boxing your pkmn and rematching everyone in order
-  - There is an NPC that generates a trainer battle with a randomized roster
-  - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
-  - Stone evolutions regain some level-up moves
-  - Yellow-version move lists have been integrated
   - All TMs can be repurchased as they are strategically scattered across all the Kanto pokemarts
   - After the elite-4, a new vendor opens up in celadon allowing the purchase of normally unique items
+  - After the elite-4, there is an NPC that generates a trainer battle with a randomized 6-pkmn roster
   - Added some special trainer battles as fun little easter eggs
-  - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+- Minor learnset changes that make things more convenient while still staying gen-1 legal
+  - Stone evolutions regain some level-up moves
+  - Yellow-version move lists have been integrated
 - Minimal changes to battle mechanics necessitated by AI improvements
   - Trapping moves now have reduced priority and they end (using up the turn) if the target switches
     - Prevents PP underflow glitch
@@ -64,12 +67,13 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
-- 
+- General trainer rematch code moved to bank2D to make space in home.asm
 
 
 #New features & adjustments from last version:
 -----------
 - trainer ai routine 1 prevents using disable on a disabled pkmn
+- exp bar added to battle hud
 
   
 #Bugfixes:
@@ -186,16 +190,28 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Fixed daycare man capitalization
   - Clarified "chem" to mean grade in chemistry
   - Fixed capitalization in safari zone entrance
- 
-- Stat-down moves no longer have a 25% miss chance in AI matches
-- Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
-- Trapping moves nerfed big time to prevent the new AI from cheesing them:
-  - switching out of a trapping move ends it immediately and wastes its user's turn
-  - trapping moves have reduced priority like Counter
-  - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
-- Adjustment to the sleep condition
+
+- Adjustments to moves  
+  - Stat-down moves no longer have a 25% miss chance in AI matches
+  - Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
+  - Trapping moves nerfed big time to prevent the new AI from cheesing them:
+    - switching out of a trapping move ends it immediately and wastes its user's turn
+    - trapping moves have reduced priority like Counter
+    - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+  - Ghost moves (i.e. just Lick) do 2x against psychic as was always intended
+  - Pay Day upped to 8x multiplier instead of 2x
+    - It's 5x in later generations, but amulet coin doesn't exist in gen 1. 8x is a compromise.
+
+- Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
   - Waking up from sleep does not waste the turn and the chosen move is used
+    - Badge stat-ups are now only applied in wild pokemon battles to give parity to enemy trainers
+  - Badge stat-ups are now temporary boosts
+    - They are applied upon battle start or switching-in
+    - They are not applied at all after stat recalculations, so any stat change on your pkmn cancels all of them
+  - The effect of X Accuracy is no longer applied to one-hit K.O. moves (it originally made them auto-hit)
+  - The limiter on vitamins is raised to a max of 62720 stat exp after the elite 4 have been beaten
+  
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
   - using a move with a dream eater effect is heavily discouraged against non-sleeping opponents
   - using a move with a dream eater effect is slightly encouraged against a sleeping opponent
@@ -212,14 +228,14 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - heavily discourage using Counter against a non-applicable move
   - heavily discourage roar, teleport, & whirlwind
   - heavily discourage disable against a pkmn already disabled
+
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
   - zero-power buffing/debuffing moves are randomly preferenced 12.5% of the time to spice things up
   - zero-power buffing/debuffing moves are randomly discouraged 50% of the time to let ai always have a damage option
   - OHKO moves are heavily discouraged if the ai pkmn is slower than the player pkmn (they would never hit)
   - Static damage moves are randomly preferenced 25% of the time to spice things up
-- Trainer ai routine #3 added to the following trainer classes
-  - jr trainer M, jr trainer F, hiker, supernerd, engineer, lass, chief, bruno, brock, gentleman, agatha
+
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
   - 25% chance to switch if active pkmn is below 1/3 HP
   - chance to switch based on power of incoming supereffective move
@@ -229,9 +245,13 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - 25% chance to switch if opponent is using a trapping move
   - 25% chance to switch if active pkmn is confused
   - on the lowest stat mod, 12.5% chance to switch per lowered stage
+  
+- Trainer ai routine #3 added to the following trainer classes
+  - jr trainer M, jr trainer F, hiker, supernerd, engineer, lass, chief, bruno, brock, gentleman, agatha
 - Trainer ai routine #4 added to the following trainer classes
   -lass, jr trainer m/f, pokemaniac, supernerd, hiker, engineer, beauty, psychic, rocker, tamer, birdkeeper, cooltrainer m/f, gentleman
   -prof.oak, chief, gym leaders, e4
+  
 - Trainer stat DVs are now randomly generated to a degree
   - Attack DV is between 9 and 15 and always odd-numbered
   - Defense, special, and speed DVs are between 8 and 15
@@ -241,29 +261,24 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Trainer pkmn now have stat experience assigned to them that is scaled to their level
   - These are real DVs and statEXP values that utilize the existing enemy party_struct which is normally unused by trainer AI
 - Special trainers, e4, and gym leaders are slightly adjusted in their item use
-- Badge stat-ups are now only applied in wild pokemon battles to give parity to enemy trainers
-- Badge stat-ups are now temporary boosts
-  - They are applied upon battle start or switching-in
-  - They are not applied at all after stat recalculations, so any stat change on your pkmn cancels all of them
-- Ghost moves (i.e. just Lick) do 2x against psychic as was always intended
-- The effect of X Accuracy is no longer applied to one-hit K.O. moves (it originally made them auto-hit)
-- Pay Day upped to 8x multiplier instead of 2x
-  - It's 5x in later generations, but amulet coin doesn't exist in gen 1. 8x is a compromise.
-- Pokemon have gained their TMs and Moves from yellow
-- Kadabra & Alakazam can access Kinesis via the move relearner
-- Raichu gains some attacks back via level
-- Arcanine gains some attacks back via level
-- Ninetails gains some attacks back via level
-- Poliwrath gains some attacks back via level
-- Cloyster gains some attacks back via level
-- Starmie gains some attacks back via level
-- Exeggcutor gains some attacks back via level
-- Vileplume gains some attacks back via level
-- Victreebel gains some attacks back via level
-- Mewtwo can learn Swift by TM 
-- Kakuna and Metapod learn harden by level-up
-- pikachu and kadabra have their catch rates adjusted to yellow version
-- Give haunter/machoke/kadabra/graveler an evo by level option (level 45 to 48)
+
+- Adjustments to learnsets and base stats
+  - Pokemon have gained their TMs and Moves from yellow
+  - Kadabra & Alakazam can access Kinesis via the move relearner
+  - Raichu gains some attacks back via level
+  - Arcanine gains some attacks back via level
+  - Ninetails gains some attacks back via level
+  - Poliwrath gains some attacks back via level
+  - Cloyster gains some attacks back via level
+  - Starmie gains some attacks back via level
+  - Exeggcutor gains some attacks back via level
+  - Vileplume gains some attacks back via level
+  - Victreebel gains some attacks back via level
+  - Mewtwo can learn Swift by TM 
+  - Kakuna and Metapod learn harden by level-up
+  - pikachu and kadabra have their catch rates adjusted to yellow version
+  - Give haunter/machoke/kadabra/graveler an evo by level option (level 45 to 48)
+
 - Game corner prize costs re-balanced
 - Bushes moved around so Erika can be battled without CUT
 - The bush blocking the Vermilion gym has been replaced with a blocking pkmn that goes away after the ss anne leaves
@@ -284,11 +299,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - The juggler rosters, especially in fuchsia gym, have been slightly altered for flavor
 - Just for fun, the last juggler in the fuchsia gym is replaced with a cameo of Janine
   - Though at this point she's still just a cooltrainer and doesn't have a unique battle sprite
-- Event bit 908 seems to be unused. This bit is now set to indicate the elite 4 have been beaten.
 - S.S. Anne can be re-entered after defeating the elite 4.
   - minor text change indicating its return
   - the captain's text has been slightly altered for a more generic context
-- There is a new NPC in the route 7 underground path entrance that generates random battles after beating the elite 4
+- There is a new NPC in the west-east underground path that generates random battles after beating the elite 4
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
 - Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
 - Can battle Mr. Fuji after beating the elite 4
@@ -297,7 +311,6 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Talk to the little girl to delete moves.
   - Talk to her tutor to relearn moves.
   - I have expanded Mateo's code so that it also detects default level-0 moves from the baseStats header files.
-- The limiter on vitamins is raised to a max of 62720 stat exp after the elite 4 have been beaten
 - Trainer pkmn give double stat exp
 - Pkmn with levels > 100 give 255 stat exp for each stat
 - Pkmn with levels > 100 have 255 base exp yield
@@ -306,6 +319,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - If a level 100 chansey is first in your roster:
   - Shiny wild random encounters are much more common (1 in 256)
   - Repel effects will not block shiny encounters
+- Added an exp bar using code by Danny-E 33 
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):
@@ -363,6 +377,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 -----------
 - The Pret team for providing the base disassembly and all the code comments that came with it.
 - Rangi for the tool Polished Map
+- Exp bar coded by Danny-E 33
 - Move deleter/relearner coded by TheFakeMateo for Pokemon Red++
 - The following folks for their great tutorials, glitch videos, and explanations across the internet:
   - TheFakeMateo 
