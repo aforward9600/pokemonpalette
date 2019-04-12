@@ -31,6 +31,8 @@ CeladonMart3TextPointers:
 	dw CeladonMart3Text17
 	dw CeladonMart3ClerkText
 	dw CeladonMart3BlockerText
+	dw CeladonMart3Text6	;joenote - copying these down here due to a strange bug
+	dw CeladonMart3Text7
 
 CeladonMart3Text1:
 	TX_ASM

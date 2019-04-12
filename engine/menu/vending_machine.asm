@@ -44,9 +44,9 @@ VendingMachineMenu:
 ;else water is being piked
 	jr .pickwater
 .picklemonade
-	ld a, $5
-	ld [hMoney], a
 	xor a
+	ld [hMoney], a
+	ld a, $5
 	ld [hMoney + 2], a
 	ld a, $3
 	ld [hMoney + 1], a

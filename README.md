@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 beta0
+Version 1.06 beta1
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -71,6 +71,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Bide & Night Shade changed to have 1 power instead of 0 like other set-damage moves (works better with ai routines)
 - Fixed a bug that caused Bide to always miss
 - Bide changed to Typeless since it ignores typing (works better with ai routines)
+- Fixed lemonade price
+- Fixed TV & snes text in celadon mart 3f
 
 
 #New features & adjustments from last version:
