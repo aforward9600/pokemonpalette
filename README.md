@@ -35,7 +35,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Though difficult for a select few, each pkmn can be obtained multiple times
   - The uniquness between red & blue is still preserved in encounter rarity
 - Minor quality-of-life improvements during battle
-  - When a pkmn is caught and fills the box, a reminder is printed that the box is full
+  - When a when a box is filled (either via catching or depositing a pokemon), notification text is displayed
   - Exp bar in battle
   - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
 - Minor quality-of-life improvements outside of battle
@@ -68,13 +68,18 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
 - General trainer rematch code moved to bank2D to make space in home.asm
+- Bide & Night Shade changed to have 1 power instead of 0 like other set-damage moves (works better with ai routines)
+- Fixed a bug that caused Bide to always miss
+- Bide changed to Typeless since it ignores typing (works better with ai routines)
 
 
 #New features & adjustments from last version:
 -----------
 - trainer ai routine 1 prevents using disable on a disabled pkmn
 - exp bar added to battle hud
-
+- text reminder in the PC when the box is full after depositing
+- Bide's damage accumulation is now done after a damaging hit is applied (including multi-hit attacks)
+- trainer ai routine 3 discourages using thunder wave against immune pkmn
   
 #Bugfixes:
 -----------
@@ -190,6 +195,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Fixed daycare man capitalization
   - Clarified "chem" to mean grade in chemistry
   - Fixed capitalization in safari zone entrance
+  - PC has a text prompt to tell you if its full after depositing
 
 - Adjustments to moves  
   - Stat-down moves no longer have a 25% miss chance in AI matches
@@ -201,6 +207,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Ghost moves (i.e. just Lick) do 2x against psychic as was always intended
   - Pay Day upped to 8x multiplier instead of 2x
     - It's 5x in later generations, but amulet coin doesn't exist in gen 1. 8x is a compromise.
+  - Changes to Bide
+    - damage accumulation is done after taking a damaging hit instead of during turn execution (less room for glitches)
+	- side effect: bide is buffed because multi-hit moves now add damage to bide for each attack
+	- changed to Typeless to play nicer with AI routine 3 (it ignores the type chart regardless)
 
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
@@ -235,6 +245,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - zero-power buffing/debuffing moves are randomly discouraged 50% of the time to let ai always have a damage option
   - OHKO moves are heavily discouraged if the ai pkmn is slower than the player pkmn (they would never hit)
   - Static damage moves are randomly preferenced 25% of the time to spice things up
+  - Thunder Wave is not used against immune types
 
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
   - 25% chance to switch if active pkmn is below 1/3 HP

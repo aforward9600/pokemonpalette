@@ -525,6 +525,10 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMovePower]	;get the base power of the enemy's attack
 	and a	;check if it is zero
 	jr nz, .skipout	;get out of this section if non-zero power
+	ld a, [wEnemyMoveNum]
+	cp THUNDER_WAVE
+	jr z, .skipout ;get out of this section if the move is thunderwave (see if it's useful)
+.backfromTwave
 	call Random	;else get a random number between 0 and 255
 	and $07	;get only bits 0 to 2
 	jp z, .givepref	;if zero (12.5% chance) slightly encourage to spice things up
@@ -555,6 +559,10 @@ AIMoveChoiceModification3:
 	ld [hl], a
 	jp .nextMove
 .skipout2
+	;if thunder wave is being used against a non-immune target, jump back a bit since it's not a damaging move
+	ld a, [wEnemyMoveNum]
+	cp THUNDER_WAVE
+	jp z, .backfromTwave
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use ohko moves on faster opponents, since they will auto-miss

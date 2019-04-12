@@ -3503,6 +3503,7 @@ MirrorMoveCheck:
 	callab DisplayEffectiveness
 	ld a, 1
 	ld [wMoveDidntMiss], a
+	call EnemyBideAccum	;joedebug - accumulating bide damage here now
 .notDone
 	ld a, [wPlayerMoveEffect]
 	ld hl, AlwaysHappenSideEffects
@@ -3775,19 +3776,20 @@ CheckPlayerStatusConditions:
 	ld hl, wPlayerBattleStatus1
 	bit STORING_ENERGY, [hl] ; is mon using bide?
 	jr z, .ThrashingAboutCheck
-	xor a
-	ld [wPlayerMoveNum], a
-	ld hl, wDamage
-	ld a, [hli]
-	ld b, a
-	ld c, [hl]
-	ld hl, wPlayerBideAccumulatedDamage + 1
-	ld a, [hl]
-	add c ; accumulate damage taken
-	ld [hld], a
-	ld a, [hl]
-	adc b
-	ld [hl], a
+;joenote - done elsewhere using PlayerBideAccum
+;	xor a
+;	ld [wPlayerMoveNum], a
+;	ld hl, wDamage
+;	ld a, [hli]
+;	ld b, a
+;	ld c, [hl]
+;	ld hl, wPlayerBideAccumulatedDamage + 1
+;	ld a, [hl]
+;	add c ; accumulate damage taken
+;	ld [hld], a
+;	ld a, [hl]
+;	adc b
+;	ld [hl], a
 	ld hl, wPlayerNumAttacksLeft
 	dec [hl] ; did Bide counter hit 0?
 	jr z, .UnleashEnergy
@@ -6364,6 +6366,7 @@ EnemyCheckIfMirrorMoveEffect:
 	call ApplyAttackToPlayerPokemon
 	call PrintCriticalOHKOText
 	callab DisplayEffectiveness
+	call PlayerBideAccum
 	ld a, 1
 	ld [wMoveDidntMiss], a
 .handleExplosionMiss
@@ -6620,19 +6623,20 @@ CheckEnemyStatusConditions:
 	ld hl, wEnemyBattleStatus1
 	bit STORING_ENERGY, [hl] ; is mon using bide?
 	jr z, .checkIfThrashingAbout
-	xor a
-	ld [wEnemyMoveNum], a
-	ld hl, wDamage
-	ld a, [hli]
-	ld b, a
-	ld c, [hl]
-	ld hl, wEnemyBideAccumulatedDamage + 1
-	ld a, [hl]
-	add c ; accumulate damage taken
-	ld [hld], a
-	ld a, [hl]
-	adc b
-	ld [hl], a
+;joenote - doing this elsewhere with function EnemyBideAccum
+;	xor a
+;	ld [wEnemyMoveNum], a
+;	ld hl, wDamage
+;	ld a, [hli]
+;	ld b, a
+;	ld c, [hl]
+;	ld hl, wEnemyBideAccumulatedDamage + 1
+;	ld a, [hl]
+;	add c ; accumulate damage taken
+;	ld [hld], a
+;	ld a, [hl]
+;	adc b
+;	ld [hl], a
 	ld hl, wEnemyNumAttacksLeft
 	dec [hl] ; did Bide counter hit 0?
 	jr z, .unleashEnergy
@@ -9613,4 +9617,41 @@ PlayShinyAnimation:
 	ret 
 
 
+EnemyBideAccum:
+	ld hl, wEnemyBattleStatus1
+	bit STORING_ENERGY, [hl] ; is mon using bide?
+	ret z
+	xor a
+	ld [wEnemyMoveNum], a
+	ld hl, wDamage
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	ld hl, wEnemyBideAccumulatedDamage + 1
+	ld a, [hl]
+	add c ; accumulate damage taken
+	ld [hld], a
+	ld a, [hl]
+	adc b
+	ld [hl], a
+	ret
+
+PlayerBideAccum:
+	ld hl, wPlayerBattleStatus1
+	bit STORING_ENERGY, [hl] ; is mon using bide?
+	ret z
+	xor a
+	ld [wPlayerMoveNum], a
+	ld hl, wDamage
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	ld hl, wPlayerBideAccumulatedDamage + 1
+	ld a, [hl]
+	add c ; accumulate damage taken
+	ld [hld], a
+	ld a, [hl]
+	adc b
+	ld [hl], a
+	ret
 

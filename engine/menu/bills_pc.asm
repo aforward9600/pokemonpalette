@@ -251,6 +251,13 @@ BillsPCDeposit:
 	ld [hl], "@"
 	ld hl, MonWasStoredText
 	call PrintText
+;joenote - add reminder text for box full
+	ld a, [wNumInBox]
+	cp MONS_PER_BOX
+	jr nz, .jumptomenu
+	ld hl, BoxFullText
+	call PrintText
+.jumptomenu
 	jp BillsPCMenu
 
 BillsPCWithdraw:
