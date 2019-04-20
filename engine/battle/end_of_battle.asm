@@ -44,6 +44,12 @@ EndOfBattle:
 	ld [wForceEvolution], a
 	predef EvolutionAfterBattle
 .resetVariables
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - set the 7th bit of wUnusedD5A3 so it signifies coming out of a battle
+	ld a, [wUnusedD5A3]
+	set 7, a
+	ld [wUnusedD5A3], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	xor a
 	ld [wLowHealthAlarm], a ;disable low health alarm
 	ld [wChannelSoundIDs + Ch4], a

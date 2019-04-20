@@ -6809,11 +6809,11 @@ LoadEnemyMonData:
 	pop bc
 	jr nz, .storeDVs	;if bit for that pkmn position is already set, then store its DVs that were just loaded
 ;not sent out before, so generate special random DVs
-	call RandTrainerDV
+	call Random ; generate random IVs
+	or $88	;joenote - makes trainer pkmn have average IVs at minimum
 	ld b, a
-	call RandTrainerDV
-	and $EF	;makes the attack DV even
-	add $10	;makes attack DV odd for +8 hp DVs minimum
+	call Random
+	or $98	;joenote - makes trainer pkmn have average IVs at minimum
 	;save DVs to the party data structure, to which hl is still pointing, so that they can be recalled on a switch-in
 	ld [hl], a
 	inc hl
@@ -9566,13 +9566,6 @@ CalcEnemyStatEXP:
 ;	jr nz, .loop	;loop back if b is not zero
 ;	ret
 	
-;joenote - custom function for generating random trainer DVs between 8 and 15
-RandTrainerDV:
-	call BattleRandom	;get random number into a
-	and $77		;and a with 0111 0111. want to put zero in bit positions 4 and 7
-	;and $EE	;makes the nybbles of a even
-	add	$88		;add 1000 1000 to a to make min DVs 8
-	ret		;return back
 
 ;joenote - function for checking and reseting the AI's already-acted bit
 CheckandResetEnemyActedBit:

@@ -2685,7 +2685,10 @@ wNumHoFTeams:: ; d5a2
 ; number of HOF teams
 	ds 1
 
-wUnusedD5A3:: ; d5a3
+;this gets zeroed out when entering a map
+;stays preserved if exiting a battle
+;bit 7 is set if coming out of a battle
+wUnusedD5A3:: ; d5a3	;joenote - use for the random npc win streak 
 	ds 1
 
 wPlayerCoins:: ; d5a4

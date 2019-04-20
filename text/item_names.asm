@@ -48,7 +48,8 @@ ItemNames:
 	db "LEAF STONE@"
 	db "CARD KEY@"
 	db "NUGGET@"
-	db "PP UP@"
+	;db "PP UP@"	;unused PP_UP
+	db "M.GENE@"	;joenote - custom item
 	db "POKé DOLL@"
 	db "FULL HEAL@"
 	db "REVIVE@"

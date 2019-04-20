@@ -2,12 +2,35 @@
 ;joenote - adding scripts for random trainer battle
 
 UndergroundPathWEScript:
+	call CheckLostRandBattle
+	call CheckWinstreak
 	jp EnableAutoTextBoxDrawing
 
 UndergroundPathWETextPointers:
 	dw RandTrainerText1
+	dw PickUpItemText
 
-	
+CheckLostRandBattle:
+	ld a, [wIsInBattle]
+	cp $ff
+	ret nz
+	ld a, HS_UNDPATHWE_MGENE
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	xor a
+	ld [wUnusedD5A3], a
+	ret
+
+CheckWinstreak:
+	ld a, [wUnusedD5A3]
+	cp $5
+	ret c
+	ld a, HS_UNDPATHWE_MGENE
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	xor a
+	ld [wUnusedD5A3], a
+	ret
 	
 RandTrainerText1:
 	TX_ASM
@@ -43,6 +66,12 @@ RandTrainerText1:
 	call InitBattleEnemyParameters
 	;ld a, $09	;load 9 into the gym leader value to play final battle music 
 	;ld [wGymLeaderNo], a
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;increment victory counter for the random trainer
+	ld a, [wUnusedD5A3]
+	inc a
+	ld [wUnusedD5A3], a
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	xor a
 	ld [hJoyHeld], a
 	jr .textend

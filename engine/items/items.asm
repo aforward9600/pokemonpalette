@@ -59,13 +59,14 @@ ItemUsePtrTable:
 	dw UnusableItem      ; DOME_FOSSIL
 	dw UnusableItem      ; HELIX_FOSSIL
 	dw UnusableItem      ; SECRET_KEY
-	dw UnusableItem
+	dw UnusableItem		 ; XXX
 	dw UnusableItem      ; BIKE_VOUCHER
 	dw ItemUseXAccuracy  ; X_ACCURACY
 	dw ItemUseEvoStone   ; LEAF_STONE
 	dw ItemUseCardKey    ; CARD_KEY
 	dw UnusableItem      ; NUGGET
-	dw UnusableItem      ; ??? PP_UP
+	;dw UnusableItem      ; unused PP_UP
+	dw ItemUseVitamin    ; M_GENE	;joenote - custom item
 	dw ItemUsePokedoll   ; POKE_DOLL
 	dw ItemUseMedicine   ; FULL_HEAL
 	dw ItemUseMedicine   ; REVIVE
@@ -1274,6 +1275,8 @@ ItemUseMedicine:
 	pop de
 	pop hl
 	ld a, [wcf91]
+	cp M_GENE	;joenote - custom item
+	jp .useMGene
 	cp RARE_CANDY
 	jp z, .useRareCandy
 	push hl
@@ -1406,6 +1409,55 @@ ItemUseMedicine:
 	ld a, [hl]
 	adc b
 	ld [hl], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	jp .end_mgene
+;joenote - added code for the M_GENE
+.useMGene
+	push hl
+	ld bc, wPartyMon1DVs - wPartyMon1
+	add hl, bc ; hl now points to DVs
+;generate new random DVs and make sure they are at least 9,9,8,8
+	call Random
+	or $98
+	ld [hli], a
+	call Random
+	or $88
+	ld [hl], a
+	pop hl
+
+	ld a, [wWhichPokemon]
+	push af
+	ld a, [wcf91]
+	push af
+	push de
+
+	push hl
+	ld bc, wPartyMon1MaxHP - wPartyMon1
+	add hl, bc ; hl now points to MSB of max HP
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	pop hl
+
+	push hl
+	call .recalculateStats
+	pop hl
+	ld bc, (wPartyMon1MaxHP) - wPartyMon1
+	add hl, bc ; hl now points to MSB of recalculated max HP
+	ld a, [hli]
+	ld b, a
+	ld a, [hld]
+	ld c, a
+	
+; set current hp to new max hp
+	ld de, (wPartyMon1HP) - wPartyMon1MaxHP
+	add hl, de ; hl now points to MSB of current HP
+	ld a, b
+	ld [hli], a
+	ld a, c
+	ld [hld], a
+.end_mgene
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, RARE_CANDY_MSG
 	ld [wPartyMenuTypeOrMessageID], a
 	call RedrawPartyMenu

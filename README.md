@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 beta1
+Version 1.06 beta2
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -73,6 +73,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Bide changed to Typeless since it ignores typing (works better with ai routines)
 - Fixed lemonade price
 - Fixed TV & snes text in celadon mart 3f
+- Trainer pkmn DV calculation made more efficient
 
 
 #New features & adjustments from last version:
@@ -82,7 +83,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - text reminder in the PC when the box is full after depositing
 - Bide's damage accumulation is now done after a damaging hit is applied (including multi-hit attacks)
 - trainer ai routine 3 discourages using thunder wave against immune pkmn
-  
+- Pkmn added to the player's party (either as a gift or in-game trade) have at the least DVs of 9,8,8,8
+- Rest's sleep condition increased to 3 turns since attacking on wakeup is allowed
+- Added new item M.GENE: re-randomizes a pkmn's DVs to values of 9,8,8,8 or more
+
 #Bugfixes:
 -----------
 
@@ -213,6 +217,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
     - damage accumulation is done after taking a damaging hit instead of during turn execution (less room for glitches)
 	- side effect: bide is buffed because multi-hit moves now add damage to bide for each attack
 	- changed to Typeless to play nicer with AI routine 3 (it ignores the type chart regardless)
+  - Rest's sleep condition increased to 3 turns since attacking on wakeup is allowed.
 
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
@@ -223,6 +228,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
     - They are not applied at all after stat recalculations, so any stat change on your pkmn cancels all of them
   - The effect of X Accuracy is no longer applied to one-hit K.O. moves (it originally made them auto-hit)
   - The limiter on vitamins is raised to a max of 62720 stat exp after the elite 4 have been beaten
+  - Pkmn added to the player's party (either as a gift or in-game trade) have at the least IVs of 9,8,8,8
+  - New item M.GENE: re-randomizes a pkmn's DVs to values of 9,8,8,8 or more.
+  - Win 5 matches in a row against the random team NPC to get M.GENE items (leaving the area resets the win streak)
   
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
   - using a move with a dream eater effect is heavily discouraged against non-sleeping opponents
