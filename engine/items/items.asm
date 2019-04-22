@@ -1276,7 +1276,7 @@ ItemUseMedicine:
 	pop hl
 	ld a, [wcf91]
 	cp M_GENE	;joenote - custom item
-	jp .useMGene
+	jp z, .useMGene
 	cp RARE_CANDY
 	jp z, .useRareCandy
 	push hl

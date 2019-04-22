@@ -185,7 +185,8 @@ SlotMachine_SetFlags:
 	ld a, [wSlotMachineSevenAndBarModeChance]
 	cp b
 	jr c, .allowSevenAndBarMatches
-	ld a, 210
+;	ld a, 210
+	ld a, 200	;joenote - slightly increase odds matches
 	cp b
 	jr c, .allowMatches ; 55/256 (~21.5%) chance
 	ld [hl], 0

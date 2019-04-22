@@ -317,6 +317,24 @@ ShinyAttractFunction:
 	ld [wFontLoaded], a
 	ret
 	
+
+;play cry if the 1st pokemon has payday in its move set
+LuckySlotDetect:
+	push hl
+	ld b, NUM_MOVES + 1
+	ld hl, wPartyMon1Moves
+.loop
+	dec b
+	jr z, .return
+	ld a, [hli]
+	cp PAY_DAY
+	jr nz, .loop
+	ld a, [wPartyMon1Species]
+	call PlayCry
+.return
+	pop hl
+	ret
+	
 	
 	
 ;joenote - check if enemy mon has gen2 shiny DVs

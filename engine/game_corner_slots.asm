@@ -16,10 +16,14 @@ StartSlotMachine:
 	inc a
 	cp b
 	jr z, .match
-	ld a, 253
+	;ld a, 253
+	ld a, 250	;joenote - slightly increase odds of fever mode
 	jr .next
 .match
-	ld a, 250
+	callba LuckySlotDetect	;joenote - play cry for the lucky slot if the ist pokemon has payday
+	;ld a, 250
+	ld a, 240	;joenote - slightly increase odds of fever mode
+	
 .next
 	ld [wSlotMachineSevenAndBarModeChance], a
 	ld a, [H_LOADEDROMBANK]

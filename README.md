@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 beta2
+Version 1.06 beta3
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -74,6 +74,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Fixed lemonade price
 - Fixed TV & snes text in celadon mart 3f
 - Trainer pkmn DV calculation made more efficient
+- Fixed typo with M.GENE that gave its effect to all vitamins
 
 
 #New features & adjustments from last version:
@@ -86,6 +87,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Pkmn added to the player's party (either as a gift or in-game trade) have at the least DVs of 9,8,8,8
 - Rest's sleep condition increased to 3 turns since attacking on wakeup is allowed
 - Added new item M.GENE: re-randomizes a pkmn's DVs to values of 9,8,8,8 or more
+- Slightly increased slot odds
+- A pkmn with Pay Day will play its cry when interacting with a lucky slot machine
 
 #Bugfixes:
 -----------
@@ -301,6 +304,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Give haunter/machoke/kadabra/graveler an evo by level option (level 45 to 48)
 
 - Game corner prize costs re-balanced
+- Slightly increased slot odds
+- A pkmn with Pay Day will play its cry when interacting with a lucky slot machine
 - Bushes moved around so Erika can be battled without CUT
 - The bush blocking the Vermilion gym has been replaced with a blocking pkmn that goes away after the ss anne leaves
 - The surfboard, a nugget, and TM 15 are hidden items added to the vermilion dock
