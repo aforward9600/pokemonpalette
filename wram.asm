@@ -2424,7 +2424,7 @@ wXBlockCoord:: ; d364
 wLastMap:: ; d365
 	ds 1
 
-wUnusedD366:: ; d366	;joenote - use this to track which ai pokemon have switched out
+wUnusedD366:: ; d366	;joenote - use this to track which ai pokemon have switched & shiny state
 	ds 1
 ;bit 0: set if player mon shiny
 ;bit 1: 1st pkmn (position 0)

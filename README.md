@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 beta3
+Version 1.06 beta4
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -41,6 +41,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Minor quality-of-life improvements outside of battle
   - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
   - Move relearner and deleter
+  - Slot machine bugs and oversights fixed so now you can actually win big
+  - A pokemon having Pay Day will tip you off to the lucky slot machine and when it's in a special payout mode
+  - An NPC will pay COINS for showing him pokemon as an alternative to slots
   - Nearly all trainers can be rematched just by talking to them a 2nd time after their most recent defeat
   - Due to on-demand rematches, you could do a pseudo-"new game+" by boxing your pkmn and rematching everyone in order
   - All TMs can be repurchased as they are strategically scattered across all the Kanto pokemarts
@@ -75,6 +78,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Fixed TV & snes text in celadon mart 3f
 - Trainer pkmn DV calculation made more efficient
 - Fixed typo with M.GENE that gave its effect to all vitamins
+- The following #includes have been moved from trainer_ai.asm Bank$E to main.asm Bank$2D to free up space for AI and custom trainers
+  - INCLUDE "engine/battle/read_trainer_party.asm"
+  - INCLUDE "data/trainer_moves.asm"
+  - INCLUDE "data/trainer_parties.asm"
+- More fixes to slot reels
 
 
 #New features & adjustments from last version:
@@ -88,7 +96,13 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Rest's sleep condition increased to 3 turns since attacking on wakeup is allowed
 - Added new item M.GENE: re-randomizes a pkmn's DVs to values of 9,8,8,8 or more
 - Slightly increased slot odds
-- A pkmn with Pay Day will play its cry when interacting with a lucky slot machine
+- Slot machine coin counter runs twice as fast
+- A pkmn with Pay Day in the 1st party slot will play its cry when interacting with a lucky slot machine
+- A pkmn with Pay Day in the 1st party slot will play its cry when a slot machine enters payout modes
+- TM13 & TM14 swapped buyable locations between game corner and indigo plateau
+- New NPC in celadon hotel will reward coins for showing him requested pkmn
+- There are four lucky slot machines instead of one
+- Interaction of slot reel modes tweaked for better gameplay and fixed some developer oversights
 
 #Bugfixes:
 -----------
@@ -176,7 +190,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Enemy DVs can no longer be manipulated by having it use transform multiple times
   - Fixed a bug where itemfinder can't locate objects with a zero x or y coord
   - After defeating the cerulean burglar rocket, the guard itself always moves to prevent getting stuck in the front door
-  - Game corner reel bug fixed
+  - Slot machine reel bug fixed
+  - Fixed oversights in reel functionality to better match Gamfreak's intent
   - Surfboard bugfixes:
 	  - cannot use the surfboard if being forced to ride the bicycle
 	  - no longer freezes the game when using it from the item menu to get back on land
@@ -305,7 +320,14 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 - Game corner prize costs re-balanced
 - Slightly increased slot odds
-- A pkmn with Pay Day will play its cry when interacting with a lucky slot machine
+- Slot machine coin counter runs twice as fast
+- There are four lucky slot machines instead of one
+- Interaction of slot reel modes tweaked for better gameplay
+- A pkmn with Pay Day in the 1st party slot will play its cry when interacting with a lucky slot machine
+- A pkmn with Pay Day in the 1st party slot will play its cry when a slot machine enters payout modes
+  - 1 cry for a normal payout on the next pull
+  - 2 cries to signal the possibility of all 7s/bars on the next pull
+  - 3 cries to signal that super payout mode had been entered
 - Bushes moved around so Erika can be battled without CUT
 - The bush blocking the Vermilion gym has been replaced with a blocking pkmn that goes away after the ss anne leaves
 - The surfboard, a nugget, and TM 15 are hidden items added to the vermilion dock
@@ -329,6 +351,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - minor text change indicating its return
   - the captain's text has been slightly altered for a more generic context
 - There is a new NPC in the west-east underground path that generates random battles after beating the elite 4
+- New NPC in celadon hotel will reward coins for showing him requested pkmn
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
 - Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
 - Can battle Mr. Fuji after beating the elite 4

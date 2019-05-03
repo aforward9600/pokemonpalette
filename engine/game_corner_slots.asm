@@ -10,10 +10,19 @@ StartSlotMachine:
 	ld a, [wCanPlaySlots]
 	and a
 	ret z
+;	ld a, [wLuckySlotHiddenObjectIndex]
+;	ld b, a
+;	ld a, [wHiddenObjectIndex]
+;	inc a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - increase number of lucky machines to four
 	ld a, [wLuckySlotHiddenObjectIndex]
+	and $07
 	ld b, a
 	ld a, [wHiddenObjectIndex]
 	inc a
+	and $07
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 	cp b
 	jr z, .match
 	;ld a, 253

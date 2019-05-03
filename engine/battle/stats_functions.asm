@@ -1,7 +1,10 @@
 
 ;Putting some useful functions into this file that are in fact used now
+	
+	
 
-CheckLowerPlayerPriority:	;joenote - custom functions to handle lower move priority. Sets zero flag if priority lowered.
+;joenote - custom functions to handle lower move priority. Sets zero flag if priority lowered.
+CheckLowerPlayerPriority:	
 	ld a, [wPlayerSelectedMove]
 	call LowPriorityMoves
 	ret
@@ -20,6 +23,7 @@ LowPriorityMoves:
 	ret z
 	cp CLAMP
 	ret
+	
 	
 	
 ;joenote - custom functions for determining which trainerAI pkmn have already been sent out before
@@ -177,8 +181,8 @@ HalveSelectedStats:
 
 	
 	
-	
-	
+;joenote - custom functions for determining which trainerAI pkmn have already been switched out before
+;a=party position of pkmn (like wEnemyMonPartyPos). If checking, zero flag gives bit state (1 means switched out already)	
 CheckAISwitched:
 	ld a, [wEnemyMonPartyPos]	
 	cp $05
@@ -263,7 +267,7 @@ SetAISwitched:
 .partyret
 	ret
 	
-SwapTurn:
+SwapTurn:	;a simple custom function for swapping whose turn it is in the battle engine
 	ld a, [H_WHOSETURN]
 	and a
 	jr z, .make_one
@@ -277,7 +281,7 @@ SwapTurn:
 
 	
 
-
+;custom function to determin the DVs of wild pokemon with an option for forcing shiny DVs
 DetermineWildMonDVs:
 	ld a, [wFontLoaded]
 	bit 7, a
@@ -300,6 +304,10 @@ DetermineWildMonDVs:
 	ld [wFontLoaded], a
 	ret
 
+	
+
+;Custom functions to handle shiny pokemon
+	
 ShinyAttractFunction:
 ;only if the party leader is lvl 100 or more
 	ld a, [wPartyMon1Level]
@@ -316,26 +324,6 @@ ShinyAttractFunction:
 	set 7, a 
 	ld [wFontLoaded], a
 	ret
-	
-
-;play cry if the 1st pokemon has payday in its move set
-LuckySlotDetect:
-	push hl
-	ld b, NUM_MOVES + 1
-	ld hl, wPartyMon1Moves
-.loop
-	dec b
-	jr z, .return
-	ld a, [hli]
-	cp PAY_DAY
-	jr nz, .loop
-	ld a, [wPartyMon1Species]
-	call PlayCry
-.return
-	pop hl
-	ret
-	
-	
 	
 ;joenote - check if enemy mon has gen2 shiny DVs
 ;zero flag is set if not shiny	
@@ -447,7 +435,6 @@ SkipEnemyShinybit:
 	ld [wUnusedD366], a
 	ret
 
-
 ShinyStatusScreen:
 	ld a, [wPalPacket + 3]
 	call ShinyDVConvert
@@ -464,71 +451,57 @@ ShinyEnemyMon:
 	ld [wPalPacket + 7], a
 	ret
 	
-ShinyDVConvert:	;'a' holds the default value
-	
+ShinyDVConvert:	;'a' holds the default value	
 	cp PAL_MEWMON
 	jr nz, .next1
 	ld a, PAL_BLUEMON
 	jr .endConvert
-	
 .next1
 	cp PAL_BLUEMON
 	jr nz, .next2
 	ld a, PAL_MEWMON
 	jr .endConvert
-	
 .next2
 	cp PAL_REDMON
 	jr nz, .next3
 	ld a, PAL_GREYMON
 	jr .endConvert
-
 .next3
 	cp PAL_CYANMON
 	jr nz, .next4
 	ld a, PAL_PURPLEMON
 	jr .endConvert
-	
 .next4
 	cp PAL_PURPLEMON
 	jr nz, .next5
 	ld a, PAL_BROWNMON
 	jr .endConvert
-
 .next5
 	cp PAL_BROWNMON
 	jr nz, .next6
 	ld a, PAL_REDMON
 	jr .endConvert
-
 .next6
 	cp PAL_GREENMON
 	jr nz, .next7
 	ld a, PAL_PINKMON
 	jr .endConvert
-
 .next7
 	cp PAL_PINKMON
 	jr nz, .next8
 	ld a, PAL_YELLOWMON
 	jr .endConvert
-	
 .next8
 	cp PAL_YELLOWMON
 	jr nz, .next9
 	ld a, PAL_GREENMON
 	jr .endConvert
-	
 .next9
 	cp PAL_GREYMON
 	jr nz, .endConvert
 	ld a, PAL_CYANMON
-
 .endConvert
 	ret
-	
-	
-
 	
 	
 
@@ -565,7 +538,7 @@ GetRandTrainer:
 	ld [wEngagedTrainerSet], a
 	ret
 
-;gets a random pokemon
+;gets a random pokemon and puts its hex ID in register a and wcf91
 GetRandMon:
 	push hl
 	push bc
@@ -587,6 +560,7 @@ GetRandMon:
 	ld a, [hl]
 	pop bc
 	pop hl
+	ld [wcf91], a
 	ret
 	
 ;generates a randomized 6-party enemy trainer roster
@@ -598,7 +572,7 @@ GetRandRoster:
 .loop	
 	push bc
 	call GetRandMon
-	ld [wcf91], a
+	;ld [wcf91], a
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
 	push hl
@@ -779,4 +753,68 @@ TrainerRematch:
 .skip_rematch_choice
 	ResetEvent EVENT_909
 	xor a
+	ret
+	
+	
+	
+;play cry if the 1st pokemon has payday in its move set
+LuckySlotDetect:
+	push hl
+	ld b, NUM_MOVES + 1
+	ld hl, wPartyMon1Moves
+.loop
+	dec b
+	jr z, .return
+	ld a, [hli]
+	cp PAY_DAY
+	jr nz, .loop
+	ld a, [wPartyMon1Species]
+	call PlayCry
+.return
+	pop hl
+	ret
+	
+
+;Convert the DVs of the ist party pkmn into a normalized BCD-value score stored in wcd6d
+Mon1DVsBCDScore:
+	push de
+	push hl
+	push bc
+	xor a
+	ld [hCoins], a
+	ld [hCoins + 1], a
+	ld [hItemPrice], a	
+	ld [hItemPrice + 1], a	
+	ld [hItemPrice + 2], a	
+	
+	ld de, hCoins + 1
+	ld hl, hItemPrice + 1
+	
+	ld a, [wPartyMon1DVs]	;load first two nybbles of DVs
+	srl a	;shift all bits to the right one time
+	and $F7	; clear the highest bit of the low nybble in case the high nybble overflowed into the low nybble
+	ld [de], a
+	
+	ld a, [wPartyMon1DVs + 1]	;load second two nybbles of DVs
+	srl a	;shift all bits to the right one time
+	and $F7	; clear the highest bit of the low nybble in case the high nybble overflowed into the low nybble
+	ld [hl], a
+	
+	ld c, $2
+	predef AddBCDPredef	;add value in hl location to value in de location
+	;now store in wcd6d buffer
+	ld a, [hCoins]
+	ld [wcd6d], a
+	ld a, [hCoins + 1]
+	ld [wcd6d + 1], a
+
+	xor a
+	ld [hCoins], a
+	ld [hCoins + 1], a
+	ld [hItemPrice], a	
+	ld [hItemPrice + 1], a	
+	ld [hItemPrice + 2], a	
+	pop bc
+	pop hl
+	pop de
 	ret

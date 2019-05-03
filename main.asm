@@ -2110,3 +2110,8 @@ TradingAnimationGraphicsEnd:
 TradingAnimationGraphics2: INCBIN "gfx/trade2.2bpp"
 TradingAnimationGraphics2End:
 
+;joenote - moved this out of trainer_ai.asm in bank $E to here. 
+;Now there is lots of space for custom trainers and rosters
+INCLUDE "engine/battle/read_trainer_party.asm"
+INCLUDE "data/trainer_moves.asm"
+INCLUDE "data/trainer_parties.asm"

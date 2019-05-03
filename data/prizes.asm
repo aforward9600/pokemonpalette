@@ -62,7 +62,7 @@ ENDC
 
 PrizeMenuTMsEntries:
 	db TM_24
-	db TM_13
+	db TM_14
 	db TM_15
 	db "@"
 

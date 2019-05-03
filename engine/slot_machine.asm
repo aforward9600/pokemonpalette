@@ -66,6 +66,7 @@ MainSlotMachineLoop:
 	ld hl, BetHowManySlotMachineText
 	call PrintText
 	call SaveScreenTilesToBuffer1
+	call SlotMachine_SetFlags	;joenote - moved here
 .loop
 	ld a, A_BUTTON | B_BUTTON
 	ld [wMenuWatchedKeys], a
@@ -109,7 +110,7 @@ MainSlotMachineLoop:
 	call LoadScreenTilesFromBuffer1
 	call SlotMachine_SubtractBetFromPlayerCoins
 	call SlotMachine_LightBalls
-	call SlotMachine_SetFlags
+	;call SlotMachine_SetFlags	;joenote - move higher
 	ld a, 4
 	ld hl, wSlotMachineWheel1SlipCounter
 	ld [hli], a
@@ -177,10 +178,12 @@ SlotMachine_SetFlags:
 	ret nz
 	ld a, [wSlotMachineAllowMatchesCounter]
 	and a
-	jr nz, .allowMatches
+	jr nz, .allowMatches_silent
 	call Random
-	and a
-	jr z, .setAllowMatchesCounter ; 1/256 (~0.4%) chance
+	;and a
+	;jr z, .setAllowMatchesCounter ; 1/256 (~0.4%) chance
+	cp $03
+	jr c, .setAllowMatchesCounter ; 3/256 joenote - increasing chance to 1.2%
 	ld b, a
 	ld a, [wSlotMachineSevenAndBarModeChance]
 	cp b
@@ -193,13 +196,30 @@ SlotMachine_SetFlags:
 	ret
 .allowMatches
 	set 6, [hl]
+	callba LuckySlotDetect ;joenote - signal that a match is allowed
+	ret
+.allowMatches_silent	;don't play the detect cry if in super mode
+	set 6, [hl]
+	;allow for chance of 7s/bars when in super mode
+	call Random
+	ld b, a
+	ld a, [wSlotMachineSevenAndBarModeChance]
+	cp b
+	jr c, .allowSevenAndBarMatches
 	ret
 .setAllowMatchesCounter
 	ld a, 60
 	ld [wSlotMachineAllowMatchesCounter], a
+	;joenote - signal that super mode has been entered if 1st pkmn has payday
+	callba LuckySlotDetect	
+	callba LuckySlotDetect	
+	callba LuckySlotDetect	
 	ret
 .allowSevenAndBarMatches
+	;joenote - signal that 7s/bars is allowed
 	set 7, [hl]
+	callba LuckySlotDetect
+	callba LuckySlotDetect	
 	ret
 
 SlotMachine_SpinWheels:
@@ -300,13 +320,20 @@ SlotMachine_StopWheel1Early:
 	ret
 ; It looks like this was intended to make the wheel stop when a 7 symbol was
 ; visible, but it has a bug and so the wheel stops randomly.
+	;Note that the following are the hex numbers for each symbol
+	;seven = 02
+	;bar = 06
+	;cherry = 0a
+	;fish = 0e
+	;bird = 12
+	;mouse = 16
 .sevenAndBarMode
 	ld c, $3
 .loop
 	ld a, [hli]
 	cp SLOTS7 >> 8
 	;jr c, .stopWheel ; condition never true
-	;joenote - making this true
+	jr z, .stopWheel ;joenote - fixed to stop correctly
 	dec c
 	jr nz, .loop
 	ret
@@ -329,11 +356,17 @@ SlotMachine_StopWheel2Early:
 ; wheels OR if no symbols are lined up and the bottom symbol in wheel 2 is a
 ; 7 symbol or bar symbol. The second part could be a bug or a way to reduce the
 ; player's odds.
+	;joenote - changing this based on possible original intent
+	;Stop early if there is a match in the first two reels AND it's either bars or 7s
 .sevenAndBarMode
 	call SlotMachine_FindWheel1Wheel2Matches
-	ld a, [de]
-	cp (SLOTSBAR >> 8) + 1
-	ret nc
+	ret nz	;return if no match found
+	ld a, [de]	;	;else load the match tile in reel 2
+	cp (SLOTSBAR >> 8) + 1	;is the hex value less than 07? (meaning is the tile 06 for bar or 02 for seven)
+	jr c, .stopWheel	;stop reel slippage if hex tile is less than 07
+	ld a, [wSlotMachineFlags]	;else load the flags again
+	bit 6, a	;and see if any match is even allowed
+	ret z	;return if any matching is not allowed
 .stopWheel
 	xor a
 	ld [wSlotMachineWheel2SlipCounter], a
@@ -705,9 +738,10 @@ SlotMachine_PayCoinsToPlayer:
 	ld [wAnimCounter], a
 	ld a, [wSlotMachineWinningSymbol]
 	cp (SLOTSBAR >> 8) + 1
-	ld c, 8
+	;ld c, 8
+	ld c, 4	;joenote - double the speed of a payout
 	jr nc, .skip2
-	srl c ; c = 4 (make the the coins transfer faster if the symbol was 7 or bar)
+	srl c ; halve c above (make the the coins transfer twice as fast if the symbol was 7 or bar)
 .skip2
 	call DelayFrames
 	jr .loop
@@ -780,6 +814,12 @@ SlotMachine_AnimWheel3:
 	ld [wBaseCoordX], a
 
 SlotMachine_AnimWheel:
+;joedebug
+;	push bc	
+;	ld c, 5
+;	call DelayFrames
+;	pop bc
+	
 	ld a, $58
 	ld [wBaseCoordY], a
 	push de
