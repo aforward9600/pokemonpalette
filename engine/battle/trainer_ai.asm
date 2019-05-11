@@ -150,6 +150,16 @@ AIMoveChoiceModification1:
 .notdisable
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use substitute if not enough hp
+	ld a, [wEnemyMoveEffect]
+	cp SUBSTITUTE_EFFECT
+	jr nz, .notsubstitute
+	ld a, 4	;
+	call AICheckIfHPBelowFraction
+	jp c, .heavydiscourage
+.notsubstitute
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use dream eater if enemy not asleep, otherwise encourage it
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp DREAM_EATER_EFFECT	;see if it is dream eater
@@ -221,7 +231,7 @@ AIMoveChoiceModification1:
 	dec [hl]	;else return preference to neutral (1/3 to 1/2 hp)
 	ld a, 3	;
 	call AICheckIfHPBelowFraction
-	jp nc, .nextMove	;if hp is 1/2 or more, get next move
+	jp nc, .nextMove	;if hp is 1/3 or more, get next move
 	dec [hl]	;else slightly encourage
 	jp .nextMove	;get next move
 .notahealingmove
@@ -528,6 +538,16 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMoveNum]
 	cp THUNDER_WAVE
 	jr z, .skipout ;get out of this section if the move is thunderwave (see if it's useful)
+	ld a, [wEnemyMoveEffect]
+	cp POISON_EFFECT
+	jr nz, .notpoisoneffect
+	ld a, [wEnemyMonType]
+	cp POISON
+	jr z, .heavydiscourage2
+	ld a, [wEnemyMonType + 1]
+	cp POISON
+	jr z, .heavydiscourage2
+.notpoisoneffect
 .backfromTwave
 	call Random	;else get a random number between 0 and 255
 	and $07	;get only bits 0 to 2
@@ -994,17 +1014,17 @@ GiovanniAI:
 CooltrainerMAI:	;joenote - changed item to x-special and added switching
 	cp $40
 	jp c, AIUseXSpecial
-	ld a, 5
-	call AICheckIfHPBelowFraction
-	jp c, AISwitchIfEnoughMons
+;	ld a, 5
+;	call AICheckIfHPBelowFraction
+;	jp c, AISwitchIfEnoughMons
 	ret
 	
 CooltrainerFAI:
 	cp $40
 	jp c, AIUseXAccuracy	;uses x accuracy now
-	ld a, 5
-	call AICheckIfHPBelowFraction
-	jp c, AISwitchIfEnoughMons
+;	ld a, 5
+;	call AICheckIfHPBelowFraction
+;	jp c, AISwitchIfEnoughMons
 	ret
 	
 BrockAI:
@@ -1089,8 +1109,8 @@ BrunoAI:
 	ret
 
 AgathaAI:
-	cp $14
-	jp c, AISwitchIfEnoughMons
+;	cp $14
+;	jp c, AISwitchIfEnoughMons
 	cp $80
 	jr nc, .agathareturn
 	ld a, 4

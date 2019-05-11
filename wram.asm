@@ -1655,7 +1655,7 @@ wTrainerName:: ; d04a
 	ds 13
 
 wIsInBattle:: ; d057
-; lost battle, this is -1
+; lost battle, this is -1 or FF
 ; no battle, this is 0
 ; wild battle, this is 1
 ; trainer battle, this is 2
@@ -2117,7 +2117,8 @@ wMoveNum:: ; d0e0
 wMovesString:: ; d0e1
 	ds 56
 
-wUnusedD119:: ; d119	;joenote - use this to backup which turn it is
+;joenote - use this to backup which turn it is
+wUnusedD119:: ; d119	
 	ds 1
 
 wWalkBikeSurfStateCopy:: ; d11a

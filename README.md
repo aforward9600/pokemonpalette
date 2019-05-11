@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 beta4
+Version 1.06 beta5
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -103,6 +103,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - New NPC in celadon hotel will reward coins for showing him requested pkmn
 - There are four lucky slot machines instead of one
 - Interaction of slot reel modes tweaked for better gameplay and fixed some developer oversights
+- Fixed an issue where moves are skipped due to gaining multple levels in battle then evolving
+- AI improvement - poisoning moves discouraged against poison types
+- AI improvement - substitute discouraged if less that 1/4 hp remains
+- Agatha & cooltrainers will not randomly switch
 
 #Bugfixes:
 -----------
@@ -116,6 +120,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Fixed skipping move-learn on level-up glitch. 
      - when gaining multiple levels at a time, each in-between level is incrementally checked for moves learned
      - this prevents a pkmn from skipping learnable moves if gaining multiple levels in battle
+	 - Also does this when evolving via level-up for the new evolution's movelist
   - Burn & Paralyze stat penalties are now properly applied after Speed & Attack stats get updated/recalculated
   - Badge stat-ups don't get stacked anymore
   - If player is frozen, the hyperbeam recharge bit is now cleared
@@ -266,6 +271,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - heavily discourage using Counter against a non-applicable move
   - heavily discourage roar, teleport, & whirlwind
   - heavily discourage disable against a pkmn already disabled
+  - substitute discouraged if less that 1/4 hp remains
 
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
@@ -274,6 +280,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - OHKO moves are heavily discouraged if the ai pkmn is slower than the player pkmn (they would never hit)
   - Static damage moves are randomly preferenced 25% of the time to spice things up
   - Thunder Wave is not used against immune types
+  - Poisoning moves discouraged against poison types
 
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
   - 25% chance to switch if active pkmn is below 1/3 HP
@@ -300,6 +307,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Trainer pkmn now have stat experience assigned to them that is scaled to their level
   - These are real DVs and statEXP values that utilize the existing enemy party_struct which is normally unused by trainer AI
 - Special trainers, e4, and gym leaders are slightly adjusted in their item use
+- Agatha & cooltrainers will not randomly switch since they now have ai routine 4
 
 - Adjustments to learnsets and base stats
   - Pokemon have gained their TMs and Moves from yellow
