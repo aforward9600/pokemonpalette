@@ -1,4 +1,4 @@
-ZoneMons2:;joenote - added jynx
+ZoneMons2:;joenote - added jynx & tweaked encounter tables
 	db $1E
 	IF DEF(_RED)
 		db 22,NIDORAN_M
@@ -11,8 +11,8 @@ ZoneMons2:;joenote - added jynx
 	db 25,EXEGGCUTE
 	db 30,NIDORINO
 	db 30,NIDORINA
-	db 27,JYNX
 	db 32,VENOMOTH
+	db 27,JYNX
 	db 26,CHANSEY
 	db 28,TAUROS
 	db $00

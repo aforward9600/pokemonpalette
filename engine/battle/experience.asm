@@ -183,7 +183,17 @@ GainExperience:
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
 	ld hl, GainedText
+;joenote - changing exp.all text
+	ld a, [wBoostExpByExpAll]
+	and a
+	jr z, .noexpall
+	ld a, [wWhichPokemon]
+	and a
+	jr nz, .noexpprint	;print the exp.all amount only once (for the first party member)
+	ld hl, WithExpAllText
+.noexpall
 	call PrintText
+.noexpprint
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
 	callba AnimateEXPBar	;joenote - animate the exp bar
@@ -364,9 +374,9 @@ DivideExpDataByNumMonsGainingExp:
 	dec c
 	jr nz, .countSetBitsLoop
 	cp $2
+	ld[wUnusedD155], a	;joenote - make a backup of number of mons gaining exp
 	ret c ; return if only one mon is gaining exp
 	ld [wd11e], a ; store number of mons gaining exp
-	ld[wUnusedD155], a	;joenote - make a backup of number of mons gaining exp
 	ld hl, wEnemyMonBaseStats
 	ld c, wEnemyMonBaseExp + 1 - wEnemyMonBaseStats
 .divideLoop
@@ -402,10 +412,11 @@ BoostExp:
 GainedText:
 	TX_FAR _GainedText
 	TX_ASM
-	ld a, [wBoostExpByExpAll]
-	ld hl, WithExpAllText
-	and a
-	ret nz
+;joenote - changing exp.all text
+;	ld a, [wBoostExpByExpAll]
+;	ld hl, WithExpAllText
+;	and a
+;	ret nz
 	ld hl, ExpPointsText
 	ld a, [wGainBoostedExp]
 	and a

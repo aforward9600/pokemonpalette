@@ -212,6 +212,18 @@ ItemUseBall:
 	ld a, 150
 	cp b
 	jr c, .loop
+	
+;joenote - pump up those safari balls
+
+; Less than or equal to 150 is good enough for an Ultra Ball.
+	ld a, [hl]
+	cp ULTRA_BALL
+	jr z, .checkForAilments
+	
+; If it's a Safari Ball and Rand1 is greater than 'a', try again.
+	ld a, 125
+	cp b
+	jr c, .loop
 
 .checkForAilments
 ; Pokémon can be caught more easily with a status ailment.
@@ -252,10 +264,11 @@ ItemUseBall:
 
 ; Determine BallFactor. It's 8 for Great Balls and 12 for the others.
 	ld a, [wcf91]
-	cp GREAT_BALL
+	;cp GREAT_BALL
+	cp SAFARI_BALL ;joenote - great balls now have factor of 12 and safari balls now have factor of 8
 	ld a, 12
 	jr nz, .skip1
-	ld a, 12	;joenote: changed to 12 from 8 
+	ld a, 8
 
 .skip1
 ; Note that the results of all division operations are floored.
@@ -345,6 +358,10 @@ ItemUseBall:
 	jr z, .skip4
 	ld b, 150
 	cp ULTRA_BALL
+	jr z, .skip4
+;joenote - pump up those safari balls
+	ld b, 125
+	cp SAFARI_BALL
 	jr z, .skip4
 
 .skip4

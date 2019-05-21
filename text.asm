@@ -1430,9 +1430,13 @@ _GainedText::
 	text " gained"
 	line "@@"
 
+;_WithExpAllText::
+;	text "with EXP.ALL,"
+;	cont "@@"
+;joenote - making this less annoying
 _WithExpAllText::
-	text "with EXP.ALL,"
-	cont "@@"
+	text "EXP.ALL gives team"
+	line "@@"
 
 _BoostedText::
 	text "a boosted"

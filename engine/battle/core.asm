@@ -257,6 +257,7 @@ StartBattle:	;joedebug - start of the battle
 	jp z, .playerSendOutFirstMon ; if so, send out player mon
 ; safari zone battle
 .displaySafariZoneBattleMenu
+	callba ShinyEnemyAnimation
 	call DisplayBattleMenu
 	ret c ; return if the player ran from battle
 	ld a, [wActionResultOrTookBattleTurn]
@@ -270,7 +271,8 @@ StartBattle:	;joedebug - start of the battle
 	jp PrintText
 .notOutOfSafariBalls
 	callab PrintSafariZoneBattleText
-	ld a, [wEnemyMonSpeed + 1]
+	;ld a, [wEnemyMonSpeed + 1]
+	ld a, [wEnemyMonLevel]		;joenote - make escaping pokemon based on level instead of speed
 	add a
 	ld b, a ; init b (which is later compared with random value) to (enemy speed % 256) * 2
 	jp c, EnemyRan ; if (enemy speed % 256) > 127, the enemy runs
@@ -1101,6 +1103,12 @@ ReplaceFaintedEnemyMon:
 	ret z
 	call LoadScreenTilesFromBuffer1
 .notLinkBattle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joedebug - clear exp party flags here instead of EnemySendOut to prevent them clearing on enemy switches
+	xor a
+	ld [wPartyGainExpFlags], a
+	ld [wPartyFoughtCurrentEnemyFlags], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call EnemySendOut
 	xor a
 	ld [wEnemyMoveNum], a
@@ -1470,18 +1478,20 @@ SlideTrainerPicOffScreen:
 	ret
 
 ; send out a trainer's mon
+;joedebug - try not to reset party flags on trainer switch
+;			do this instead during ReplaceFaintedEnemyMon
 EnemySendOut:
 	ld hl, wPartyGainExpFlags
-	xor a
-	ld [hl], a
+	;xor a
+	;ld [hl], a
 	ld a, [wPlayerMonNumber]
 	ld c, a
 	ld b, FLAG_SET
 	push bc
 	predef FlagActionPredef
 	ld hl, wPartyFoughtCurrentEnemyFlags
-	xor a
-	ld [hl], a
+	;xor a
+	;ld [hl], a
 	pop bc
 	predef FlagActionPredef
 

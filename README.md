@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 beta5
+Version 1.06 beta6
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -38,6 +38,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - When a when a box is filled (either via catching or depositing a pokemon), notification text is displayed
   - Exp bar in battle
   - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+  - The safari zone mechanics run off level instead of speed and safari balls have a boosted catch rate
 - Minor quality-of-life improvements outside of battle
   - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
   - Move relearner and deleter
@@ -83,6 +84,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - INCLUDE "data/trainer_moves.asm"
   - INCLUDE "data/trainer_parties.asm"
 - More fixes to slot reels
+- Tweaked safari zone encounters a bit
+- Shiny animations will play in safari zone now
+- Redid the title screen a bit
+- Fixed a minor error that caused exp all to calculate incorrectly
 
 
 #New features & adjustments from last version:
@@ -107,6 +112,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - AI improvement - poisoning moves discouraged against poison types
 - AI improvement - substitute discouraged if less that 1/4 hp remains
 - Agatha & cooltrainers will not randomly switch
+- Upped the power of safari balls
+- Escaping in the safari zone is now based on level instead of speed
+- Exp.all now prints one message when splitting exp instead of one per party member
+- Flags for dividing exp among active pokemon are now only reset after fainting an enemy pkmn
+
 
 #Bugfixes:
 -----------
@@ -120,7 +130,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Fixed skipping move-learn on level-up glitch. 
      - when gaining multiple levels at a time, each in-between level is incrementally checked for moves learned
      - this prevents a pkmn from skipping learnable moves if gaining multiple levels in battle
-	 - Also does this when evolving via level-up for the new evolution's movelist
+	 - also does this when evolving via level-up for the new evolution's movelist
   - Burn & Paralyze stat penalties are now properly applied after Speed & Attack stats get updated/recalculated
   - Badge stat-ups don't get stacked anymore
   - If player is frozen, the hyperbeam recharge bit is now cleared
@@ -225,6 +235,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Clarified "chem" to mean grade in chemistry
   - Fixed capitalization in safari zone entrance
   - PC has a text prompt to tell you if its full after depositing
+  - Exp.all now prints one message when splitting exp instead of for each party member
 
 - Adjustments to moves  
   - Stat-down moves no longer have a 25% miss chance in AI matches
@@ -254,6 +265,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Pkmn added to the player's party (either as a gift or in-game trade) have at the least IVs of 9,8,8,8
   - New item M.GENE: re-randomizes a pkmn's DVs to values of 9,8,8,8 or more.
   - Win 5 matches in a row against the random team NPC to get M.GENE items (leaving the area resets the win streak)
+  - Upped the power of safari balls
+  - Escaping in the safari zone is now based on level instead of speed
   
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
   - using a move with a dream eater effect is heavily discouraged against non-sleeping opponents
@@ -308,6 +321,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - These are real DVs and statEXP values that utilize the existing enemy party_struct which is normally unused by trainer AI
 - Special trainers, e4, and gym leaders are slightly adjusted in their item use
 - Agatha & cooltrainers will not randomly switch since they now have ai routine 4
+- Flags for dividing exp among active pokemon are now only reset after fainting an enemy pkmn
+  - Originally these get reset every time the opponent send out a pkmn (even swithing)
+  - Was never really noticed since most trainers never switch nor would have the opportunity
+  - Changed based on user feedback since many trainers now try to switch
 
 - Adjustments to learnsets and base stats
   - Pokemon have gained their TMs and Moves from yellow
