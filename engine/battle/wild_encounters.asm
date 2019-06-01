@@ -79,6 +79,9 @@ TryDoWildEncounter:
 	ld [wcf91], a
 	ld [wEnemyMonSpecies2], a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - 	disallow mew if pokedex not complete
+	callba DisallowMew
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - check for shiny DV attract conditions
 	callba ShinyAttractFunction
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	

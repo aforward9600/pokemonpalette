@@ -306,6 +306,17 @@ DetermineWildMonDVs:
 
 	
 
+;replace random mew encounters with ditto if dex diploma not gotten
+DisallowMew:
+	CheckEvent EVENT_90B
+	ret nz
+	ld a, DITTO
+	ld [wcf91], a
+	ld [wEnemyMonSpecies2], a
+	ret
+	
+	
+	
 ;Custom functions to handle shiny pokemon
 	
 ShinyAttractFunction:
@@ -324,7 +335,7 @@ ShinyAttractFunction:
 	set 7, a 
 	ld [wFontLoaded], a
 	ret
-	
+
 ;joenote - check if enemy mon has gen2 shiny DVs
 ;zero flag is set if not shiny	
 CheckEnemyShinyDVs:

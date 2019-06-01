@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 beta6
+Version 1.06 final
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -88,6 +88,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Shiny animations will play in safari zone now
 - Redid the title screen a bit
 - Fixed a minor error that caused exp all to calculate incorrectly
+- Mew can only be encountered after getting the pokedex diploma
 
 
 #New features & adjustments from last version:
@@ -419,7 +420,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - articuno is rare on 1f
   - zapdos is rare on 2f
   - moltres is rare on b1
-  - mew is very rare on b1
+  - mew is very rare on b1 and will only show up after getting the pokedex diploma
   - dittos are rare and only on 2f & b1
   - scripted mewtwo is now at lvl 74
   - super rod in the unknown dungeon basement will yield either a lvl 70 mewtwo clone or glitch-level experiment dittos (a trap encounter)
