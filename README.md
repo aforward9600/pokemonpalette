@@ -6,6 +6,9 @@ Download the IPS patch file of the version you want and apply it to its respecti
 
 Always apply patches to a fresh USA ROM or else strange glitches will occur.  
 
+The master branch will now be used for subsequent beta builds.
+Please refer to the backup branches for the last stable version.
+
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.  
 This is a mostly-vanilla hack that focuses on fixing glitches from the original game.  
 Additionally, trainer AI routines are also improved and includes minimal quality-of-life improvements.  
