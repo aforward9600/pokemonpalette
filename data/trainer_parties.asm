@@ -128,7 +128,7 @@ LassData:
 	db 23,BELLSPROUT,WEEPINBELL,0
 	db 23,ODDISH,GLOOM,0
 ;Vermillion Dock 
-	;joenote - Special Trainer - orange league champ
+	;joenote - Special Trainer - Seiga the orange league champ
 	db $FF,80,CLEFABLE,82,GENGAR,83,VICTREEBEL,83,NINETALES,84,KANGASKHAN,85,BLASTOISE,0	;lass #19
 	
 SailorData:
@@ -159,7 +159,7 @@ JrTrainerMData:
 ; Route 12
 	db 29,NIDORAN_M,NIDORINO,0
 ;joenote - special fight with future trainer red
-	db $FF,83,MUK,85,VENUSAUR,85,CHARIZARD,85,BLASTOISE,87,SNORLAX,88,PIKACHU,0
+	db $FF,83,MUK,85,VENUSAUR,85,CHARIZARD,85,BLASTOISE,87,SNORLAX,88,PIKACHU,0	;jr trainer male #9
 ; Unused
 	;db 18,DIGLETT,DIGLETT,SANDSHREW,0
 JrTrainerFData:
@@ -625,7 +625,7 @@ GentlemanData:
 ; SS Anne 2F Rooms
 	db 17,GROWLITHE,PONYTA,0
 ;joenote - special fight with mr fuji
-	db $FF,69,MAROWAK,70,OMASTAR,70,KABUTOPS,71,AERODACTYL,73,ARCANINE,100,DITTO,0
+	db $FF,69,MAROWAK,70,OMASTAR,70,KABUTOPS,71,AERODACTYL,73,ARCANINE,100,DITTO,0	;gentleman #5
 ; Unused
 	;db 48,PRIMEAPE,0
 Green2Data:

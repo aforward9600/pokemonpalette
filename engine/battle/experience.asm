@@ -31,10 +31,10 @@ GainExperience:
 	ld a, [hli]
 	ld b, a ; enemy mon base stat
 	ld a, [de] ; stat exp
-	add b ; add enemy mon base state to stat exp
+	add b ; add enemy mon base stat to stat exp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - bonus statexp
-	;if enemy level > 100, give 255 stat exp
+	;if enemy level > 100, give 255 stat exp instead of enemy mon's base stat
 	push bc
 	ld c, a
 	ld a, [wEnemyMonLevel]

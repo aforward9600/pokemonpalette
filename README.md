@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 final
+Version 1.06 final *hotfix*
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -74,52 +74,15 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
-- General trainer rematch code moved to bank2D to make space in home.asm
-- Bide & Night Shade changed to have 1 power instead of 0 like other set-damage moves (works better with ai routines)
-- Fixed a bug that caused Bide to always miss
-- Bide changed to Typeless since it ignores typing (works better with ai routines)
-- Fixed lemonade price
-- Fixed TV & snes text in celadon mart 3f
-- Trainer pkmn DV calculation made more efficient
-- Fixed typo with M.GENE that gave its effect to all vitamins
-- The following #includes have been moved from trainer_ai.asm Bank$E to main.asm Bank$2D to free up space for AI and custom trainers
-  - INCLUDE "engine/battle/read_trainer_party.asm"
-  - INCLUDE "data/trainer_moves.asm"
-  - INCLUDE "data/trainer_parties.asm"
-- More fixes to slot reels
-- Tweaked safari zone encounters a bit
-- Shiny animations will play in safari zone now
-- Redid the title screen a bit
-- Fixed a minor error that caused exp all to calculate incorrectly
-- Mew can only be encountered after getting the pokedex diploma
-
+- fixed a bug that defaulted shiny pokemon to have a max attack DV in certain instances
+- the code disallowing mew is borked-up, so it's removed
 
 #New features & adjustments from last version:
 -----------
-- trainer ai routine 1 prevents using disable on a disabled pkmn
-- exp bar added to battle hud
-- text reminder in the PC when the box is full after depositing
-- Bide's damage accumulation is now done after a damaging hit is applied (including multi-hit attacks)
-- trainer ai routine 3 discourages using thunder wave against immune pkmn
-- Pkmn added to the player's party (either as a gift or in-game trade) have at the least DVs of 9,8,8,8
-- Rest's sleep condition increased to 3 turns since attacking on wakeup is allowed
-- Added new item M.GENE: re-randomizes a pkmn's DVs to values of 9,8,8,8 or more
-- Slightly increased slot odds
-- Slot machine coin counter runs twice as fast
-- A pkmn with Pay Day in the 1st party slot will play its cry when interacting with a lucky slot machine
-- A pkmn with Pay Day in the 1st party slot will play its cry when a slot machine enters payout modes
-- TM13 & TM14 swapped buyable locations between game corner and indigo plateau
-- New NPC in celadon hotel will reward coins for showing him requested pkmn
-- There are four lucky slot machines instead of one
-- Interaction of slot reel modes tweaked for better gameplay and fixed some developer oversights
-- Fixed an issue where moves are skipped due to gaining multple levels in battle then evolving
-- AI improvement - poisoning moves discouraged against poison types
-- AI improvement - substitute discouraged if less that 1/4 hp remains
-- Agatha & cooltrainers will not randomly switch
-- Upped the power of safari balls
-- Escaping in the safari zone is now based on level instead of speed
-- Exp.all now prints one message when splitting exp instead of one per party member
-- Flags for dividing exp among active pokemon are now only reset after fainting an enemy pkmn
+- Safari zone pokemon have better DVs on average
+- Seiga's party moves updated
+- Fuji's party moves updated
+- Chief's party moves updated
 
 
 #Bugfixes:

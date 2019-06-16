@@ -286,13 +286,26 @@ DetermineWildMonDVs:
 	ld a, [wFontLoaded]
 	bit 7, a
 	jr z, .do_random
-	ld a, $FA
 	ld b, $AA
+	call Random	;get random number into a
+	or $20	;set only bit 5
+	and $F0 ; clear the lower nybble
+	or $0A	;set the lower nyble to $A
 	jr .load
 .do_random
+	ld a, [wSafariSteps]
+	and a
+	jr z, .do_random_safari	;safari zone pokemon have better DVs
 	call Random
 	ld b, a
 	call Random
+	jr .load
+.do_random_safari
+	call Random
+	or $88
+	ld b, a
+	call Random
+	or $98
 .load
 	push hl
 	ld hl, wEnemyMonDVs
@@ -306,14 +319,32 @@ DetermineWildMonDVs:
 
 	
 
-;replace random mew encounters with ditto if dex diploma not gotten
+;replace random mew encounters with ditto if dex diploma not attained
 DisallowMew:
+	ret
 	CheckEvent EVENT_90B
 	ret nz
 	ld a, DITTO
 	ld [wcf91], a
 	ld [wEnemyMonSpecies2], a
 	ret
+;DisallowMew:
+;	ret
+;	push bc
+;	ld b, a
+;	CheckEvent EVENT_90B
+;	jr nz, .kickout
+;	ld a, [wIsInBattle]
+;	dec a	;zero flag set here if in wild battle
+;	ld a, DITTO
+;	ld [wcf91], a
+;	jr nz, .return
+;	ld [wEnemyMonSpecies2], a
+;.kickout
+;	ld a, b
+;.return
+;	pop bc
+;	ret
 	
 	
 	
@@ -572,6 +603,7 @@ GetRandMon:
 	pop bc
 	pop hl
 	ld [wcf91], a
+	call DisallowMew
 	ret
 	
 ;generates a randomized 6-party enemy trainer roster
@@ -598,117 +630,96 @@ GetRandRoster:
 	ret
 	
 ListRealPkmn:
-	db RHYDON       ; $01
-	db KANGASKHAN   ; $02
+	db MEW          ; $15
+	db MEWTWO       ; $83
+	db MOLTRES      ; $49
+	db ARTICUNO     ; $4A
+	db ZAPDOS       ; $4B
+ListNonLegendPkmn:
 	db NIDORAN_M    ; $03
 	db CLEFAIRY     ; $04
 	db SPEAROW      ; $05
 	db VOLTORB      ; $06
-	db NIDOKING     ; $07
-	db SLOWBRO      ; $08
-	db IVYSAUR      ; $09
-	db EXEGGUTOR    ; $0A
-	db LICKITUNG    ; $0B
 	db EXEGGCUTE    ; $0C
 	db GRIMER       ; $0D
-	db GENGAR       ; $0E
 	db NIDORAN_F    ; $0F
-	db NIDOQUEEN    ; $10
 	db CUBONE       ; $11
 	db RHYHORN      ; $12
-	db LAPRAS       ; $13
-	db ARCANINE     ; $14
-	db MEW          ; $15
-	db GYARADOS     ; $16
 	db SHELLDER     ; $17
 	db TENTACOOL    ; $18
 	db GASTLY       ; $19
-	db SCYTHER      ; $1A
 	db STARYU       ; $1B
-	db BLASTOISE    ; $1C
-	db PINSIR       ; $1D
-	db TANGELA      ; $1E
 	db GROWLITHE    ; $21
-	db ONIX         ; $22
-	db FEAROW       ; $23
 	db PIDGEY       ; $24
 	db SLOWPOKE     ; $25
-	db KADABRA      ; $26
-	db GRAVELER     ; $27
-	db CHANSEY      ; $28
-	db MACHOKE      ; $29
-	db MR_MIME      ; $2A
-	db HITMONLEE    ; $2B
-	db HITMONCHAN   ; $2C
-	db ARBOK        ; $2D
-	db PARASECT     ; $2E
 	db PSYDUCK      ; $2F
 	db DROWZEE      ; $30
-	db GOLEM        ; $31
-	db MAGMAR       ; $33
-	db ELECTABUZZ   ; $35
-	db MAGNETON     ; $36
 	db KOFFING      ; $37
 	db MANKEY       ; $39
 	db SEEL         ; $3A
 	db DIGLETT      ; $3B
-	db TAUROS       ; $3C
-	db FARFETCHD    ; $40
 	db VENONAT      ; $41
-	db DRAGONITE    ; $42
 	db DODUO        ; $46
 	db POLIWAG      ; $47
-	db JYNX         ; $48
-	db MOLTRES      ; $49
-	db ARTICUNO     ; $4A
-	db ZAPDOS       ; $4B
-	db DITTO        ; $4C
 	db MEOWTH       ; $4D
 	db KRABBY       ; $4E
 	db VULPIX       ; $52
-	db NINETALES    ; $53
 	db PIKACHU      ; $54
-	db RAICHU       ; $55
 	db DRATINI      ; $58
-	db DRAGONAIR    ; $59
 	db KABUTO       ; $5A
-	db KABUTOPS     ; $5B
 	db HORSEA       ; $5C
-	db SEADRA       ; $5D
 	db SANDSHREW    ; $60
-	db SANDSLASH    ; $61
 	db OMANYTE      ; $62
-	db OMASTAR      ; $63
 	db JIGGLYPUFF   ; $64
-	db WIGGLYTUFF   ; $65
 	db EEVEE        ; $66
-	db FLAREON      ; $67
-	db JOLTEON      ; $68
-	db VAPOREON     ; $69
 	db MACHOP       ; $6A
 	db ZUBAT        ; $6B
 	db EKANS        ; $6C
 	db PARAS        ; $6D
-	db POLIWHIRL    ; $6E
-	db POLIWRATH    ; $6F
 	db WEEDLE       ; $70
 	db KAKUNA       ; $71
-	db BEEDRILL     ; $72
-	db DODRIO       ; $74
-	db PRIMEAPE     ; $75
-	db DUGTRIO      ; $76
-	db VENOMOTH     ; $77
-	db DEWGONG      ; $78
 	db CATERPIE     ; $7B
 	db METAPOD      ; $7C
-	db BUTTERFREE   ; $7D
-	db MACHAMP      ; $7E
-	db GOLDUCK      ; $80
-	db HYPNO        ; $81
-	db GOLBAT       ; $82
-	db MEWTWO       ; $83
-	db SNORLAX      ; $84
 	db MAGIKARP     ; $85
+	db ABRA         ; $94
+	db BULBASAUR    ; $99
+	db GOLDEEN      ; $9D
+	db PONYTA       ; $A3
+	db RATTATA      ; $A5
+	db GEODUDE      ; $A9
+	db MAGNEMITE    ; $AD
+	db CHARMANDER   ; $B0
+	db SQUIRTLE     ; $B1
+	db ODDISH       ; $B9
+	db BELLSPROUT   ; $BC
+ListMidEvolvedPkmn:
+	db IVYSAUR      ; $09
+	db KADABRA      ; $26
+	db GRAVELER     ; $27
+	db MACHOKE      ; $29
+	db POLIWHIRL    ; $6E
+	db HAUNTER      ; $93
+	db PIDGEOTTO    ; $96
+	db NIDORINO     ; $A7
+	db NIDORINA     ; $A8
+	db CHARMELEON   ; $B2
+	db WARTORTLE    ; $B3
+	db GLOOM        ; $BA
+	db WEEPINBELL   ; $BD
+ListMostEvolvedPkmn:
+	db VICTREEBEL   ; $BE
+	db VILEPLUME    ; $BB
+	db CHARIZARD    ; $B4
+	db PORYGON      ; $AA
+	db AERODACTYL   ; $AB
+	db RATICATE     ; $A6
+	db RAPIDASH     ; $A4
+	db VENUSAUR     ; $9A
+	db TENTACRUEL   ; $9B
+	db SEAKING      ; $9E
+	db PIDGEOT      ; $97
+	db STARMIE      ; $98
+	db ALAKAZAM     ; $95
 	db MUK          ; $88
 	db KINGLER      ; $8A
 	db CLOYSTER     ; $8B
@@ -717,38 +728,62 @@ ListRealPkmn:
 	db WEEZING      ; $8F
 	db PERSIAN      ; $90
 	db MAROWAK      ; $91
-	db HAUNTER      ; $93
-	db ABRA         ; $94
-	db ALAKAZAM     ; $95
-	db PIDGEOTTO    ; $96
-	db PIDGEOT      ; $97
-	db STARMIE      ; $98
-	db BULBASAUR    ; $99
-	db VENUSAUR     ; $9A
-	db TENTACRUEL   ; $9B
-	db GOLDEEN      ; $9D
-	db SEAKING      ; $9E
-	db PONYTA       ; $A3
-	db RAPIDASH     ; $A4
-	db RATTATA      ; $A5
-	db RATICATE     ; $A6
-	db NIDORINO     ; $A7
-	db NIDORINA     ; $A8
-	db GEODUDE      ; $A9
-	db PORYGON      ; $AA
-	db AERODACTYL   ; $AB
-	db MAGNEMITE    ; $AD
-	db CHARMANDER   ; $B0
-	db SQUIRTLE     ; $B1
-	db CHARMELEON   ; $B2
-	db WARTORTLE    ; $B3
-	db CHARIZARD    ; $B4
-	db ODDISH       ; $B9
-	db GLOOM        ; $BA
-	db VILEPLUME    ; $BB
-	db BELLSPROUT   ; $BC
-	db WEEPINBELL   ; $BD
-	db VICTREEBEL   ; $BE
+	db BUTTERFREE   ; $7D
+	db MACHAMP      ; $7E
+	db GOLDUCK      ; $80
+	db HYPNO        ; $81
+	db GOLBAT       ; $82
+	db SNORLAX      ; $84
+	db BEEDRILL     ; $72
+	db DODRIO       ; $74
+	db PRIMEAPE     ; $75
+	db DUGTRIO      ; $76
+	db VENOMOTH     ; $77
+	db DEWGONG      ; $78
+	db POLIWRATH    ; $6F
+	db FLAREON      ; $67
+	db JOLTEON      ; $68
+	db VAPOREON     ; $69
+	db WIGGLYTUFF   ; $65
+	db OMASTAR      ; $63
+	db SANDSLASH    ; $61
+	db SEADRA       ; $5D
+	db KABUTOPS     ; $5B
+	db DRAGONAIR    ; $59
+	db RAICHU       ; $55
+	db NINETALES    ; $53
+	db DITTO        ; $4C
+	db JYNX         ; $48
+	db DRAGONITE    ; $42
+	db TAUROS       ; $3C
+	db FARFETCHD    ; $40
+	db GOLEM        ; $31
+	db MAGMAR       ; $33
+	db ELECTABUZZ   ; $35
+	db MAGNETON     ; $36
+	db MR_MIME      ; $2A
+	db HITMONLEE    ; $2B
+	db HITMONCHAN   ; $2C
+	db ARBOK        ; $2D
+	db PARASECT     ; $2E
+	db CHANSEY      ; $28
+	db ONIX         ; $22
+	db FEAROW       ; $23
+	db BLASTOISE    ; $1C
+	db PINSIR       ; $1D
+	db TANGELA      ; $1E
+	db RHYDON       ; $01
+	db KANGASKHAN   ; $02
+	db NIDOKING     ; $07
+	db SLOWBRO      ; $08
+	db EXEGGUTOR    ; $0A
+	db LICKITUNG    ; $0B
+	db GENGAR       ; $0E
+	db NIDOQUEEN    ; $10
+	db LAPRAS       ; $13
+	db ARCANINE     ; $14
+	db GYARADOS     ; $16
+	db SCYTHER      ; $1A
 	db $00
 	
 TrainerRematch:
