@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.06 final *hotfix*
+Version 1.07 beta1
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -75,7 +75,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 #Hack-Induced Bugfixes & Adjustments in this version:
 -----------
 - fixed a bug that defaulted shiny pokemon to have a max attack DV in certain instances
-- the code disallowing mew is borked-up, so it's removed
+- mew will not appear in randomized trainer battles if pokedex diploma not attained
+
 
 #New features & adjustments from last version:
 -----------

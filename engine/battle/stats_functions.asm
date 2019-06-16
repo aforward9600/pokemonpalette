@@ -321,31 +321,19 @@ DetermineWildMonDVs:
 
 ;replace random mew encounters with ditto if dex diploma not attained
 DisallowMew:
-	ret
 	CheckEvent EVENT_90B
 	ret nz
+	ld a, [wcf91]
+	cp MEW
+	ret nz
+	ld a, [wIsInBattle]
+	dec a	;zero flag set here if in wild battle
 	ld a, DITTO
 	ld [wcf91], a
+	ret nz
 	ld [wEnemyMonSpecies2], a
 	ret
-;DisallowMew:
-;	ret
-;	push bc
-;	ld b, a
-;	CheckEvent EVENT_90B
-;	jr nz, .kickout
-;	ld a, [wIsInBattle]
-;	dec a	;zero flag set here if in wild battle
-;	ld a, DITTO
-;	ld [wcf91], a
-;	jr nz, .return
-;	ld [wEnemyMonSpecies2], a
-;.kickout
-;	ld a, b
-;.return
-;	pop bc
-;	ret
-	
+
 	
 	
 ;Custom functions to handle shiny pokemon
