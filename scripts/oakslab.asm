@@ -999,6 +999,8 @@ OaksLabText5:
 	ld hl, OakVictorySpeech	;load text for when you win
 	ld de, OakVictorySpeech	;load text for when you lose
 	call SaveEndBattleTextPointers	;save the win/lose text
+	ld a, $8
+	ld [wGymLeaderNo], a	;set bgm to gym leader music
 	ld a, OPP_PROF_OAK	;load the trainer type
 	ld [wCurOpponent], a	;set as the current opponent
 	; select oak's team based on the starter chosen
@@ -1267,6 +1269,19 @@ OaksLabText27:
 	db "@"
 
 OaksLabText11:
+	TX_ASM
+	CheckEvent EVENT_90C
+	jr z, .scaleOn
+	ResetEvent EVENT_90C
+	ld hl, OaksLabText_scalingOFF 
+	jr .end
+.scaleOn
+	SetEvent EVENT_90C
+	ld hl, OaksLabText_scalingON
+.end
+	call PrintText
+	jp TextScriptEnd
+
 OaksLabText10:
 	TX_ASM
 	ld hl, OaksLabText_1d405
@@ -1288,4 +1303,12 @@ OaksLabText_prebattle:
 	
 OakVictorySpeech:
 	TX_FAR _OakVictorySpeech
+	db "@"
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;joenote - add text for level-scaling
+OaksLabText_scalingON:
+	TX_FAR _OaksLabText_scalingON
+	db "@"
+OaksLabText_scalingOFF:
+	TX_FAR _OaksLabText_scalingOFF
 	db "@"

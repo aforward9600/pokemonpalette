@@ -42,6 +42,6 @@ _Mansion3Text5::
 	cont "was gestated with"
 	cont "MEW's superb DNA."
 
-	para "An ehhanced novel"
-	line "creation: MEWTWO."
+	para "An enhanced new"
+	line "species: MEWTWO."
 	done

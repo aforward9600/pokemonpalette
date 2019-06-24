@@ -1,3 +1,44 @@
+
+;joenote - evolve an enemy mon in wcf91 based on wCurEnemyLVL
+EnemyMonEvolve:
+	push bc	
+	ld hl, EvosMovesPointerTable
+	ld a, [wcf91]
+	dec a
+	add a
+	ld c, a
+	ld b, 0
+	rl b
+	add hl, bc
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+.evoloop
+	ld a, [hli]
+	and a
+	jr z, .return
+	cp EV_LEVEL
+	jr z, .lvl_evolve
+	cp EV_TRADE
+	jr z, .trade_evolve
+	;else item evolve
+	inc hl
+.trade_evolve
+	inc hl
+	inc hl
+	jr .evoloop
+.lvl_evolve
+	ld a, [hli]
+	ld b, a
+	ld a, [wCurEnemyLVL]
+	cp b
+	jr c, .return
+	ld a, [hl]
+	ld [wcf91], a
+.return
+	pop bc
+	ret
+
 ; try to evolve the mon in [wWhichPokemon]
 TryEvolvingMon:
 	ld hl, wCanEvolveFlags

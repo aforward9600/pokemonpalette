@@ -509,3 +509,18 @@ _OakVictorySpeech::
 	line "him. He retired"
 	cont "to LAVENDER TOWN."
 	prompt
+	
+;;;;;;;;;;;;;;;;;;;;;;joenote - adding text for lvl scaling
+_OaksLabText_scalingON::
+	text "Need a challenge?"
+	line "I've set it up so"
+	cont "weaker trainers"
+	cont "scale up to you."
+	done
+	
+_OaksLabText_scalingOFF::
+	text "Too hard? I see..."
+	line "I've set weaker"
+	cont "trainers back to"
+	cont "normal for you."
+	done

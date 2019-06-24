@@ -67,7 +67,13 @@ ReadTrainer:
 	and a ; have we reached the end of the trainer data?
 	;jr z, .FinishUp
 	jr z, .AddAdditionalMoveData	;joenote - converting to Yellow version method
-	ld [wcf91], a ; write species somewhere (XXX why?)
+	ld [wcf91], a ; write species somewhere (gives flexibility in calling the species)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;adding a custom function here
+	push hl
+	callba ScaleTrainer
+	pop hl
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
 	push hl
@@ -86,6 +92,12 @@ ReadTrainer:
 	ld [wCurEnemyLVL], a
 	ld a, [hli]
 	ld [wcf91], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;adding a custom function here
+	push hl
+	callba ScaleTrainer
+	pop hl
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
 	push hl

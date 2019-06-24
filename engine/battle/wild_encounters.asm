@@ -20,7 +20,7 @@ TryDoWildEncounter:
 	and a
 	jr z, .next
 	dec a
-	jr z, .lastRepelStep
+	jp z, .lastRepelStep
 	ld [wRepelRemainingSteps], a
 .next
 ; determine if wild pokemon can appear in the half-block we're standing in
@@ -79,8 +79,11 @@ TryDoWildEncounter:
 	ld [wcf91], a
 	ld [wEnemyMonSpecies2], a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - 	disallow mew if pokedex not complete
+;joenote - disallow mew if pokedex not complete
 	callba DisallowMew
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - expand the safari zone random encounters
+	callba GetRandMonSafari
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - check for shiny DV attract conditions
 	callba ShinyAttractFunction

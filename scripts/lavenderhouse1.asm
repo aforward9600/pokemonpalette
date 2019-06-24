@@ -103,6 +103,8 @@ LavenderHouse1Text5:
 	ld hl, FujiTextVictorySpeech	;load text for when you win
 	ld de, FujiTextVictorySpeech	;load text for when you lose
 	call SaveEndBattleTextPointers	;save the win/lose text
+	ld a, $8
+	ld [wGymLeaderNo], a	;set bgm to gym leader music
 	ld a, OPP_GENTLEMAN	;load the trainer type
 	ld [wCurOpponent], a	;set as the current opponent
 	ld a, 5	;get the right roster

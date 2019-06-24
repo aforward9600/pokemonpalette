@@ -34,9 +34,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Giving them access to stat experience
   - Giving them above-average random DVs
   - Trainers of a smart-enough trainer class will make use of basic pkmn switching
+- One of OAK's aides will toggle on/off scaling of trainer rosters to your level (evolving them if applicable)
 - All 151 pkmn are available in one version
   - Though difficult for a select few, each pkmn can be obtained multiple times
-  - The uniquness between red & blue is still preserved in encounter rarity
+  - The uniqueness between red & blue is still preserved in encounter rarity
 - Minor quality-of-life improvements during battle
   - When a when a box is filled (either via catching or depositing a pokemon), notification text is displayed
   - Exp bar in battle
@@ -76,14 +77,19 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 -----------
 - fixed a bug that defaulted shiny pokemon to have a max attack DV in certain instances
 - mew will not appear in randomized trainer battles if pokedex diploma not attained
+- mew will not appear in random encounters if pokedex diploma not attained 
+- Seiga's party moves updated
+- Fuji's party moves updated
+- Chief's party moves updated
+- Fixed some spelling errors
 
 
 #New features & adjustments from last version:
 -----------
 - Safari zone pokemon have better DVs on average
-- Seiga's party moves updated
-- Fuji's party moves updated
-- Chief's party moves updated
+- After the elite 4, Safari zone has a chance to generate any non-legendary pokemon (selection varies by area)
+- One of Oak's aides in the lab toggles trainer level scaling & evolution on/off
+- The elite 4 now use the gym leader battle music
 
 
 #Bugfixes:
@@ -293,6 +299,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Originally these get reset every time the opponent send out a pkmn (even swithing)
   - Was never really noticed since most trainers never switch nor would have the opportunity
   - Changed based on user feedback since many trainers now try to switch
+- There is an option to scale trainer rosters to the level of your 1st roster pkmn
+  - Talk to the right aide in Oak's lab to toggle on/off
+  - Enemy pkmn will evolve by level if applicable
+  - Gym leaders and the E4 scale slightly higher than normal trainers
+  - This is a good option to turn on for a pseudo-"New Game +" where you rematch all possible trainers in order
 
 - Adjustments to learnsets and base stats
   - Pokemon have gained their TMs and Moves from yellow
@@ -337,6 +348,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Rematch with Giovanni (respawns after leaving the gym)
 - Blaine has a touched-up battle sprite so he doesn't look like an alien
   - Snagged this off reddit, but original artist unknown (let me know if this is yours)
+- The elite 4 now use the gym battle music rather than the standard trainer music
 - The juggler rosters, especially in fuchsia gym, have been slightly altered for flavor
 - Just for fun, the last juggler in the fuchsia gym is replaced with a cameo of Janine
   - Though at this point she's still just a cooltrainer and doesn't have a unique battle sprite
@@ -362,7 +374,6 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Shiny wild random encounters are much more common (1 in 256)
   - Repel effects will not block shiny encounters
 - Added an exp bar using code by Danny-E 33 
-
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):
 - charmander on route 25
@@ -402,6 +413,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - ponyta on route 7
 - tentacruel to routes 19, 20, and 21
 - seaking to routes 19, 20, and 21
+- After beating the elite 4, there is a rare chance for any pokemon to be encountered in the safari zone (depends on location)
+- All pokemon in the safari zone have above-average DVs
 
 
 #Changes to pokemart inventories:

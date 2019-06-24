@@ -293,9 +293,8 @@ DetermineWildMonDVs:
 	or $0A	;set the lower nyble to $A
 	jr .load
 .do_random
-	ld a, [wSafariSteps]
-	and a
-	jr z, .do_random_safari	;safari zone pokemon have better DVs
+	call IsInSafariZone
+	jr nz, .do_random_safari	;safari zone pokemon have better DVs
 	call Random
 	ld b, a
 	call Random
@@ -322,7 +321,7 @@ DetermineWildMonDVs:
 ;replace random mew encounters with ditto if dex diploma not attained
 DisallowMew:
 	CheckEvent EVENT_90B
-	ret nz
+	ret z
 	ld a, [wcf91]
 	cp MEW
 	ret nz
@@ -572,7 +571,8 @@ GetRandTrainer:
 GetRandMon:
 	push hl
 	push bc
-	ld hl, ListRealPkmn
+	ld h, d
+	ld l, e
 	call Random
 	ld b, a
 .loop
@@ -584,7 +584,8 @@ GetRandMon:
 	ld a, [hl]
 	and a
 	jr nz, .loop
-	ld hl, ListRealPkmn
+	ld h, d
+	ld l, e
 	jr .loop
 .endloop
 	ld a, [hl]
@@ -602,12 +603,23 @@ GetRandRoster:
 	ld b, 6
 .loop	
 	push bc
+	push de
+	ld de, ListRealPkmn
 	call GetRandMon
-	;ld [wcf91], a
+	pop de
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
 	push hl
+	call ScaleTrainer
+	pop hl
+	push hl
 	call AddPartyMon
+	call Random
+	and $03
+	ld b, a
+	ld a, [wCurEnemyLVL]
+	add b
+	ld [wCurEnemyLVL], a
 	pop hl
 	pop bc
 	dec b
@@ -615,8 +627,7 @@ GetRandRoster:
 ;end of loop
 	pop bc
 	xor a	;set the zero flag before returning
-	ret
-	
+	ret	
 ListRealPkmn:
 	db MEW          ; $15
 	db MEWTWO       ; $83
@@ -694,12 +705,26 @@ ListMidEvolvedPkmn:
 	db WARTORTLE    ; $B3
 	db GLOOM        ; $BA
 	db WEEPINBELL   ; $BD
+ListNonEvolvingPkmn:
+	db PORYGON      ; $AA
+	db AERODACTYL   ; $AB
+	db SNORLAX      ; $84
+	db DITTO        ; $4C
+	db JYNX         ; $48
+	db TAUROS       ; $3C
+	db FARFETCHD    ; $40
+	db MAGMAR       ; $33
+	db ELECTABUZZ   ; $35
+	db MR_MIME      ; $2A
+	db HITMONLEE    ; $2B
+	db HITMONCHAN   ; $2C
+	db CHANSEY      ; $28
+	db ONIX         ; $22
+	db FEAROW       ; $23
 ListMostEvolvedPkmn:
 	db VICTREEBEL   ; $BE
 	db VILEPLUME    ; $BB
 	db CHARIZARD    ; $B4
-	db PORYGON      ; $AA
-	db AERODACTYL   ; $AB
 	db RATICATE     ; $A6
 	db RAPIDASH     ; $A4
 	db VENUSAUR     ; $9A
@@ -721,7 +746,6 @@ ListMostEvolvedPkmn:
 	db GOLDUCK      ; $80
 	db HYPNO        ; $81
 	db GOLBAT       ; $82
-	db SNORLAX      ; $84
 	db BEEDRILL     ; $72
 	db DODRIO       ; $74
 	db PRIMEAPE     ; $75
@@ -740,40 +764,56 @@ ListMostEvolvedPkmn:
 	db DRAGONAIR    ; $59
 	db RAICHU       ; $55
 	db NINETALES    ; $53
-	db DITTO        ; $4C
-	db JYNX         ; $48
 	db DRAGONITE    ; $42
-	db TAUROS       ; $3C
-	db FARFETCHD    ; $40
 	db GOLEM        ; $31
-	db MAGMAR       ; $33
-	db ELECTABUZZ   ; $35
 	db MAGNETON     ; $36
-	db MR_MIME      ; $2A
-	db HITMONLEE    ; $2B
-	db HITMONCHAN   ; $2C
 	db ARBOK        ; $2D
 	db PARASECT     ; $2E
-	db CHANSEY      ; $28
-	db ONIX         ; $22
-	db FEAROW       ; $23
 	db BLASTOISE    ; $1C
-	db PINSIR       ; $1D
-	db TANGELA      ; $1E
 	db RHYDON       ; $01
-	db KANGASKHAN   ; $02
 	db NIDOKING     ; $07
 	db SLOWBRO      ; $08
 	db EXEGGUTOR    ; $0A
-	db LICKITUNG    ; $0B
 	db GENGAR       ; $0E
 	db NIDOQUEEN    ; $10
-	db LAPRAS       ; $13
 	db ARCANINE     ; $14
 	db GYARADOS     ; $16
-	db SCYTHER      ; $1A
 	db $00
-	
+
+
+;implement a function to scale trainer levels
+ScaleTrainer:
+	CheckEvent EVENT_90C
+	ret z
+	push bc
+	ld a, [wCurEnemyLVL]
+	ld b, a
+	ld a, [wPartyMon1Level]
+	cp b
+	jr c, .nolvlincrease
+	jr z, .nolvlincrease
+	ld [wCurEnemyLVL], a
+	call Random
+	and $03
+	ld b, a
+	ld a, [wGymLeaderNo]
+	and a
+	jr z, .notboss
+	ld a, [wCurEnemyLVL]
+	add b
+	ld [wCurEnemyLVL], a
+	call Random
+	and $03
+	ld b, a
+.notboss
+	ld a, [wCurEnemyLVL]
+	add b
+	ld [wCurEnemyLVL], a
+.nolvlincrease
+	pop bc
+	callba EnemyMonEvolve
+	ret
+
 TrainerRematch:
 	xor a
 	CheckEvent EVENT_909
@@ -787,6 +827,74 @@ TrainerRematch:
 .skip_rematch_choice
 	ResetEvent EVENT_909
 	xor a
+	ret
+
+
+	
+; return a = 0 if not in safari zone, else a = 1 if in safari zone
+IsInSafariZone:
+	ld a, [wCurMap]
+	cp SAFARI_ZONE_EAST
+	jr c, .notSafari
+	cp SAFARI_ZONE_REST_HOUSE_1
+	jr nc, .notSafari
+	ld a, $01
+	jr .return
+.notSafari
+	ld a, $00
+.return
+	and a
+	ret
+
+;Generate a random mon for an expanded safari zone roster
+GetRandMonSafari:
+	;return if e4 not yet beaten
+	CheckEvent EVENT_908
+	ret z	
+	;return if not in safari zone
+	call IsInSafariZone
+	ret z
+	;else continue on
+	call Random
+	cp 26
+	ret nc	;only a 26/256 chance to have an expanded encounter
+	push hl
+	push bc
+	call GetSafariList
+	call Random
+	ld b, a
+.loop
+	ld a, b
+	and a
+	jr z, .endloop
+	inc hl
+	dec b
+	ld a, [hl]
+	and a
+	jr nz, .loop
+	call GetSafariList
+	jr .loop
+.endloop
+	ld a, [hl]
+	pop bc
+	pop hl
+	ld [wcf91], a
+	ld [wEnemyMonSpecies2], a
+	call DisallowMew
+	ret	
+
+GetSafariList:	
+	ld a, [wCurMap]
+	cp SAFARI_ZONE_CENTER
+	ld hl, ListNonLegendPkmn
+	ret z
+	cp SAFARI_ZONE_EAST
+	ld hl, ListMidEvolvedPkmn
+	ret z
+	cp SAFARI_ZONE_NORTH
+	ld hl, ListNonEvolvingPkmn
+	ret z
+	ld hl, ListMostEvolvedPkmn
 	ret
 	
 	
