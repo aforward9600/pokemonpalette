@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.07 beta1
+Version 1.07 beta2
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -82,6 +82,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Fuji's party moves updated
 - Chief's party moves updated
 - Fixed some spelling errors
+- Trainers give 1x stat exp again since it throws off the difficulty late game
+- Indigo mart list no longer glitched, but no longer sells great balls as a result
+- EXP ALL now displays text correctly if the 1st pokemon in the party has fainted
+- Tweaked the rates and types of trainer item use
 
 
 #New features & adjustments from last version:
@@ -90,6 +94,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - After the elite 4, Safari zone has a chance to generate any non-legendary pokemon (selection varies by area)
 - One of Oak's aides in the lab toggles trainer level scaling & evolution on/off
 - The elite 4 now use the gym leader battle music
+- Saffron guards now explicitly mention fresh water
+- Acid armor does not make its user disappear
+- EXP ALL no longer counts fainted pokemon when dividing exp
+- Rage now heavily discouraged in AI routine 1
+- *unverified* enemy should not use item or switch during fly/dig or other such moves
 
 
 #Bugfixes:
@@ -175,7 +184,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Vending machine now checks for the correct amount of money
   - Prevented byte overflow when determining the trash can with 2nd switch in vermillion gym
   - Hidden nugget in safari entrance now obtainable
-  - EXP All should now dispense the correct exp if multiple pokemon take place in a battle
+  - EXP ALL should now dispense the correct exp if multiple pokemon take place in a battle
+  - EXP ALL no longer counts fainted pokemon when dividing exp
   - Enemy DVs can no longer be manipulated by having it use transform multiple times
   - Fixed a bug where itemfinder can't locate objects with a zero x or y coord
   - After defeating the cerulean burglar rocket, the guard itself always moves to prevent getting stuck in the front door
@@ -226,6 +236,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 	- side effect: bide is buffed because multi-hit moves now add damage to bide for each attack
 	- changed to Typeless to play nicer with AI routine 3 (it ignores the type chart regardless)
   - Rest's sleep condition increased to 3 turns since attacking on wakeup is allowed.
+  - Acid armor does not make its user disappear
 
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
@@ -258,7 +269,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - heavily discourage using Counter against a non-applicable move
   - heavily discourage roar, teleport, & whirlwind
   - heavily discourage disable against a pkmn already disabled
-  - substitute discouraged if less that 1/4 hp remains
+  - Substitute discouraged if less that 1/4 hp remains
+  - Rage is heavily discouraged
 
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
@@ -365,7 +377,6 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Talk to the little girl to delete moves.
   - Talk to her tutor to relearn moves.
   - I have expanded Mateo's code so that it also detects default level-0 moves from the baseStats header files.
-- Trainer pkmn give double stat exp
 - Pkmn with levels > 100 give 255 stat exp for each stat
 - Pkmn with levels > 100 have 255 base exp yield
 - If a pkmn has DVs that would make it shiny in Gen 2, the Reflect animation plays when it enters battle

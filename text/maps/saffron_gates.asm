@@ -3,6 +3,10 @@ _SaffronGateText_1dfe7::
 	line "Gee, I'm thirsty,"
 	cont "though!"
 
+	para "I wish that I had"
+	line "some FRESHWATER"
+	cont "right now."
+
 	para "Oh wait there,"
 	line "the road's closed."
 	done

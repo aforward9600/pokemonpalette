@@ -1017,22 +1017,7 @@ FaintEnemyPokemon:
 	;else continue on
 	push hl
 	push bc
-	ld hl, wEnemyMonBaseStats	;get first stat
-	ld b, $7
-.exp_stat_loop
-
-	ld a, [wUnusedD155]	
-	ld c, a		;get number of participating pkmn into c
-	xor a	;clear a to zero
-.exp_adder_loop
-	add [hl]	; add the value of the current exp stat to 'a'
-	dec c		; decrement participating pkmn
-	jr nz, .exp_adder_loop
-	ld [hl], a	;stick the exp values, now multiplied by the number of participating pkmn, back into the stat address
-	
-	inc hl	;get next stat 
-	dec b
-	jr nz, .exp_stat_loop
+	callba UndoDivision4ExpAll
 	pop bc
 	pop hl
 .expallfix_end
@@ -1042,18 +1027,8 @@ FaintEnemyPokemon:
 
 ; the player has exp all
 ; now, set the gain exp flag for every party member
-; half of the total stat exp and normal exp will divided evenly amongst every party member
-	ld a, $1
-	ld [wBoostExpByExpAll], a
-	ld a, [wPartyCount]
-	ld b, 0
-.gainExpFlagsLoop
-	scf
-	rl b
-	dec a
-	jr nz, .gainExpFlagsLoop
-	ld a, b
-	ld [wPartyGainExpFlags], a
+; half of the total stat exp and normal exp will divided evenly amongst every party member	
+	callba SetExpAllFlags
 	jpab GainExperience
 
 EnemyMonFaintedText:

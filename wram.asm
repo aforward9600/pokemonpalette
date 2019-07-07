@@ -3019,6 +3019,7 @@ wd728:: ; d728
 ; bit 5: received Super Rod
 ; bit 6: gave one of the Saffron guards a drink
 ; bit 7: set by ItemUseCardKey, which is leftover code from a previous implementation of the Card Key
+			;joenote - repurposed for exp all message now
 	ds 1
 
 	ds 1

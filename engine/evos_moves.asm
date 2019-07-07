@@ -2,6 +2,7 @@
 ;joenote - evolve an enemy mon in wcf91 based on wCurEnemyLVL
 EnemyMonEvolve:
 	push bc	
+.start
 	ld hl, EvosMovesPointerTable
 	ld a, [wcf91]
 	dec a
@@ -35,6 +36,7 @@ EnemyMonEvolve:
 	jr c, .return
 	ld a, [hl]
 	ld [wcf91], a
+	jr .start
 .return
 	pop bc
 	ret

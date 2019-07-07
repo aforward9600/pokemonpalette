@@ -2,6 +2,16 @@ GainExperience:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z ; return if link battle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - set exp all bit for messaging
+	ld a, [wBoostExpByExpAll]
+	and a
+	jr z, .skipexpallmsg
+	ld a, [wd728]
+	set 7, a
+	ld [wd728], a	
+.skipexpallmsg
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call DivideExpDataByNumMonsGainingExp
 	ld hl, wPartyMon1
 	xor a
@@ -44,16 +54,6 @@ GainExperience:
 	jr c, .nobonus1
 	ld a, $FF
 .nobonus1
-	;if trainer battle, give double stat exp
-	push bc
-	ld c, a
-	ld a, [wIsInBattle]
-	dec a ; is it a trainer battle?
-	ld a, c
-	pop bc
-	jr z, .nobonus2
-	add b
-.nobonus2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [de], a
 	jr nc, .nextBaseStat
@@ -187,9 +187,11 @@ GainExperience:
 	ld a, [wBoostExpByExpAll]
 	and a
 	jr z, .noexpall
-	ld a, [wWhichPokemon]
-	and a
-	jr nz, .noexpprint	;print the exp.all amount only once (for the first party member)
+	ld a, [wd728]
+	bit 7, a
+	jr z, .noexpprint	;print the exp.all amount only once (for the first party member)
+	res 7, a
+	ld [wd728], a
 	ld hl, WithExpAllText
 .noexpall
 	call PrintText

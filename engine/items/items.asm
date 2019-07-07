@@ -1684,8 +1684,9 @@ ItemUseCardKey:
 .done
 	ld hl, ItemUseText00
 	call PrintText
-	ld hl, wd728
-	set 7, [hl]
+	;joenote - removed because this bit is never used by anything (old key card implementation)
+	;ld hl, wd728
+	;set 7, [hl]
 	ret
 
 ; These tables are probably supposed to be door locations in Silph Co.,

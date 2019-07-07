@@ -138,6 +138,9 @@ AIMoveChoiceModification1:
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp SWITCH_AND_TELEPORT_EFFECT	;see if it is a battle-ending effect
 	jp z, .heavydiscourage	;heavily discourage if so
+;and dont try to use rage either
+	cp RAGE_EFFECT	
+	jp z, .heavydiscourage
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use disable on a pkmn that is already disabled
@@ -910,6 +913,11 @@ TrainerAI:
 	cp LINK_STATE_BATTLING
 	ret z
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - AI should not use actions if in a move that prevents such a thing
+	ld a, [wEnemyBattleStatus1]
+	and $73
+	ret nz
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - switch if the switch bit is set	
 	call CheckandResetSwitchBit
 	jp nz, AISwitchIfEnoughMons	;switch if bit was initially set
@@ -1007,24 +1015,18 @@ BlackbeltAI:
 GiovanniAI:
 	cp $20 
 	jp c, AIUseDireHit
-	cp $40
-	jp c, AIUseGuardSpec
+	;cp $40
+	;jp c, AIUseGuardSpec
 	ret
 
-CooltrainerMAI:	;joenote - changed item to x-special and added switching
-	cp $40
+CooltrainerMAI:	;joenote - changed item to x-special
+	cp $20
 	jp c, AIUseXSpecial
-;	ld a, 5
-;	call AICheckIfHPBelowFraction
-;	jp c, AISwitchIfEnoughMons
 	ret
 	
 CooltrainerFAI:
-	cp $40
+	cp $20
 	jp c, AIUseXAccuracy	;uses x accuracy now
-;	ld a, 5
-;	call AICheckIfHPBelowFraction
-;	jp c, AISwitchIfEnoughMons
 	ret
 	
 BrockAI:
@@ -1035,12 +1037,12 @@ BrockAI:
 	ret 
 
 MistyAI:
-	cp $40
+	cp $20
 	jp c, AIUseXDefend
 	ret
 	
 LtSurgeAI:
-	cp $40
+	cp $20
 	jp c, AIUseXSpeed
 	ret
 	
@@ -1054,12 +1056,12 @@ ErikaAI:
 	ret
 
 KogaAI:
-	cp $40
+	cp $20
 	jp c, AIUseXAttack
 	ret
 	
 BlaineAI:	;blaine needs to check HP. this was an oversight	
-	cp $40
+	cp $20
 	jr nc, .blainereturn
 	ld a, $A
 	call AICheckIfHPBelowFraction	
@@ -1068,7 +1070,7 @@ BlaineAI:	;blaine needs to check HP. this was an oversight
 	ret
 
 SabrinaAI:
-	cp $40
+	cp $20
 	jr nc, .sabrinareturn
 	ld a, $A
 	call AICheckIfHPBelowFraction
@@ -1086,7 +1088,7 @@ Sony2AI:
 	ret
 
 Sony3AI:
-	cp $20
+	cp $40	;joenote - doubled the chance of use
 	jr nc, .rival3return
 	ld a, 5
 	call AICheckIfHPBelowFraction
@@ -1099,13 +1101,20 @@ LoreleiAI:
 	jr nc, .loreleireturn
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	jp c, AIUseSuperPotion
+	jp c, AIUseHyperPotion	;joenote - changed to hyper potion
 .loreleireturn
 	ret
 
+;joenote - changed to hyper potion like other e4 members
 BrunoAI:
-	cp $40
-	jp c, AIUseXDefend
+;	cp $40
+;	jp c, AIUseXDefend
+	cp $80
+	jr nc, .brunoreturn
+	ld a, 5
+	call AICheckIfHPBelowFraction
+	jp c, AIUseHyperPotion
+.brunoreturn
 	ret
 
 AgathaAI:
@@ -1113,9 +1122,9 @@ AgathaAI:
 ;	jp c, AISwitchIfEnoughMons
 	cp $80
 	jr nc, .agathareturn
-	ld a, 4
+	ld a, 5	;joenote - upped to 5
 	call AICheckIfHPBelowFraction
-	jp c, AIUseSuperPotion
+	jp c, AIUseHyperPotion	;joenote - changed to hyper potion
 .agathareturn
 	ret
 
