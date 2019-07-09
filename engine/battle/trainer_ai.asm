@@ -1376,27 +1376,26 @@ AIUseDireHit:
 
 AICheckIfHPBelowFraction:
 ; return carry if enemy trainer's current HP is below 1 / a of the maximum
+;joenote - first preserve stuff onto the stack
+	push hl
+	push bc
+	push de
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - handle an 'a' value of 1
 	cp 1
 	jr nz, .not_one
-	push bc
 	ld a, [wEnemyMonMaxHP]
 	ld b, a
 	ld a, [wEnemyMonHP]
 	cp b	;a = HP MSB an b = MAXHP MSB so do a - b and set carry if negative
-	pop bc
-	ret c
-	push bc
+	jr c, .return
 	ld a, [wEnemyMonMaxHP + 1]
 	ld b, a
 	ld a, [wEnemyMonHP + 1]
 	cp b	;a = HP LSB an b = MAXHP LSB so do a - b and set carry if negative
-	pop bc
-	ret
+	jr .return
 .not_one
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	push hl	;joenote - added this
 	ld [H_DIVISOR], a
 	ld hl, wEnemyMonMaxHP
 	ld a, [hli]
@@ -1413,13 +1412,16 @@ AICheckIfHPBelowFraction:
 	ld a, [hld]
 	ld e, a
 	ld a, [hl]
-	pop hl	;joenote - added this
 	ld d, a
 	ld a, d
 	sub b
-	ret nz
+	jr nz, .return
 	ld a, e
 	sub c
+.return	;joenote - consolidating returns with the stack
+	pop de
+	pop bc
+	pop hl
 	ret
 
 AIUseXAttack:

@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.07 beta2
+Version 1.07 beta3
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -86,6 +86,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Indigo mart list no longer glitched, but no longer sells great balls as a result
 - EXP ALL now displays text correctly if the 1st pokemon in the party has fainted
 - Tweaked the rates and types of trainer item use
+- Fixed an issue where funciton AICheckIfHPBelowFraction can cause an infinite loop
 
 
 #New features & adjustments from last version:
@@ -450,3 +451,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Crystal_
   - ChickasaurusGL
   - v0id19
+- The following Redditors for their help in pointing out and diagnosing bugs 
+  - kadetPirx
+  - JOBOalthor1992
+  - krazsen
