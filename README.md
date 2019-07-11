@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.07 beta3
+Version 1.07 beta4
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -87,6 +87,12 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - EXP ALL now displays text correctly if the 1st pokemon in the party has fainted
 - Tweaked the rates and types of trainer item use
 - Fixed an issue where funciton AICheckIfHPBelowFraction can cause an infinite loop
+- Fixed the coin guy in celadon hotel
+- Ajusted some trainer parties a little bit
+- Fixed the Chansey trick for finding shiny pokemon
+- Fixed mew being available
+- Ajusted cerulean cave 1f to remove the walkable cliff tile
+- Trainer scaling will now do stone evolving if enemy pkmn is lvl 40 or more
 
 
 #New features & adjustments from last version:

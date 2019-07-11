@@ -6,7 +6,7 @@ CeladonHotelScript:
 	and a
 	jr nz, .jump
 	push hl
-	callba GetRandMon	;get random pkmn in wcf91
+	callba GetRandMonAny	;get random pkmn in wcf91
 	pop hl
 	ld a, [wcf91]
 	ld [wUnusedD5A3], a

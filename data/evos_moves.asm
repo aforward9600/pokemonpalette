@@ -545,7 +545,7 @@ PinsirEvosMoves:
 TangelaEvosMoves:
 ; Evolutions
 	db 0
-; Learnsetjoenote-modified for yellow
+; Learnset	joenote-modified for yellow
 	db 27, ABSORB
 	db 29, VINE_WHIP
 	db 32, POISONPOWDER

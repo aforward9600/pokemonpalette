@@ -5,6 +5,8 @@ EnemyMonEvolve:
 .start
 	ld hl, EvosMovesPointerTable
 	ld a, [wcf91]
+	cp EEVEE
+	jr z, .return
 	dec a
 	add a
 	ld c, a
@@ -24,6 +26,11 @@ EnemyMonEvolve:
 	jr z, .trade_evolve
 	;else item evolve
 	inc hl
+	;only item evolve if lvl 40 or more
+	ld b, 40
+	ld a, [wCurEnemyLVL]
+	cp b
+	jr nc, .lvl_evolve ;after incrementing hl one space, maintains the same structure as lvl evolving
 .trade_evolve
 	inc hl
 	inc hl
