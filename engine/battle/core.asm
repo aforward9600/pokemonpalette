@@ -5195,7 +5195,7 @@ ApplyAttackToEnemyPokemon:
 	cp SPECIAL_DAMAGE_EFFECT
 	jr z, .specialDamage
 	cp TRAPPING_EFFECT	;joenote - clear hyper beam if target hit with trapping effect
-	call ClearHyperBeam
+	call z, ClearHyperBeam
 	ld a, [wPlayerMovePower]
 	and a
 	jp z, ApplyAttackToEnemyPokemonDone ; no attack to apply if base power is 0
@@ -5317,7 +5317,7 @@ ApplyAttackToPlayerPokemon:
 	cp SPECIAL_DAMAGE_EFFECT
 	jr z, .specialDamage
 	cp TRAPPING_EFFECT	;joenote - clear hyper beam if target hit with trapping effect
-	call ClearHyperBeam	
+	call z, ClearHyperBeam	
 	ld a, [wEnemyMovePower]
 	and a
 	jp z, ApplyAttackToPlayerPokemonDone
@@ -7933,7 +7933,7 @@ SleepEffect:
 	and a
 	jp z, .sleepEffect
 	ld de, wBattleMonStatus
-	ld bc, wPlayerBattleStatus2
+	ld bc, wPlayerBattleStatus2	
 .sleepEffect
 	;joenote - should not be able to sleep an opponent with substitute up
 	call CheckTargetSubstitute
@@ -7946,22 +7946,15 @@ SleepEffect:
 ;	jr nz, .setSleepCounter ; if the target had to recharge, all hit tests will be skipped
 	                        ; including the event where the target already has another status
 	ld a, [de]
-	ld b, a
+	;ld b, a	;joenote - no need to overwrite b
 	and $7
 	jr z, .notAlreadySleeping ; can't affect a mon that is already asleep
 	ld hl, AlreadyAsleepText
 	jp PrintText
 .notAlreadySleeping
-	ld a, b
+	ld a, [de];ld a, b
 	and a
 	jr nz, .didntAffect ; can't affect a mon that is already statused
-;;;;;joenote: sleep will normal-chance hit here if not already asleep or have another status effect 
-	ld a, [bc]
-	bit NEEDS_TO_RECHARGE, a ; does the target need to recharge? (hyper beam)
-	res NEEDS_TO_RECHARGE, a ; target no longer needs to recharge
-	ld [bc], a
-	;jr nz, .setSleepCounter ; if the target had to recharge, all hit tests will be skipped
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	push de
 	call MoveHitTest ; apply accuracy tests
 	pop de
@@ -7970,6 +7963,11 @@ SleepEffect:
 	jr nz, .didntAffect
 .setSleepCounter
 ; set target's sleep counter to a random number between 1 and 7
+;;;;;joenote: recharge hyper beam if fallen asleep
+	ld a, [bc]
+	res NEEDS_TO_RECHARGE, a ; target no longer needs to recharge
+	ld [bc], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call BattleRandom
 	and $7
 	jr z, .setSleepCounter

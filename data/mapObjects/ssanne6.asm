@@ -6,7 +6,7 @@ SSAnne6Object:
 
 	db 0 ; signs
 
-	db 7 ; objects
+	db 8 ; objects
 	object SPRITE_COOK, 1, 8, WALK, 1, 1 ; person
 	object SPRITE_COOK, 5, 8, WALK, 1, 2 ; person
 	object SPRITE_COOK, 9, 7, WALK, 1, 3 ; person
@@ -14,6 +14,7 @@ SSAnne6Object:
 	object SPRITE_COOK, 13, 8, STAY, NONE, 5 ; person
 	object SPRITE_COOK, 13, 10, STAY, NONE, 6 ; person
 	object SPRITE_COOK, 11, 13, STAY, UP, 7 ; person
+	object SPRITE_GYM_HELPER, 11, 2, STAY, DOWN, 8; joenote - gym guy for post-game tournament
 
 	; warp-to
 	warp_to 6, 0, SS_ANNE_6_WIDTH ; SS_ANNE_1

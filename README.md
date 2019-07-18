@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.07 beta4
+Version 1.07 beta5
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -54,6 +54,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - All TMs can be repurchased as they are strategically scattered across all the Kanto pokemarts
   - After the elite-4, a new vendor opens up in celadon allowing the purchase of normally unique items
   - After the elite-4, there is an NPC that generates a trainer battle with a randomized 6-pkmn roster
+  - There's a tournament being held in the SS Anne's kitchen after the elite 4 are beaten
   - Added some special trainer battles as fun little easter eggs
 - Minor learnset changes that make things more convenient while still staying gen-1 legal
   - Stone evolutions regain some level-up moves
@@ -91,8 +92,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Ajusted some trainer parties a little bit
 - Fixed the Chansey trick for finding shiny pokemon
 - Fixed mew being available
-- Ajusted cerulean cave 1f to remove the walkable cliff tile
-- Trainer scaling will now do stone evolving if enemy pkmn is lvl 40 or more
+- Trainer scaling will now do stone evolving if enemy pkmn is lvl 40 or more and not an eevee
+- Fixed typos that caused errors in hyperbeam recharging
 
 
 #New features & adjustments from last version:
@@ -106,6 +107,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - EXP ALL no longer counts fainted pokemon when dividing exp
 - Rage now heavily discouraged in AI routine 1
 - *unverified* enemy should not use item or switch during fly/dig or other such moves
+- Ajusted cerulean cave 1f to remove the walkable cliff tile
+- Metronome now classified as a typeless special damage move to play better with the AI
+- There's a tournament being held in the SS Anne's kitchen after the elite 4 are beaten
 
 
 #Bugfixes:
@@ -187,6 +191,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - PP-up uses are disregarded when determining to use STRUGGLE if one or more moves are disabled
   - PC graphic restored to celadon hotel
   - A tile in cinnabar mansion 3f is slightly modified to prevent getting permanently stuck
+  - A tile in cerulean cave 1f adjusted so there isn't a walkable cliff tile
   - Ether and elixer now account for PP-ups used when determining if move is at full PP
   - Vending machine now checks for the correct amount of money
   - Prevented byte overflow when determining the trash can with 2nd switch in vermillion gym
@@ -244,6 +249,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 	- changed to Typeless to play nicer with AI routine 3 (it ignores the type chart regardless)
   - Rest's sleep condition increased to 3 turns since attacking on wakeup is allowed.
   - Acid armor does not make its user disappear
+  - Metronome now classified as a typeless special damage move to play better with the AI
 
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
@@ -392,6 +398,16 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Shiny wild random encounters are much more common (1 in 256)
   - Repel effects will not block shiny encounters
 - Added an exp bar using code by Danny-E 33 
+- There's a tournament being held in the SS Anne's kitchen after the elite 4 are beaten
+  - Talk to the Gym Guy you find there
+  - win 7 matches in a row for a master ball
+  - Battles use teams of 3 pokemon
+  - Your team is healed in-between battles
+  - Enemy pokemon levels are based on the level of your 1st party pokemon
+  - You must have an open item slot to claim your prize
+  - Any trainer can appear with any three pokemon
+  - No breaks allowed in-between battles
+
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):
 - charmander on route 25

@@ -600,10 +600,15 @@ GetRandMon:
 	
 ;generates a randomized 6-party enemy trainer roster
 GetRandRoster:
-	ld a, [wPartyMon1Level]
-	ld [wCurEnemyLVL], a
 	push bc
 	ld b, 6
+	jp GetRandRosterLoop
+GetRandRoster3:	;3-mon party
+	push bc
+	ld b, 3
+GetRandRosterLoop:
+	ld a, [wPartyMon1Level]
+	ld [wCurEnemyLVL], a
 .loop	
 	push bc
 	push de

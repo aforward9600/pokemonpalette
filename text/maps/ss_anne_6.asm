@@ -67,3 +67,81 @@ _SSAnne6Text_61816::
 	para "But, have I enough"
 	line "fillets du beef?"
 	done
+
+_SSAnne6Text_GymGuy::
+	text "Yo! Champ in"
+	line "making!"
+
+	para "Do I remind you of"
+	line "someone? You must"
+	cont "mean one of my"
+	cont "relatives."
+
+	para "No advice from me"
+	line "though. I'm on a"
+	cont "vacation."
+	done
+	
+_SSAnne6Text_GymGuy2::
+	text "Yo! Champ!"
+
+	para "It was getting a"
+	line "bit restless on"
+	cont "board, so I set"
+	cont "up a tournament"
+	cont "between everyone."
+
+	para "If you can beat 7"
+	line "trainers you"
+	cont "win a nice prize!"
+	
+	para "But everyone has"
+	line "to use exactly 3"
+	cont "#MON."
+	
+	para "Your #MON get"
+	line "healed between"
+	cont "each round."
+	
+	para "Be careful!"
+	line "These are strong"
+	cont "folks from all"
+	cont "over the place."
+	
+	para "You up for it?"
+	done
+	
+_SSAnne6Text_GymGuy_keepgoing::
+	text "Yo! Champ!"
+	line "Wanna keep going?"
+	done
+
+_SSAnne6Text_GymGuy_noroom::
+	text "Your bag is full."
+	line "Take a load off."
+	done
+	
+_SSAnne6Text_GymGuy_party::
+	text "You need exactly 3"
+	line "#mon to enter."
+	done
+
+_SSAnne6Text_GymGuy_bye::
+	text "Later then CHAMP!"
+	done
+	
+_SSAnne6Text_GymGuy_ready::
+	text "Ready? Fight!"
+	done
+
+_SSAnne6Text_GymGuy_battleend::
+	text "..."
+	line "That's a match!"
+	prompt
+
+_SSAnne6Text_GymGuy_win::
+	text "I knew you could"
+	line "do it!"
+	
+	para "<PLAYER> won a"
+	line "MASTER BALL!@@"

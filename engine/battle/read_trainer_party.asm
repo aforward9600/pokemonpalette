@@ -58,6 +58,14 @@ ReadTrainer:
 	jp z, .FinishUp
 .not_rand_roster
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joedebug - get a random 3 pkmn roster based on 1st party mon's level
+	CheckEvent EVENT_90D
+	jr z, .not_rand_roster3
+	callba GetRandRoster3
+	jp z, .FinishUp
+.not_rand_roster3
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [hli]
 	cp $FF ; is the trainer special?
 	jr z, .SpecialTrainer ; if so, check for special moves
