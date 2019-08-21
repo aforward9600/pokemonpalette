@@ -7040,6 +7040,10 @@ LoadEnemyMonData:
 	ld [hli], a
 	dec b
 	jr nz, .statModLoop
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - need to apply stat changes from burn and paralyze when the ai pkmn gets sent back in
+	call ApplyBurnAndParalysisPenaltiesToEnemy
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ret
 
 ; calls BattleTransition to show the battle transition animation and initializes some battle variables

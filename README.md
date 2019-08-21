@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.07 beta5
+Version 1.07 beta6
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -94,6 +94,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Fixed mew being available
 - Trainer scaling will now do stone evolving if enemy pkmn is lvl 40 or more and not an eevee
 - Fixed typos that caused errors in hyperbeam recharging
+- Fixed improper animations playing for Bide and Metronome
+- Oak's Tauros given better moves
 
 
 #New features & adjustments from last version:
@@ -108,8 +110,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Rage now heavily discouraged in AI routine 1
 - *unverified* enemy should not use item or switch during fly/dig or other such moves
 - Ajusted cerulean cave 1f to remove the walkable cliff tile
-- Metronome now classified as a typeless special damage move to play better with the AI
+- Metronome now classified as a typeless move to play better with the AI
 - There's a tournament being held in the SS Anne's kitchen after the elite 4 are beaten
+- Trainer AI routine #1 will discourage using haze if it's unstatus'd or has net-neutral or better stat mods
+- Stat changes from burn and paralyze are applied when the ai sends out a pkmn with those conditions
 
 
 #Bugfixes:
@@ -137,6 +141,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - AI type effectiveness function now takes type 1 and 2 into account together 
 	 - Before AI would only look at the type it encountered first in a list search
      - AI will now treat a move as neutral if type 1 makes it supereffective but type 2 makes it not effective
+  - Stat changes from burn and paralyze are applied when the ai sends out a pkmn with those conditions
+
 
 - Move fixes
   - dire hit/focus energy now quadruples crit rate instead of quarters
@@ -284,6 +290,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - heavily discourage disable against a pkmn already disabled
   - Substitute discouraged if less that 1/4 hp remains
   - Rage is heavily discouraged
+  - Will discourage using Haze if unstatus'd or has net-neutral or better stat mods
 
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity

@@ -143,6 +143,31 @@ AIMoveChoiceModification1:
 	jp z, .heavydiscourage
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use haze if user has no status or neutral stat mods
+	ld a, [wEnemyMoveEffect]	;load the move effect
+	cp HAZE_EFFECT	;see if it is haze
+	jp nz, .hazekickout	;move on if not haze
+;using haze at this point
+	ld a, [wEnemyMonStatus]	;get status
+	and a
+	jp z, .heavydiscourage	;discourage if status is clear
+	push hl
+	push bc
+	xor a
+	ld b, 6
+	ld hl, wEnemyMonStatMods
+.hazeloop
+	add [hl]
+	inc hl
+	dec b
+	jr nz, .hazeloop
+	pop bc
+	pop hl
+	cp 42
+	jp nc, .heavydiscourage	;discourage if summed stat mods are same or more than 42 (7 per mod is neutral)
+.hazekickout
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use disable on a pkmn that is already disabled
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp DISABLE_EFFECT
@@ -471,6 +496,12 @@ MistBlockEffects:	;joenote - added this table to track for things blocked by mis
 	db ACCURACY_DOWN2_EFFECT
 	db EVASION_DOWN2_EFFECT
 	db $FF
+
+SpecialZeroBPMoves:	;joenote - added this table to tracks 0 bp moves that should not be treated as buffs
+	db BIDE
+	db METRONOME
+	db THUNDER_WAVE
+	db $FF
 	
 ; slightly encourage moves with specific effects.
 ; in particular, stat-modifying moves and other move effects
@@ -538,9 +569,18 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMovePower]	;get the base power of the enemy's attack
 	and a	;check if it is zero
 	jr nz, .skipout	;get out of this section if non-zero power
+	;check on certain moves with zero bp but are handled differently
 	ld a, [wEnemyMoveNum]
-	cp THUNDER_WAVE
-	jr z, .skipout ;get out of this section if the move is thunderwave (see if it's useful)
+	push hl
+	push de
+	push bc
+	ld hl, SpecialZeroBPMoves
+	ld de, $0001
+	call IsInArray	;see if a is found in the hl array (carry flag set if true)
+	pop bc
+	pop de
+	pop hl
+	jp c, .skipout	;carry flag means the move was found in the list
 	ld a, [wEnemyMoveEffect]
 	cp POISON_EFFECT
 	jr nz, .notpoisoneffect

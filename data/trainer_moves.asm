@@ -208,7 +208,20 @@ SpecialTrainerMoves:
 	db 6,1,SWORDS_DANCE
 	db 4,2,LEER
 	db 0
-	
+
+	;prof oak's 1st pokemon
+	db PROF_OAK,$1
+	db 1,2,EARTHQUAKE
+	db 1,3,THUNDERBOLT
+	db 0
+	db PROF_OAK,$2
+	db 1,2,EARTHQUAKE
+	db 1,3,THUNDERBOLT
+	db 0
+	db PROF_OAK,$3
+	db 1,2,EARTHQUAKE
+	db 1,3,THUNDERBOLT
+	db 0
 	;mr fuji battle
 	db GENTLEMAN,$5
 	db 1,1,BONEMERANG
