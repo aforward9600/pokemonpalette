@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.07 beta6
+Version 1.07 beta7
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -96,6 +96,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Fixed typos that caused errors in hyperbeam recharging
 - Fixed improper animations playing for Bide and Metronome
 - Oak's Tauros given better moves
+- Re-wrote critical hit probability function to for streamlineing
+- Focus energy/Dire hit now properly quadruples crit rate instead of doubling it
 
 
 #New features & adjustments from last version:
