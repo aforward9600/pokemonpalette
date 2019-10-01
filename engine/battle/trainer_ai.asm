@@ -584,10 +584,10 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMoveEffect]
 	cp POISON_EFFECT
 	jr nz, .notpoisoneffect
-	ld a, [wEnemyMonType]
+	ld a, [wBattleMonType]
 	cp POISON
 	jr z, .heavydiscourage2
-	ld a, [wEnemyMonType + 1]
+	ld a, [wBattleMonType + 1]
 	cp POISON
 	jr z, .heavydiscourage2
 .notpoisoneffect
