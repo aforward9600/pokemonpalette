@@ -128,7 +128,7 @@ LassData:
 	db 23,BELLSPROUT,WEEPINBELL,0
 	db 23,ODDISH,GLOOM,0
 ;Vermillion Dock 
-	;joenote - Special Trainer - Seiga the orange league champ
+	;joenote - Special Trainer - Seiga/Green the orange league champ
 	db $FF,80,CLEFABLE,82,GENGAR,83,VICTREEBEL,83,NINETALES,84,KANGASKHAN,85,BLASTOISE,0	;lass #19
 	
 SailorData:
@@ -474,6 +474,7 @@ ChiefData:
 ; none
 ;joenote - special fight with the silph chief
 	db $FF,72,KANGASKHAN,73,RHYDON,73,GOLDUCK,74,PINSIR,74,SCYTHER,76,TAUROS,0
+	db 128,MON_GHOST,0	;joenote - fight with superboss missingno
 ScientistData:
 ; Silph Co. 2F
 	db 26,GRIMER,WEEZING,KOFFING,WEEZING,0

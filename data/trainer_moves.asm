@@ -99,8 +99,8 @@ SpecialTrainerMoves:
 	
 	db LORELEI,$1
 	db 1,1,BUBBLEBEAM
-	db 2,3,ICE_BEAM
 	db 3,1,SURF
+	db 3,2,ICE_BEAM
 	db 4,1,PSYCHIC_M
 	db 4,3,LOVELY_KISS
 	db 5,3,BLIZZARD
@@ -222,6 +222,7 @@ SpecialTrainerMoves:
 	db 1,2,EARTHQUAKE
 	db 1,3,THUNDERBOLT
 	db 0
+	
 	;mr fuji battle
 	db GENTLEMAN,$5
 	db 1,1,BONEMERANG

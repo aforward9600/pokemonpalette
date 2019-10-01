@@ -505,16 +505,13 @@ MainInBattleLoop:
 .specialMoveNotUsed
 	callab SwitchEnemyMon	;joedebug - both AI and link enemy use this to switch
 .noLinkBattle
-	ld a, [wPlayerSelectedMove]
-	cp QUICK_ATTACK
+	callba CheckHigherPlayerPriority	;joenote - custom function now used
 	jr nz, .playerDidNotUseQuickAttack
-	ld a, [wEnemySelectedMove]
-	cp QUICK_ATTACK
+	callba CheckHigherEnemyPriority	;joenote - custom function now used
 	jr z, .compareSpeed  ; if both used Quick Attack
 	jp .playerMovesFirst ; if player used Quick Attack and enemy didn't
 .playerDidNotUseQuickAttack
-	ld a, [wEnemySelectedMove]
-	cp QUICK_ATTACK
+	callba CheckHigherEnemyPriority	;joenote - custom function now used
 	jr z, .enemyMovesFirst ; if enemy used Quick Attack and player didn't
 	callba CheckLowerPlayerPriority	;joenote - custom function now used
 	jr nz, .playerDidNotUseCounter
@@ -3479,7 +3476,7 @@ MirrorMoveCheck:
 	ld a, [wPlayerMoveEffect]
 	cp EXPLODE_EFFECT ; even if Explosion or Selfdestruct missed, its effect still needs to be activated
 	jr z, .notDone
-	cp HYPER_BEAM_EFFECT ;joenote - hyperbeam effect needs to happen if it misses
+	;cp HYPER_BEAM_EFFECT ;joenote - makes hyperbeam effect happen if it misses
 	jr z, .notDone
 	jp ExecutePlayerMoveDone ; otherwise, we're done if the move missed
 .moveDidNotMiss
@@ -6348,7 +6345,7 @@ EnemyCheckIfMirrorMoveEffect:
 	ld a, [wEnemyMoveEffect]
 	cp EXPLODE_EFFECT
 	jr z, .handleExplosionMiss
-	cp HYPER_BEAM_EFFECT ;joenote - hyperbeam effect needs to happen if it misses
+	;cp HYPER_BEAM_EFFECT ;joenote - makes hyperbeam effect happen if it misses
 	jr z, .handleExplosionMiss
 	jp ExecuteEnemyMoveDone
 .moveDidNotMiss
@@ -8497,10 +8494,10 @@ StatModifierDownEffect:
 	ld hl, wPlayerMonStatMods
 	ld de, wEnemyMoveEffect
 	ld bc, wPlayerBattleStatus1
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jr z, .statModifierDownEffect
 ;joenote - do not have stat-downs have 25% miss chance with AI opponent
+;	ld a, [wLinkState]
+;	cp LINK_STATE_BATTLING
+;	jr z, .statModifierDownEffect
 ;	call BattleRandom
 ;	cp $40 ; 1/4 chance to miss by in regular battle
 ;	jp c, MoveMissed
@@ -9103,6 +9100,8 @@ TrappingEffect:
 .setTrappingCounter
 	inc a
 	ld [de], a
+;joenote - have the trapping effect user get its speed halved until stats get recalculated
+	callba ReduceSpeed
 	ret
 
 MistEffect:

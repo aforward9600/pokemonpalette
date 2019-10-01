@@ -277,7 +277,7 @@ LinkMenu:
 	xor a
 	ld [wMenuJoypadPollCount], a
 	ld [wSerialExchangeNybbleSendData], a
-	inc a ; LINK_STATE_IN_CABLE_CLUB
+	inc a ; LINK_STATE_IN_CABLE_CLUB (makes a = 1)
 	ld [wLinkState], a
 	ld [wEnteringCableClub], a
 	jr SpecialEnterMap

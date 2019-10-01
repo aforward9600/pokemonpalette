@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue
 
-Version 1.07 beta7
+Version 1.07 (release)
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
@@ -44,8 +44,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
   - The safari zone mechanics run off level instead of speed and safari balls have a boosted catch rate
 - Minor quality-of-life improvements outside of battle
-  - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
+  - Softlock Warp: instantly teleport back to your mom's house if you get stuck (see instructions in detailed changes below)
+  - Running Shoes: Hold B to double your speed when running, walking, and biking
+  - Press SELECT to use HMs based on proper context (must have the right badge and the move on one of your pkmn)
   - Move relearner and deleter
+  - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
   - Slot machine bugs and oversights fixed so now you can actually win big
   - A pokemon having Pay Day will tip you off to the lucky slot machine and when it's in a special payout mode
   - An NPC will pay COINS for showing him pokemon as an alternative to slots
@@ -60,9 +63,12 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Stone evolutions regain some level-up moves
   - Yellow-version move lists have been integrated
 - Minimal changes to battle mechanics necessitated by AI improvements
-  - Trapping moves now have reduced priority and they end (using up the turn) if the target switches
-    - Prevents PP underflow glitch
-	- Prevents merciless abuse of wrap by ekans trainers that caused unwinnable battles without level-grinding
+  - Trapping move mechanics nerfed to prevent PP underflow glitch as well as stopping merciless, unwinnable abuse by AI trainers
+	- They now end, ending the turn with no further attack, if the target switches pkmn
+    - Accuracy reduced
+	- Power increased
+	- Upon hitting, user's speed reduced 25% until recalculated through other mechanics
+	- The user's Cry is played on the final turn of a trapping move to signal its end
   - Adjustment to the sleep condition
     - Sleep does not prevent choosing a move
 	- Waking up from sleep does not waste the turn and the chosen move is used
@@ -74,11 +80,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Might be possible to use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
 
 
-#Hack-Induced Bugfixes & Adjustments in this version:
+#Hack-Induced Bugfixes & Adjustments since last non-beta version:
 -----------
-- fixed a bug that defaulted shiny pokemon to have a max attack DV in certain instances
-- mew will not appear in randomized trainer battles if pokedex diploma not attained
-- mew will not appear in random encounters if pokedex diploma not attained 
+- Fixed a bug that defaulted shiny pokemon to have a max attack DV in certain instances
+- Mew will not appear in randomized trainer battles if pokedex diploma not attained
+- Mew will not appear in random encounters if pokedex diploma not attained 
 - Seiga's party moves updated
 - Fuji's party moves updated
 - Chief's party moves updated
@@ -96,11 +102,20 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Fixed typos that caused errors in hyperbeam recharging
 - Fixed improper animations playing for Bide and Metronome
 - Oak's Tauros given better moves
-- Re-wrote critical hit probability function to for streamlineing
+- Re-wrote critical hit probability function for streamlining
 - Focus energy/Dire hit now properly quadruples crit rate instead of doubling it
+- Hyper beam does not need to recharge on a miss
+- Trapping moves (wrap, fire spin, etc.) have adjusted mechanics:
+  - Have normal priority per original game
+  - Power increased
+  - Accuracy reduced
+  - Upon hitting, user's speed reduced 25% until recalculated through other mechanics
+- Lorelei's movesets slightly tweaked
+- Streamlined how how high priority moves are handled to match low priority moves (only affects optimization)
+- Lots of useless code in overworld.asm commented out in order to free up space
 
 
-#New features & adjustments from last version:
+#New features & adjustments since last non-beta version:
 -----------
 - Safari zone pokemon have better DVs on average
 - After the elite 4, Safari zone has a chance to generate any non-legendary pokemon (selection varies by area)
@@ -116,6 +131,11 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - There's a tournament being held in the SS Anne's kitchen after the elite 4 are beaten
 - Trainer AI routine #1 will discourage using haze if it's unstatus'd or has net-neutral or better stat mods
 - Stat changes from burn and paralyze are applied when the ai sends out a pkmn with those conditions
+- Can battle the silph chief
+- Softlock Warp: instantly teleport back to your mom's house if you get stuck
+- Running Shoes: Hold B to double your speed when running, walking, and biking
+- Butterfree and Beedrill have their prior evolutions' moves added to their level-0 move list
+- Select button now activates surf, cut, flash, and strength
 
 
 #Bugfixes:
@@ -144,7 +164,6 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 	 - Before AI would only look at the type it encountered first in a list search
      - AI will now treat a move as neutral if type 1 makes it supereffective but type 2 makes it not effective
   - Stat changes from burn and paralyze are applied when the ai sends out a pkmn with those conditions
-
 
 - Move fixes
   - dire hit/focus energy now quadruples crit rate instead of quarters
@@ -181,7 +200,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Trapping move PP can no longer underflow due to an opponent switching pkmn
   - Raging and Thrashing no longer suffers from accuracy degradation
   - Breaking a substitute does not nullify explosion/self-destruct, hyper beam recharge, or recoil damage
-  - Hyper beam must recharge if it misses or knocks out the opposing pkmn
+  - Hyper beam must recharge if it knocks out the opposing pkmn
   - Bugfixes involving Counter:
     - works against BIRD type, which is now typeless and assigned only to STRUGGLE
     - To prevent desync, pressing B to get out of the move selection menu zeros-out the ram location for selected move & move power
@@ -245,8 +264,10 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Stat-down moves no longer have a 25% miss chance in AI matches
   - Moves that hit multiple times in a turn now calculate damage and critical hits for each individual attack
   - Trapping moves nerfed big time to prevent the new AI from cheesing them:
-    - switching out of a trapping move ends it immediately and wastes its user's turn
-    - trapping moves have reduced priority like Counter
+    - Switching out of a trapping move ends it immediately and wastes its user's turn (prevents PP underflow glitch too)
+    - Accuracy reduced
+	- Power increased
+	- Upon hitting, user's speed reduced 25% until recalculated through other mechanics
     - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
   - Ghost moves (i.e. just Lick) do 2x against psychic as was always intended
   - Pay Day upped to 8x multiplier instead of 2x
@@ -355,7 +376,21 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Kakuna and Metapod learn harden by level-up
   - pikachu and kadabra have their catch rates adjusted to yellow version
   - Give haunter/machoke/kadabra/graveler an evo by level option (level 45 to 48)
+  - Butterfree and Beedrill have their prior evolutions' moves added to their level-0 move list
 
+- Softlock Warp 
+  - instantly teleport back to your mom's house if you get stuck or are unable to move after updating to a new patch
+  - Intructions to perform:
+    - go to the start menu and put the cursor on OPTION
+	- press and hold DOWN on the d-pad (the cursor will now be on EXIT)
+	- while continuing to hold DOWN, press and hold SELECT
+	- while continuing to hold those two buttons, press B
+	- the start menu should close and you will warp back to your mom's house
+- Context-sensitive SELECT button for using HMs (must have the right badge and the move on one of your pkmn)
+  - press select against a shore to surf
+  - press select when facing a shrub or grass tile to use cut
+  - press select in a dark area to light it with flash
+  - in all other instances, pressing select activates strength
 - Game corner prize costs re-balanced
 - Slightly increased slot odds
 - Slot machine coin counter runs twice as fast
@@ -392,8 +427,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - There is a new NPC in the west-east underground path that generates random battles after beating the elite 4
 - New NPC in celadon hotel will reward coins for showing him requested pkmn
 - Talking to prof oak after beating the elite 4 let's you challenge him to a battle
-- Trainer Green can be battled next to the ss anne dock truck after beating the elite 4
+- Trainer Green (named Seiga) can be battled next to the ss anne dock truck after beating the elite 4
 - Can battle Mr. Fuji after beating the elite 4
+- Can battle the Silph Chief after beating the elite 4
 - Move deleter/relearner added to the saffron house below COPYCAT's house
   - Code comes from Mateo's Red++ hack. It's simply the best gen-1 implementation and I cannot come up with something better.
   - Talk to the little girl to delete moves.

@@ -3,7 +3,7 @@
 	
 	
 
-;joenote - custom functions to handle lower move priority. Sets zero flag if priority lowered.
+;joenote - custom functions to handle move priority. Sets zero flag if priority lowered/raised.
 CheckLowerPlayerPriority:	
 	ld a, [wPlayerSelectedMove]
 	call LowPriorityMoves
@@ -14,14 +14,34 @@ CheckLowerEnemyPriority:
 	ret
 LowPriorityMoves:
 	cp COUNTER
-	ret z
-	cp BIND
-	ret z
-	cp WRAP
-	ret z
-	cp FIRE_SPIN
-	ret z
-	cp CLAMP
+;	ret z
+;	cp BIND
+;	ret z
+;	cp WRAP
+;	ret z
+;	cp FIRE_SPIN
+;	ret z
+;	cp CLAMP
+	ret
+
+CheckHigherPlayerPriority:	
+	ld a, [wPlayerSelectedMove]
+	call HighPriorityMoves
+	ret
+CheckHigherEnemyPriority:
+	ld a, [wEnemySelectedMove]
+	call HighPriorityMoves
+	ret
+HighPriorityMoves:
+	cp QUICK_ATTACK
+;	ret z
+;	cp DUMMY_MOVE1
+;	ret z
+;	cp DUMMY_MOVE2
+;	ret z
+;	cp DUMMY_MOVE3
+;	ret z
+;	cp DUMMY_MOVE4
 	ret
 	
 	
@@ -1024,4 +1044,311 @@ SetExpAllFlags:
 .return
 	ld a, b
 	ld [wPartyGainExpFlags], a
+	ret
+	
+	
+;joenote - this function is meant to temporarily reduce a a pkmn's speed by 25% for using trapping moves until stats are recalculated
+;"c" holds lower byte of speed and "b" holds upper byte of speed
+ReduceSpeed:
+	push bc
+	push de
+	ld hl, wBattleMonSpeed + 1	;assume it is the player's turn
+	ld a, [H_WHOSETURN]
+	and a
+	jr z, .proceed
+	ld hl, wEnemyMonSpeed + 1	;else it's the enemy's turn
+.proceed
+	;bc to hold regular speed and de to hold 25% of that
+	ld a, [hld]
+	ld c, a
+	ld e, a
+	ld a, [hl]
+	ld b, a
+	ld d, a
+	;make de one-quarter of bc
+	srl d
+	rr e
+	srl d
+	rr e
+	;now subtract e from c
+	ld a, c
+	sub e
+	ld c, a
+	;now subtract d from b with carry
+	ld a, b
+	sbc d
+	ld b, a
+	;a still holds upper speed byte, so save it back
+	ld [hli], a
+	;now OR the upper speed byte in a with the lower speed byte
+	or c	;zero flag is set if speed is totally zero
+	jr nz, .notzerospeed
+	ld c, 1	;give minimum of at least 1 in speed
+.notzerospeed
+	ld [hl], c
+	pop de
+	pop bc
+	ret
+
+	
+;This function is for teleporting you home from the start menu if you get stuck
+SoftlockTeleport:
+	ld a, [hJoyInput]
+	cp D_DOWN + B_BUTTON + SELECT
+	ret nz
+	ld a, [wCurrentMenuItem]
+	cp 6 
+	ret nz
+	ld a, PALLET_TOWN
+	ld [wLastBlackoutMap], a
+	ld a, [wd732]
+	set 3, a 
+	res 4, a 
+	set 6, a 
+	ld [wd732], a
+	ret
+	
+	
+;this function handles tracking of how bast to go on or off a bike
+;biking ORs with $2
+;running by holding B ORs with $1
+TrackRunBikeSpeed:
+	xor a
+	ld[wUnusedD119], a
+	ld a, [wWalkBikeSurfState]
+	dec a ; riding a bike? (0 value = TRUE)
+	call z, IsRidingBike
+	ld a, [hJoyHeld]
+	and B_BUTTON	;holding B to speed up? (non-zero value = TRUE)
+	call nz, IsRunning
+	ld a, [wUnusedD119]
+	cp 2	;is biking without speedup being done?
+	jr z, .skip	;if not make the states a value from 1 to 4 (excluding biking without speedup, which needs to be 2)
+	inc a	
+.skip
+	ld[wUnusedD119], a
+	ret
+IsRidingBike:
+	ld a, [wUnusedD119]
+	or $2
+	ld[wUnusedD119], a
+	ret
+IsRunning:
+	ld a, [wUnusedD119]
+	or $1
+	ld[wUnusedD119], a
+	ret
+	
+
+;joenote - allows for using HMs on the overworld with just a button press
+CheckForSmartHMuse:
+	callba GetTileAndCoordsInFrontOfPlayer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;check for cut
+	ld a, [wObtainedBadges]
+	bit 1, a ; does the player have the Cascade Badge?
+	jr z, .nocut
+	;does a party 'mon have CUT?
+	ld c, CUT
+	call PartyMoveTest
+	jr z, .nocut
+	;which tileset is being used?
+	ld a, [wCurMapTileset]
+	and a ; OVERWORLD
+	jr z, .overworld
+	;check gym tileset
+	cp GYM
+	jr nz, .nocut
+	ld a, [wTileInFrontOfPlayer]
+	cp $50 ; gym cuttable tree
+	jr nz, .nocut
+	jr .canCut
+.overworld
+	dec a
+	ld a, [wTileInFrontOfPlayer]
+	cp $3d ; cuttable tree
+	jr z, .canCut
+	cp $52 ; grass
+	jr nz, .nocut
+.canCut
+	ld [wCutTile], a
+	ld a, $ff
+	ld [wUpdateSpritesEnabled], a
+	callba InitCutAnimOAM
+	ld de, CutTreeBlockSwaps
+	callba ReplaceTreeTileBlock
+	callba RedrawMapView
+	callba AnimCut
+	ld a, $1
+	ld [wUpdateSpritesEnabled], a
+	ld a, SFX_CUT
+	call PlaySound
+	ld a, $90
+	ld [hWY], a
+	call UpdateSprites
+	callba RedrawMapView
+	jp .return
+.nocut
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;check for surfing
+	ld a, [wObtainedBadges]
+	bit 4, a ; does the player have the Soul Badge?
+	jr z, .nosurf
+	ld a, [wWalkBikeSurfState]
+	ld [wWalkBikeSurfStateCopy], a
+	cp 2 ; is the player already surfing?
+	jr z, .nosurf	
+	callba IsSurfingAllowed
+	ld hl, wd728
+	bit 1, [hl]
+	res 1, [hl]
+	jr z, .nosurf
+	callba IsNextTileShoreOrWater	;unsets carry if player is facing water or shore
+	jr c, .nosurf
+	ld hl, TilePairCollisionsWater
+	call CheckForTilePairCollisions
+	jr c, .nosurf
+	;is the surfboard in the bag?
+	;ld b, SURFBOARD
+	;call IsItemInBag
+	;jr nz, .beginsurfing
+	;check if a party member has surf
+	ld c, SURF
+	call PartyMoveTest
+	jr z, .nosurf
+.beginsurfing
+	;we can now initiate surfing
+	ld hl, wd730
+	set 7, [hl]
+	ld a, 2
+	ld [wWalkBikeSurfState], a ; change player state to surfing
+	;update sprites
+	call LoadPlayerSpriteGraphics
+	call PlayDefaultMusic ; play surfing music
+	;move player forward
+	ld a, [wPlayerDirection] ; direction the player is going
+	bit PLAYER_DIR_BIT_UP, a
+	ld b, D_UP
+	jr nz, .storeSimulatedButtonPress
+	bit PLAYER_DIR_BIT_DOWN, a
+	ld b, D_DOWN
+	jr nz, .storeSimulatedButtonPress
+	bit PLAYER_DIR_BIT_LEFT, a
+	ld b, D_LEFT
+	jr nz, .storeSimulatedButtonPress
+	ld b, D_RIGHT
+.storeSimulatedButtonPress
+	ld a, b
+	ld [wSimulatedJoypadStatesEnd], a
+	xor a
+	ld [wWastedByteCD39], a
+	inc a
+	ld [wSimulatedJoypadStatesIndex], a
+	jp .return
+.nosurf
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;check for flash
+	ld a, [wObtainedBadges]
+	bit 0, a ; does the player have the Boulder Badge?
+	jr z, .noflash
+	;check if the map pal offset is not zero
+	ld a, [wMapPalOffset]
+	and a 
+	jr z, .noflash
+	;check if a party member has strength
+	ld c, FLASH
+	call PartyMoveTest
+	jr z, .noflash
+	;restore the map pal offset to brighten it up
+	xor a
+	ld [wMapPalOffset], a
+	jp .return
+.noflash
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;else check for strength and enable it
+	ld a, [wObtainedBadges]
+	bit 3, a ; does the player have the Rainbow Badge?
+	jr z, .nostrength
+	;check if a party member has strength
+	ld c, STRENGTH
+	call PartyMoveTest
+	jr z, .nostrength
+	;set the usingStrength bit
+	ld a, [wd728]
+	set 0, a
+	ld [wd728], a
+	jp .return
+.nostrength
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.return
+	jpba OverworldLoop
+	
+
+;Check if any pokemon in the party has a certain move
+;move ID should be in 'c'
+;set zero flag if move not found
+;clear zero flag if move found
+PartyMoveTest:
+	push hl
+	push bc
+	;;;;;
+	ld hl, wPartyMon1Moves
+	ld b, NUM_MOVES + 1
+	call MoveTestLoop
+	jr nz, .return_1
+	;;;;;
+	ld a, [wPartyCount]
+	cp 2
+	jr c, .return_0
+	ld hl, wPartyMon2Moves
+	ld b, NUM_MOVES + 1
+	call MoveTestLoop
+	jr nz, .return_1
+	;;;;;
+	ld a, [wPartyCount]
+	cp 3
+	jr c, .return_0
+	ld hl, wPartyMon3Moves
+	ld b, NUM_MOVES + 1
+	call MoveTestLoop
+	jr nz, .return_1
+	;;;;;
+	ld a, [wPartyCount]
+	cp 4
+	jr c, .return_0
+	ld hl, wPartyMon4Moves
+	ld b, NUM_MOVES + 1
+	call MoveTestLoop
+	jr nz, .return_1
+	;;;;;
+	ld a, [wPartyCount]
+	cp 5
+	jr c, .return_0
+	ld hl, wPartyMon5Moves
+	ld b, NUM_MOVES + 1
+	call MoveTestLoop
+	jr nz, .return_1
+	;;;;;
+	ld a, [wPartyCount]
+	cp 6
+	jr c, .return_0
+	ld hl, wPartyMon6Moves
+	ld b, NUM_MOVES + 1
+	call MoveTestLoop
+	jr nz, .return_1
+.return_0
+	xor a
+.return_1
+	pop bc
+	pop hl
+	ret
+	
+MoveTestLoop:
+	dec b
+	jr z, .return
+	ld a, [hli]
+	cp c
+	jr nz, MoveTestLoop
+	inc b
+.return
 	ret

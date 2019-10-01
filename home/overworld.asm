@@ -80,13 +80,23 @@ OverworldLoopLessDelay::
 	jp .displayDialogue
 .startButtonNotPressed
 	bit 0, a ; A button
+	jr nz, .AorSelectPressed
+	bit 2, a	;Select button
 	jp z, .checkIfDownButtonIsPressed
-; if A is pressed
+; if A or SELECT is pressed
+.AorSelectPressed
 	ld a, [wd730]
-	bit 2, a
+	bit 2, a	;check if input is being ignored
 	jp nz, .noDirectionButtonsPressed
 	call IsPlayerCharacterBeingControlledByGame
 	jr nz, .checkForOpponent
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	ld a, [hJoyPressed]
+	bit 2, a	;is Select being pressed?
+	jr z, .notselect
+	jpba CheckForSmartHMuse	;this function jumps back to OverworldLoop on completion
+.notselect
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call CheckForHiddenObjectOrBookshelfOrCardKeyDoor
 	ld a, [$ffeb]
 	and a
@@ -104,24 +114,25 @@ OverworldLoopLessDelay::
 	bit 0, a
 	jr nz, .checkForOpponent
 	aCoord 8, 9
-	ld [wTilePlayerStandingOn], a ; unused?
+	ld [wTilePlayerStandingOn], a 
 	call DisplayTextID ; display either the start menu or the NPC/sign text
-	ld a, [wEnteringCableClub]
+	ld a, [wEnteringCableClub]	;this can only be a 0 or a 1
 	and a
 	jr z, .checkForOpponent
 	dec a
 	ld a, 0
 	ld [wEnteringCableClub], a
-	jr z, .changeMap
+	jr z, .changeMap	;this only jumps if the previous dec a reduces a to 0
 ; XXX can this code be reached?
-	predef LoadSAV
-	ld a, [wCurMap]
-	ld [wDestinationMap], a
-	call SpecialWarpIn
-	ld a, [wCurMap]
-	call SwitchToMapRomBank ; switch to the ROM bank of the current map
-	ld hl, wCurMapTileset
-	set 7, [hl]
+;no, it cannot be reached
+;	predef LoadSAV
+;	ld a, [wCurMap]
+;	ld [wDestinationMap], a
+;	call SpecialWarpIn
+;	ld a, [wCurMap]
+;	call SwitchToMapRomBank ; switch to the ROM bank of the current map
+;	ld hl, wCurMapTileset
+;	set 7, [hl]
 .changeMap
 	jp EnterMap
 .checkForOpponent
@@ -273,16 +284,26 @@ OverworldLoopLessDelay::
 .noSpinning
 	call UpdateSprites
 
-.moveAhead2
+.moveAhead2		;joenote - rewriting this to implement running functionality
 	ld hl, wFlags_0xcd60
 	res 2, [hl]
-	ld a, [wWalkBikeSurfState]
-	dec a ; riding a bike?
-	jr nz, .normalPlayerSpriteAdvancement
+	;ld a, [wWalkBikeSurfState]
+	;dec a ; riding a bike?
+	;jr nz, .normalPlayerSpriteAdvancement
 	ld a, [wd736]
 	bit 6, a ; jumping a ledge?
 	jr nz, .normalPlayerSpriteAdvancement
+	;call DoBikeSpeedup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	callba TrackRunBikeSpeed
+.speedloop
+	ld a, [wUnusedD119]
+	dec a
+	ld [wUnusedD119], a
+	jr z, .normalPlayerSpriteAdvancement
 	call DoBikeSpeedup
+	jr .speedloop
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .normalPlayerSpriteAdvancement
 	call AdvancePlayerSprite
 	ld a, [wWalkCounter]
@@ -490,8 +511,8 @@ WarpFound2::
 ; this is for handling "outside" maps that can't have the 0xFF destination map
 	ld a, [wCurMap]
 	ld [wLastMap], a
-	ld a, [wCurMapWidth]
-	ld [wUnusedD366], a ; not read
+	;ld a, [wCurMapWidth]
+	;ld [wUnusedD366], a ; not read
 	ld a, [hWarpDestinationMap]
 	ld [wCurMap], a
 	cp ROCK_TUNNEL_1
@@ -1538,10 +1559,10 @@ AdvancePlayerSprite::
 	or $98
 	ld [wMapViewVRAMPointer + 1], a
 .adjustXCoordWithinBlock
-	ld a, c
-	and a
-	jr z, .pointlessJump ; mistake?
-.pointlessJump
+;	ld a, c
+;	and a
+;	jr z, .pointlessJump ; mistake?
+;.pointlessJump
 	ld hl, wXBlockCoord
 	ld a, [hl]
 	add c
@@ -2033,8 +2054,8 @@ LoadPlayerSpriteGraphicsCommon::
 ; function to load data from the map header
 LoadMapHeader::
 	callba MarkTownVisitedAndLoadMissableObjects
-	ld a, [wCurMapTileset]
-	ld [wUnusedD119], a
+	;ld a, [wCurMapTileset]
+	;ld [wUnusedD119], a
 	ld a, [wCurMap]
 	call SwitchToMapRomBank
 	ld a, [wCurMapTileset]
@@ -2221,8 +2242,8 @@ LoadMapHeader::
 	ld a, [hLoadSpriteTemp1]
 	ld [hli], a ; store movement byte 2 in byte 0 of sprite entry
 	ld a, [hLoadSpriteTemp2]
-	ld [hl], a ; this appears pointless, since the value is overwritten immediately after
-	ld a, [hLoadSpriteTemp2]
+	;ld [hl], a ; this appears pointless, since the value is overwritten immediately after
+	;ld a, [hLoadSpriteTemp2]
 	ld [hLoadSpriteTemp1], a
 	and $3f
 	ld [hl], a ; store text ID in byte 1 of sprite entry
@@ -2332,7 +2353,7 @@ LoadMapData::
 	ld [hSCY], a
 	ld [hSCX], a
 	ld [wWalkCounter], a
-	ld [wUnusedD119], a
+	;ld [wUnusedD119], a
 	ld [wWalkBikeSurfStateCopy], a
 	ld [wSpriteSetID], a
 	call LoadTextBoxTilePatterns

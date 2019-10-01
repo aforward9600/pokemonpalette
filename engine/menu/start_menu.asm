@@ -77,6 +77,7 @@ RedisplayStartMenu::
 
 ; EXIT falls through to here
 CloseStartMenu::
+	callba SoftlockTeleport	;joenote - do a check for a softlock warp
 	call Joypad
 	ld a, [hJoyPressed]
 	bit 0, a ; was A button newly pressed?
