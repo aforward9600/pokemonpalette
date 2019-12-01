@@ -44,7 +44,7 @@ ENDM
 battle_struct: MACRO
 \1Species::    db
 \1HP::         dw
-\1PartyPos::
+\1PartyPos::	;party position is zero-indexed (first pkmn is position zero)
 \1BoxLevel::   db
 \1Status::     db
 \1Type::
@@ -3006,11 +3006,16 @@ wWhichDungeonWarp:: ; d71e
 
 wUnusedD71F:: ; d71f	;joenote - used as a backup address for the wDamage value
 	ds 2
-;;;;;;;;;;;;;;joenote - use these unused locations for debugging
-wUnusedD721:: 
+wUnusedD721:: ; d721	;joenote - use to set various wram flags
 	ds 1
+	;bit 0 - player is girl if set
+	;bit 1 - activate cinnabar shore if set
+	;bit 2 - override bit 0 for specific bank switching instances
+;;;;;;;;;;;;;;joenote - use these unused locations for debugging and parsing DV scores
 wUnusedD722:: 
-	ds 6
+	ds 4
+wUnusedD726:: 
+	ds 2
 ;;;;;;;;;;;;;;
 wd728:: ; d728
 ; bit 0: using Strength outside of battle

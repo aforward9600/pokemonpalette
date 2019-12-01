@@ -254,15 +254,15 @@ DrawHPBar::
 LoadMonData::
 	jpab LoadMonData_
 
-OverwritewMoves::
+;OverwritewMoves::
 ; Write c to [wMoves + b]. Unused.
-	ld hl, wMoves
-	ld e, b
-	ld d, 0
-	add hl, de
-	ld a, c
-	ld [hl], a
-	ret
+;	ld hl, wMoves
+;	ld e, b
+;	ld d, 0
+;	add hl, de
+;	ld a, c
+;	ld [hl], a
+;	ret
 
 LoadFlippedFrontSpriteByMonIndex::
 	ld a, 1
@@ -540,14 +540,14 @@ PrintLevelCommon::
 	ld b, LEFT_ALIGN | 1 ; 1 byte
 	jp PrintNumber
 
-GetwMoves::
+;GetwMoves::
 ; Unused. Returns the move at index a from wMoves in a
-	ld hl, wMoves
-	ld c, a
-	ld b, 0
-	add hl, bc
-	ld a, [hl]
-	ret
+;	ld hl, wMoves
+;	ld c, a
+;	ld b, 0
+;	add hl, bc
+;	ld a, [hl]
+;	ret
 
 ; copies the base stat data of a pokemon to wMonHeader
 ; INPUT:
@@ -565,10 +565,11 @@ GetMonHeader::
 	push af
 	ld a, [wd0b5]
 	ld [wd11e], a
-	ld de, FossilKabutopsPic
-	ld b, $66 ; size of Kabutops fossil and Ghost sprites
+;joenote - fossil kabutops is used for the missingno with a basestats file, so this need to be modified
+	;ld de, FossilKabutopsPic
+	;ld b, $66 ; size of Kabutops fossil and Ghost sprites
 	cp FOSSIL_KABUTOPS ; Kabutops fossil
-	jr z, .specialID
+	jr z, .fossilkabutops	;.specialID
 	ld de, GhostPic
 	cp MON_GHOST ; Ghost
 	jr z, .specialID
@@ -576,8 +577,8 @@ GetMonHeader::
 	ld b, $77 ; size of Aerodactyl fossil sprite
 	cp FOSSIL_AERODACTYL ; Aerodactyl fossil
 	jr z, .specialID
-	cp MEW
-	jr z, .mew
+	;cp MEW	
+	;jr z, .mew
 	predef IndexToPokedex   ; convert pokemon ID in [wd11e] to pokedex number
 	ld a, [wd11e]
 	dec a
@@ -596,11 +597,18 @@ GetMonHeader::
 	inc hl
 	ld [hl], d
 	jr .done
-.mew
-	ld hl, MewBaseStats
+;.mew	;joenote - mew's base stats are now lined-up with the other pokemon, so this isn't needed
+;	ld hl, MewBaseStats
+;	ld de, wMonHeader
+;	ld bc, MonBaseStatsEnd - MonBaseStats
+;	ld a, BANK(MewBaseStats)
+;	call FarCopyData
+;do this for fossil kabutops missingno instead
+.fossilkabutops
+	ld hl, MissingnoBaseStats
 	ld de, wMonHeader
 	ld bc, MonBaseStatsEnd - MonBaseStats
-	ld a, BANK(MewBaseStats)
+	ld a, BANK(MissingnoBaseStats)
 	call FarCopyData
 .done
 	ld a, [wd0b5]
@@ -3351,10 +3359,10 @@ GetName::
 	ld bc, $0014
 	call CopyData
 .gotPtr
-	ld a, e
-	ld [wUnusedCF8D], a
+;	ld a, e
+;	ld [wUnusedCF8D], a
 	ld a, d
-	ld [wUnusedCF8D + 1], a
+;	ld [wUnusedCF8D + 1], a
 	pop de
 	pop bc
 	pop hl

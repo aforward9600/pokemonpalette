@@ -1,13 +1,71 @@
+;joenote - adding in support for the missingno shore encounter
+
 Route20Script:
 	CheckAndResetEvent EVENT_IN_SEAFOAM_ISLANDS
 	call nz, Route20Script_50cc6
 	call EnableAutoTextBoxDrawing
+	call MissingnoShore
 	ld hl, Route20TrainerHeader0
 	ld de, Route20ScriptPointers
 	ld a, [wRoute20CurScript]
 	call ExecuteCurMapScriptInTable
 	ld [wRoute20CurScript], a
 	ret
+
+MissingnoShore:
+	ld a, [wUnusedD721]	;check if old man has been talked to to activate the shore
+	bit 1, a
+	jr z, .return	;leave if it hasn't
+	ld hl, MissingnoCoordsData	;load the table of coordinates defining the infamous cinnabar shore
+	call ArePlayerCoordsInArray	;check player coordinates and set the carry flag if a match is found
+	jr nc, .return	;leave if the carry flag is not set
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;everything checks out, so do stuff
+	ld a, [wUnusedD721]
+	res 1, a
+	ld [wUnusedD721], a	;clear cinnabar shore activation
+	call Random
+	and a 
+	jr nz, .return
+	call Random
+	nop
+	cp $0C
+	jr nc, .return
+	nop
+	ld hl, wd72d;set the bits for triggering battle
+	set 6, [hl]	;
+	set 7, [hl]	;
+	ld hl, ExclamationText	;load text for when you win
+	ld de, ExclamationText	;load text for when you lose
+	call SaveEndBattleTextPointers	;save the win/lose text
+	ld a, $9
+	ld [wGymLeaderNo], a	;set bgm to champion music
+	ld a, OPP_CHIEF	;load the trainer type
+	ld [wCurOpponent], a	;set as the current opponent
+	ld a, 2	;get the right roster
+	ld [wTrainerNo], a
+	xor a
+	ld [hJoyHeld], a
+	jp TextScriptEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.return
+	ret
+	
+MissingnoCoordsData:
+		;Y,X
+	db $02,$00
+	db $03,$00
+	db $04,$00
+	db $05,$00
+	db $06,$00
+	db $07,$00
+	db $08,$00
+	db $09,$00
+	db $0A,$00
+	db $0B,$00
+	db $0C,$00
+	db $0D,$00
+	db $ff
 
 Route20Script_50cc6:
 	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE

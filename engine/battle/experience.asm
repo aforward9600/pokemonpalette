@@ -41,20 +41,18 @@ GainExperience:
 	ld a, [hli]
 	ld b, a ; enemy mon base stat
 	ld a, [de] ; stat exp
-	add b ; add enemy mon base stat to stat exp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - bonus statexp
 	;if enemy level > 100, give 255 stat exp instead of enemy mon's base stat
-	push bc
-	ld c, a
+	push af
 	ld a, [wEnemyMonLevel]
 	cp 101
-	ld a, c
-	pop bc
 	jr c, .nobonus1
-	ld a, $FF
+	ld b, $FF
 .nobonus1
+	pop af
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	add b ; add enemy mon base stat to stat exp
 	ld [de], a
 	jr nc, .nextBaseStat
 ; if there was a carry, increment the upper byte

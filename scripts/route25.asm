@@ -52,7 +52,8 @@ Route25TextPointers:
 	dw Route25Text9
 	dw PickUpItemText
 	dw Route25Text11
-
+	dw Route25Text12
+	
 Route25TrainerHeader0:
 	dbEventFlagBit EVENT_BEAT_ROUTE_25_TRAINER_0
 	db ($2 << 4) ; trainer's view range
@@ -189,6 +190,42 @@ Route25Text9:
 	ld hl, Route25TrainerHeader8
 	call TalkToTrainer
 	jp TextScriptEnd
+	
+;joenote - text for red battle
+Route25Text12:
+	TX_ASM
+	ld hl, Route25PrintText12
+	call PrintText
+	CheckEvent EVENT_908	;has elite 4 been beaten?
+	jr z, .no_e4_beaten
+	ld hl, RedText_challenge	;else ask if you want to challenge
+	call PrintText	;print the challenge text
+	call YesNoChoice	;prompt a yes/no choice
+	ld a, [wCurrentMenuItem]	;load the player choice
+	and a	;check the player choice
+	jr nz, .no_e4_beaten	;kick out if no chosen
+	;otherwise begin loading battle
+	ld hl, RedText_prebattle	;load pre battle text
+	call PrintText	;print the pre battle text
+	ld hl, wd72d;set the bits for triggering battle
+	set 6, [hl]	;
+	set 7, [hl]	;
+	ld hl, RedTextVictorySpeech	;load text for when you win
+	ld de, RedTextVictorySpeech	;load text for when you lose
+	call SaveEndBattleTextPointers	;save the win/lose text
+	ld a, $9
+	ld [wGymLeaderNo], a	;set bgm to champion music
+	ld a, OPP_JR_TRAINER_M	;load the trainer type
+	ld [wCurOpponent], a	;set as the current opponent
+	ld a, 9	;get the right roster
+	ld [wTrainerNo], a
+	xor a
+	ld [hJoyHeld], a
+	jp TextScriptEnd
+.no_e4_beaten
+	ld hl, RedTextVictorySpeech
+	call PrintText
+	jp TextScriptEnd
 
 Route25BattleText1:
 	TX_FAR _Route25BattleText1
@@ -301,3 +338,17 @@ Route25AfterBattleText9:
 Route25Text11:
 	TX_FAR _Route25Text11
 	db "@"
+
+;joenote - dialogue for Red battle
+Route25PrintText12:
+	TX_FAR _Route25PrintText12
+	db "@"
+RedText_challenge:
+	TX_FAR _RedText_challenge
+	db "@"
+RedText_prebattle:
+	TX_FAR _RedText_prebattle
+	db "@"
+RedTextVictorySpeech:
+	TX_FAR _RedTextVictorySpeech
+	db "@"	

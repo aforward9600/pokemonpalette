@@ -1,18 +1,21 @@
 # Shin Pokémon Red and Blue
 
-Version 1.07 (release)
+Version 1.08
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 
 Always apply patches to a fresh USA ROM or else strange glitches will occur.  
 
-The master branch will now be used for subsequent beta builds.
+Important Note: If you are using a save file from a previous version, you might be blocked by invisible walls upon loading the game.
+To fix this, you must use the Softlock Warp detailed below to teleport back to Palette Town.
+
+The master github branch will now be used for subsequent beta builds.
 Please refer to the backup branches for the last stable version.
 
 This is a rom hack of pokemon red & blue based on the Pret team's disassembly.  
-This is a mostly-vanilla hack that focuses on fixing glitches from the original game.  
-Additionally, trainer AI routines are also improved and includes minimal quality-of-life improvements.  
-Think of it as what the Nintendo Virtual Console re-release of red & blue might have been.  
+It's a mostly-vanilla hack that focuses on fixing game engine bugs and oversights from the original game.  
+Additionally, trainer AI routines are improved and multiple quality-of-life improvements have been added.  
+Think of it as what the Nintendo Virtual Console re-release of red & blue might have been (plus a few extra goodies).  
 
 ![Title Screen](/screenshots/bgb00001.bmp?raw=true)
 
@@ -23,6 +26,8 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 ![Marts](/screenshots/bgb00011.bmp?raw=true)
 
 ![Shiny Animation](/screenshots/bgb00012.bmp?raw=true)
+
+![Girl Trainer](/screenshots/bgb00015.bmp?raw=true)
 
 
 #Summary
@@ -38,26 +43,34 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - All 151 pkmn are available in one version
   - Though difficult for a select few, each pkmn can be obtained multiple times
   - The uniqueness between red & blue is still preserved in encounter rarity
+- You can play as a boy or a girl
+- You can hunt for shiny pokemon
+  - DVs are checked to see if a pokemon would be shiny in the gen 2 games
+  - If a pokemon has shiny DVs, then it will play the Reflect animation when entering battle
+  - If playing on a super gameboy, shiny pkmn will have a palette swap on the status screen and also change color in battle
 - Minor quality-of-life improvements during battle
   - When a when a box is filled (either via catching or depositing a pokemon), notification text is displayed
   - Exp bar in battle
   - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
   - The safari zone mechanics run off level instead of speed and safari balls have a boosted catch rate
+  - Press Select to play a mon's cry if it's already listed as owned in the pokedex
 - Minor quality-of-life improvements outside of battle
   - Softlock Warp: instantly teleport back to your mom's house if you get stuck (see instructions in detailed changes below)
-  - Running Shoes: Hold B to double your speed when running, walking, and biking
+  - Running Shoes: Hold B to double your speed when walking, surfing, and biking
   - Press SELECT to use HMs based on proper context (must have the right badge and the move on one of your pkmn)
   - Move relearner and deleter
-  - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
-  - Slot machine bugs and oversights fixed so now you can actually win big
-  - A pokemon having Pay Day will tip you off to the lucky slot machine and when it's in a special payout mode
-  - An NPC will pay COINS for showing him pokemon as an alternative to slots
   - Nearly all trainers can be rematched just by talking to them a 2nd time after their most recent defeat
   - Due to on-demand rematches, you could do a pseudo-"new game+" by boxing your pkmn and rematching everyone in order
   - All TMs can be repurchased as they are strategically scattered across all the Kanto pokemarts
+  - Hold select and enter the status screen to print a 'mons stat exp
+  - Hold start and enter the status screen to print a 'mons DVs
+  - Slot machine bugs and oversights fixed so now you can actually win big
+  - A pokemon having Pay Day will tip you off to the lucky slot machine and when it's in a special payout mode
+  - An NPC will pay COINS for showing him pokemon as an alternative to slots
   - After the elite-4, a new vendor opens up in celadon allowing the purchase of normally unique items
   - After the elite-4, there is an NPC that generates a trainer battle with a randomized 6-pkmn roster
   - There's a tournament being held in the SS Anne's kitchen after the elite 4 are beaten
+  - CUT not needed to get to Lt. Surge and Erika (a blocking event replaces the Vermilion shrub)
   - Added some special trainer battles as fun little easter eggs
 - Minor learnset changes that make things more convenient while still staying gen-1 legal
   - Stone evolutions regain some level-up moves
@@ -72,70 +85,50 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Adjustment to the sleep condition
     - Sleep does not prevent choosing a move
 	- Waking up from sleep does not waste the turn and the chosen move is used
-- You can hunt for shiny pokemon
-  - DVs are checked to see if a pokemon would be shiny in the gen 2 games
-  - If a pokemon has shiny DVs, then it will play the Reflect animation when entering battle
-  - If playing on a super gameboy, shiny pkmn will have a palette swap on the status screen and also change color in battle
+- Compatible with original Gameboy hardware (DMG, Super, Pocket, Color, Advance, SP)
 - Potentially compatible with Pokemon Stadium 1 & 2
 - Might be possible to use a save from vanilla USA red/blue with this rom hack (save in RED's house before transferring over)
 
 
 #Hack-Induced Bugfixes & Adjustments since last non-beta version:
 -----------
-- Fixed a bug that defaulted shiny pokemon to have a max attack DV in certain instances
-- Mew will not appear in randomized trainer battles if pokedex diploma not attained
-- Mew will not appear in random encounters if pokedex diploma not attained 
-- Seiga's party moves updated
-- Fuji's party moves updated
-- Chief's party moves updated
-- Fixed some spelling errors
-- Trainers give 1x stat exp again since it throws off the difficulty late game
-- Indigo mart list no longer glitched, but no longer sells great balls as a result
-- EXP ALL now displays text correctly if the 1st pokemon in the party has fainted
-- Tweaked the rates and types of trainer item use
-- Fixed an issue where funciton AICheckIfHPBelowFraction can cause an infinite loop
-- Fixed the coin guy in celadon hotel
-- Ajusted some trainer parties a little bit
-- Fixed the Chansey trick for finding shiny pokemon
-- Fixed mew being available
-- Trainer scaling will now do stone evolving if enemy pkmn is lvl 40 or more and not an eevee
-- Fixed typos that caused errors in hyperbeam recharging
-- Fixed improper animations playing for Bide and Metronome
-- Oak's Tauros given better moves
-- Re-wrote critical hit probability function for streamlining
-- Focus energy/Dire hit now properly quadruples crit rate instead of doubling it
-- Hyper beam does not need to recharge on a miss
-- Trapping moves (wrap, fire spin, etc.) have adjusted mechanics:
-  - Have normal priority per original game
-  - Power increased
-  - Accuracy reduced
-  - Upon hitting, user's speed reduced 25% until recalculated through other mechanics
-- Lorelei's movesets slightly tweaked
-- Streamlined how how high priority moves are handled to match low priority moves (only affects optimization)
-- Lots of useless code in overworld.asm commented out in order to free up space
+- Included alternative main.asm and pokered.link files with instructions on how to recompile with red/green or yellow pkmn sprites
+- Fixed a major bug where the sleep effect function was writing to the wrong address in the BC register
+- Reworked some random numbers in trainer AI
+- Mew's base stats are now handled in the same block of memory as all the others, so some space is saved in home.asm
+- Minor text tweeks for gender neutrality
+- Pressing SELECT to surf under forced cycling will now do nothing instead of throwing up an invisible text box
+- Made more space in Rom Bank 0 by commenting out unused functions in home.asm
+- Trapping moves made slightly more accurate and slightly less damaging
+- Commented out exclamation point code from core.asm to save space (leftovers from japanese grammar)
+- Fixed an bug where player move power was always getting zeroed upon selection (difficulty increase)
+	- AI can now switch out of supereffective moves, use counter, and not use def-up moves against special attacks
+- Fixed a major bug that caused all enemy pokemon to give +255 stat exp for every stat (difficulty increase)
 
 
 #New features & adjustments since last non-beta version:
 -----------
-- Safari zone pokemon have better DVs on average
-- After the elite 4, Safari zone has a chance to generate any non-legendary pokemon (selection varies by area)
-- One of Oak's aides in the lab toggles trainer level scaling & evolution on/off
-- The elite 4 now use the gym leader battle music
-- Saffron guards now explicitly mention fresh water
-- Acid armor does not make its user disappear
-- EXP ALL no longer counts fainted pokemon when dividing exp
-- Rage now heavily discouraged in AI routine 1
-- *unverified* enemy should not use item or switch during fly/dig or other such moves
-- Ajusted cerulean cave 1f to remove the walkable cliff tile
-- Metronome now classified as a typeless move to play better with the AI
-- There's a tournament being held in the SS Anne's kitchen after the elite 4 are beaten
-- Trainer AI routine #1 will discourage using haze if it's unstatus'd or has net-neutral or better stat mods
-- Stat changes from burn and paralyze are applied when the ai sends out a pkmn with those conditions
-- Can battle the silph chief
-- Softlock Warp: instantly teleport back to your mom's house if you get stuck
-- Running Shoes: Hold B to double your speed when running, walking, and biking
-- Butterfree and Beedrill have their prior evolutions' moves added to their level-0 move list
-- Select button now activates surf, cut, flash, and strength
+- Mind battle with future Trainer RED via the new girl outside Bill's villa
+- AI routine 1 heavily discourages boosting defense against special, OHKO, or static-damaging attacks
+- You can now battle missingno on the infamous cinnabar shoreline
+  - You must have gotten the pokedex diploma first
+  - Activated the traditional way via the "old man in viridian" method
+  - Uses trainer battle routines (different music, uses AI, and uncatchable)
+  - Uses fossil kabutops graphics and has its own defined base stats data
+    - Prevents terrible glitches
+	- Won't mess up your hall of fame
+  - Upon encountering, it still gives 128 of the item in the 6th slot
+- You can now play as a girl when starting a new game
+  - Has front, back, walking, and cycling sprites
+  - Has unique default names when starting a new game
+- In-battle way to check if enemy pokemon is owned in the pokedex
+  - On the main battle menu, place the cursor over an option in the left column
+  - Press the Select button
+  - The enemy pokemon will play its cry if registered as owned
+- AI routine 2 now activates on the 1st turn after sendout (as intended) instead of the 2nd
+- You can now check DVs or stat exp by holding down a button and entering the status screen
+  - hold SELECT for stat exp
+  - hold START for DVs
 
 
 #Bugfixes:
@@ -164,6 +157,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 	 - Before AI would only look at the type it encountered first in a list search
      - AI will now treat a move as neutral if type 1 makes it supereffective but type 2 makes it not effective
   - Stat changes from burn and paralyze are applied when the ai sends out a pkmn with those conditions
+  - AI routine #2 (prioritize buffing or use a status move) now activates on the 1st turn after sendout instead of the 2nd
 
 - Move fixes
   - dire hit/focus energy now quadruples crit rate instead of quarters
@@ -267,29 +261,29 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
     - Switching out of a trapping move ends it immediately and wastes its user's turn (prevents PP underflow glitch too)
     - Accuracy reduced
 	- Power increased
-	- Upon hitting, user's speed reduced 25% until recalculated through other mechanics
-    - A pkmn plays its cry to signal the last turn of using a trapping move like wrap/clamp/etc
+	- Each time a trapping move is used and hits, user's speed reduced 25% until recalculated through other mechanics
+    - A pkmn plays its cry to signal the last turn of the trapping move
   - Ghost moves (i.e. just Lick) do 2x against psychic as was always intended
   - Pay Day upped to 8x multiplier instead of 2x
     - It's 5x in later generations, but amulet coin doesn't exist in gen 1. 8x is a compromise.
   - Changes to Bide
     - damage accumulation is done after taking a damaging hit instead of during turn execution (less room for glitches)
-	- side effect: bide is buffed because multi-hit moves now add damage to bide for each attack
+	- side effect: bide is buffed because multi-hit moves now add damage to bide for each of the 2 to 5 hits
 	- changed to Typeless to play nicer with AI routine 3 (it ignores the type chart regardless)
-  - Rest's sleep condition increased to 3 turns since attacking on wakeup is allowed.
-  - Acid armor does not make its user disappear
-  - Metronome now classified as a typeless special damage move to play better with the AI
+  - Rest's sleep condition increased to 3 turns since attacking on wakeup is now allowed.
+  - Acid armor's animation changed so that does not make its user disappear
+  - Metronome now classified as a Typeless special damage move to play better with the AI
 
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
   - Waking up from sleep does not waste the turn and the chosen move is used
-    - Badge stat-ups are now only applied in wild pokemon battles to give parity to enemy trainers
+  - Badge stat-ups are now only applied in wild pokemon battles to give parity to enemy trainers
   - Badge stat-ups are now temporary boosts
     - They are applied upon battle start or switching-in
     - They are not applied at all after stat recalculations, so any stat change on your pkmn cancels all of them
   - The effect of X Accuracy is no longer applied to one-hit K.O. moves (it originally made them auto-hit)
   - The limiter on vitamins is raised to a max of 62720 stat exp after the elite 4 have been beaten
-  - Pkmn added to the player's party (either as a gift or in-game trade) have at the least IVs of 9,8,8,8
+  - Pkmn added to the player's party (either as a gift or in-game trade) have at the least DVs of 9,8,8,8
   - New item M.GENE: re-randomizes a pkmn's DVs to values of 9,8,8,8 or more.
   - Win 5 matches in a row against the random team NPC to get M.GENE items (leaving the area resets the win streak)
   - Upped the power of safari balls
@@ -314,6 +308,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Substitute discouraged if less that 1/4 hp remains
   - Rage is heavily discouraged
   - Will discourage using Haze if unstatus'd or has net-neutral or better stat mods
+  - Will heavily discourage boosting defense against special, OHKO, or static-damaging attacks
 
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
@@ -378,6 +373,9 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - Give haunter/machoke/kadabra/graveler an evo by level option (level 45 to 48)
   - Butterfree and Beedrill have their prior evolutions' moves added to their level-0 move list
 
+- You can now play as a girl when starting a new game
+  - Has front, back, walking, and cycling sprites
+  - Has unique default names when starting a new game
 - Softlock Warp 
   - instantly teleport back to your mom's house if you get stuck or are unable to move after updating to a new patch
   - Intructions to perform:
@@ -391,6 +389,13 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - press select when facing a shrub or grass tile to use cut
   - press select in a dark area to light it with flash
   - in all other instances, pressing select activates strength
+- You can now check DVs or stat exp by holding down a button and entering the status screen
+  - hold SELECT for stat exp
+  - hold START for DVs
+- In-battle way to check if enemy pokemon is owned in the pokedex
+  - On the main battle menu, place the cursor over an option in the left column
+  - Press the Select button
+  - The enemy pokemon will play its cry if registered as owned
 - Game corner prize costs re-balanced
 - Slightly increased slot odds
 - Slot machine coin counter runs twice as fast
@@ -430,6 +435,7 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
 - Trainer Green (named Seiga) can be battled next to the ss anne dock truck after beating the elite 4
 - Can battle Mr. Fuji after beating the elite 4
 - Can battle the Silph Chief after beating the elite 4
+- Mind battle with future Trainer RED after beating the elite 4 via the new girl outside Bill's villa
 - Move deleter/relearner added to the saffron house below COPYCAT's house
   - Code comes from Mateo's Red++ hack. It's simply the best gen-1 implementation and I cannot come up with something better.
   - Talk to the little girl to delete moves.
@@ -452,6 +458,14 @@ Think of it as what the Nintendo Virtual Console re-release of red & blue might 
   - You must have an open item slot to claim your prize
   - Any trainer can appear with any three pokemon
   - No breaks allowed in-between battles
+- You can now battle missingno on the infamous cinnabar shoreline
+  - You must have gotten the pokedex diploma first
+  - Activated the traditional way via the "old man in viridian" method
+  - Uses trainer battle routines (different music, uses AI, and uncatchable)
+  - Uses fossil kabutops graphics and has its own defined base stats data
+    - Prevents terrible glitches
+	- Won't mess up your hall of fame
+  - Upon encountering, it still gives 128 of the item in the 6th slot
 
 
 #Added Encounter Locations for the following pokemon (rare if not normally in the chosen version):

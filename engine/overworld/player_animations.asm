@@ -386,9 +386,18 @@ FishingAnim:
 	call DelayFrames
 	ld hl, wd736
 	set 6, [hl] ; reserve the last 4 OAM entries
+;joenote - support female sprite
+	push af
+	ld de, RedFSprite
+	lb bc, BANK(RedFSprite), $c
+	ld a, [wUnusedD721]
+	bit 0, a	;check if girl
+	jr nz, .donefemale
 	ld de, RedSprite
-	ld hl, vNPCSprites
 	lb bc, BANK(RedSprite), $c
+.donefemale
+	pop af
+	ld hl, vNPCSprites
 	call CopyVideoData
 	ld a, $4
 	ld hl, RedFishingTiles

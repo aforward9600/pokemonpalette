@@ -1,4 +1,5 @@
-db MON_GHOST ; pokedex id
+MissingnoBaseStats:
+db FOSSIL_KABUTOPS ; pokedex id
 db 128 ; base hp
 db 128 ; base attack
 db 128 ; base defense
@@ -8,9 +9,9 @@ db BIRD ; species type 1
 db NORMAL ; species type 2
 db 1 ; catch rate
 db 255 ; base exp yield
-INCBIN "pic/other/ghost.pic",0,1 ; 77, sprite dimensions
-dw GhostPic
-dw OldManPic
+INCBIN "pic/bmon/fossilkabutops.pic",0,1 ; $66, sprite dimensions
+dw FossilKabutopsPic
+dw KabutopsPicBack
 ; attacks known at lvl 0
 db WATER_GUN
 db SKY_ATTACK

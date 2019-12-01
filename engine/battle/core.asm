@@ -877,7 +877,7 @@ HandleEnemyMonFainted:
 	ld a, [hli]
 	or [hl] ; does battle mon have 0 HP?
 	jr nz, .skipReplacingBattleMon ; if not, skip replacing battle mon
-	call DoUseNextMonDialogue ; this call is useless in a trainer battle. it shouldn't be here
+	;call DoUseNextMonDialogue ; this call is useless in a trainer battle. it shouldn't be here
 	ret c
 	call ChooseNextMon
 .skipReplacingBattleMon
@@ -1498,6 +1498,8 @@ EnemySendOutFirstMon:
 	sub 4
 	ld [wWhichPokemon], a
 	jr .next3
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;AI trainer switching & sendout is handled in this block
 .next
 	ld b, $FF
 .next2
@@ -1512,12 +1514,13 @@ EnemySendOutFirstMon:
 	ld bc, wEnemyMon2 - wEnemyMon1
 	call AddNTimes
 	pop bc
-	inc hl
+	inc hl	;check the HP of the pokemon being switched to
 	ld a, [hli]
 	ld c, a
 	ld a, [hl]
 	or c
-	jr z, .next2
+	jr z, .next2	;go to next pkmn in roster if this one has zero HP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .next3
 	ld a, [wWhichPokemon]
 	ld hl, wEnemyMon1Level
@@ -2271,11 +2274,19 @@ DisplayBattleMenu:
 	inc hl
 	ld a, $1
 	ld [hli], a ; wMaxMenuItem
-	ld [hl], D_RIGHT | A_BUTTON ; wMenuWatchedKeys
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - adding SELECT.
+;Aim is to play enemy pokemon's cry if it hasn't been caught yet when select is pressed
+	ld [hl], D_RIGHT | A_BUTTON | SELECT ; wMenuWatchedKeys	
 	call HandleMenuInput
 	bit 4, a ; check if right was pressed
 	jr nz, .rightColumn
-	jr .AButtonPressed ; the A button was pressed
+	bit 0, a ;check if A was pressed
+	;jr .AButtonPressed 
+	jr nz, .AButtonPressed 
+	callba CryIfOwned
+	jp .leftColumn
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .rightColumn ; put cursor in right column of menu
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_SAFARI
@@ -2308,7 +2319,7 @@ DisplayBattleMenu:
 	ld [hli], a ; wMenuWatchedKeys
 	call HandleMenuInput
 	bit 5, a ; check if left was pressed
-	jr nz, .leftColumn ; if left was pressed, jump
+	jp nz, .leftColumn ; if left was pressed, jump
 	ld a, [wCurrentMenuItem]
 	add $2 ; if we're in the right column, the actual id is +2
 	ld [wCurrentMenuItem], a
@@ -2318,7 +2329,7 @@ DisplayBattleMenu:
 	cp BATTLE_TYPE_SAFARI
 	ld a, [wCurrentMenuItem]
 	ld [wBattleAndStartSavedMenuItem], a
-	jr z, .handleMenuSelection
+	jp z, .handleMenuSelection
 ; not Safari battle
 ; swap the IDs of the item menu and party menu (this is probably because they swapped the positions
 ; of these menu items in first generation English versions)
@@ -2536,7 +2547,7 @@ PartyMenuOrRockOrRun:
 	xor a
 	ld [hl], a ; wLastMenuItem
 	call HandleMenuInput
-	bit 1, a ; was A pressed?
+	bit 1, a ; was B pressed?
 	jr nz, .partyMonDeselected ; if B was pressed, jump
 ; A was pressed
 	call PlaceUnfilledArrowMenuCursor
@@ -2817,6 +2828,7 @@ SelectMenuItem:
 	jp nz, SwapMovesInMenu ; select
 	bit 1, a ; B, but was it reset above?
 	;;;;;;;;;;;;;;;;;;;;;;;
+	jr z, .Bnotpressed
 	;joenote
 	;This is the point where B has been pressed 
 	;to exit out of the move selection menu during battle.
@@ -2826,6 +2838,7 @@ SelectMenuItem:
 	ld a, $00
 	ld [wPlayerMovePower], a
 	ld [wPlayerSelectedMove], a
+.Bnotpressed
 	;;;;;;;;;;;;;;;;;;;;;;;
 	push af
 	xor a
@@ -3842,11 +3855,7 @@ CheckPlayerStatusConditions:
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - play cry to signal end of trapping move
 	ld a, [wBattleMonSpecies]
-	push hl
-	push bc
-	call PlayCry
-	pop bc
-	pop hl
+	call CryFunc
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp .returnToHL
 
@@ -4026,22 +4035,22 @@ MonName1Text:
 .playerTurn
 	ld [hl], a
 	ld [wd11e], a
-	call DetermineExclamationPointTextNum
-	ld a, [wMonIsDisobedient]
-	and a
+;	call DetermineExclamationPointTextNum	;joenote - useless, so removing
+;	ld a, [wMonIsDisobedient]
+;	and a
 	ld hl, Used2Text
-	ret nz
-	ld a, [wd11e]
-	cp 3
-	ld hl, Used2Text
-	ret c
-	ld hl, Used1Text
+;	ret nz
+;	ld a, [wd11e]
+;	cp 3
+;	ld hl, Used2Text
+;	ret c
+;	ld hl, Used1Text
 	ret
 
-Used1Text:
-	TX_FAR _Used1Text
-	TX_ASM
-	jr PrintInsteadText
+;Used1Text:
+;	TX_FAR _Used1Text
+;	TX_ASM
+;	jr PrintInsteadText
 
 Used2Text:
 	TX_FAR _Used2Text
@@ -4064,11 +4073,11 @@ PrintMoveName:
 	ld hl, _PrintMoveName
 	ret
 
-_PrintMoveName:
+_PrintMoveName:	;joenote - removing useless exclamation points
 	TX_FAR _CF4BText
 	TX_ASM
 	ld hl, ExclamationPointPointerTable
-	ld a, [wd11e] ; exclamation point num
+	xor a	;	ld a, [wd11e] ; exclamation point num
 	add a
 	push bc
 	ld b, $0
@@ -4080,32 +4089,33 @@ _PrintMoveName:
 	ld l, a
 	ret
 
+;joenote - cleaning up useless exclamation points from japanese grammar
 ExclamationPointPointerTable:
 	dw ExclamationPoint1Text
-	dw ExclamationPoint2Text
-	dw ExclamationPoint3Text
-	dw ExclamationPoint4Text
-	dw ExclamationPoint5Text
+;	dw ExclamationPoint2Text
+;	dw ExclamationPoint3Text
+;	dw ExclamationPoint4Text
+;	dw ExclamationPoint5Text
 
 ExclamationPoint1Text:
 	TX_FAR _ExclamationPoint1Text
 	db "@"
 
-ExclamationPoint2Text:
-	TX_FAR _ExclamationPoint2Text
-	db "@"
+;ExclamationPoint2Text:
+;	TX_FAR _ExclamationPoint2Text
+;	db "@"
 
-ExclamationPoint3Text:
-	TX_FAR _ExclamationPoint3Text
-	db "@"
+;ExclamationPoint3Text:
+;	TX_FAR _ExclamationPoint3Text
+;	db "@"
 
-ExclamationPoint4Text:
-	TX_FAR _ExclamationPoint4Text
-	db "@"
+;ExclamationPoint4Text:
+;	TX_FAR _ExclamationPoint4Text
+;	db "@"
 
-ExclamationPoint5Text:
-	TX_FAR _ExclamationPoint5Text
-	db "@"
+;ExclamationPoint5Text:
+;	TX_FAR _ExclamationPoint5Text
+;	db "@"
 
 ; this function does nothing useful
 ; if the move being used is in set [1-4] from ExclamationPointMoveSets,
@@ -4114,42 +4124,43 @@ ExclamationPoint5Text:
 ; but all five text strings are identical
 ; this likely had to do with Japanese grammar that got translated,
 ; but the functionality didn't get removed
-DetermineExclamationPointTextNum:
-	push bc
-	ld a, [wd11e] ; move ID
-	ld c, a
-	ld b, $0
-	ld hl, ExclamationPointMoveSets
-.loop
-	ld a, [hli]
-	cp $ff
-	jr z, .done
-	cp c
-	jr z, .done
-	and a
-	jr nz, .loop
-	inc b
-	jr .loop
-.done
-	ld a, b
-	ld [wd11e], a ; exclamation point num
-	pop bc
-	ret
+;DetermineExclamationPointTextNum:	;joenote - removing because useless
+;	push bc
+;	ld a, [wd11e] ; move ID
+;	ld c, a
+;	ld b, $0
+;	ld hl, ExclamationPointMoveSets
+;.loop
+;	ld a, [hli]
+;	cp $ff
+;	jr z, .done
+;	cp c
+;	jr z, .done
+;	and a
+;	jr nz, .loop
+;	inc b
+;	jr .loop
+;.done
+;	ld a, b
+;	ld [wd11e], a ; exclamation point num
+;	pop bc
+;	ret
 
-ExclamationPointMoveSets:
-	db SWORDS_DANCE, GROWTH
-	db $00
-	db RECOVER, BIDE, SELFDESTRUCT, AMNESIA
-	db $00
-	db MEDITATE, AGILITY, TELEPORT, MIMIC, DOUBLE_TEAM, BARRAGE
-	db $00
-	db POUND, SCRATCH, VICEGRIP, WING_ATTACK, FLY, BIND, SLAM, HORN_ATTACK, BODY_SLAM
-	db WRAP, THRASH, TAIL_WHIP, LEER, BITE, GROWL, ROAR, SING, PECK, COUNTER
-	db STRENGTH, ABSORB, STRING_SHOT, EARTHQUAKE, FISSURE, DIG, TOXIC, SCREECH, HARDEN
-	db MINIMIZE, WITHDRAW, DEFENSE_CURL, METRONOME, LICK, CLAMP, CONSTRICT, POISON_GAS
-	db LEECH_LIFE, BUBBLE, FLASH, SPLASH, ACID_ARMOR, FURY_SWIPES, REST, SHARPEN, SLASH, SUBSTITUTE
-	db $00
-	db $FF ; terminator
+;joenote - commenting out because useless
+;ExclamationPointMoveSets:
+;	db SWORDS_DANCE, GROWTH
+;	db $00
+;	db RECOVER, BIDE, SELFDESTRUCT, AMNESIA
+;	db $00
+;	db MEDITATE, AGILITY, TELEPORT, MIMIC, DOUBLE_TEAM, BARRAGE
+;	db $00
+;	db POUND, SCRATCH, VICEGRIP, WING_ATTACK, FLY, BIND, SLAM, HORN_ATTACK, BODY_SLAM
+;	db WRAP, THRASH, TAIL_WHIP, LEER, BITE, GROWL, ROAR, SING, PECK, COUNTER
+;	db STRENGTH, ABSORB, STRING_SHOT, EARTHQUAKE, FISSURE, DIG, TOXIC, SCREECH, HARDEN
+;	db MINIMIZE, WITHDRAW, DEFENSE_CURL, METRONOME, LICK, CLAMP, CONSTRICT, POISON_GAS
+;	db LEECH_LIFE, BUBBLE, FLASH, SPLASH, ACID_ARMOR, FURY_SWIPES, REST, SHARPEN, SLASH, SUBSTITUTE
+;	db $00
+;	db $FF ; terminator
 
 PrintMoveFailureText:
 	ld de, wPlayerMoveEffect
@@ -6691,11 +6702,7 @@ CheckEnemyStatusConditions:
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - play cry to signal end of trapping move
 	ld a, [wEnemyMonSpecies]
-	push hl
-	push bc
-	call PlayCry
-	pop bc
-	pop hl
+	call CryFunc
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp .enemyReturnToHL
 .checkIfUsingRage
@@ -7098,14 +7105,25 @@ SwapPlayerAndEnemyLevels:
 ; loads either red back pic or old man back pic
 ; also writes OAM data and loads tile patterns for the Red or Old Man back sprite's head
 ; (for use when scrolling the player sprite and enemy's silhouettes on screen)
+;joenote - modifying to allow a female back sprite
 LoadPlayerBackPic:
 	ld a, [wBattleType]
 	dec a ; is it the old man tutorial?
 	ld de, RedPicBack
-	jr nz, .next
+	jr nz, .redback
 	ld de, OldManPic
-.next
+	jr .bankred
+.redback
+	ld a, [wUnusedD721]
+	bit 0, a	;check if girl
+	jr z, .bankred	;go to the normal red sprite bank if boy
+	;else load girl sprites
+	ld de, RedPicFBack
+	ld a, BANK(RedPicFBack)
+	jr .next
+.bankred
 	ld a, BANK(RedPicBack)
+.next
 	call UncompressSpriteFromDE
 	predef ScaleSpriteByTwo
 	ld hl, wOAMBuffer
@@ -7158,7 +7176,7 @@ LoadPlayerBackPic:
 	coord hl, 1, 5
 	predef_jump CopyUncompressedPicToTilemap
 
-; does nothing since no stats are ever selected (barring glitches)	joenote - removed since it's taking up space
+; does nothing since no stats are ever selected (barring glitches)	
 DoubleOrHalveSelectedStats:
 	callab DoubleSelectedStats
 	jpab HalveSelectedStats
@@ -7961,7 +7979,9 @@ SleepEffect:
 	and a
 	jr nz, .didntAffect ; can't affect a mon that is already statused
 	push de
+	push bc	;joenote - need to preserve bc register
 	call MoveHitTest ; apply accuracy tests
+	pop bc
 	pop de
 	ld a, [wMoveMissed]
 	and a
@@ -9638,3 +9658,11 @@ PlayerBideAccum:
 	ld [hl], a
 	ret
 
+;joenote - function to play cry with stack pushing
+CryFunc:
+	push hl
+	push bc
+	call PlayCry
+	pop bc
+	pop hl
+	ret

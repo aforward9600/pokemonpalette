@@ -1,11 +1,25 @@
 ChoosePlayerName:
 	call OakSpeechSlidePicRight
+;joenote - support female sprite
+	ld de, DefaultNamesPlayerF
+	ld a, [wUnusedD721]
+	bit 0, a	;check if girl
+	jr nz, .donefemale_names
 	ld de, DefaultNamesPlayer
+.donefemale_names
 	call DisplayIntroNameTextBox
 	ld a, [wCurrentMenuItem]
 	and a
 	jr z, .customName
+;joenote - support female sprite
+	push af
+	ld hl, DefaultNamesPlayerListF
+	ld a, [wUnusedD721]
+	bit 0, a	;check if girl
+	jr nz, .donefemale_names2
 	ld hl, DefaultNamesPlayerList
+.donefemale_names2
+	pop af
 	call GetDefaultName
 	ld de, wPlayerName
 	call OakSpeechSlidePicLeft
@@ -20,8 +34,15 @@ ChoosePlayerName:
 	jr z, .customName
 	call ClearScreen
 	call Delay3
+;joenote - support female sprite
+	ld de, RedPicFFront
+	ld b, BANK(RedPicFFront)
+	ld a, [wUnusedD721]
+	bit 0, a	;check if girl
+	jr nz, .donefemale_front
 	ld de, RedPicFront
 	ld b, BANK(RedPicFront)
+.donefemale_front
 	call IntroDisplayPicCenteredOrUpperRight
 .done
 	ld hl, YourNameIsText
@@ -187,6 +208,14 @@ DisplayIntroNameTextBox:
 .namestring
 	db "NAME@"
 
+;joenote - set girl names
+DefaultNamesPlayerF:
+	db   "NEW NAME"
+	next "YELLOW"
+	next "CLAIRE"
+	next "JILL"
+	db   "@"
+
 IF DEF(_RED)
 DefaultNamesPlayer:
 	db   "NEW NAME"
@@ -242,6 +271,12 @@ GetDefaultName:
 	ld de, wcd6d
 	ld bc, $14
 	jp CopyData
+
+DefaultNamesPlayerListF:
+	db "NEW NAME@"
+	db "YELLOW@"
+	db "CLAIRE@"
+	db "JILL@"
 
 IF DEF(_RED)
 DefaultNamesPlayerList:

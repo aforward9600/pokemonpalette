@@ -159,7 +159,7 @@ JrTrainerMData:
 ; Route 12
 	db 29,NIDORAN_M,NIDORINO,0
 ;joenote - special fight with future trainer red
-	db $FF,83,MUK,85,VENUSAUR,85,CHARIZARD,85,BLASTOISE,87,SNORLAX,88,PIKACHU,0	;jr trainer male #9
+	db $FF,83,LAPRAS,85,VENUSAUR,85,CHARIZARD,85,BLASTOISE,87,SNORLAX,88,PIKACHU,0	;jr trainer male #9
 ; Unused
 	;db 18,DIGLETT,DIGLETT,SANDSHREW,0
 JrTrainerFData:
@@ -474,7 +474,7 @@ ChiefData:
 ; none
 ;joenote - special fight with the silph chief
 	db $FF,72,KANGASKHAN,73,RHYDON,73,GOLDUCK,74,PINSIR,74,SCYTHER,76,TAUROS,0
-	db 128,MON_GHOST,0	;joenote - fight with superboss missingno
+	db 128,FOSSIL_KABUTOPS,0	;joenote - fight with missingno
 ScientistData:
 ; Silph Co. 2F
 	db 26,GRIMER,WEEZING,KOFFING,WEEZING,0

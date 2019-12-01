@@ -1198,6 +1198,10 @@ CheckForSmartHMuse:
 	ld [wWalkBikeSurfStateCopy], a
 	cp 2 ; is the player already surfing?
 	jr z, .nosurf	
+	;surfing not allowed if forced to ride bike
+	ld a, [wd732]
+	bit 5, a
+	jr nz, .nosurf
 	callba IsSurfingAllowed
 	ld hl, wd728
 	bit 1, [hl]
@@ -1352,3 +1356,39 @@ MoveTestLoop:
 	inc b
 .return
 	ret
+	
+	
+	
+
+
+;Overworld Female Sprite Functions
+LoadRedSpriteToDE:
+	ld de, RedFSprite
+	ld a, [wUnusedD721]
+	bit 0, a	;check if girl
+	jr nz, .donefemale
+	ld de, RedSprite
+.donefemale
+	res 2, a
+	ld [wUnusedD721], a
+	ret
+	
+LoadSeelSpriteToDE:
+	ld de, SeelSprite
+	ld a, [wUnusedD721]
+	set 2, a	;regardless if boy or girl, need to set override bit to use the regular sprite bank
+	ld [wUnusedD721], a
+	ret
+
+LoadRedCyclingSpriteToDE:
+	ld de, RedFCyclingSprite
+	ld a, [wUnusedD721]
+	bit 0, a	;check if girl
+	jr nz, .donefemale
+	ld de, RedCyclingSprite
+.donefemale
+	res 2, a
+	ld [wUnusedD721], a
+	ret
+
+

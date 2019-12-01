@@ -286,6 +286,27 @@ AIMoveChoiceModification1:
 .noMistImm	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use defense-up moves if opponent is special attacking
+	ld a, [wEnemyMoveEffect]	;get the move effect
+	cp DEFENSE_UP1_EFFECT	
+	jr z, .do_def_check
+	cp DEFENSE_UP2_EFFECT
+	jr nz, .nodefupmove
+.do_def_check
+	ld a, [wPlayerMoveEffect]
+	cp SPECIAL_DAMAGE_EFFECT
+	jp z, .heavydiscourage	;don't bother boosting def against static damage attacks
+	cp OHKO_EFFECT
+	jp z, .heavydiscourage	;don't bother boosting def against OHKO attacks
+	ld a, [wPlayerMovePower]	;all regular damage moves have a power of at least 10
+	cp 10
+	jr c, .nodefupmove
+	ld a, [wPlayerMoveType]	;physical move types are numbers $00 to $08 while special is $14 to $1A
+	cp $14
+	jp nc, .heavydiscourage	;at this point, heavy discourage defense-boosting because player is using a special move of 10+ power
+.nodefupmove
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - heavily discourage stat modifying moves if it would hit the mod limit and be ineffective
 	;check for stat down effects
 	ld a, [wEnemyMoveEffect]	;get the move effect
@@ -514,7 +535,7 @@ AIMoveChoiceModification2:
 	ret nz
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wAILayer2Encouragement]
-	cp $1
+	and a ;cp $1	;joenote - AI layer 2 should activate on 1st turn instead of 2nd turn after sendout
 	ret nz
 	ld hl, wBuffer - 1 ; temp move selection array (-1 byte offset)
 	ld de, wEnemyMonMoves ; enemy moves
@@ -593,10 +614,10 @@ AIMoveChoiceModification3:
 .notpoisoneffect
 .backfromTwave
 	call Random	;else get a random number between 0 and 255
-	and $07	;get only bits 0 to 2
-	jp z, .givepref	;if zero (12.5% chance) slightly encourage to spice things up
-	cp $03	;don't set carry flag if number is >= this value
-	jp nc, .notEffectiveMove	;75% chance to slightly discourage and would rather do damage
+	cp $20
+	jp c, .givepref	;(12.5% chance) slightly encourage to spice things up
+	cp $A0	;don't set carry flag if number is >= this value
+	jp nc, .notEffectiveMove	;62.5% chance to slightly discourage and would rather do damage
 	jp .nextMove	;else neither encourage nor discourage
 .skipout
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -651,8 +672,8 @@ AIMoveChoiceModification3:
 	cp $1	;check if it is 1. special damage moves assumed to have 1 base power
 	jr nz, .skipout4	;skip down if it's not a special damage move
 	call Random	;else get a random number between 0 and 255
-	and $3	;get bits 0 to 1
-	jp z, .givepref	;if zero (25% chance) slightly encourage
+	cp $40	
+	jp c, .givepref	;(25% chance) slightly encourage
 	jp .nextMove	;else neither encourage nor discourage
 .skipout4
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -723,8 +744,8 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	bit 5, a	;check a for trapping move bit (sets or clears zero flag)
 	jr z, .skipSwitchTrapEnd	;not trapped if zero flag set
 	call Random	;put a random number in 'a' between 0 and 255
-	and $03	;use only bits 0 to 1 for a random number of 0 to 3
-	jp z, .setSwitch	;switch if zero
+	cp $40	;set carry if rand num < $40
+	jp c, .setSwitch	;25% chance to switch
 .skipSwitchTrapEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -733,8 +754,8 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	bit 7, a	;check a for the confusion bit (sets or clears zero flag)
 	jr z, .skipSwitchConfuseEnd	;not confused if zero flag set
 	call Random	;put a random number in 'a' between 0 and 255
-	and $03	;use only bits 0 to 1 for a random number of 0 to 3
-	jp z, .setSwitch	;switch if zero
+	cp $40	;set carry if rand num < $40
+	jp c, .setSwitch	;25% chance to switch
 .skipSwitchConfuseEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -743,8 +764,8 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	bit 7, a	;check a for the leech seed bit (sets or clears zero flag)
 	jr z, .skipSwitchSeedEnd	;not seeded if zero flag set
 	call Random	;put a random number in 'a' between 0 and 255
-	and $07	;use only bits 0 to 2 for a random number of 0 to 7
-	jp z, .setSwitch	;switch if zero
+	cp $20	;set carry if rand num < $20
+	jp c, .setSwitch	;12.5% chance to switch
 .skipSwitchSeedEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -754,8 +775,8 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	and $f
 	jr z, .skipSwitchDisableEnd	;no disabled moves if zero flag set
 	call Random	;put a random number in 'a' between 0 and 255
-	and $07	;use only bits 0 to 2 for a random number of 0 to 7
-	jp z, .setSwitch	;if zero flag is set, switch pkmn because 'a' is zero
+	cp $20	;set carry if rand num < $20
+	jp c, .setSwitch	;12.5% chance to switch
 .skipSwitchDisableEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -806,8 +827,8 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	call AICheckIfHPBelowFraction
 	jr nc, .skipSwitchHPend	;if hp not below 1/3 then skip to the end of this block
 	call Random	;put a random number in 'a' between 0 and 255
-	and $03	;use only bits 0 & 1 for a random number of 0 to 3
-	jp z, .setSwitch	;if zero flag is set, switch pkmn because 'a' is zero
+	cp $40	;set carry if rand num < $40
+	jp c, .setSwitch	;25% chance to switch
 .skipSwitchHPend
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -845,8 +866,8 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	and a	;check for any non-volatile status
 	jr z, .skipSwitchNVstatEnd	;no NV status if zero flag set
 	call Random	;put a random number in 'a' between 0 and 255
-	and $03	;use only bits 0 to 1 for a random number of 0 to 3
-	jp z, .setSwitch	;switch if zero
+	cp $40	;set carry if rand num < $40
+	jp c, .setSwitch	;25% chance to switch
 .skipSwitchNVstatEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jr .skipSwitchEnd	;jump to the end and get out of this line is reached.
@@ -1342,7 +1363,7 @@ SwitchEnemyMon:
 	ld [wPlayerSelectedMove], a
 .preparewithdraw
 	callba SetAISwitched ;joenote - track the pkmn as being switched out
-; prepare to withdraw the active monster: copy hp, number, and status to roster
+; prepare to withdraw the active monster:
 
 	ld a, [wEnemyMonPartyPos]
 	ld hl, wEnemyMon1HP
@@ -1352,7 +1373,7 @@ SwitchEnemyMon:
 	ld e, l
 	ld hl, wEnemyMonHP
 	ld bc, 4
-	call CopyData
+	call CopyData	 ;copy hp, number, and status of the active pokemon to its roster position
 
 	ld hl, AIBattleWithdrawText
 	call PrintText

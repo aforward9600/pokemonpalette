@@ -154,3 +154,32 @@ _Route25Text11::
 	text "SEA COTTAGE"
 	line "BILL lives here!"
 	done
+
+;Joenote - setting up the Red battle
+_Route25PrintText12::
+	text "The present and"
+	line "the future meet"
+	cont "through me."
+	
+	para "A future champion"
+	line "calls to one in"
+	cont "the present."
+	prompt
+
+_RedText_challenge::
+	text "Are you ready"
+	line "to battle"
+	cont "across time?"
+	prompt
+	
+_RedText_prebattle::
+	text "My mind to your"
+	line "mind."
+	
+	para "Your thoughts to"
+	line "my thoughts."
+	done
+	
+_RedTextVictorySpeech::
+	text "..."
+	prompt

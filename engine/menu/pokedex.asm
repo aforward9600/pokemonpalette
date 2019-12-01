@@ -663,3 +663,33 @@ IndexToPokedex:
 	ret
 
 INCLUDE "data/pokedex_order.asm"
+
+;joenote - play an enemy mon's cry if it's owned in the dex
+CryIfOwned:
+	push bc
+	push hl
+	ld a, [wEnemyMonSpecies]
+	ld b, a
+	ld c, 0
+	ld hl, PokedexOrder
+.loop ; go through the list until we find an entry with a matching dex number
+	inc c
+	ld a, [hli]
+	cp b
+	jr nz, .loop
+	ld a, c
+
+	ld hl, wPokedexOwned
+	dec a
+	ld c, a
+	ld b, FLAG_TEST
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr z, .return
+	ld a, [wEnemyMonSpecies]
+	call PlayCry
+.return
+	pop hl
+	pop bc
+	ret

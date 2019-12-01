@@ -53,3 +53,8 @@ _OakSpeechText3::
 	cont "with #MON"
 	cont "awaits! Let's go!"
 	done
+
+;joenote - ask if girl
+_AskIfGirlText::
+	text "Are you a girl?"
+	done

@@ -2318,7 +2318,7 @@ const_value = 0
 	const EVENT_90B    ;got dex diploma              ; 90B, (D868, bit 3)
 	const EVENT_90C    ;trainer lvl scaling          ; 90C, (D868, bit 4)
 	const EVENT_90D    ;3-mon random trainer         ; 90D, (D868, bit 5)
-	const EVENT_90E                                  ; 90E, (D868, bit 6)
+	const EVENT_90E									 ; 90E, (D868, bit 6)
 	const EVENT_90F                                  ; 90F, (D868, bit 7)
 	const EVENT_910                                  ; 910, (D869, bit 0)
 	const EVENT_BEAT_VICTORY_ROAD_1_TRAINER_0        ; 911, (D869, bit 1)

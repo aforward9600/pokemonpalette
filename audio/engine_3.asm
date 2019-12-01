@@ -1287,7 +1287,7 @@ Audio3_PlaySound::
 	jp nc, Audio3_7d9c2
 .asm_7d901
 	xor a
-	ld [wUnusedC000], a
+	;ld [wUnusedC000], a
 	ld [wDisableChannelOutputWhenSfxEnds], a
 	ld [wMusicTempo + 1], a
 	ld [wMusicWaveInstrument], a
@@ -1528,7 +1528,7 @@ Audio3_7daa8:
 	ld a, $77
 	ld [rNR50], a
 	xor a
-	ld [wUnusedC000], a
+	;ld [wUnusedC000], a
 	ld [wDisableChannelOutputWhenSfxEnds], a
 	ld [wMuteAudioAndPauseMusic], a
 	ld [wMusicTempo + 1], a

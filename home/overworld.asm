@@ -91,6 +91,7 @@ OverworldLoopLessDelay::
 	call IsPlayerCharacterBeingControlledByGame
 	jr nz, .checkForOpponent
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - for smart HM use
 	ld a, [hJoyPressed]
 	bit 2, a	;is Select being pressed?
 	jr z, .notselect
@@ -2020,24 +2021,26 @@ RunMapScript::
 .return
 	ret
 
+;joenote - modified to properly load girl trainer sprites
 LoadWalkingPlayerSpriteGraphics::
-	ld de, RedSprite
-	ld hl, vNPCSprites
+	callba LoadRedSpriteToDE
+;	ld hl, vNPCSprites
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadSurfingPlayerSpriteGraphics::
-	ld de, SeelSprite
-	ld hl, vNPCSprites
+	callba LoadSeelSpriteToDE
+;	ld hl, vNPCSprites
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadBikePlayerSpriteGraphics::
-	ld de, RedCyclingSprite
-	ld hl, vNPCSprites
+	callba LoadRedCyclingSpriteToDE
+;	ld hl, vNPCSprites
 
 LoadPlayerSpriteGraphicsCommon::
+	ld hl, vNPCSprites
 	push de
 	push hl
-	lb bc, BANK(RedSprite), $0c
+	call .isfemaletrainer
 	call CopyVideoData
 	pop hl
 	pop de
@@ -2048,8 +2051,19 @@ LoadPlayerSpriteGraphicsCommon::
 	inc d
 .noCarry
 	set 3, h
-	lb bc, BANK(RedSprite), $0c
+	call .isfemaletrainer
 	jp CopyVideoData
+.isfemaletrainer
+	lb bc, BANK(RedFSprite), $0c
+	ld a, [wUnusedD721]
+	;load the regular sprite bank if female bit cleared or overriding female bit set
+	;otherwise load the female player sprite bank
+	and %00000101
+	xor %00000001
+	jr z, .donefemale
+	lb bc, BANK(RedSprite), $0c
+.donefemale
+	ret
 
 ; function to load data from the map header
 LoadMapHeader::
