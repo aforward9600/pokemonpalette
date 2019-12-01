@@ -1,7 +1,7 @@
 By default, this rom hack uses the sprites from USA red/blue versions (japanese blue) that are stored in the pic/bmon folder.
 
 You may want to recompile using the japanese red/gree sprites in the pic/rgmon folder 
-or even the yellow version sprit4es in the pic/ymon folder.
+or even the yellow version sprites in the pic/ymon folder.
 
 Since these sprites take up more space than the default sprites, some shuffling of data in the rom banks is in order.
 Included is a modified main.asm for using ymon sprites and another main.asm for using rgmon sprites.
