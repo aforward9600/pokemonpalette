@@ -14,8 +14,7 @@ FuchsiaGymObject:
 	object SPRITE_ROCKER, 1, 12, STAY, DOWN, 4, OPP_JUGGLER, 6
 	object SPRITE_ROCKER, 3, 5, STAY, UP, 5, OPP_TAMER, 1
 	object SPRITE_ROCKER, 8, 2, STAY, DOWN, 6, OPP_TAMER, 2
-;	object SPRITE_ROCKER, 2, 7, STAY, LEFT, 7, OPP_JUGGLER, 7
-	object SPRITE_BRUNETTE_GIRL, 2, 7, STAY, LEFT, 7, OPP_COOLTRAINER_F, 5	;joenote - adding Janine
+	object SPRITE_ROCKER, 2, 7, STAY, LEFT, 7, OPP_JUGGLER, 7
 	object SPRITE_GYM_HELPER, 7, 15, STAY, DOWN, 8 ; person
 
 	; warp-to

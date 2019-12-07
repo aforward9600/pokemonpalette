@@ -38,16 +38,6 @@ VermilionCityScriptPointers:
 	dw VermilionCityScript4
 
 VermilionCityScript0:
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - remove the pkmn blocking the gym if HM01 has been obtained
-	CheckEvent EVENT_GOT_HM01
-	jr z, .end 	;skip out if not
-	;else remove the blocking sprite
-	ld a, HS_VERMILION_PKMN
-	ld [wMissableObjectIndex], a
-	predef HideObject
-.end
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wSpriteStateData1 + 9]
 	and a ; cp SPRITE_FACING_DOWN
 	ret nz
@@ -60,11 +50,8 @@ VermilionCityScript0:
 	ld a, $3
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	CheckEvent EVENT_908 ;joenote - override the blocking guy if you beat the elite 4
-	jr nz, .ssane_returns3	;joenote - jump...
 	CheckEvent EVENT_SS_ANNE_LEFT
 	jr nz, .asm_19810
-.ssane_returns3	;joenote - ...to here
 	ld b, S_S_TICKET
 	predef GetQuantityOfItemInBag
 	ld a, b
@@ -133,15 +120,13 @@ VermilionCityTextPointers:
 	dw VermilionCityText4
 	dw VermilionCityText5
 	dw VermilionCityText6
-	dw VermilionCityText7;joenote - v1.01 - this is bugged if there's a 7th object. object 7's text pointer plays instead...
+	dw VermilionCityText7
 	dw VermilionCityText8
 	dw MartSignText
 	dw PokeCenterSignText
 	dw VermilionCityText11
 	dw VermilionCityText12
 	dw VermilionCityText13
-	dw VermilionPKMNText
-	dw VermilionCityText7	;...so it's being copied down here as text pointer 15. now it works.
 
 VermilionCityText1:
 	TX_FAR _VermilionCityText1
@@ -149,15 +134,9 @@ VermilionCityText1:
 
 VermilionCityText2:
 	TX_ASM
-	CheckEvent EVENT_908 ;joenote - add text for SS ANNE returning
-	jr nz, .ssane_returns				;
 	CheckEvent EVENT_SS_ANNE_LEFT
 	jr nz, .asm_1989e
 	ld hl, VermilionCityText_198a7
-	call PrintText
-	jr .asm_198a4
-.ssane_returns	;joenote - add text for SS ANNE returning
-	ld hl, VermilionCityText_annereturns
 	call PrintText
 	jr .asm_198a4
 .asm_1989e
@@ -174,17 +153,11 @@ VermilionCityText_198ac:
 	TX_FAR _VermilionCityText_198ac
 	db "@"
 
-VermilionCityText_annereturns:	;joenote - add text for SS ANNE returning
-	TX_FAR _VermilionCityText_annereturns
-	db "@"
 
 VermilionCityText3:
 	TX_ASM
-	CheckEvent EVENT_908 ;joenote - override the blocking guy if you beat the elite 4
-	jr nz, .ssane_returns2	;joenote - jump...
 	CheckEvent EVENT_SS_ANNE_LEFT
 	jr nz, .asm_198f6
-.ssane_returns2	;joenote - ... to here 
 	ld a, [wSpriteStateData1 + 9]
 	cp SPRITE_FACING_RIGHT
 	jr z, .asm_198c8
@@ -284,6 +257,3 @@ VermilionCityText13:
 	TX_FAR _VermilionCityText13
 	db "@"
 
-VermilionPKMNText:
-	TX_FAR _VermilionPKMNText
-	db "@"

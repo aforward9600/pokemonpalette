@@ -1,6 +1,6 @@
 _MomWakeUpText::
 	text "MOM: Right."
-	line "All kids leave"
+	line "All boys leave"
 	cont "home some day."
 	cont "It said so on TV."
 

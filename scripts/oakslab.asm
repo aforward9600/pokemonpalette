@@ -976,53 +976,6 @@ OaksLabText5:
 .asm_1d266
 	ld hl, OaksLabText_1d31d
 	call PrintText
-;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - prof oak battle
-	CheckEvent EVENT_908	;has elite 4 been beaten?
-	jr z, .dexcheck	;if no then leave this section and do the pokedex check like normal
-	call YesNoChoice	;else call a yes/no choice box
-	ld a, [wCurrentMenuItem]	;load the player choice
-	and a	;check the player choice
-	jr z, .dexcheck	;if yes, then check the pokedex like normal
-	ld hl, OaksLabText_challenge	;else ask if you want to challenge prof oak
-	call PrintText	;print the challenge text
-	call YesNoChoice	;prompt a yes/no choice
-	ld a, [wCurrentMenuItem]	;load the player choice
-	and a	;check the player choice
-	jp nz, .asm_1d2e7	;if no, jump to generic text about coming to visit and end the conversation
-	;otherwise begin loading battle
-	ld hl, OaksLabText_prebattle	;load oak's pre battle text
-	call PrintText	;print the pre battle text
-	ld hl, wd72d;set the bits for triggering battle
-	set 6, [hl]	;
-	set 7, [hl]	;
-	ld hl, OakVictorySpeech	;load text for when you win
-	ld de, OakVictorySpeech	;load text for when you lose
-	call SaveEndBattleTextPointers	;save the win/lose text
-	ld a, $8
-	ld [wGymLeaderNo], a	;set bgm to gym leader music
-	ld a, OPP_PROF_OAK	;load the trainer type
-	ld [wCurOpponent], a	;set as the current opponent
-	; select oak's team based on the starter chosen
-	ld a, [wRivalStarter]
-	cp STARTER2	;did rival choose squirtle?
-	jr nz, .NotStarter2
-	ld a, $2 	;then oak has venusaur
-	jr .team_selected
-.NotStarter2
-	cp STARTER3	;did rival choose bulbasaur?
-	jr nz, .NotStarter3 
-	ld a, $3 	;then oak has charizard
-	jr .team_selected
-.NotStarter3	;rival chose charmander
-	ld a, $1 	;then oak has blastoise	
-.team_selected
-	ld [wTrainerNo], a	;load oak's team
-	xor a
-	ld [hJoyHeld], a
-	jp TextScriptEnd
-.dexcheck
-;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	predef DisplayDexRating
@@ -1269,19 +1222,6 @@ OaksLabText27:
 	db "@"
 
 OaksLabText11:
-	TX_ASM
-	CheckEvent EVENT_90C
-	jr z, .scaleOn
-	ResetEvent EVENT_90C
-	ld hl, OaksLabText_scalingOFF 
-	jr .end
-.scaleOn
-	SetEvent EVENT_90C
-	ld hl, OaksLabText_scalingON
-.end
-	call PrintText
-	jp TextScriptEnd
-
 OaksLabText10:
 	TX_ASM
 	ld hl, OaksLabText_1d405
@@ -1292,23 +1232,3 @@ OaksLabText_1d405:
 	TX_FAR _OaksLabText_1d405
 	db "@"
 
-;;;;;;;;;;;;;;;;;;;;;;joenote - adding text for oak battle
-OaksLabText_challenge:
-	TX_FAR _OaksLabText_challenge
-	db "@"
-
-OaksLabText_prebattle:
-	TX_FAR _OaksLabText_prebattle
-	db "@"
-	
-OakVictorySpeech:
-	TX_FAR _OakVictorySpeech
-	db "@"
-	
-;;;;;;;;;;;;;;;;;;;;;;;;;joenote - add text for level-scaling
-OaksLabText_scalingON:
-	TX_FAR _OaksLabText_scalingON
-	db "@"
-OaksLabText_scalingOFF:
-	TX_FAR _OaksLabText_scalingOFF
-	db "@"

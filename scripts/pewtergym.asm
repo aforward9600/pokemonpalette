@@ -108,14 +108,6 @@ PewterGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_5c49b
 .asm_5c462
-;;;;;;;joenote - have a rematch with gym leader?
-	ld hl, RematchTrainerText
-	call PrintText
-	call NoYesChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .asm_5c46a
-;;;;;;;
 	ld hl, PewterGymText_5c4a3
 	call PrintText
 	jr .asm_5c49b
@@ -136,10 +128,6 @@ PewterGymText1:
 	ld [wGymLeaderNo], a
 	xor a
 	ld [hJoyHeld], a
-;;;;joenote - added for rematch to skip gym leader tm
-	CheckEvent EVENT_GOT_TM34
-	jp nz, TextScriptEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
 	ld [wPewterGymCurScript], a
 	ld [wCurMapScript], a

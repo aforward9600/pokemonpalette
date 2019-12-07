@@ -143,58 +143,31 @@ _FuchsiaGymEndBattleText5::
 _FuchsiaGymAfterBattleText5::
 	text "I still have much"
 	line "to learn!"
-	done
+	done	
 
-;joenote - added text for Janine in fuschia gym
 _FuchsiaGymBattleText6::
-	text "My name is JANINE,"
-	line "and my dad is the";
-	cont "GYM LEADER here."
+	text "Master KOGA comes"
+	line "from a long line"
+	cont "of ninjas!"
 
-	para "He's training me"
-	line "in poison #MON!"
+	para "What did you"
+	line "descend from?"
 	done
 
 _FuchsiaGymEndBattleText6::
-	text "!!?"
-	line "So... So strong!"
+	text "Dropped"
+	line "my balls!"
 	prompt
 
 _FuchsiaGymAfterBattleText6::
-	text "My ninja skills"
-	line "get better with"
-	cont "each day."
+	text "Where there is"
+	line "light, there is"
+	cont "shadow!"
 
-	para "Fufufufu..."
-	line "Soon I'll be"
-	cont "the GYM LEADER!"
+	para "Light and shadow!"
+	line "Which do you"
+	cont "choose?"
 	done
-	
-
-;_FuchsiaGymBattleText6::
-;	text "Master KOGA comes"
-;	line "from a long line"
-;	cont "of ninjas!"
-;
-;	para "What did you"
-;	line "descend from?"
-;	done
-;
-;_FuchsiaGymEndBattleText6::
-;	text "Dropped"
-;	line "my balls!"
-;	prompt
-;
-;_FuchsiaGymAfterBattleText6::
-;	text "Where there is"
-;	line "light, there is"
-;	cont "shadow!"
-;
-;	para "Light and shadow!"
-;	line "Which do you"
-;	cont "choose?"
-;	done
-
 
 _FuchsiaGymText_7564e::
 	text "Yo! Champ in"

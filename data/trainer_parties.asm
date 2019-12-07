@@ -127,9 +127,6 @@ LassData:
 ; Celadon Gym
 	db 23,BELLSPROUT,WEEPINBELL,0
 	db 23,ODDISH,GLOOM,0
-;Vermillion Dock 
-	;joenote - Special Trainer - Seiga/Green the orange league champ
-	db $FF,80,CLEFABLE,82,GENGAR,83,VICTREEBEL,83,NINETALES,84,KANGASKHAN,85,BLASTOISE,0	;lass #19
 	
 SailorData:
 ; SS Anne Stern
@@ -158,10 +155,9 @@ JrTrainerMData:
 	db 19,RATTATA,DIGLETT,EKANS,SANDSHREW,0
 ; Route 12
 	db 29,NIDORAN_M,NIDORINO,0
-;joenote - special fight with future trainer red
-	db $FF,83,LAPRAS,85,VENUSAUR,85,CHARIZARD,85,BLASTOISE,87,SNORLAX,88,PIKACHU,0	;jr trainer male #9
 ; Unused
 	;db 18,DIGLETT,DIGLETT,SANDSHREW,0
+	
 JrTrainerFData:
 ; Cerulean Gym
 	db 19,GOLDEEN,0
@@ -391,18 +387,18 @@ RockerData:
 	db 20,VOLTORB,MAGNEMITE,PIKACHU,0
 ; Route 12
 	db 29,ELECTABUZZ,JOLTEON,0
-JugglerData:	;joenote - tweaked some parties
+JugglerData:	
 ; Silph Co. 5F
 	db 29,KADABRA,MR_MIME,0
 ; Victory Road 2F
 	db 41,DROWZEE,HYPNO,KADABRA,KADABRA,0
-	db 48,TANGELA, GOLEM,0	;db 48,MR_MIME,0
+	db 48,MR_MIME,0
 ; Fuchsia Gym
-	db 33,ODDISH,GASTLY,VENONAT,KOFFING,0	;db 31,DROWZEE,DROWZEE,KADABRA,DROWZEE,0
-	db 38,EXEGGCUTE,EXEGGCUTE,0	;db 38,HYPNO,0
+	db 31,DROWZEE,DROWZEE,KADABRA,DROWZEE,0
+	db 38,HYPNO,0
 	db 34,DROWZEE,HYPNO,0
+	db 34,DROWZEE,KADABRA,0	
 ; Unused
-	;db 34,DROWZEE,KADABRA,0	;joenote - in fuschia gym, replaced by Janine
 	;db 33,HYPNO,0
 TamerData:
 ; Fuchsia Gym
@@ -466,15 +462,12 @@ Green1Data:
 	db $FF,18,PIDGEOTTO,15,ABRA,15,RATTATA,17,BULBASAUR,0
 	db $FF,18,PIDGEOTTO,15,ABRA,15,RATTATA,17,CHARMANDER,0
 ProfOakData:
-; Unused - joenote: restored
+; Unused
 	db $FF,66,TAUROS,67,EXEGGUTOR,68,ARCANINE,69,BLASTOISE,70,GYARADOS,0
 	db $FF,66,TAUROS,67,EXEGGUTOR,68,ARCANINE,69,VENUSAUR,70,GYARADOS,0
 	db $FF,66,TAUROS,67,EXEGGUTOR,68,ARCANINE,69,CHARIZARD,70,GYARADOS,0
 ChiefData:
 ; none
-;joenote - special fight with the silph chief
-	db $FF,72,KANGASKHAN,73,RHYDON,73,GOLDUCK,74,PINSIR,74,SCYTHER,76,TAUROS,0
-	db 128,FOSSIL_KABUTOPS,0	;joenote - fight with missingno
 ScientistData:
 ; Silph Co. 2F
 	db 26,GRIMER,WEEZING,KOFFING,WEEZING,0
@@ -594,8 +587,6 @@ CooltrainerFData:
 	db 43,PARASECT,DEWGONG,CHANSEY,0
 ; Victory Road 1F
 	db 44,PERSIAN,NINETALES,0
-; Fuschia Gym	;joenote - added Janine
-	db 34,GOLBAT,VENOMOTH,0	;db 46,VILEPLUME,BUTTERFREE,0
 ; Unused
 	;db 45,IVYSAUR,VENUSAUR,0
 	;db 45,NIDORINA,NIDOQUEEN,0
@@ -625,8 +616,6 @@ GentlemanData:
 	db 23,PIKACHU,0
 ; SS Anne 2F Rooms
 	db 17,GROWLITHE,PONYTA,0
-;joenote - special fight with mr fuji
-	db $FF,69,MAROWAK,70,OMASTAR,70,KABUTOPS,71,AERODACTYL,73,ARCANINE,100,DITTO,0	;gentleman #5
 ; Unused
 	;db 48,PRIMEAPE,0
 Green2Data:

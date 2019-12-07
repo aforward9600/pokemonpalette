@@ -49,23 +49,6 @@ ReadTrainer:
 ; - if [wLoneAttackNo] != 0, one pokemon on the team has a special move ;joenote - not applicable to the Yellow method
 ; else the first byte is the level of every pokemon on the team
 .IterateTrainer
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joedebug - get a random 6 pkmn roster based on 1st party mon's level
-	CheckEvent EVENT_90A
-	jr z, .not_rand_roster
-	callba GetRandRoster
-	ResetEvent EVENT_90A
-	jp z, .FinishUp
-.not_rand_roster
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joedebug - get a random 3 pkmn roster based on 1st party mon's level
-	CheckEvent EVENT_90D
-	jr z, .not_rand_roster3
-	callba GetRandRoster3
-	jp z, .FinishUp
-.not_rand_roster3
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [hli]
 	cp $FF ; is the trainer special?
 	jr z, .SpecialTrainer ; if so, check for special moves
@@ -76,12 +59,6 @@ ReadTrainer:
 	;jr z, .FinishUp
 	jr z, .AddAdditionalMoveData	;joenote - converting to Yellow version method
 	ld [wcf91], a ; write species somewhere (gives flexibility in calling the species)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;adding a custom function here
-	push hl
-	callba ScaleTrainer
-	pop hl
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
 	push hl
@@ -100,11 +77,6 @@ ReadTrainer:
 	ld [wCurEnemyLVL], a
 	ld a, [hli]
 	ld [wcf91], a
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;adding a custom function here
-	push hl
-	callba ScaleTrainer
-	pop hl
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a

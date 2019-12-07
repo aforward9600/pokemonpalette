@@ -50,23 +50,6 @@ DrawHP_:
 .printFraction
 	add hl, bc
 
-;joenote - print stat exp if select is held
-	;parse dv stats here so they can be grabbed later
-	call DVParse
-	call Joypad
-	ld a, [hJoyHeld]
-	bit 2, a
-	jr z, .checkstart
-	ld de, wLoadedMonHPExp
-	lb bc, 2, 5
-	jr .printnum
-.checkstart	;print DVs if start is held
-	bit 3, a
-	jr z, .doregular
-	ld de, wUnusedD726  
-	lb bc, 1, 2
-	jr .printnum
-.doregular
 	ld de, wLoadedMonHP
 	lb bc, 2, 3
 	call PrintNumber
@@ -291,33 +274,6 @@ PrintStatsBox:
 	pop hl
 	pop bc
 	add hl, bc
-;joenote - print stat exp if select is held
-	call Joypad
-	ld a, [hJoyHeld]
-	bit 2, a
-	jr z, .checkstart
-	ld de, wLoadedMonAttackExp
-	lb bc, 2, 5
-	call PrintStat
-	ld de, wLoadedMonDefenseExp
-	call PrintStat
-	ld de, wLoadedMonSpeedExp
-	call PrintStat
-	ld de, wLoadedMonSpecialExp
-	jp PrintNumber
-.checkstart	;joenote - print DVs if start is held
-	bit 3, a
-	jr z, .doregular
-	ld de, wUnusedD722
-	lb bc, 1, 2
-	call PrintStat
-	ld de, wUnusedD722 + 1
-	call PrintStat
-	ld de, wUnusedD722 + 2
-	call PrintStat
-	ld de, wUnusedD722 + 3
-	jp PrintNumber
-.doregular
 	ld de, wLoadedMonAttack
 	lb bc, 2, 3
 	call PrintStat
@@ -527,56 +483,3 @@ StatusScreen_PrintPP:
 	jr nz, StatusScreen_PrintPP
 	ret
 
-;joenote - parse DV scores
-DVParse:
-	push hl
-	push bc
-	ld hl, wUnusedD722
-	ld b, $00
-
-	ld a, [wLoadedMonDVs]	;get attack dv
-	swap a
-	and $0F
-	ld [hl], a
-	inc hl
-	and $01
-	sla a
-	sla a
-	sla a
-	or b
-	ld b, a
-	
-	
-	ld a, [wLoadedMonDVs]	;get defense dv
-	and $0F
-	ld [hl], a
-	inc hl
-	and $01
-	sla a
-	sla a
-	or b
-	ld b, a
-	
-	ld a, [wLoadedMonDVs + 1]	;get speed dv
-	swap a
-	and $0F
-	ld [hl], a
-	inc hl
-	and $01
-	sla a
-	or b
-	ld b, a
-	
-	ld a, [wLoadedMonDVs + 1]	;get special dv
-	and $0F
-	ld [hl], a
-	inc hl
-	and $01
-	or b
-	ld b, a
-
-	ld [hl], b	;load hp dv
-	
-	pop bc
-	pop hl
-	ret

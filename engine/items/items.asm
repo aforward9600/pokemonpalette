@@ -65,8 +65,7 @@ ItemUsePtrTable:
 	dw ItemUseEvoStone   ; LEAF_STONE
 	dw ItemUseCardKey    ; CARD_KEY
 	dw UnusableItem      ; NUGGET
-	;dw UnusableItem      ; unused PP_UP
-	dw ItemUseVitamin    ; M_GENE	;joenote - custom item
+	dw UnusableItem      ; unused PP_UP
 	dw ItemUsePokedoll   ; POKE_DOLL
 	dw ItemUseMedicine   ; FULL_HEAL
 	dw ItemUseMedicine   ; REVIVE
@@ -359,7 +358,7 @@ ItemUseBall:
 	ld b, 150
 	cp ULTRA_BALL
 	jr z, .skip4
-;joenote - pump up those safari balls
+;joenote - pump up those safari balls to account for changed ball factor
 	ld b, 125
 	cp SAFARI_BALL
 	jr z, .skip4
@@ -1292,8 +1291,6 @@ ItemUseMedicine:
 	pop de
 	pop hl
 	ld a, [wcf91]
-	cp M_GENE	;joenote - custom item
-	jp z, .useMGene
 	cp RARE_CANDY
 	jp z, .useRareCandy
 	push hl
@@ -1306,17 +1303,6 @@ ItemUseMedicine:
 	jr nc, .noCarry2
 	inc h
 .noCarry2
-	CheckEvent EVENT_908	;joenote - has elite 4 been beaten?
-	jr z, .e4notbeaten 	;if not, do default compare
-	;else remove the vitamin limiter
-	ld a, 10
-	ld b, a
-	ld a, [hl] ; a = MSB of stat experience of the appropriate stat
-	cp $F5 ; is there already at least 62720 stat experience?
-	jr nc, .vitaminNoEffect ; if so, vitamins can't add any more
-	add b ; add 2560 (256 * 10) stat experience
-	jr .noCarry3	;carry should be impossible here
-.e4notbeaten
 	ld a, 10
 	ld b, a
 	ld a, [hl] ; a = MSB of stat experience of the appropriate stat
@@ -1426,55 +1412,6 @@ ItemUseMedicine:
 	ld a, [hl]
 	adc b
 	ld [hl], a
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	jp .end_mgene
-;joenote - added code for the M_GENE
-.useMGene
-	push hl
-	ld bc, wPartyMon1DVs - wPartyMon1
-	add hl, bc ; hl now points to DVs
-;generate new random DVs and make sure they are at least 9,9,8,8
-	call Random
-	or $98
-	ld [hli], a
-	call Random
-	or $88
-	ld [hl], a
-	pop hl
-
-	ld a, [wWhichPokemon]
-	push af
-	ld a, [wcf91]
-	push af
-	push de
-
-	push hl
-	ld bc, wPartyMon1MaxHP - wPartyMon1
-	add hl, bc ; hl now points to MSB of max HP
-	ld a, [hli]
-	ld b, a
-	ld c, [hl]
-	pop hl
-
-	push hl
-	call .recalculateStats
-	pop hl
-	ld bc, (wPartyMon1MaxHP) - wPartyMon1
-	add hl, bc ; hl now points to MSB of recalculated max HP
-	ld a, [hli]
-	ld b, a
-	ld a, [hld]
-	ld c, a
-	
-; set current hp to new max hp
-	ld de, (wPartyMon1HP) - wPartyMon1MaxHP
-	add hl, de ; hl now points to MSB of current HP
-	ld a, b
-	ld [hli], a
-	ld a, c
-	ld [hld], a
-.end_mgene
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, RARE_CANDY_MSG
 	ld [wPartyMenuTypeOrMessageID], a
 	call RedrawPartyMenu
@@ -2002,14 +1939,6 @@ RodResponse:
 	dec a ; is there a bite?
 	jr nz, .next
 	; if yes, store level and species data
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - check for shiny DV attract conditions
-	push af
-	push bc
-	callba ShinyAttractFunction
-	pop bc
-	pop af
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 	ld a, 1
 	ld [wMoveMissed], a
 	ld a, b ; level

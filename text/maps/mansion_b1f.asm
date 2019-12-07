@@ -28,22 +28,13 @@ _Mansion4AfterBattleText2::
 	cont "my studies!"
 	done
 
-;_Mansion4Text7::
-;	text "Diary; Sept. 1"
-;	line "MEWTWO is far too"
-;	cont "powerful."
-
-;	para "We have failed to"
-;	line "curb its vicious"
-;	cont "tendencies..."
-;	done
-;joenote - edited text to be closer to original japanese context
 _Mansion4Text7::
 	text "Diary; Sept. 1"
 	line "MEWTWO is far too"
 	cont "powerful."
 
-	para "It's no use..."
-	line "I can no longer"
-	cont "control it!"
+	para "We have failed to"
+	line "curb its vicious"
+	cont "tendencies..."
 	done
+

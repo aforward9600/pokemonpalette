@@ -57,24 +57,6 @@ SetPal_Battle:
 	;now at wPalPacket + 7
 	ld [hl], a	
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;load shiny palette in battle
-	ld a, [wUnusedD366]
-	bit 7, a
-	jr z, .noshinyenemy
-	callba CheckEnemyShinyDVs
-	jr z, .noshinyenemy
-	callba ShinyEnemyMon
-.noshinyenemy
-	ld a, [wUnusedD366]
-	bit 0, a
-	jr z, .noshinyplayer
-	callba CheckPlayerShinyDVs
-	jr z, .noshinyplayer
-	callba ShinyPlayerMon
-.noshinyplayer
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 	ld hl, wPalPacket
 	ld de, BlkPacket_Battle
 	ld a, SET_PAL_BATTLE
@@ -106,14 +88,7 @@ SetPal_StatusScreen:
 	inc hl
 	pop af
 	ld [hl], a
-	
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;load shiny palette on status screen
-	callba CheckLoadedShinyDVs
-	jr z, .noshiny
-	callba ShinyStatusScreen
-.noshiny
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 	ld hl, wPalPacket
 	ld de, BlkPacket_StatusScreen

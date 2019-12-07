@@ -134,7 +134,6 @@ FightingDojoText1:
 	jp nz, .continue1
 	CheckEventReuseA EVENT_BEAT_KARATE_MASTER
 	jp nz, .continue2
-.fightkaratemaster	;joenote - added marker
 	ld hl, FightingDojoText_5ce8e
 	call PrintText
 	ld hl, wd72d
@@ -147,23 +146,11 @@ FightingDojoText1:
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
 	call InitBattleEnemyParameters
-;;;;joenote - added for rematch to skip choosing prize
-	CheckEvent EVENT_DEFEATED_FIGHTING_DOJO
-	jp nz, TextScriptEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
 	ld [wFightingDojoCurScript], a
 	ld [wCurMapScript], a
 	jr .asm_9dba4
 .continue1
-;;;;;;;joenote - have a rematch with karate master?
-	ld hl, RematchTrainerText
-	call PrintText
-	call NoYesChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .fightkaratemaster
-;;;;;;;
 	ld hl, FightingDojoText_5ce9d
 	call PrintText
 	jr .asm_9dba4

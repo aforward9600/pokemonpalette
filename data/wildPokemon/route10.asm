@@ -1,4 +1,4 @@
-Route10Mons:;joenote - added magnemite
+Route10Mons:
 	db $0F
 	IF DEF(_RED)
 		db 16,VOLTORB
@@ -7,7 +7,7 @@ Route10Mons:;joenote - added magnemite
 		db 11,EKANS
 		db 13,SPEAROW
 		db 15,EKANS
-		db 17,MAGNEMITE
+		db 17,VOLTORB
 		db 17,SPEAROW
 		db 13,EKANS
 		db 17,EKANS
@@ -19,7 +19,7 @@ Route10Mons:;joenote - added magnemite
 		db 11,SANDSHREW
 		db 13,SPEAROW
 		db 15,SANDSHREW
-		db 17,MAGNEMITE
+		db 17,VOLTORB
 		db 17,SPEAROW
 		db 13,SANDSHREW
 		db 17,SANDSHREW

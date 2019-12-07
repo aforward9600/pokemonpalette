@@ -268,14 +268,6 @@ ViridianGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_6dff7
 .asm_9fc95
-;;;;;;;joenote - have a rematch with gym leader?
-	ld hl, RematchTrainerText
-	call PrintText
-	call NoYesChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .asm_6de66
-;;;;;;;
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, ViridianGymText_74ad9
@@ -303,10 +295,6 @@ ViridianGymText1:
 	call InitBattleEnemyParameters
 	ld a, $8
 	ld [wGymLeaderNo], a
-;;;;joenote - added for rematch to skip gym leader tm
-	CheckEvent EVENT_GOT_TM27
-	jp nz, TextScriptEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
 	ld [wViridianGymCurScript], a
 .asm_6dff7

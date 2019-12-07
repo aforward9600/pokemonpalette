@@ -1,10 +1,10 @@
-Route5Mons:;joenote - added meowth/mankey
+Route5Mons:
 	db $0F
 	IF DEF(_RED)
 		db 13,ODDISH
 		db 13,PIDGEY
 		db 15,PIDGEY
-		db 10,MEOWTH
+		db 10,MANKEY
 		db 12,MANKEY
 		db 15,ODDISH
 		db 16,ODDISH
@@ -16,7 +16,7 @@ Route5Mons:;joenote - added meowth/mankey
 		db 13,BELLSPROUT
 		db 13,PIDGEY
 		db 15,PIDGEY
-		db 10,MANKEY
+		db 10,MEOWTH
 		db 12,MEOWTH
 		db 15,BELLSPROUT
 		db 16,BELLSPROUT

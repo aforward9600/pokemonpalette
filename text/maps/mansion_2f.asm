@@ -15,27 +15,10 @@ _Mansion2AfterBattleText1::
 	cont "sets of doors!"
 	done
 
-;_Mansion2Text3::
-;	text "Diary: July 5"
-;	line "Guyana,"
-;	cont "South America"
-;
-;	para "A new #MON was"
-;	line "discovered deep"
-;	cont "in the jungle."
-;	done
-;
-;_Mansion2Text4::
-;	text "Diary: July 10"
-;	line "We christened the"
-;	cont "newly discovered"
-;	cont "#MON, MEW."
-;	done
-;joenote - edited text to be closer to original japanese context
 _Mansion2Text3::
 	text "Diary: July 5"
-	line "Note- -f Dr.--JI,"
-	cont "FAR---- ISLAND"
+	line "Guyana,"
+	cont "South America"
 
 	para "A new #MON was"
 	line "discovered deep"
@@ -44,10 +27,11 @@ _Mansion2Text3::
 
 _Mansion2Text4::
 	text "Diary: July 10"
-	line "I christened the"
+	line "We christened the"
 	cont "newly discovered"
 	cont "#MON, MEW."
 	done
+
 
 _Mansion2Text_520c2::
 	text "A secret switch!"

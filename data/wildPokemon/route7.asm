@@ -1,4 +1,4 @@
-Route7Mons:;joenote - added ponyta
+Route7Mons:
 	db $0F
 	IF DEF(_RED)
 		db 19,PIDGEY
@@ -6,7 +6,7 @@ Route7Mons:;joenote - added ponyta
 		db 17,MANKEY
 		db 22,ODDISH
 		db 22,PIDGEY
-		db 18,PONYTA
+		db 18,MANKEY
 		db 18,GROWLITHE
 		db 20,GROWLITHE
 		db 19,MANKEY
@@ -18,7 +18,7 @@ Route7Mons:;joenote - added ponyta
 		db 17,MEOWTH
 		db 22,BELLSPROUT
 		db 22,PIDGEY
-		db 18,PONYTA
+		db 18,MEOWTH
 		db 18,VULPIX
 		db 20,VULPIX
 		db 19,MEOWTH

@@ -36,16 +36,6 @@ OakSpeech:
 	call LoadTextBoxTilePatterns
 	call SetDefaultNames
 	predef InitPlayerData2
-;joenote - give option to play as a girl here
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	ld hl, AskIfGirlText
-	call PrintText
-	call NoYesChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	ld [wUnusedD721], a
-	call ClearScreen
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $FF
 	call PlaySound ; stop music
 	ld a, BANK(Music_Routes2)
@@ -85,15 +75,9 @@ OakSpeech:
 	call PrintText
 	call GBFadeOutToWhite
 	call ClearScreen
-;joenote - support female sprite
-	ld de, RedPicFFront
-	lb bc, BANK(RedPicFFront), $00
-	ld a, [wUnusedD721]
-	bit 0, a	;check if girl
-	jr nz, .donefemale_front
 	ld de, RedPicFront
 	lb bc, BANK(RedPicFront), $00
-.donefemale_front	call IntroDisplayPicCenteredOrUpperRight
+	call IntroDisplayPicCenteredOrUpperRight
 	call MovePicLeft
 	ld hl, IntroducePlayerText
 	call PrintText
@@ -110,15 +94,9 @@ OakSpeech:
 .skipChoosingNames
 	call GBFadeOutToWhite
 	call ClearScreen
-;joenote - support female sprite
-	ld de, RedPicFFront
-	lb bc, BANK(RedPicFFront), $00
-	ld a, [wUnusedD721]
-	bit 0, a	;check if girl
-	jr nz, .donefemale_front2
 	ld de, RedPicFront
 	lb bc, BANK(RedPicFront), $00
-.donefemale_front2	call IntroDisplayPicCenteredOrUpperRight
+	call IntroDisplayPicCenteredOrUpperRight
 	call GBFadeInFromWhite
 	ld a, [wd72d]
 	and a
@@ -253,7 +231,3 @@ IntroDisplayPicCenteredOrUpperRight:
 	xor a
 	ld [hStartTileID], a
 	predef_jump CopyUncompressedPicToTilemap
-
-AskIfGirlText::	;joenote - text to ask if girl
-	TX_FAR _AskIfGirlText
-	db "@"

@@ -1221,9 +1221,6 @@ PokemartGreetingText::
 	TX_FAR _PokemartGreetingText
 	db "@"
 
-RematchTrainerText::	;joenote - for trainer rematch
-	TX_FAR _OneMoreGoSlotMachineText
-	db "@"
 
 LoadItemList::
 	ld a, 1
@@ -1511,11 +1508,6 @@ DisplayListMenuIDLoop::
 	call GetItemPrice
 	pop hl
 	ld a,[wListMenuID]
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - needed to make Mateo's move deleter/relearner work
-	cp a, MOVESLISTMENU
-	jr z, .skipStoringItemName
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	cp ITEMLISTMENU
 	jr nz, .skipGettingQuantity
 ; if it's an item menu
@@ -1542,7 +1534,6 @@ DisplayListMenuIDLoop::
 .storeChosenEntry ; store the menu entry that the player chose and return
 	ld de, wcd6d
 	call CopyStringToCF4B ; copy name to wcf4b
-.skipStoringItemName	;joenote - skip here if skipping storing item name
 	ld a, CHOSE_MENU_ITEM
 	ld [wMenuExitMethod], a
 	ld a, [wCurrentMenuItem]
@@ -2318,16 +2309,11 @@ TalkToTrainer::
 	ld a, c
 	and a
 	jr z, .trainerNotYetFought     ; test trainer's flag
-;;;;;;;joenote - have a rematch with most trainers?
-	callba TrainerRematch
-	jr nz, .trainerNotYetFought
-;;;;;;;
 	ld a, $6
 	call ReadTrainerHeaderInfo     ; print after battle text
 	jp PrintText
 	
 .trainerNotYetFought
-	SetEvent EVENT_909	;joenote - make it so you cannot rematch a defeated trainer until talking to any defeated trainer
 	ld a, $4
 	call ReadTrainerHeaderInfo     ; print before battle text
 	call PrintText
@@ -3161,25 +3147,12 @@ LoadHpBarAndStatusTilePatterns::
 	ld de, vChars2 + $620
 	ld bc, HpBarAndStatusGraphicsEnd - HpBarAndStatusGraphics
 	ld a, BANK(HpBarAndStatusGraphics)
-;joenote - load exp bar
-	;jp FarCopyData2 ; if LCD is off, transfer all at once
-	call FarCopyData2
-	ld hl, EXPBarGraphics
-	ld de, vChars1 + $400
-	ld bc, EXPBarGraphicsEnd - EXPBarGraphics
-	ld a, BANK(EXPBarGraphics)
-	jp FarCopyData2
+	jp FarCopyData2 ; if LCD is off, transfer all at once
 .on
 	ld de, HpBarAndStatusGraphics
 	ld hl, vChars2 + $620
 	lb bc, BANK(HpBarAndStatusGraphics), (HpBarAndStatusGraphicsEnd - HpBarAndStatusGraphics) / $10
-;joenote - load exp bar
-	;jp CopyVideoData ; if LCD is on, transfer during V-blank
-	call CopyVideoData
-	ld de,EXPBarGraphics
-	ld hl, vChars1 + $400
-	lb bc, BANK(EXPBarGraphics), (EXPBarGraphicsEnd - EXPBarGraphics) / $10
-	jp CopyVideoData
+	jp CopyVideoData ; if LCD is on, transfer during V-blank
 
 
 FillMemory::

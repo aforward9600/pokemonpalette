@@ -1,6 +1,5 @@
 ; super rod data
 ; format: map, pointer to fishing group
-;joenote - mewtwo re-encounter set in fishing group 2 (route 22 set to group 1)
 SuperRodData:
 	dbw PALLET_TOWN, FishingGroup1
 	dbw VIRIDIAN_CITY, FishingGroup1
@@ -20,7 +19,7 @@ SuperRodData:
 	dbw ROUTE_19, FishingGroup8
 	dbw ROUTE_20, FishingGroup8
 	dbw ROUTE_21, FishingGroup8
-	dbw ROUTE_22, FishingGroup1
+	dbw ROUTE_22, FishingGroup2
 	dbw ROUTE_23, FishingGroup9
 	dbw ROUTE_24, FishingGroup3
 	dbw ROUTE_25, FishingGroup3
@@ -41,15 +40,13 @@ SuperRodData:
 ; number of monsters, followed by level/monster pairs
 FishingGroup1:
 	db 2
-	db 15,PSYDUCK
+	db 15,TENTACOOL
 	db 15,POLIWAG
 
 FishingGroup2:
-	db 4
-	db 160,DITTO
-	db 200,DITTO
-	db 240,DITTO
-	db 70,MEWTWO
+	db 2
+	db 15,GOLDEEN
+	db 15,POLIWAG
 
 FishingGroup3:
 	db 3
@@ -70,7 +67,7 @@ FishingGroup5:
 FishingGroup6:
 	db 4
 	db 15,DRATINI
-	db 15,LAPRAS
+	db 15,KRABBY
 	db 15,PSYDUCK
 	db 15,SLOWPOKE
 

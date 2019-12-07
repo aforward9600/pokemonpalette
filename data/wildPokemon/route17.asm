@@ -1,4 +1,4 @@
-Route17Mons:;joenote - added dodrio
+Route17Mons:
 	db $19
 	db 20,SPEAROW
 	db 22,SPEAROW
@@ -7,7 +7,7 @@ Route17Mons:;joenote - added dodrio
 	db 27,RATICATE
 	db 26,DODUO
 	db 28,DODUO
-	db 29,DODRIO
+	db 29,RATICATE
 	db 25,FEAROW
 	db 27,FEAROW
 	db $00

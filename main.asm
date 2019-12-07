@@ -23,7 +23,7 @@ INCLUDE "engine/black_out.asm"
 MewPicFront:: INCBIN "pic/bmon/mew.pic"
 MewPicBack::  INCBIN "pic/monback/mewb.pic"
 ;INCLUDE "data/baseStats/mew.asm"	;this has been moved to be with the other pokemon base stat files
-INCLUDE "data/baseStats/missingno.asm"	;joenote - added basestats for missingno
+INCLUDE "data/baseStats/missingno.asm"	;joenote - added basestats for fossil kabutops missingno
 
 INCLUDE "engine/battle/safari_zone.asm"
 
@@ -206,9 +206,6 @@ INCLUDE "engine/battle/moveEffects/haze_effect.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/random.asm"
 
-;joenote - adding exp bar
-EXPBarGraphics:  INCBIN "gfx/exp_bar.2bpp"
-EXPBarGraphicsEnd:
 
 SECTION "NPC Sprites 2", ROMX, BANK[NPC_SPRITES_2]
 
@@ -454,9 +451,7 @@ FuchsiaMartBlocks: INCBIN "maps/fuchsiamart.blk"
 INCLUDE "data/mapHeaders/saffronhouse1.asm"
 INCLUDE "scripts/saffronhouse1.asm"
 INCLUDE "data/mapObjects/saffronhouse1.asm"
-;joenote - adding Mateo's move relearner/deleter files
-INCLUDE "scripts/move_deleter.asm"
-INCLUDE "scripts/move_relearner.asm"
+
 
 INCLUDE "data/mapHeaders/saffronhouse2.asm"
 INCLUDE "scripts/saffronhouse2.asm"
@@ -2100,7 +2095,6 @@ INCLUDE "engine/items/tm_prices.asm"
 SECTION "bank2D",ROMX,BANK[$2D]	;joenote - This is a known empty bank. Going to start moving stuff here
 
 INCLUDE "engine/battle/stats_functions.asm"	
-INCLUDE "engine/battle/exp_bar_print.asm"	
 
 TradingAnimationGraphics:
 INCBIN "gfx/game_boy.2bpp"
@@ -2117,8 +2111,3 @@ INCLUDE "engine/battle/read_trainer_party.asm"
 INCLUDE "data/trainer_moves.asm"
 INCLUDE "data/trainer_parties.asm"
 
-;joenote - adding female sprites
-RedPicFBack::           INCBIN "pic/trainer/redb_f.pic"
-RedPicFFront:: 			INCBIN "pic/trainer/red_f.pic"
-RedFSprite:            INCBIN "gfx/sprites/redf.2bpp"
-RedFCyclingSprite:     INCBIN "gfx/sprites/cyclingf.2bpp"

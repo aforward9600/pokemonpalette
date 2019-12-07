@@ -101,17 +101,3 @@ _CeladonMart3Text15::
 	line "Both are #MON!"
 	done
 
-_CeladonMart3Blocker::
-	text "This vendor will"
-	line "be open after the"
-	cont "#MON League"
-	cont "Championship."
-	
-	para "Come back to buy"
-	line "rare new items"
-	cont "from SILPH CO."
-	
-	para "Phew!"
-	line "It is really hot"
-	cont "in this costume."
-	done

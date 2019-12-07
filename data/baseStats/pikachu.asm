@@ -6,7 +6,7 @@ db 90 ; base speed
 db 50 ; base special
 db ELECTRIC ; species type 1
 db ELECTRIC ; species type 2
-db 163 ; catch rate ;joenote - adjusted from 190 to match yellow's starter pikachu
+db 190
 db 82 ; base exp yield
 INCBIN "pic/bmon/pikachu.pic",0,1 ; 55, sprite dimensions
 dw PikachuPicFront

@@ -228,9 +228,7 @@ SECTION "Text 3", ROMX, BANK[TEXT_3]
 
 INCLUDE "text/maps/rock_tunnel_b2f_2.asm"
 INCLUDE "text/maps/seafoam_islands_b4f.asm"
-;joenote - adding Mateo's move relearner/deleter files
-INCLUDE "text/move_deleter.asm"
-INCLUDE "text/move_relearner.asm"
+
 
 _AIBattleWithdrawText::
 	TX_RAM wTrainerName
@@ -1955,7 +1953,6 @@ INCLUDE "text/maps/daycare_2.asm"
 INCLUDE "text/maps/underground_path_route_6_entrance.asm"
 INCLUDE "text/maps/underground_path_route_7_entrance.asm"
 INCLUDE "text/maps/underground_path_route_7_entrance_unused.asm"
-INCLUDE "text/maps/underground_path_we.asm"	;joenote - added this file for custom npc
 INCLUDE "text/maps/underground_path_route_8_entrance.asm"
 INCLUDE "text/maps/rock_tunnel_pokecenter.asm"
 INCLUDE "text/maps/rock_tunnel_b1f.asm"

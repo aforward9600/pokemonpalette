@@ -1,5 +1,5 @@
-ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up/exp all/master ball
-	money 50000     ; MASTER_BALL
+ItemPrices:
+	money 0     ; MASTER_BALL
 	money 1200  ; ULTRA_BALL
 	money 600   ; GREAT_BALL
 	money 200   ; POKE_BALL
@@ -8,7 +8,7 @@ ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up/exp all/ma
 	money 0     ; SURFBOARD
 	money 1000  ; SAFARI_BALL
 	money 0     ; POKEDEX
-	money 4200  ; MOON_STONE
+	money 0     ; MOON_STONE
 	money 100   ; ANTIDOTE
 	money 250   ; BURN_HEAL
 	money 250   ; ICE_HEAL
@@ -29,7 +29,7 @@ ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up/exp all/ma
 	money 0     ; EARTHBADGE
 	money 550   ; ESCAPE_ROPE
 	money 350   ; REPEL
-	money 15000 ; OLD_AMBER
+	money 0     ; OLD_AMBER
 	money 2100  ; FIRE_STONE
 	money 2100  ; THUNDER_STONE
 	money 2100  ; WATER_STONE
@@ -39,8 +39,8 @@ ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up/exp all/ma
 	money 9800  ; CARBOS
 	money 9800  ; CALCIUM
 	money 4800  ; RARE_CANDY
-	money 12000 ; DOME_FOSSIL
-	money 12000 ; HELIX_FOSSIL
+	money 0     ; DOME_FOSSIL
+	money 0     ; HELIX_FOSSIL
 	money 0     ; SECRET_KEY
 	money 0     ; XXX
 	money 0     ; BIKE_VOUCHER
@@ -48,8 +48,7 @@ ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up/exp all/ma
 	money 2100  ; LEAF_STONE
 	money 0     ; CARD_KEY
 	money 10000 ; NUGGET
-	;money 9800		; XXX PP_UP (not used)
-	money 9800  ;M_GENE		;joenote - custom item
+	money 9800  ; XXX PP_UP
 	money 1000  ; POKE_DOLL
 	money 600   ; FULL_HEAL
 	money 1500  ; REVIVE
@@ -74,15 +73,15 @@ ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up/exp all/ma
 	money 0     ; SILPH_SCOPE
 	money 0     ; POKE_FLUTE
 	money 0     ; LIFT_KEY
-	money 20000     ; EXP_ALL
+	money 0     ; EXP_ALL
 	money 0     ; OLD_ROD
 	money 0     ; GOOD_ROD
 	money 0     ; SUPER_ROD
-	money 9800  ; PP_UP
-	money 1200  ; ETHER
-	money 2000  ; MAX_ETHER
-	money 3000  ; ELIXER
-	money 5500  ; MAX_ELIXER
+	money 0     ; PP_UP
+	money 0     ; ETHER
+	money 0     ; MAX_ETHER
+	money 0     ; ELIXER
+	money 0     ; MAX_ELIXER
 	money 0     ; FLOOR_B2F
 	money 0     ; FLOOR_B1F
 	money 0     ; FLOOR_1F
@@ -97,3 +96,5 @@ ItemPrices:;joenote - added prices for amber/fossils/moon stone/pp_up/exp all/ma
 	money 0     ; FLOOR_10F
 	money 0     ; FLOOR_11F
 	money 0     ; FLOOR_B4F
+	
+	

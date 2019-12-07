@@ -41,17 +41,6 @@ GainExperience:
 	ld a, [hli]
 	ld b, a ; enemy mon base stat
 	ld a, [de] ; stat exp
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - bonus statexp
-	;if enemy level > 100, give 255 stat exp instead of enemy mon's base stat
-	push af
-	ld a, [wEnemyMonLevel]
-	cp 101
-	jr c, .nobonus1
-	ld b, $FF
-.nobonus1
-	pop af
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	add b ; add enemy mon base stat to stat exp
 	ld [de], a
 	jr nc, .nextBaseStat
@@ -79,19 +68,6 @@ GainExperience:
 	ld [H_MULTIPLICAND], a
 	ld [H_MULTIPLICAND + 1], a
 	ld a, [wEnemyMonBaseExp]
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - bonus exp
-	;if enemy level > 100, it has a base exp yield of 255
-	push bc
-	ld c, a
-	ld a, [wEnemyMonLevel]
-	cp 101
-	ld a, c
-	pop bc
-	jr c, .nobonus3
-	ld a, $FF
-.nobonus3
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [H_MULTIPLICAND + 2], a
 	ld a, [wEnemyMonLevel]
 	ld [H_MULTIPLIER], a
@@ -196,7 +172,6 @@ GainExperience:
 .noexpprint
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
-	callba AnimateEXPBar	;joenote - animate the exp bar
 	call LoadMonData
 	pop hl
 	ld bc, wPartyMon1Level - wPartyMon1Exp
@@ -209,9 +184,6 @@ GainExperience:
 	;wTempCoins1 was chosen because it's used only for slot machine and gets defaulted to 1 during the mini-game
 	cp d
 	jp z, .nextMon ; if level didn't change, go to next mon
-	push hl
-	callba KeepEXPBarFull	;joenote - animate the exp bar
-	pop hl
 	ld a, [wCurEnemyLVL]
 	push af
 	push hl
@@ -296,7 +268,6 @@ GainExperience:
 	call PrintText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
-	callba AnimateEXPBarAgain	;joenote - animate exp bar
 	call LoadMonData
 	ld d, $1
 	callab PrintStatsBox

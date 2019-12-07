@@ -159,14 +159,6 @@ SaffronGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_5d15f
 .asm_5d12c
-;;;;;;;joenote - have a rematch with gym leader?
-	ld hl, RematchTrainerText
-	call PrintText
-	call NoYesChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .asm_5d134
-;;;;;;;
 	ld hl, SaffronGymText_5d16e
 	call PrintText
 	jr .asm_5d15f
@@ -185,10 +177,6 @@ SaffronGymText1:
 	call InitBattleEnemyParameters
 	ld a, $6
 	ld [wGymLeaderNo], a
-	;;;;joenote - added for rematch to skip gym leader tm
-	CheckEvent EVENT_GOT_TM46
-	jp nz, TextScriptEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
 	ld [wSaffronGymCurScript], a
 .asm_5d15f

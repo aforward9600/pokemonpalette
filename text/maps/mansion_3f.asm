@@ -28,20 +28,10 @@ _Mansion3AfterBattleText2::
 	cont "over there!"
 	done
 
-;_Mansion3Text5::
-;	text "Diary: Feb. 6"
-;	line "MEW gave birth."
-;
-;	para "We named the"
-;	line "newborn MEWTWO."
-;	done
-;joenote - edited text to be closer to original japanese context
 _Mansion3Text5::
 	text "Diary: Feb. 6"
-	line "A new #MON"
-	cont "was gestated with"
-	cont "MEW's superb DNA."
+	line "MEW gave birth."
 
-	para "An enhanced new"
-	line "species: MEWTWO."
+	para "We named the"
+	line "newborn MEWTWO."
 	done

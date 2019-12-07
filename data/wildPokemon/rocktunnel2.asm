@@ -1,4 +1,4 @@
-TunnelMonsB2:;joenote - added cubone
+TunnelMonsB2:
 	db $0F
 	db 16,ZUBAT
 	db 17,ZUBAT
@@ -9,5 +9,5 @@ TunnelMonsB2:;joenote - added cubone
 	db 17,MACHOP
 	db 17,ONIX
 	db 13,ONIX
-	db 18,CUBONE
+	db 18,GEODUDE
 	db $00

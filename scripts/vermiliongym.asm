@@ -138,14 +138,6 @@ VermilionGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_5cb6a
 .asm_5cb31
-;;;;;;;joenote - have a rematch with gym leader?
-	ld hl, RematchTrainerText
-	call PrintText
-	call NoYesChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .asm_5cb39
-;;;;;;;
 	ld hl, VermilionGymText_5cb72
 	call PrintText
 	jr .asm_5cb6a
@@ -166,10 +158,6 @@ VermilionGymText1:
 	ld [wGymLeaderNo], a
 	xor a
 	ld [hJoyHeld], a
-;;;;joenote - added for rematch to skip gym leader tm
-	CheckEvent EVENT_GOT_TM24
-	jp nz, TextScriptEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
 	ld [wVermilionGymCurScript], a
 	ld [wCurMapScript], a

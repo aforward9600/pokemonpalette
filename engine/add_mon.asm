@@ -112,10 +112,8 @@ _AddPartyMon:
 
 ; Not wild.
 	call Random ; generate random IVs
-	or $88	;joenote - makes pkmn given to player have average IVs at minimum
 	ld b, a
 	call Random
-	or $98	;joenote - makes pkmn given to player have average IVs at minimum
 
 .next4
 	push bc

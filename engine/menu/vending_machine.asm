@@ -41,7 +41,7 @@ VendingMachineMenu:
 	jr z, .picklemonade
 	cp 1 ; chose soda?
 	jr z, .picksoda
-;else water is being piked
+;else water is being picked
 	jr .pickwater
 .picklemonade
 	xor a

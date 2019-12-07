@@ -1,4 +1,3 @@
-;joenote - rebalanced prizes
 PrizeDifferentMenuPtrs:
 	dw PrizeMenuMon1Entries
 	dw PrizeMenuMon1Cost
@@ -37,8 +36,8 @@ ENDC
 
 PrizeMenuMon2Entries:
 IF DEF(_RED)
-	db SCYTHER
 	db DRATINI
+	db SCYTHER
 ENDC
 IF DEF(_BLUE)
 	db PINSIR
@@ -49,21 +48,21 @@ ENDC
 
 PrizeMenuMon2Cost:
 IF DEF(_RED)
-	coins 2500
-	coins 5200
+	coins 2800
+	coins 5500
 	coins 9999
 ENDC
 IF DEF(_BLUE)
-	coins 2800
+	coins 2500
 	coins 4600
 	coins 6500
 ENDC
 	db "@"
 
 PrizeMenuTMsEntries:
-	db TM_24
-	db TM_14
+	db TM_23
 	db TM_15
+	db TM_50
 	db "@"
 
 PrizeMenuTMsCost:

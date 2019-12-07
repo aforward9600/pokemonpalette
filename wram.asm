@@ -1532,7 +1532,7 @@ wFontLoaded:: ; cfc4
 ;bit 4: 4th pkmn (position 3)
 ;bit 5: 5th pkmn (position 4)
 ;bit 6: 6th pkmn (position 5)
-;bit 7: force a wild pokemon with shiny DVs if set
+;bit 7: force a wild pokemon with shiny DVs for Gen 2 if set
 	ds 1
 
 wWalkCounter:: ; cfc5
@@ -2426,7 +2426,7 @@ wXBlockCoord:: ; d364
 wLastMap:: ; d365
 	ds 1
 
-wUnusedD366:: ; d366	;joenote - use this to track which ai pokemon have switched & shiny state
+wUnusedD366:: ; d366	;joenote - use this to track which ai pokemon have switched
 	ds 1
 ;bit 0: set if player mon shiny
 ;bit 1: 1st pkmn (position 0)
@@ -2690,7 +2690,7 @@ wNumHoFTeams:: ; d5a2
 ;this gets zeroed out when entering a map
 ;stays preserved if exiting a battle
 ;bit 7 is set if coming out of a battle
-wUnusedD5A3:: ; d5a3	;joenote - use for the random npc win streak 
+wUnusedD5A3:: ; d5a3	;joenote - use for scores/win streaks/values that get reset upon leaving a map
 	ds 1
 
 wPlayerCoins:: ; d5a4
@@ -3006,11 +3006,8 @@ wWhichDungeonWarp:: ; d71e
 
 wUnusedD71F:: ; d71f	;joenote - used as a backup address for the wDamage value
 	ds 2
-wUnusedD721:: ; d721	;joenote - use to set various wram flags
+wUnusedD721:: ; d721	
 	ds 1
-	;bit 0 - player is girl if set
-	;bit 1 - activate cinnabar shore if set
-	;bit 2 - override bit 0 for specific bank switching instances
 ;;;;;;;;;;;;;;joenote - use these unused locations for debugging and parsing DV scores
 wUnusedD722:: 
 	ds 4
@@ -3245,18 +3242,11 @@ wBoxMon2:: ds box_struct_length * (MONS_PER_BOX + -1) ; dab7
 
 wBoxMonOT::    ds NAME_LENGTH * MONS_PER_BOX ; dd2a
 wBoxMonNicks:: ds NAME_LENGTH * MONS_PER_BOX ; de06
-wBoxMonNicksEnd:: ; dee2
+wBoxMonNicksEnd:: 
 
 wBoxDataEnd::
 
-;joenote - exp bar wram values
-wEXPBarPixelLength::  ds 1
-wEXPBarBaseEXP::      ds 3
-wEXPBarCurEXP::       ds 3
-wEXPBarNeededEXP::    ds 3
-wEXPBarKeepFullFlag:: ds 1
-
-; deed
+; dee2
 
 SECTION "Stack", WRAM0[$df00]
 	ds $ff

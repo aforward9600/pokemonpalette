@@ -109,14 +109,6 @@ CeruleanGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_5c7bb
 .asm_5c785
-;;;;;;;joenote - have a rematch with gym leader?
-	ld hl, RematchTrainerText
-	call PrintText
-	call NoYesChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .asm_5c78d
-;;;;;;;
 	ld hl, CeruleanGymText_5c7c3
 	call PrintText
 	jr .asm_5c7bb
@@ -137,10 +129,6 @@ CeruleanGymText1:
 	ld [wGymLeaderNo], a
 	xor a
 	ld [hJoyHeld], a
-;;;;joenote - added for rematch to skip gym leader tm
-	CheckEvent EVENT_GOT_TM11
-	jp nz, TextScriptEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $3
 	ld [wCeruleanGymCurScript], a
 .asm_5c7bb

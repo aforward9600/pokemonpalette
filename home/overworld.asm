@@ -91,11 +91,11 @@ OverworldLoopLessDelay::
 	call IsPlayerCharacterBeingControlledByGame
 	jr nz, .checkForOpponent
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - for smart HM use
+;joenote - do something if select is pressed
 	ld a, [hJoyPressed]
 	bit 2, a	;is Select being pressed?
 	jr z, .notselect
-	jpba CheckForSmartHMuse	;this function jumps back to OverworldLoop on completion
+	;select was pressed, so call functions here
 .notselect
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call CheckForHiddenObjectOrBookshelfOrCardKeyDoor
@@ -285,7 +285,7 @@ OverworldLoopLessDelay::
 .noSpinning
 	call UpdateSprites
 
-.moveAhead2		;joenote - rewriting this to implement running functionality
+.moveAhead2		;joenote - rewriting this to implement an optional running or speedup functionality
 	ld hl, wFlags_0xcd60
 	res 2, [hl]
 	;ld a, [wWalkBikeSurfState]
@@ -2021,26 +2021,22 @@ RunMapScript::
 .return
 	ret
 
-;joenote - modified to properly load girl trainer sprites
 LoadWalkingPlayerSpriteGraphics::
-	callba LoadRedSpriteToDE
-;	ld hl, vNPCSprites
+	ld de, RedSprite
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadSurfingPlayerSpriteGraphics::
-	callba LoadSeelSpriteToDE
-;	ld hl, vNPCSprites
+	ld de, SeelSprite
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadBikePlayerSpriteGraphics::
-	callba LoadRedCyclingSpriteToDE
-;	ld hl, vNPCSprites
+	ld de, RedCyclingSprite
 
 LoadPlayerSpriteGraphicsCommon::
 	ld hl, vNPCSprites
 	push de
 	push hl
-	call .isfemaletrainer
+	lb bc, BANK(RedSprite), $0c
 	call CopyVideoData
 	pop hl
 	pop de
@@ -2051,19 +2047,9 @@ LoadPlayerSpriteGraphicsCommon::
 	inc d
 .noCarry
 	set 3, h
-	call .isfemaletrainer
-	jp CopyVideoData
-.isfemaletrainer
-	lb bc, BANK(RedFSprite), $0c
-	ld a, [wUnusedD721]
-	;load the regular sprite bank if female bit cleared or overriding female bit set
-	;otherwise load the female player sprite bank
-	and %00000101
-	xor %00000001
-	jr z, .donefemale
 	lb bc, BANK(RedSprite), $0c
-.donefemale
-	ret
+	jp CopyVideoData
+
 
 ; function to load data from the map header
 LoadMapHeader::

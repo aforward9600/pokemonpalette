@@ -41,7 +41,7 @@ _SSAnne7Text_61932::
 
 	para "Now that I'm not"
 	line "sick any more, I"
-	cont "can sail anytime."	;joenote - altered text to be more generic
+	cont "guess it's time."
 	done
 
 _HM01NoRoomText::

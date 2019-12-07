@@ -1,4 +1,4 @@
-WaterMons:	;joenote - made some minor adjustments
+WaterMons:
 	db $00
 	db $05
 	db 5,TENTACOOL
@@ -8,6 +8,6 @@ WaterMons:	;joenote - made some minor adjustments
 	db 10,TENTACOOL
 	db 15,TENTACOOL
 	db 20,TENTACOOL
-	db 30,TENTACRUEL	
-	db 35,TENTACRUEL
-	db 40,SEAKING
+	db 30,TENTACOOL
+	db 35,TENTACOOL
+	db 40,TENTACOOL

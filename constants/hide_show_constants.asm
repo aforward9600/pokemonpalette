@@ -234,6 +234,3 @@ const_value = 0
 	const HS_SEAFOAM_ISLANDS_5_BOULDER_1  ; E1
 	const HS_SEAFOAM_ISLANDS_5_BOULDER_2  ; E2
 	const HS_ARTICUNO                     ; E3 X
-	const HS_CELADON_MART_3_BLOCKER       ; E4 ;joenote - added this to turn on/off the blocking sprite
-	const HS_VERMILION_PKMN	      		  ; E5 ;joenote - a lazy pokemon replaces the bush blocking the gym
-	const HS_UNDPATHWE_MGENE			  ; E6 ;joenote - mgene pickup item

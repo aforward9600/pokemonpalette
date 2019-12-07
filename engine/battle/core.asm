@@ -70,7 +70,7 @@ AlwaysHappenSideEffects:
 	db RECOIL_EFFECT
 	db TWINEEDLE_EFFECT
 	db RAGE_EFFECT
-	db HYPER_BEAM_EFFECT	;joenote - make hyperbeam recharge if knock out enemy
+	db HYPER_BEAM_EFFECT	;joenote - adding this here makes hyperbeam recharge if enemy is knocked out
 	db -1
 SpecialEffects:
 ; Effects from arrays 2, 4, and 5B, minus Twineedle and Rage.
@@ -257,7 +257,6 @@ StartBattle:	;joedebug - start of the battle
 	jp z, .playerSendOutFirstMon ; if so, send out player mon
 ; safari zone battle
 .displaySafariZoneBattleMenu
-	callba ShinyEnemyAnimation
 	call DisplayBattleMenu
 	ret c ; return if the player ran from battle
 	ld a, [wActionResultOrTookBattleTurn]
@@ -271,8 +270,7 @@ StartBattle:	;joedebug - start of the battle
 	jp PrintText
 .notOutOfSafariBalls
 	callab PrintSafariZoneBattleText
-	;ld a, [wEnemyMonSpeed + 1]
-	ld a, [wEnemyMonLevel]		;joenote - make escaping pokemon based on level instead of speed
+	ld a, [wEnemyMonSpeed + 1]
 	add a
 	ld b, a ; init b (which is later compared with random value) to (enemy speed % 256) * 2
 	jp c, EnemyRan ; if (enemy speed % 256) > 127, the enemy runs
@@ -371,11 +369,7 @@ EnemyRanText:
 	db "@"
 
 MainInBattleLoop:
-;joenote - check for player shiny & play animation
-	callba ShinyPlayerAnimation
-;joenote - check for enemy shiny & play animation
-	callba ShinyEnemyAnimation
-;joenote - zero the damage from last round if not using a trapping move
+;joenote - zero the damage from last round if not using a trapping move (for fixing Counter and other stuff)
 	ld a, [wEnemyBattleStatus1]
 	bit USING_TRAPPING_MOVE, a
 	jr nz, .no_trapping_moves
@@ -492,7 +486,7 @@ MainInBattleLoop:
 	add hl, bc
 	ld a, [hl]
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joenote - fixing the check for metronome and mirror move
+;joenote - fixing the check for metronome and mirror move
 	cp METRONOME ; a MIRROR MOVE check is missing, might lead to a desync in link battles
 	             ; when combined with multi-turn moves
 	jr z, .loadMetroOrMirror
@@ -890,7 +884,6 @@ HandleEnemyMonFainted:
 	jp MainInBattleLoop
 
 FaintEnemyPokemon:
-	callba DoEnemyShinybit ;joenote - reset shiny checker bits
 	call ReadPlayerMonCurHPAndStatus
 	ld a, [wIsInBattle]
 	dec a
@@ -1178,7 +1171,6 @@ HandlePlayerMonFainted:
 
 ; resets flags, slides mon's pic down, plays cry, and prints fainted message
 RemoveFaintedPlayerMon:
-	callba DoPlayerShinybit ;joenote - reset shiny checker bits
 	ld a, [wPlayerMonNumber]
 	ld c, a
 	ld hl, wPartyGainExpFlags
@@ -1839,12 +1831,8 @@ LoadBattleMonFromParty:
 	call CopyData
 	call ApplyBurnAndParalysisPenaltiesToPlayer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - only apply badge stat boosts in wild battles to keep parity with ai trainers
-	ld a, [wIsInBattle]
-	cp $1 ; is it a wild battle?
-	jr nz, .notwild
+;joenote - apply badge stat boosts
 	call ApplyBadgeStatBoosts
-.notwild
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $7 ; default stat modifier
 	ld b, NUM_STAT_MODS
@@ -2013,7 +2001,6 @@ DrawPlayerHUDAndHPBar:
 	coord hl, 10, 7
 	call CenterMonName
 	call PlaceString
-	callba PrintEXPBar	;joenote - added in the exp bar
 	ld hl, wBattleMonSpecies
 	ld de, wLoadedMon
 	ld bc, wBattleMonDVs - wBattleMonSpecies
@@ -2282,9 +2269,9 @@ DisplayBattleMenu:
 	bit 4, a ; check if right was pressed
 	jr nz, .rightColumn
 	bit 0, a ;check if A was pressed
-	;jr .AButtonPressed 
 	jr nz, .AButtonPressed 
-	callba CryIfOwned
+	;joenote - at this line, SELECT was pressed and you can do function calls here. 
+	;Jump back to .leftColumn when done.
 	jp .leftColumn
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .rightColumn ; put cursor in right column of menu
@@ -2616,9 +2603,9 @@ PartyMenuOrRockOrRun:
 ; fall through to SwitchPlayerMon
 
 SwitchPlayerMon:	;joedebug - this is where the player switches
-	callba DoPlayerShinybit ;joenote - reset shiny checker bits
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - if enemy using trapping move, then end their move
+; While different from the original game, this prevent numerous issues.
 	ld a, [wEnemyBattleStatus1]
 	bit USING_TRAPPING_MOVE, a
 	jr z, .preparewithdraw
@@ -2830,10 +2817,8 @@ SelectMenuItem:
 	;;;;;;;;;;;;;;;;;;;;;;;
 	jr z, .Bnotpressed
 	;joenote
-	;This is the point where B has been pressed 
-	;to exit out of the move selection menu during battle.
-	;Write 0 to wPlayerMovePower and wPlayerSelectedMove to nullify any previous 
-	;cursor selection when this line is reached. 
+	;This is the point where B has been pressed to exit out of the move selection menu during battle.
+	;Write 0 to wPlayerMovePower and wPlayerSelectedMove to nullify any previous cursor selection when this line is reached. 
 	;This prevents a de-sync and some other Counter shenanigans.
 	ld a, $00
 	ld [wPlayerMovePower], a
@@ -2983,7 +2968,7 @@ NoMovesLeftText:
 
 SwapMovesInMenu:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - do not allow move swapping if transformed
+;joenote - do not allow move swapping if transformed. This prevents gaining unseen glitch moves.
 	ld a, [wPlayerBattleStatus3]	;load the player status
 	bit TRANSFORMED, a ; is pkmn transformed?
 	ret nz	;return if transformed
@@ -3489,7 +3474,7 @@ MirrorMoveCheck:
 	ld a, [wPlayerMoveEffect]
 	cp EXPLODE_EFFECT ; even if Explosion or Selfdestruct missed, its effect still needs to be activated
 	jr z, .notDone
-	;cp HYPER_BEAM_EFFECT ;joenote - makes hyperbeam effect happen if it misses
+	;cp HYPER_BEAM_EFFECT ;joenote - if this line is uncommented, it makes hyperbeam need to recharge even if it misses
 	jr z, .notDone
 	jp ExecutePlayerMoveDone ; otherwise, we're done if the move missed
 .moveDidNotMiss
@@ -3851,12 +3836,6 @@ CheckPlayerStatusConditions:
 	ld [wPlayerNumAttacksLeft], a
 	ld hl, getPlayerAnimationType ; if it didn't, skip damage calculation (deal damage equal to last hit),
 	                ; DecrementPP and MoveHitTest
-	jp nz, .returnToHL
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joenote - play cry to signal end of trapping move
-	ld a, [wBattleMonSpecies]
-	call CryFunc
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp .returnToHL
 
 .RageCheck
@@ -4846,7 +4825,7 @@ GetEnemyMonStat:
 	ld a, [wUnusedD153 + 1]
 	ld l, a
 	
-	ld b, $01	;take stat exp into account
+	ld b, $01	;Make CalcStat function take stat exp into account
 .nottrainer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call CalcStat
@@ -5206,7 +5185,7 @@ ApplyAttackToEnemyPokemon:
 	jr z, .superFangEffect
 	cp SPECIAL_DAMAGE_EFFECT
 	jr z, .specialDamage
-	cp TRAPPING_EFFECT	;joenote - clear hyper beam if target hit with trapping effect
+	cp TRAPPING_EFFECT	;joenote - clear hyper beam recharge if target hit with trapping effect
 	call z, ClearHyperBeam
 	ld a, [wPlayerMovePower]
 	and a
@@ -5328,7 +5307,7 @@ ApplyAttackToPlayerPokemon:
 	jr z, .superFangEffect
 	cp SPECIAL_DAMAGE_EFFECT
 	jr z, .specialDamage
-	cp TRAPPING_EFFECT	;joenote - clear hyper beam if target hit with trapping effect
+	cp TRAPPING_EFFECT	;joenote - clear hyper beam recharge if target hit with trapping effect
 	call z, ClearHyperBeam	
 	ld a, [wEnemyMovePower]
 	and a
@@ -6356,7 +6335,7 @@ EnemyCheckIfMirrorMoveEffect:
 	ld a, [wEnemyMoveEffect]
 	cp EXPLODE_EFFECT
 	jr z, .handleExplosionMiss
-	;cp HYPER_BEAM_EFFECT ;joenote - makes hyperbeam effect happen if it misses
+	;cp HYPER_BEAM_EFFECT ;joenote - makes hyperbeam recharge even if it misses
 	jr z, .handleExplosionMiss
 	jp ExecuteEnemyMoveDone
 .moveDidNotMiss
@@ -6698,12 +6677,6 @@ CheckEnemyStatusConditions:
 	dec [hl] ; did multi-turn move end?
 	ld hl, GetEnemyAnimationType ; if it didn't, skip damage calculation (deal damage equal to last hit),
 	                             ; DecrementPP and MoveHitTest
-	jp nz, .enemyReturnToHL
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joenote - play cry to signal end of trapping move
-	ld a, [wEnemyMonSpecies]
-	call CryFunc
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp .enemyReturnToHL
 .checkIfUsingRage
 	ld a, [wEnemyBattleStatus2]
@@ -6802,11 +6775,13 @@ LoadEnemyMonData:
 	pop bc
 	jr nz, .storeDVs	;if bit for that pkmn position is already set, then store its DVs that were just loaded
 ;not sent out before, so generate special random DVs
-	call Random ; generate random IVs
-	or $88	;joenote - makes trainer pkmn have average IVs at minimum
+	;call Random ; generate random IVs
+	;or $88	;joenote - makes trainer pkmn have average IVs at minimum
+	ld a, $88	;vanilla red/blue always has exactly average DVs
 	ld b, a
-	call Random
-	or $98	;joenote - makes trainer pkmn have average IVs at minimum
+	;call Random
+	;or $98	;joenote - makes trainer pkmn have average IVs at minimum
+	ld a, $98	;vanilla red/blue always has exactly average DVs
 	;save DVs to the party data structure, to which hl is still pointing, so that they can be recalled on a switch-in
 	ld [hl], a
 	inc hl
@@ -6825,7 +6800,7 @@ LoadEnemyMonData:
 	jr .wildDVstored
 .storeDVs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joedebug automatically do shiny DVs
+;joedebug automatically do shiny gen 2 DVs
 ;	ld a, $FA
 ;	ld b, $AA
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7105,25 +7080,14 @@ SwapPlayerAndEnemyLevels:
 ; loads either red back pic or old man back pic
 ; also writes OAM data and loads tile patterns for the Red or Old Man back sprite's head
 ; (for use when scrolling the player sprite and enemy's silhouettes on screen)
-;joenote - modifying to allow a female back sprite
 LoadPlayerBackPic:
 	ld a, [wBattleType]
 	dec a ; is it the old man tutorial?
 	ld de, RedPicBack
-	jr nz, .redback
+	jr nz, .next
 	ld de, OldManPic
-	jr .bankred
-.redback
-	ld a, [wUnusedD721]
-	bit 0, a	;check if girl
-	jr z, .bankred	;go to the normal red sprite bank if boy
-	;else load girl sprites
-	ld de, RedPicFBack
-	ld a, BANK(RedPicFBack)
-	jr .next
-.bankred
-	ld a, BANK(RedPicBack)
 .next
+	ld a, BANK(RedPicBack)
 	call UncompressSpriteFromDE
 	predef ScaleSpriteByTwo
 	ld hl, wOAMBuffer
@@ -9120,8 +9084,6 @@ TrappingEffect:
 .setTrappingCounter
 	inc a
 	ld [de], a
-;joenote - have the trapping effect user get its speed halved until stats get recalculated
-	callba ReduceSpeed
 	ret
 
 MistEffect:
@@ -9527,21 +9489,25 @@ PlayBattleAnimationGotID:
 ;requires a, b, de, and wCurEnemyLVL
 CalcEnemyStatEXP:
 	;This loads 648 stat exp per level. Note that 648 in hex is the two-byte $0288
-	push hl
-	push bc
-	ld a, $02
-	ld [H_MULTIPLICAND], a
-	ld a, $88
-	ld [H_MULTIPLICAND + 1], a
-	ld a, [wCurEnemyLVL]
-	ld [H_MULTIPLIER], a
-	call Multiply
-	ld a, h
+;	push hl
+;	push bc
+;	ld a, $02
+;	ld [H_MULTIPLICAND], a
+;	ld a, $88
+;	ld [H_MULTIPLICAND + 1], a
+;	ld a, [wCurEnemyLVL]
+;	ld [H_MULTIPLIER], a
+;	call Multiply
+;	ld a, h
+;	ld d, a
+;	ld a, l
+;	ld e, a
+;	pop bc
+;	pop hl
+;joenote - vanilla red/blue has 0 stat exp for all stats on all opponents
+	xor a
 	ld d, a
-	ld a, l
 	ld e, a
-	pop bc
-	pop hl
 	ret
 	
 ;	;Alternative algorithm: adds (12 stat exp * current level) per level.
@@ -9605,20 +9571,6 @@ ZeroLastDamage:
 	pop af
 	ret
 
-;joenote - play an animation for shiny DVs
-PlayShinyAnimation:
-	ld a, [H_WHOSETURN]
-	push af
-	ld a, d
-	ld [H_WHOSETURN], a
-	xor a
-	ld [wAnimationType], a
-	ld a, REFLECT
-	call PlayMoveAnimation
-	pop af
-	ld [H_WHOSETURN], a
-	ret 
-
 
 EnemyBideAccum:
 	ld hl, wEnemyBattleStatus1
@@ -9658,11 +9610,4 @@ PlayerBideAccum:
 	ld [hl], a
 	ret
 
-;joenote - function to play cry with stack pushing
-CryFunc:
-	push hl
-	push bc
-	call PlayCry
-	pop bc
-	pop hl
-	ret
+

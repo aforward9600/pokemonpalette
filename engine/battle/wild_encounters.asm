@@ -78,16 +78,6 @@ TryDoWildEncounter:
 	ld a, [hl]
 	ld [wcf91], a
 	ld [wEnemyMonSpecies2], a
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - disallow mew if pokedex not complete
-	callba DisallowMew
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - expand the safari zone random encounters
-	callba GetRandMonSafari
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - check for shiny DV attract conditions
-	callba ShinyAttractFunction
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 	ld a, [wRepelRemainingSteps]
 	and a
 	jr z, .willEncounter
@@ -104,12 +94,6 @@ TryDoWildEncounter:
 	call EnableAutoTextBoxDrawing
 	call DisplayTextID
 .CantEncounter2
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - initiate encounter if shiny (overrides repel)
-	ld a, [wFontLoaded]
-	bit 7, a
-	jr nz, .willEncounter
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $1
 	and a
 	ret

@@ -10,28 +10,16 @@ StartSlotMachine:
 	ld a, [wCanPlaySlots]
 	and a
 	ret z
-;	ld a, [wLuckySlotHiddenObjectIndex]
-;	ld b, a
-;	ld a, [wHiddenObjectIndex]
-;	inc a
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - increase number of lucky machines to four
 	ld a, [wLuckySlotHiddenObjectIndex]
-	and $07
 	ld b, a
 	ld a, [wHiddenObjectIndex]
-	inc a
-	and $07
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
+	inc a	
 	cp b
 	jr z, .match
-	;ld a, 253
-	ld a, 250	;joenote - slightly increase odds of fever mode
+	ld a, 253
 	jr .next
 .match
-	callba LuckySlotDetect	;joenote - play cry for the lucky slot if the ist pokemon has payday
-	;ld a, 250
-	ld a, 240	;joenote - slightly increase odds of fever mode
+	ld a, 250
 	
 .next
 	ld [wSlotMachineSevenAndBarModeChance], a

@@ -8,14 +8,8 @@ PayDayEffect_:
 	jr z, .payDayEffect
 	ld a, [wEnemyMonLevel]
 .payDayEffect
-; level * 2
-;	add a
-;;;;;;;;joenote - change pay day to lvl * 8
-	;let's do a = (a*2)^3
-	sla a	
-	sla a
-	sla a
-;;;;;;;;
+;level * 2
+	add a
 	ld [H_DIVIDEND + 3], a
 	xor a
 	ld [H_DIVIDEND], a

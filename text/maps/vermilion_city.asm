@@ -21,15 +21,6 @@ _VermilionCityText_198ac::
 	line "about a year."
 	done
 
-_VermilionCityText_annereturns::	;joenote - added text
-	text "Did you see S.S."
-	line "ANNE moored in"
-	cont "the harbor?"
-
-	para "She came back due"
-	line "to massive blooms"
-	cont "of TENTACOOL!"
-	done
 	
 _SSAnneWelcomeText4::
 	text "Welcome to S.S."
@@ -135,7 +126,3 @@ _VermilionCityText13::
 	text "VERMILION HARBOR"
 	done
 
-_VermilionPKMNText::
-	text "A lazy #MON"
-	line "is sunbathing."
-	done

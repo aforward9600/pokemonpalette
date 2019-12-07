@@ -374,7 +374,7 @@ PlayBattleMusic::
 	ld a, [wGymLeaderNo]
 	and a
 	jr z, .notGymLeaderBattle
-	;joenote - use gym leader dummy value 9 to initial final battle music
+	;joenote - use gym leader dummy value 9 to initiate final battle music
 	cp $09
 	jr z, .finalBattle
 	ld a, MUSIC_GYM_LEADER_BATTLE

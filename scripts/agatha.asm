@@ -135,8 +135,6 @@ AgathaText1:
 	TX_ASM
 	ld hl, AgathaTrainerHeader0
 	call TalkToTrainer
-	ld a, 8
-	ld [wGymLeaderNo], a	;joenote - use gym leader music
 	jp TextScriptEnd
 
 AgathaBeforeBattleText:

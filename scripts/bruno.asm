@@ -132,8 +132,6 @@ BrunoText1:
 	TX_ASM
 	ld hl, BrunoTrainerHeader0
 	call TalkToTrainer
-	ld a, 8
-	ld [wGymLeaderNo], a	;joenote - use gym leader music
 	jp TextScriptEnd
 
 BrunoBeforeBattleText:

@@ -183,15 +183,8 @@ HoFMonInfoText:
 	next "TYPE2/@"
 
 HoFLoadPlayerPics:
-;joenote - support female sprite
-	ld de, RedPicFFront
-	ld a, BANK(RedPicFFront)
-	ld a, [wUnusedD721]
-	bit 0, a	;check if girl
-	jr nz, .donefemale_front
 	ld de, RedPicFront
 	ld a, BANK(RedPicFront)
-.donefemale_front
 	call UncompressSpriteFromDE
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
@@ -199,15 +192,8 @@ HoFLoadPlayerPics:
 	call CopyData
 	ld de, vFrontPic
 	call InterlaceMergeSpriteBuffers
-;joenote - support female sprite
-	ld de, RedPicFBack
-	ld a, BANK(RedPicFBack)
-	ld a, [wUnusedD721]
-	bit 0, a	;check if girl
-	jr nz, .donefemale_back
 	ld de, RedPicBack
 	ld a, BANK(RedPicBack)
-.donefemale_back
 	call UncompressSpriteFromDE
 	predef ScaleSpriteByTwo
 	ld de, vBackPic

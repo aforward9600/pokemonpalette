@@ -180,25 +180,21 @@ SlotMachine_SetFlags:
 	and a
 	jr nz, .allowMatches_silent
 	call Random
-	;and a
-	;jr z, .setAllowMatchesCounter ; 1/256 (~0.4%) chance
-	cp $03
-	jr c, .setAllowMatchesCounter ; 3/256 joenote - increasing chance to 1.2%
+	and a
+	jr z, .setAllowMatchesCounter ; 1/256 (~0.4%) chance
 	ld b, a
 	ld a, [wSlotMachineSevenAndBarModeChance]
 	cp b
 	jr c, .allowSevenAndBarMatches
-;	ld a, 210
-	ld a, 200	;joenote - slightly increase odds matches
+	ld a, 210
 	cp b
 	jr c, .allowMatches ; 55/256 (~21.5%) chance
 	ld [hl], 0
 	ret
 .allowMatches
 	set 6, [hl]
-	callba LuckySlotDetect ;joenote - signal that a match is allowed
 	ret
-.allowMatches_silent	;don't play the detect cry if in super mode
+.allowMatches_silent	
 	set 6, [hl]
 	;allow for chance of 7s/bars when in super mode
 	call Random
@@ -210,16 +206,9 @@ SlotMachine_SetFlags:
 .setAllowMatchesCounter
 	ld a, 60
 	ld [wSlotMachineAllowMatchesCounter], a
-	;joenote - signal that super mode has been entered if 1st pkmn has payday
-	callba LuckySlotDetect	
-	callba LuckySlotDetect	
-	callba LuckySlotDetect	
 	ret
 .allowSevenAndBarMatches
-	;joenote - signal that 7s/bars is allowed
 	set 7, [hl]
-	callba LuckySlotDetect
-	callba LuckySlotDetect	
 	ret
 
 SlotMachine_SpinWheels:
