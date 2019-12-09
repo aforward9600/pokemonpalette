@@ -5,11 +5,11 @@ NPC_SPRITES_2 EQU $5
 
 GFX EQU $4
 
-PICS_1 EQU $9
-PICS_2 EQU $A
-PICS_3 EQU $B
-PICS_4 EQU $C
-PICS_5 EQU $D
+PICS_1 EQU $2E
+PICS_2 EQU $2F
+PICS_3 EQU $30
+PICS_4 EQU $31
+PICS_5 EQU $32
 
 INCLUDE "home.asm"
 
@@ -808,8 +808,6 @@ PidgeotPicBack::       INCBIN "pic/monback/pidgeotb.pic"
 StarmiePicFront::      INCBIN "pic/rgmon/starmie.pic"
 StarmiePicBack::       INCBIN "pic/monback/starmieb.pic"
 
-RedPicBack::           INCBIN "pic/trainer/redb.pic"
-OldManPic::            INCBIN "pic/trainer/oldman.pic"
 
 
 SECTION "Battle (bank C)", ROMX, BANK[$C]
@@ -874,6 +872,8 @@ WeepinbellPicBack::    INCBIN "pic/monback/weepinbellb.pic"
 VictreebelPicFront::   INCBIN "pic/rgmon/victreebel.pic"
 VictreebelPicBack::    INCBIN "pic/monback/victreebelb.pic"
 
+RedPicBack::           INCBIN "pic/trainer/redb.pic"
+OldManPic::            INCBIN "pic/trainer/oldman.pic"
 
 SECTION "Battle (bank D)", ROMX, BANK[$D]
 
