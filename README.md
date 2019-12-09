@@ -233,20 +233,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Changed based on user feedback since many trainers now try to switch
 
 - Adjustments to learnsets and base stats
-  - Pokemon have gained their TMs and Moves from yellow
-  - Raichu gains some attacks back via level
-  - Arcanine gains some attacks back via level
-  - Ninetails gains some attacks back via level
-  - Poliwrath gains some attacks back via level
-  - Cloyster gains some attacks back via level
-  - Starmie gains some attacks back via level
-  - Exeggcutor gains some attacks back via level
-  - Vileplume gains some attacks back via level
-  - Victreebel gains some attacks back via level
   - Mewtwo can learn Swift by TM 
-  - Kakuna and Metapod learn harden by level-up
-  - Give haunter/machoke/kadabra/graveler an evo by level option (level 45 to 48)
-  - Butterfree and Beedrill have their prior evolutions' moves added to their level-0 move list
+
 
 
 #CREDITS / SPECIAL THANKS:

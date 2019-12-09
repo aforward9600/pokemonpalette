@@ -1035,7 +1035,7 @@ TrainerAIPointers:
 	dbw 3,JugglerAI ; juggler
 	dbw 3,GenericAI
 	dbw 3,GenericAI
-	dbw 1,BlackbeltAI ; blackbelt
+	dbw 2,BlackbeltAI ; blackbelt
 	dbw 3,GenericAI
 	dbw 3,GenericAI
 	dbw 1,GenericAI ; chief
@@ -1043,14 +1043,14 @@ TrainerAIPointers:
 	dbw 1,GiovanniAI ; giovanni
 	dbw 3,GenericAI
 	dbw 2,CooltrainerMAI ; cooltrainerm
-	dbw 2,CooltrainerFAI ; cooltrainerf
+	dbw 1,CooltrainerFAI ; cooltrainerf
 	dbw 2,BrunoAI ; bruno
 	dbw 5,BrockAI ; brock
 	dbw 1,MistyAI ; misty
 	dbw 1,LtSurgeAI ; surge
 	dbw 1,ErikaAI ; erika
 	dbw 2,KogaAI ; koga
-	dbw 1,BlaineAI ; blaine
+	dbw 2,BlaineAI ; blaine
 	dbw 1,SabrinaAI ; sabrina
 	dbw 3,GenericAI
 	dbw 1,Sony2AI ; sony2
@@ -1074,20 +1074,22 @@ BlackbeltAI:
 	ret
 	
 GiovanniAI:
-	cp $20 
-	jp c, AIUseDireHit
-	;cp $40
-	;jp c, AIUseGuardSpec
+	cp $40
+	jp c, AIUseGuardSpec
 	ret
 
-CooltrainerMAI:	;joenote - changed item to x-special
-	cp $20
-	jp c, AIUseXSpecial
+CooltrainerMAI:	
+	cp $40
+	jp c, AIUseXAttack
 	ret
 	
 CooltrainerFAI:
-	cp $20
-	jp c, AIUseXAccuracy	;uses x accuracy now
+	cp $40
+	jr nc, .coolFreturn
+	ld a, $5
+	call AICheckIfHPBelowFraction
+	jp c, AIUseHyperPotion
+.coolFreturn
 	ret
 	
 BrockAI:
@@ -1098,12 +1100,12 @@ BrockAI:
 	ret 
 
 MistyAI:
-	cp $20
+	cp $40
 	jp c, AIUseXDefend
 	ret
 	
 LtSurgeAI:
-	cp $20
+	cp $40
 	jp c, AIUseXSpeed
 	ret
 	
@@ -1117,21 +1119,21 @@ ErikaAI:
 	ret
 
 KogaAI:
-	cp $20
+	cp $40
 	jp c, AIUseXAttack
 	ret
 	
 BlaineAI:	;blaine needs to check HP. this was an oversight	
-	cp $20
+	cp $40
 	jr nc, .blainereturn
-	ld a, $A
+	ld a, $2
 	call AICheckIfHPBelowFraction	
-	jp c, AIUseHyperPotion	;joenote - changed to hyper potion
+	jp c, AIUseSuperPotion
 .blainereturn
 	ret
 
 SabrinaAI:
-	cp $20
+	cp $40
 	jr nc, .sabrinareturn
 	ld a, $A
 	call AICheckIfHPBelowFraction
@@ -1149,7 +1151,7 @@ Sony2AI:
 	ret
 
 Sony3AI:
-	cp $40	;joenote - doubled the chance of use
+	cp $20
 	jr nc, .rival3return
 	ld a, 5
 	call AICheckIfHPBelowFraction
@@ -1162,20 +1164,14 @@ LoreleiAI:
 	jr nc, .loreleireturn
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	jp c, AIUseHyperPotion	;joenote - changed to hyper potion
+	jp c, AIUseSuperPotion	
 .loreleireturn
 	ret
 
-;joenote - changed to hyper potion like other e4 members
+
 BrunoAI:
-;	cp $40
-;	jp c, AIUseXDefend
-	cp $80
-	jr nc, .brunoreturn
-	ld a, 5
-	call AICheckIfHPBelowFraction
-	jp c, AIUseHyperPotion
-.brunoreturn
+	cp $40
+	jp c, AIUseXDefend
 	ret
 
 AgathaAI:
@@ -1183,9 +1179,9 @@ AgathaAI:
 ;	jp c, AISwitchIfEnoughMons
 	cp $80
 	jr nc, .agathareturn
-	ld a, 5	;joenote - upped to 5
+	ld a, $4
 	call AICheckIfHPBelowFraction
-	jp c, AIUseHyperPotion	;joenote - changed to hyper potion
+	jp c, AIUseSuperPotion
 .agathareturn
 	ret
 
