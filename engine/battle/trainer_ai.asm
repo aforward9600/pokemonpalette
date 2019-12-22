@@ -1396,7 +1396,7 @@ AIUseFullHeal:
 	ld a, FULL_HEAL
 	jp AIPrintItemUse
 
-AICureStatus:
+AICureStatus:	;joenote - modified to be more robust and also undo stat changes of brn/par
 ; cures the status of enemy's active pokemon
 	ld a, [wEnemyMonPartyPos]
 	ld hl, wEnemyMon1Status
@@ -1404,9 +1404,12 @@ AICureStatus:
 	call AddNTimes
 	xor a
 	ld [hl], a ; clear status in enemy team roster
-	ld [wEnemyMonStatus], a ; clear status of active enemy
+	callab UndoBurnParStats ;undo stat changes if burned or paralyzed
+	xor a
+	ld [wEnemyMonStatus], a ; clear status in active enemy data
+	ld [wEnemyToxicCounter], a	;clear toxic counter
 	ld hl, wEnemyBattleStatus3
-	res 0, [hl]
+	res BADLY_POISONED, [hl]	;clear toxic bit
 	ret
 
 AIUseXAccuracy: 

@@ -920,19 +920,22 @@ ItemUseMedicine:
 	ld a, [wPlayerMonNumber]
 	cp d ; is pokemon the item was used on active in battle?
 	jp nz, .doneHealing
-; if it is active in battle
-	xor a
-	ld [wBattleMonStatus], a ; remove the status ailment in the in-battle pokemon data
+; if it is active in battle		
+	;joenote - this part is getting a bit of a rewrite to prevent resetting all stats when using a status healing item
 	push hl
 	ld hl, wPlayerBattleStatus3
 	res BADLY_POISONED, [hl] ; heal Toxic status
+	callab UndoBurnParStats	;undo brn/par stat changes
 	pop hl
+	xor a
+	ld [wBattleMonStatus], a ; remove the status ailment in the in-battle pokemon data
+	ld [wPlayerToxicCounter], a	;clear toxic counter
 	ld bc, wPartyMon1Stats - wPartyMon1Status
 	add hl, bc ; hl now points to party stats
 	ld de, wBattleMonStats
 	ld bc, NUM_STATS * 2
-	call CopyData ; copy party stats to in-battle stat data
-	predef DoubleOrHalveSelectedStats
+	;call CopyData ; copy party stats to in-battle stat data
+	;predef DoubleOrHalveSelectedStats	;effectively does nothing here
 	jp .doneHealing
 .healHP
 	inc hl ; hl = address of current HP
@@ -1178,8 +1181,21 @@ ItemUseMedicine:
 	jr nz, .updateInBattleData
 	ld bc, wPartyMon1Status - (wPartyMon1MaxHP + 1)
 	add hl, bc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - undo brn/par stat changes for Full Restore after restoring HP in battle
+	ld a, [wIsInBattle]
+	and a
+	jr z, .clearParBrn	;do not adjust the stats if not currently in battle
+	push hl
+	push de
+	callab UndoBurnParStats
+	pop de
+	pop hl
+.clearParBrn
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	xor a
 	ld [hl], a ; remove the status ailment in the party data
+	ld [wPlayerToxicCounter], a	;clear toxic counter
 .updateInBattleData
 	ld h, d
 	ld l, e

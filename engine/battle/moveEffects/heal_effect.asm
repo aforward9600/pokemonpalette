@@ -39,46 +39,10 @@ HealEffect_:
 	jr z, .restEffect
 	ld hl, wEnemyMonStatus
 .restEffect
-;;;;;;;;joenote - undo the stat-changing effects of burn and paralyze
-	ld a, [hl]		;load statuses
-	and 1 << BRN	;test for burn bit
-	jr z, .checkPAR 	;skip if not burnt. check for paralysis
-	ld hl, wBattleMonAttack + 1	;otherwise load the player's attack stat
-	ld a, [H_WHOSETURN]	;determine whos turn it is
-	and a
-	jr z, .undoBRN	;player is burned
-	ld hl, wEnemyMonAttack + 1	;else enemy is burned, so switch to enemy attack stat
-.undoBRN	;multiply the attak stat by 2 to undo the effects of burn
-	ld a, [hld]
-	ld b, a
-	ld a, [hl]
-	sla a
-	rl b
-	ld [hli], a
-	or b
-	ld [hl], b
-	jr .checkToxic
-.checkPAR
-	ld a, [hl]		;load statuses
-	and 1 << PAR	;test for paralyze bit
-	jr z, .checkToxic 	;skip if not paralyzed
-	ld hl, wBattleMonSpeed + 1	;otherwise load player's speed
-	ld a, [H_WHOSETURN]	;determine whos turn it is
-	and a
-	jr z, .undoPAR	;player is paralyzed
-	ld hl, wEnemyMonSpeed + 1	;else enemy is paralyzed, so switch to enemy speed stat
-.undoPAR	;multiply the speed stat by 4 to undo the effects of paralyze
-	ld a, [hld]
-	ld b, a
-	ld a, [hl]
-	sla a
-	rl b
-	sla a
-	rl b
-	ld [hli], a
-	or b
-	ld [hl], b
-.checkToxic	;remove toxic and clear toxic counter
+;;;;;;;;joenote - undo the stat-changing effects of burn and paralyze and clear toxic info
+	callab UndoBurnParStats
+
+;remove toxic and clear toxic counter
 	ld hl, wPlayerBattleStatus3	;load in for toxic bit
 	ld de, wPlayerToxicCounter	;load in for toxic counter
 	ld a, [H_WHOSETURN]
@@ -90,7 +54,8 @@ HealEffect_:
 	res BADLY_POISONED, [hl] ; heal Toxic status
 	xor a	;clear a
 	ld [de], a	;write a to toxic counter
-.Reloadstatus	;reload the initial status info so the correct condtions can be cleared
+
+;reload the initial status info so the correct condtions can be cleared
 	ld hl, wBattleMonStatus
 	ld a, [H_WHOSETURN]
 	and a

@@ -19,14 +19,18 @@ HazeEffect_:
 ;	ld a, [H_WHOSETURN]
 ;	and a
 ;	jr z, .cureStatuses
-	ld a, [hl]	; joenote - added
-	ld [hl], $0 ; joenote - added
+	xor a
+	ld [hl], a ; joenote - added
+	ld [wEnemyToxicCounter], a	;joenote - clear toxic counter
 	ld hl, wBattleMonStatus
 	dec de ; de is now wPlayerSelectedMove
 
 ;.cureStatuses
-	ld a, [hl]
-	ld [hl], $0
+;joenote - making sure to clear statuses and toxic counter
+	ld [wPlayerToxicCounter], a	;clear toxic counter
+	ld [hl], a ;clear status
+;	ld a, [hl]
+;	ld [hl], $0
 ;	and SLP | (1 << FRZ)
 ;	jr z, .cureVolatileStatuses
 ; prevent the Pokemon from executing a move if it was asleep or frozen
@@ -35,7 +39,7 @@ HazeEffect_:
 ;	ld [de], a
 
 ;.cureVolatileStatuses
-	xor a
+;	xor a
 	ld [wPlayerDisabledMove], a
 	ld [wEnemyDisabledMove], a
 	ld hl, wPlayerDisabledMoveNumber

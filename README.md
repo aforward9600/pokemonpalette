@@ -13,6 +13,23 @@ The Lite patch, unlike the full Shin Pokemon Red/Blue, tries to fix bugs and imp
 It was done to serve as a codebase for others to start their own romhacks.
 
 
+#Latest Fixes:
+---------------
+- Gamefreak's abandoned functions for halving and doubling stats have been modified and put back into use
+- The 999 cap for reflect and light screen is now consolidated into a single function
+- New custom function for undoing the stat changes of burn and paralysis
+  - undoing paralysis is accurate to within 0 to -3 points
+  - undoing burn is accurate to within 0 to -1 point
+- Rest now more efficient in undoing brn/par stat changes
+- AI using full heal now reverts brn/par stat changes
+- Condition healing items (including using Full Restore at max hp) no longer reset all stats
+  - Burn heal undoes the attack stat changes
+  - Paralyze heal undoes the speed stat changes
+  - Full restore at max hp undoes the stat changes of brn/par
+- Full Restore when used in battle to heal HP now undoes the stat changes of brn/par
+- Haze and status-curing items now clear the toxic counter
+- The function that applies badge stat-ups now selectively boosts the correct stat when called during a stat-up/down effect
+- *hack-induced* Catching a pokemon with brn/par no longer applies the stat penalties to its party data stats
 
 
 #Bugfixes:
@@ -29,7 +46,7 @@ It was done to serve as a codebase for others to start their own romhacks.
      - this prevents a pkmn from skipping learnable moves if gaining multiple levels in battle
 	 - also does this when evolving via level-up for the new evolution's movelist
   - Burn & Paralyze stat penalties are now properly applied after Speed & Attack stats get updated/recalculated
-  - Badge stat-ups don't get stacked anymore
+  - Badge stat-ups no longer stack when stat-up/down effects are applied to the player's pkmn
   - If player is frozen, the hyperbeam recharge bit is now cleared
      - now matches how enemy mon's recharge bit is cleared upon being frozen
      - this prevents getting stuck in a loop unable to do anything on your turn
@@ -168,9 +185,6 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
   - Waking up from sleep does not waste the turn and the chosen move is used
-  - Badge stat-ups are now temporary boosts (prevents issues where bonuses keep stacking)
-    - They are applied upon battle start or switching-in
-    - They are not applied at all after stat recalculations, so any stat change on your pkmn cancels all of them 
   - The effect of X Accuracy is no longer applied to one-hit K.O. moves (it originally made them auto-hit)
   - Pkmn added to the player's party (either as a gift or in-game trade) have at the least DVs of 9,8,8,8
   - Win 5 matches in a row against the random team NPC to get M.GENE items (leaving the area resets the win streak)
