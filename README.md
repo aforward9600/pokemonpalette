@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Last build was from v1.08 of Shin Pokemon Red/Blue
+Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 Always apply patches to a fresh USA ROM or else strange glitches will occur.  
