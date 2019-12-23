@@ -3012,7 +3012,14 @@ wDestinationMap:: ; d71a
 ; destination map (for certain types of special warps, not ordinary walking)
 	ds 1
 
-wUnusedD71B:: ; d71b
+wUnusedD71B:: ; d71b	;joenote - used as a backup address for a stat being raised/lowered via stat mods
+	;0 = none
+	;1 = attack
+	;2 = defense
+	;3 = speed
+	;4 = special
+	;5 = accuracy
+	;6 = evasion
 	ds 1
 
 wTileInFrontOfBoulderAndBoulderCollisionResult:: ; d71c
@@ -3030,14 +3037,7 @@ wWhichDungeonWarp:: ; d71e
 
 wUnusedD71F:: ; d71f	;joenote - used as a backup address for the wDamage value
 	ds 2
-wUnusedD721:: ; d721	;joenote - used as a backup address for a stat being raised/lowered via stat mods
-	;0 = none
-	;1 = attack
-	;2 = defense
-	;3 = speed
-	;4 = special
-	;5 = accuracy
-	;6 = evasion
+wUnusedD721:: ; d721	
 	ds 1
 ;;;;;;;;;;;;;;joenote - use these unused locations for debugging and parsing DV scores
 wUnusedD722:: 

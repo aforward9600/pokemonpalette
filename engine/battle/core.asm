@@ -7298,7 +7298,7 @@ ApplyBadgeStatBoosts:
 	jr nz, .loop
 .return	;joenote - clear out stat mod address offset backup
 	xor a
-	ld [wUnusedD721], a
+	ld [wUnusedD71B], a
 	ret
 ; multiply stat at hl by 1.125
 ; cap stat at 999
@@ -7331,7 +7331,7 @@ ApplyBadgeStatBoosts:
 ;joenote - check for backed up stat mod address offset to selectively apply badge boosts
 .selectiveBadgeBoost
 	;b holds the obtained badge bits that are used to apply boosts
-	ld a, [wUnusedD721]	;get the backed-up offset into 'a'
+	ld a, [wUnusedD71B]	;get the backed-up offset into 'a'
 	and a
 	ret z	;kick out if zero so the function will apply all normal badge boosts
 	ld c, $5	;load a value of 5 into c
@@ -8231,7 +8231,7 @@ StatModifierUpEffect:
 	ld c, a
 	ld b, $0
 	inc a ;joenote - backup the address offset for the stat mod 
-	ld [wUnusedD721], a	;joenote - backup the address offset for the stat mod 
+	ld [wUnusedD71B], a	;joenote - backup the address offset for the stat mod 
 	add hl, bc
 	ld b, [hl]
 	inc b ; increment corresponding stat mod
@@ -8491,7 +8491,7 @@ StatModifierDownEffect:
 	ld c, a
 	ld b, $0
 	inc a ;joenote - backup the address offset for the stat mod 
-	ld [wUnusedD721], a	;joenote - backup the address offset for the stat mod 
+	ld [wUnusedD71B], a	;joenote - backup the address offset for the stat mod 
 	add hl, bc
 	ld b, [hl]
 	dec b ; dec corresponding stat mod
