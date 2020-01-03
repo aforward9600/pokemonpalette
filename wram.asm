@@ -3037,7 +3037,8 @@ wWhichDungeonWarp:: ; d71e
 
 wUnusedD71F:: ; d71f	;joenote - used as a backup address for the wDamage value
 	ds 2
-wUnusedD721:: ; d721	
+wUnusedD721:: ; d721	;joenote - use to set various wram flags
+	;bit 3 - ghost marowak battle if set
 	ds 1
 ;;;;;;;;;;;;;;joenote - use these unused locations for debugging and parsing DV scores
 wUnusedD722:: 

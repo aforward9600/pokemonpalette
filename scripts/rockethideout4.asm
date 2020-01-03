@@ -199,20 +199,29 @@ RocketHideout4BattleText4:
 	TX_FAR _RocketHideout4BattleText4
 	db "@"
 
+;joenote - update the lift key to work like in Yellow version
 RocketHideout4EndBattleText4:
 	TX_FAR _RocketHideout4EndBattleText4
-	db "@"
+	;db "@"
+	TX_ASM
+	SetEvent EVENT_ROCKET_DROPPED_LIFT_KEY
+	jr nz, .gotliftkey
+	ld a, HS_ROCKET_HIDEOUT_4_ITEM_5
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+.gotliftkey
+	jp TextScriptEnd
 
 RocketHideout4AfterBattleText4:
 	TX_ASM
 	ld hl, RocketHideout4Text_455ec
 	call PrintText
-	CheckAndSetEvent EVENT_ROCKET_DROPPED_LIFT_KEY
-	jr nz, .asm_455e9
-	ld a, HS_ROCKET_HIDEOUT_4_ITEM_5
-	ld [wMissableObjectIndex], a
-	predef ShowObject
-.asm_455e9
+;	CheckAndSetEvent EVENT_ROCKET_DROPPED_LIFT_KEY
+;	jr nz, .asm_455e9
+;	ld a, HS_ROCKET_HIDEOUT_4_ITEM_5
+;	ld [wMissableObjectIndex], a
+;	predef ShowObject
+;.asm_455e9
 	jp TextScriptEnd
 
 RocketHideout4Text_455ec:

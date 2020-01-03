@@ -8,6 +8,7 @@ PokemonTower6Script:
 	ret
 
 PokemonTower6Script_60b02:
+	call DeactivateGhostMarowak	;joenote - deactivate bit on a loss
 	xor a
 	ld [wJoyIgnore], a
 	ld [wPokemonTower6CurScript], a
@@ -32,6 +33,12 @@ PokemonTower6Script0:
 	ld a, $6
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - set a bit to indicate this is a ghost marowak battle
+	ld a, [wUnusedD721]
+	set 3, a
+	ld [wUnusedD721], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, MAROWAK
 	ld [wCurOpponent], a
 	ld a, 30
@@ -60,6 +67,7 @@ PokemonTower6Script4:
 	and a
 	jr nz, .asm_60b82
 	SetEvent EVENT_BEAT_GHOST_MAROWAK
+	call DeactivateGhostMarowak	;joenote - deactivate bit on a win
 	ld a, $7
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -162,6 +170,13 @@ PokemonTower6Text7:
 	ld hl, PokemonTower2Text_60c24
 	call PrintText
 	jp TextScriptEnd
+	
+;joenote - reset a bit to indicate this is a ghost marowak battle
+DeactivateGhostMarowak:
+	ld a, [wUnusedD721]
+	res 3, a
+	ld [wUnusedD721], a
+	ret
 
 PokemonTower2Text_60c1f:
 	TX_FAR _PokemonTower2Text_60c1f
