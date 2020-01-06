@@ -204,7 +204,7 @@ RocketHideout4EndBattleText4:
 	TX_FAR _RocketHideout4EndBattleText4
 	;db "@"
 	TX_ASM
-	SetEvent EVENT_ROCKET_DROPPED_LIFT_KEY
+	CheckAndSetEvent EVENT_ROCKET_DROPPED_LIFT_KEY
 	jr nz, .gotliftkey
 	ld a, HS_ROCKET_HIDEOUT_4_ITEM_5
 	ld [wMissableObjectIndex], a
