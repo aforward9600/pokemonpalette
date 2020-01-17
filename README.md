@@ -78,9 +78,8 @@ It was done to serve as a codebase for others to start their own romhacks.
      - Fixed by allowing sleeping/frozen pkmn to use a move after haze restores them
      - on the plus size, haze now restores both opponent and user's status conditions as was intended in gen 1
   - Rest now does the following:
-     - clears the toxic bit and toxic counter
-     - if burn is removed, attack is doubled to undo its stat detriment (not perfect for atk values < 4)
-     - if paralyze is removed, speed is quadrupled to undo its stat detriment (not perfect for atk values < 8)
+     - also clears the toxic bit and toxic counter
+     - also undoes the stat-downs of burn and paralyze
   - fixed-damage moves (seismic toss, dragon rage, etc) can no longer critically hit
   - fixed-damage moves now obey type immunities
   - Transform will no longer copy the opponent's Transform move. It's swapped-out for Struggle
@@ -187,8 +186,6 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Sleep does not prevent choosing a move
   - Waking up from sleep does not waste the turn and the chosen move is used
   - The effect of X Accuracy is no longer applied to one-hit K.O. moves (it originally made them auto-hit)
-  - Pkmn added to the player's party (either as a gift or in-game trade) have at the least DVs of 9,8,8,8
-  - Win 5 matches in a row against the random team NPC to get M.GENE items (leaving the area resets the win streak)
   - Upped the power of safari balls to account for lower ball factor
   
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
