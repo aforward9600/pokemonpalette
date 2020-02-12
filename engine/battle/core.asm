@@ -9468,21 +9468,19 @@ PlayBattleAnimationGotID:
 ;requires a, b, de, and wCurEnemyLVL
 CalcEnemyStatEXP:
 	;This loads 648 stat exp per level. Note that 648 in hex is the two-byte $0288
-;	push hl
-;	push bc
 ;	ld a, $02
 ;	ld [H_MULTIPLICAND], a
 ;	ld a, $88
 ;	ld [H_MULTIPLICAND + 1], a
+;	xor a
+;	ld [H_MULTIPLICAND + 2], a
 ;	ld a, [wCurEnemyLVL]
 ;	ld [H_MULTIPLIER], a
 ;	call Multiply
-;	ld a, h
+;	ld a, [H_MULTIPLICAND]
 ;	ld d, a
-;	ld a, l
+;	ld a, [H_MULTIPLICAND + 1]
 ;	ld e, a
-;	pop bc
-;	pop hl
 ;joenote - vanilla red/blue has 0 stat exp for all stats on all opponents
 	xor a
 	ld d, a
