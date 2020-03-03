@@ -15,11 +15,9 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes:
 ---------------
-- Fixed some issues with text in celadon floor 3, outside bill's house, and in vermillion city
-- The ABCD teleport glitch has been fixed
-- The lift key in the rocket hideout drops during the end of battle text like in Yellow-version
-- A wild marowak is no longer assumed to be the ghost marowak
-- Pokedoll is disallowed during ghost marowak battle
+- Commented out more useless code in home.asm to free up more space in rom bank 0.
+- A statue base is now blocking terrain while surfing.
+- Trainer escape glitch has been plugged. Using fly/teleport/escape rope is negated entirely if spotted by a trainer.
 
 
 #Bugfixes:
@@ -60,6 +58,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Full Restore when used in battle to heal HP now undoes the stat changes of brn/par
   - Haze and status-curing items now clear the toxic counter
   - The function that applies badge stat-ups now selectively boosts the correct stat when called during a stat-up/down effect
+  - A wild marowak is no longer assumed to be the ghost marowak
+  - Pokedoll is disallowed during ghost marowak battle
 
 - Move fixes
   - dire hit/focus energy now quadruples crit rate instead of quarters
@@ -129,6 +129,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 	  - cannot use the surfboard if being forced to ride the bicycle
 	  - no longer freezes the game when using it from the item menu to get back on land
 	  - the menu text will glitch a little, but only for a split-second and does not impact gameplay
+  - The ABCD teleport glitch has been fixed
+  - The lift key in the rocket hideout drops during the end of battle text like in Yellow-version
 
 
 #TWEAKS:

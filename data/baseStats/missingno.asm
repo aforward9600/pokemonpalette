@@ -9,7 +9,7 @@ db BIRD ; species type 1
 db NORMAL ; species type 2
 db 1 ; catch rate
 db 255 ; base exp yield
-INCBIN "pic/bmon/fossilkabutops.pic",0,1 ; $66, sprite dimensions
+INCBIN "pic/other/fossilkabutops.pic",0,1 ; $66, sprite dimensions
 dw FossilKabutopsPic
 dw KabutopsPicBack
 ; attacks known at lvl 0

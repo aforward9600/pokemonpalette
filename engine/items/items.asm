@@ -2908,6 +2908,7 @@ SendNewMonToBox:
 	jr nz, .asm_e8b1
 	ret
 
+;joenote - replacing this with adapted code from pokemon yellow to prevent statue fishing/surfing
 ; checks if the tile in front of the player is a shore or water tile
 ; used for surfing and fishing
 ; unsets carry if it is, sets carry if not
@@ -2915,25 +2916,35 @@ IsNextTileShoreOrWater:
 	ld a, [wCurMapTileset]
 	ld hl, WaterTilesets
 	ld de, 1
-	call IsInArray
-	jr nc, .notShoreOrWater
+	call IsInArray ; does the current map allow surfing?
+	jr nc, .notShoreOrWater	; if not, return
+	ld hl, WaterTile
 	ld a, [wCurMapTileset]
 	cp SHIP_PORT ; Vermilion Dock tileset
-	ld a, [wTileInFrontOfPlayer] ; tile in front of player
 	jr z, .skipShoreTiles ; if it's the Vermilion Dock tileset
-	cp $48 ; eastern shore tile in Safari Zone
-	jr z, .shoreOrWater
-	cp $32 ; usual eastern shore tile
-	jr z, .shoreOrWater
+	cp GYM ; eastern shore tile in Safari Zone
+	jr z, .skipShoreTiles
+	cp DOJO ; usual eastern shore tile
+	jr z, .skipShoreTiles
+	ld hl, ShoreTiles
 .skipShoreTiles
-	cp $14 ; water tile
-	jr z, .shoreOrWater
+	ld a, [wTileInFrontOfPlayer]
+	ld de, $1
+	call IsInArray
+	jr c, .shoreOrWater
 .notShoreOrWater
 	scf
 	ret
 .shoreOrWater
 	and a
 	ret
+
+; shore tiles
+ShoreTiles:
+	db $48, $32
+WaterTile:
+	db $14
+	db $ff ; terminator
 
 ; tilesets with water
 WaterTilesets:

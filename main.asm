@@ -728,7 +728,7 @@ KakunaPicBack::       INCBIN "pic/monback/kakunab.pic"
 BeedrillPicFront::    INCBIN "pic/bmon/beedrill.pic"
 BeedrillPicBack::     INCBIN "pic/monback/beedrillb.pic"
 
-FossilKabutopsPic::   INCBIN "pic/bmon/fossilkabutops.pic"
+FossilKabutopsPic::   INCBIN "pic/other/fossilkabutops.pic"
 
 
 SECTION "Battle (bank B)", ROMX, BANK[$B]
@@ -859,7 +859,7 @@ WartortlePicFront::    INCBIN "pic/bmon/wartortle.pic"
 WartortlePicBack::     INCBIN "pic/monback/wartortleb.pic"
 CharizardPicFront::    INCBIN "pic/bmon/charizard.pic"
 CharizardPicBack::     INCBIN "pic/monback/charizardb.pic"
-FossilAerodactylPic::  INCBIN "pic/bmon/fossilaerodactyl.pic"
+FossilAerodactylPic::  INCBIN "pic/other/fossilaerodactyl.pic"
 GhostPic::             INCBIN "pic/other/ghost.pic"
 OddishPicFront::       INCBIN "pic/bmon/oddish.pic"
 OddishPicBack::        INCBIN "pic/monback/oddishb.pic"
