@@ -18,6 +18,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Commented out more useless code in home.asm to free up more space in rom bank 0.
 - A statue base is now blocking terrain while surfing.
 - Trainer escape glitch has been plugged. Using fly/teleport/escape rope is negated entirely if spotted by a trainer.
+- No more fishing or surfing in statue bases
 
 
 #Bugfixes:
