@@ -65,12 +65,16 @@ UncompressMonSprite::
 	jp UncompressSpriteData
 
 	
-In the new main.asm you must use replace-all to change every instance of xxxx to your desired back sprite folder in /pic/.
-For example, replace-all xxxx with monback to use the default back sprites.
+In the new main.asm you must use replace-all to change every instance of xxxx to your desired front sprite folder in /pic/.
+For example, replace-all xxxx with ymon to use Yellow version front sprites.
+Do the same with yyyy to point to a back sprite folder in /pic/.
+For example, replace-all yyyy with monback to use the default back sprites.
+Doing this makes the assembler include the graphics and lets the rgbgfx tool convert the png files into gameboy formats.
 
 Now go to the constants/monfrontpic_constants.asm file.
 You must do a replace-all to change all instances of bmon to your desired front sprite folder in /pic/.
 For example, replace-all bmon with ymon to use the yellow version front sprites.
+This will allow each pokemon's header structure to have the proper image size without needing to edit every baseStats file.
 
 You should now be able to recompile.
 
