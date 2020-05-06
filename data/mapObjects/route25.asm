@@ -7,7 +7,7 @@ Route25Object:
 	db 1 ; signs
 	sign 43, 3, 11 ; Route25Text11
 
-	db 11 ; objects
+	db 10 ; objects
 	object SPRITE_BUG_CATCHER, 14, 2, STAY, DOWN, 1, OPP_YOUNGSTER, 5
 	object SPRITE_BUG_CATCHER, 18, 5, STAY, UP, 2, OPP_YOUNGSTER, 6
 	object SPRITE_BLACK_HAIR_BOY_1, 24, 4, STAY, DOWN, 3, OPP_JR_TRAINER_M, 2
@@ -18,7 +18,6 @@ Route25Object:
 	object SPRITE_HIKER, 23, 9, STAY, UP, 8, OPP_HIKER, 3
 	object SPRITE_HIKER, 13, 7, STAY, RIGHT, 9, OPP_HIKER, 4
 	object SPRITE_BALL, 22, 2, STAY, NONE, 10, TM_19
-	object SPRITE_LASS, 55, 12, STAY, RIGHT, 12
 
 	; warp-to
 	warp_to 45, 3, ROUTE_25_WIDTH ; BILLS_HOUSE

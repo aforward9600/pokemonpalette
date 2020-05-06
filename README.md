@@ -15,10 +15,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes:
 ---------------
-- Commented out more useless code in home.asm to free up more space in rom bank 0.
-- A statue base is now blocking terrain while surfing.
-- Trainer escape glitch has been plugged. Using fly/teleport/escape rope is negated entirely if spotted by a trainer.
-- No more fishing or surfing in statue bases
+- Removed the girl from outside Bill's house. She is only supposed to be in the master branch.
 
 
 #Bugfixes:
@@ -132,6 +129,9 @@ It was done to serve as a codebase for others to start their own romhacks.
 	  - the menu text will glitch a little, but only for a split-second and does not impact gameplay
   - The ABCD teleport glitch has been fixed
   - The lift key in the rocket hideout drops during the end of battle text like in Yellow-version
+  - A statue base is now blocking terrain while surfing.
+  - Trainer escape glitch has been plugged. Using fly/teleport/escape rope is negated entirely if spotted by a trainer.
+  - No more fishing or surfing in statue bases
 
 
 #TWEAKS:
