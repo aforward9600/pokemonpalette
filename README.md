@@ -17,7 +17,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 ---------------
 - Removed the girl from outside Bill's house. She is only supposed to be in the master branch.
 - Reverted the bush in celadon city
-- 
+- made checking the ghost marowak flag more robust
 
 
 #Bugfixes:

@@ -112,7 +112,7 @@ MainMenu:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - initialize saved wram flags for various things
 	ld a, [wUnusedD721]
-	and %11111101
+	and %11110101
 	ld [wUnusedD721], a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld c, 10

@@ -7549,6 +7549,8 @@ InitWildBattle:
 	;joenote - use a bit to determine if this is a ghost marowak battle
 	ld a, [wUnusedD721]
 	bit 3, a
+	res 3, a	;reset after done checking it
+	ld [wUnusedD721], a
 	jr nz, .isGhost
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;	ld a, [wCurOpponent]
