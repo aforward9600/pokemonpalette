@@ -18,6 +18,9 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Removed the girl from outside Bill's house. She is only supposed to be in the master branch.
 - Reverted the bush in celadon city
 - made checking the ghost marowak flag more robust
+- fixed some text in the saffron house with the pidgey
+- fixed some badge house guy text
+- fixed map objects and text in celadon
 
 
 #Bugfixes:
@@ -173,6 +176,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Fixed capitalization in safari zone entrance
   - PC has a text prompt to tell you if its full after depositing
   - Exp.all now prints one message when splitting exp instead of for each party member
+  - text is now properly flipped in one of the saffron houses
 
 - Adjustments to moves  
   - Stat-down moves no longer have a 25% miss chance in AI matches
