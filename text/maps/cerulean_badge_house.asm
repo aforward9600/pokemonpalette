@@ -45,8 +45,8 @@ _CeruleanHouse2Text_74e9b::
 	cont "of battle."
 	prompt
 
-_CeruleanHouse2Text_74ea0::
-	text "The SPEED of all"
+_CeruleanHouse2Text_74ea0:: ;joenote - updated with correct information
+	text "The DEFENCE of all"
 	line "#MON increases"
 	cont "a little bit."
 
@@ -67,8 +67,8 @@ _CeruleanHouse2Text_74ea5::
 	cont "side of battle."
 	prompt
 
-_CeruleanHouse2Text_74eaa::
-	text "The DEFENSE of all"
+_CeruleanHouse2Text_74eaa:: ;joenote - updated with correct information
+	text "The SPEED of all"
 	line "#MON increases"
 	cont "a little bit."
 
