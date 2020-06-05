@@ -574,7 +574,7 @@ SendSGBPackets:
 	push de
 	call InitGBCPalettes
 	pop hl
-	call EmptyFunc5
+;	call EmptyFunc5
 	ret
 .notGBC
 	push de
@@ -604,8 +604,8 @@ InitGBCPalettes:
 	jr nz, .loop
 	ret
 
-EmptyFunc5:
-	ret
+;EmptyFunc5:
+;	ret
 
 CopySGBBorderTiles:
 ; SGB tile data is stored in a 4BPP planar format.

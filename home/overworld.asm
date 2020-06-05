@@ -243,6 +243,8 @@ OverworldLoopLessDelay::
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
 .holdIntermediateDirectionLoop
+	call UpdateSprites	;joenote - make the transitional frames viewable
+	call DelayFrame
 	ld hl, wFlags_0xcd60
 	set 2, [hl]
 	ld hl, wCheckFor180DegreeTurn
