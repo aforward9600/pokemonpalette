@@ -7936,7 +7936,11 @@ SleepEffect:
 ; set target's sleep counter to a random number between 1 and 7
 	call BattleRandom
 	and $7
+	;joenote - sleep for at least +1 count since attacks can now happen on wakeup
 	jr z, .setSleepCounter
+	;also made this more efficient
+	cp $2
+	jr c, .setSleepCounter
 	ld [de], a
 	call PlayCurrentMoveAnimation2
 	ld hl, FellAsleepText

@@ -21,6 +21,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - fixed some text in the saffron house with the pidgey
 - fixed some badge house guy text
 - fixed map objects and text in celadon
+- +1 turn to sleep counter since attacks can happen on wakeup (preserves effective sleep accuracy)
 
 
 #Bugfixes:
@@ -196,6 +197,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Waking up from sleep does not waste the turn and the chosen move is used
   - The effect of X Accuracy is no longer applied to one-hit K.O. moves (it originally made them auto-hit)
   - Upped the power of safari balls to account for lower ball factor
+  - +1 turn to sleep counter since attacks can happen on wakeup (preserves effective sleep accuracy)
   
 - Trainer ai routine #1 (recognition of stats, hp, and conditions) has been modified
   - using a move with a dream eater effect is heavily discouraged against non-sleeping opponents
