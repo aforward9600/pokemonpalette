@@ -25,6 +25,9 @@ It was done to serve as a codebase for others to start their own romhacks.
 - fixed amazing man glitch
 - transitional turnaround frame is now viewable
 - fixed blank back mon tile 
+- fixed-damage moves now ignore effectiveness text & sfx
+- EXP ALL handles exp correctly when all your battle participants are knocked out
+- exp all has a fix for applying roster flags in reverse order
 
 
 #Bugfixes:
@@ -89,6 +92,7 @@ It was done to serve as a codebase for others to start their own romhacks.
      - also undoes the stat-downs of burn and paralyze
   - fixed-damage moves (seismic toss, dragon rage, etc) can no longer critically hit
   - fixed-damage moves now obey type immunities
+  - fixed-damage moves now ignore effectiveness text & sfx
   - Transform will no longer copy the opponent's Transform move. It's swapped-out for Struggle
   - Struggle is now TYPELESS so that it can always neutrally damage something
   - Metronome & mirror move will not increment PP if the user is transformed
@@ -127,6 +131,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Hidden nugget in safari entrance now obtainable
   - EXP ALL should now dispense the correct exp if multiple pokemon take place in a battle
   - EXP ALL no longer counts fainted pokemon when dividing exp
+  - EXP ALL handles exp correctly when all your battle participants are knocked out
   - Enemy DVs can no longer be manipulated by having it use transform multiple times
   - Fixed a bug where itemfinder can't locate objects with a zero x or y coord
   - After defeating the cerulean burglar rocket, the guard itself always moves to prevent getting stuck in the front door
