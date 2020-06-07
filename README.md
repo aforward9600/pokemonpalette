@@ -28,6 +28,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - fixed-damage moves now ignore effectiveness text & sfx
 - EXP ALL handles exp correctly when all your battle participants are knocked out
 - exp all has a fix for applying roster flags in reverse order
+- glitched sprites can no longer cause a buffer overflow that corrupts hall of fame data
 
 
 #Bugfixes:
