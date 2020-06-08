@@ -1055,7 +1055,6 @@ FadeOutAudio::
 ; this function is used to display sign messages, sprite dialog, etc.
 ; INPUT: [hSpriteIndexOrTextID] = sprite ID or text ID
 DisplayTextID::
-	call UpdateSprites	;joenote - fixes amazing man glitch
 	ld a, [H_LOADEDROMBANK]
 	push af
 	callba DisplayTextIDInit ; initialization

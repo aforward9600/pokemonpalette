@@ -22,7 +22,6 @@ It was done to serve as a codebase for others to start their own romhacks.
 - fixed some badge house guy text
 - fixed map objects and text in celadon
 - +1 turn to sleep counter since attacks can happen on wakeup (preserves effective sleep accuracy)
-- fixed amazing man glitch
 - transitional turnaround frame is now viewable
 - fixed blank back mon tile 
 - fixed-damage moves now ignore effectiveness text & sfx
@@ -147,7 +146,6 @@ It was done to serve as a codebase for others to start their own romhacks.
   - A statue base is now blocking terrain while surfing.
   - Trainer escape glitch has been plugged. Using fly/teleport/escape rope is negated entirely if spotted by a trainer.
   - No more fishing or surfing in statue bases
-  - Fixed amazing man glitch
   - Transitional turnaround frame is now viewable
   - Fixed blank back mon tile 
 
