@@ -28,6 +28,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - EXP ALL handles exp correctly when all your battle participants are knocked out
 - exp all has a fix for applying roster flags in reverse order
 - glitched sprites can no longer cause a buffer overflow that corrupts hall of fame data
+- Seafoam islands fast current applied to the right steps on floor B3
 
 
 #Bugfixes:
