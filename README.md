@@ -29,6 +29,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - exp all has a fix for applying roster flags in reverse order
 - glitched sprites can no longer cause a buffer overflow that corrupts hall of fame data
 - Seafoam islands fast current applied to the right steps on floor B3
+- fixed amazing man glitch using a code tweak from Yellow-version
 
 
 #Bugfixes:
@@ -273,13 +274,17 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #CREDITS / SPECIAL THANKS:
 -----------
-- The Pret team for providing the base disassembly and all the code comments that came with it.
-- The following folks for their great tutorials, glitch videos, and explanations across the internet:
+- The Pret team for the pokered and pokeyellow disassemblies and all the code comments that came with them.
+- Rangi for the tool Polished Map
+- Code contributions and bugfixing by wisp92
+- The following for their great tutorials, glitch videos, and explanations across the internet
   - TheFakeMateo 
   - Crystal_
   - ChickasaurusGL
   - v0id19
-- The following Redditors for their help in pointing out and diagnosing bugs 
+- The following for their help in pointing out and diagnosing bugs 
   - kadetPirx
   - JOBOalthor1992
   - krazsen
+  - kmalove
+  - zycain
