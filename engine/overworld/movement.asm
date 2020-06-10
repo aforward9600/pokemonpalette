@@ -444,7 +444,9 @@ InitializeSpriteStatus:
 	ld a, $8
 	ld [hli], a   ; $c2x2: set Y displacement to 8
 	ld [hl], a    ; $c2x3: set X displacement to 8
-	ret
+	;ret
+	;fall through to InitializeSpriteScreenPosition
+	;This is essentially what Pokemon Yellow does to fix the amazing man glitch
 
 ; calculates the sprite's screen position form its map position and the player position
 InitializeSpriteScreenPosition:
