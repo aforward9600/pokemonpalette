@@ -221,6 +221,10 @@ SetScrollXForSlidingPlayerBodyLeft:
 	ret
 
 StartBattle:	;joedebug - start of the battle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; wispnote - Store PKMN Levels at the Beggining of the Battle.
+	callba StorePKMNLevels
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	xor a
 	ld [wPartyGainExpFlags], a
 	ld [wPartyFoughtCurrentEnemyFlags], a
