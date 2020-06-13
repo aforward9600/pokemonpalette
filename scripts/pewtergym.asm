@@ -68,9 +68,12 @@ PewterGymScript_5c3df:
 	ld a, HS_GYM_GUY
 	ld [wMissableObjectIndex], a
 	predef HideObject
-	ld a, HS_ROUTE_22_RIVAL_1
-	ld [wMissableObjectIndex], a
-	predef HideObject
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; wispnote - No longer necessary since the missable object is hidden until encounter.
+	; ld a, HS_ROUTE_22_RIVAL_1
+	; ld [wMissableObjectIndex], a
+	; predef HideObject
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 

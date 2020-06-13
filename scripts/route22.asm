@@ -80,6 +80,12 @@ Route22Script0:
 	db $FF
 
 .firstRivalBattle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Show rival's sprite before executing the event's routine.
+	ld a, HS_ROUTE_22_RIVAL_1
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $1
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
@@ -233,6 +239,12 @@ Route22Script3:
 	ret
 
 Route22Script_5104e:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Show rival's sprite before executing the event's routine.
+	ld a, HS_ROUTE_22_RIVAL_2
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $2
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
