@@ -34,6 +34,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Each of the two boulder puzzles in seafoam islands will fully reset until completed
 - The boulder switches never reset while inside victory road and they will always reset upon leaving
 - While inside victory road, boulders placed on switches will stay there between floor transitions
+- Applied a fix for skkipping moves on level up that relies on pokemon levels at the start of battle
 
 
 #Bugfixes:
