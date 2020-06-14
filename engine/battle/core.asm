@@ -221,10 +221,6 @@ SetScrollXForSlidingPlayerBodyLeft:
 	ret
 
 StartBattle:	;joedebug - start of the battle
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; wispnote - Store PKMN Levels at the Beggining of the Battle.
-	callba StorePKMNLevels
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	xor a
 	ld [wPartyGainExpFlags], a
 	ld [wPartyFoughtCurrentEnemyFlags], a
@@ -7550,6 +7546,10 @@ DetermineWildOpponent:
 	callab TryDoWildEncounter
 	ret nz
 InitBattleCommon:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; wispnote - Store PKMN Levels at the beginning of the battle.
+	callba StorePKMNLevels
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wMapPalOffset]
 	push af
 	ld hl, wLetterPrintingDelayFlags

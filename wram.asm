@@ -1126,6 +1126,11 @@ wSlotMachineWheel3BottomTile:: ; cd47
 
 wSlotMachineWheel3MiddleTile:: ; cd48
 
+; wispnote - PKMN Levels at the Begining of a Battle.
+; Required to correctly execute the level-up procedure.
+wStartBattleLevels:: 
+	;ds PARTY_LENGTH which is 6 bytes
+
 wFacingDirectionList:: ; cd48
 ; 4 bytes (also, the byte before the start of the list (cd47) is used a temp
 ;          variable when the list is rotated)
@@ -3278,13 +3283,7 @@ wBoxMonNicksEnd::
 
 wBoxDataEnd::
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; wispnote - PKMN Levels at the Begining of a Battle.
-; Required to correctly execute the level-up procedure.
-wStartBattleLevels:: ds PARTY_LENGTH; dee2
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; dee8; wispnote - Updated to account for the new variables.
+; dee2
 
 SECTION "Stack", WRAM0[$df00]
 	ds $ff

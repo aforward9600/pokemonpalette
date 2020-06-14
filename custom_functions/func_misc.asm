@@ -1,35 +1,23 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; wispnote - This function called to store PKMN Levels at the Beggining of the Battle.
-; Used letter for correctly perform the evolution routine.
+; This function called to store PKMN Levels. Usually at the beginning of battle.
 StorePKMNLevels:
-	xor a
-	ld [wMonDataLocation], a
-	ld [wWhichPokemon], a
-	ld hl, wPartyCount
+	push hl
+	push de
+	ld a, [wPartyCount]	;1 to 6
+	ld b, a	;use b for countdown
+	ld hl, wPartyMon1Level
 	ld de, wStartBattleLevels
-	push de
-	push hl
 .loopStorePKMNLevels
-	pop hl
-	inc hl
 	ld a, [hl]
-	cp $ff
-	jp z, .doneStorePKMNLevels
-	push hl
-	call LoadMonData
-	pop hl
-	pop de
-	ld a, [wWhichPokemon]
-	inc a
-	ld [wWhichPokemon], a
-	ld a, [wLoadedMonLevel]
-	ld [de], a
+	ld [de], a	
+	dec b
+	jr z, .doneStorePKMNLevels
+	push bc
+	ld bc, wPartyMon2 - wPartyMon1
+	add hl, bc
 	inc de
-	push de
-	push hl
-	jp .loopStorePKMNLevels
+	pop bc
+	jr .loopStorePKMNLevels
 .doneStorePKMNLevels
 	pop de
+	pop hl
 	ret
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
