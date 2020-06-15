@@ -3399,6 +3399,8 @@ PlayerCalcMoveDamage:
 	ld [wUnusedC000], a	;a static move, so set the flag
 	ld a, $1	;set wDamage to 1 point. just need a non-zero value otherwise it counts as a miss later on.
 	ld [wDamage], a
+	xor a
+	ld [wCriticalHitOrOHKO], a
 	jr .static_skiphere		;skip the normal calculations for static damage moves
 .not_static
 	res 4, a
@@ -6213,6 +6215,8 @@ EnemyCalcMoveDamage:
 	ld [wUnusedC000], a	;static move so set the flag
 	ld a, $1	;set wDamage to 1 point. just need a non-zero value otherwise it counts as a miss later on.
 	ld [wDamage], a
+	xor a
+	ld [wCriticalHitOrOHKO], a
 	jr .static_skiphere		;skip the normal calculations for static damage moves
 .not_static
 	res 4, a
