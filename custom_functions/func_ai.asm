@@ -171,3 +171,30 @@ SetAISwitched:
 	ret
 	
 
+;this function handles selecting which mon in an AI trainer should be sent out
+AISelectWhichMonSendOut:
+	ld b, $FF
+.partyloop	;the party loop, using b as a counter, grabs the position of the mon that is not currently out
+	inc b
+	ld a, [wEnemyMonPartyPos]	;wEnemyMonPartyPos is 0-indexed (1st mon is position 0). This address holds FF at the start of a battle.
+	cp b
+	jr z, .partyloop	;next position if pointing to the same mon
+	ld hl, wEnemyMon1
+	ld a, b
+	ld [wWhichPokemon], a	;else save the new mon's position and point HL to its data for some tests
+	
+	;check the HP of the mon
+	push bc
+	ld bc, wEnemyMon2 - wEnemyMon1
+	call AddNTimes
+	pop bc
+	inc hl	
+	ld a, [hli]
+	ld c, a
+	ld a, [hl]
+	or c
+	jr z, .partyloop	;go to next pkmn in roster if this one has zero HP
+	
+.sendOutNewMon
+	;we're done here, so the mon in the position held by wWhichPokemon will get sent out
+	ret

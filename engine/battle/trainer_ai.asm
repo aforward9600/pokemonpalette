@@ -617,7 +617,7 @@ AIMoveChoiceModification3:
 	cp $20
 	jp c, .givepref	;(12.5% chance) slightly encourage to spice things up
 	cp $A0	;don't set carry flag if number is >= this value
-	jp nc, .heavydiscourage2	;62.5% chance to slightly discourage and would rather do damage
+	jp nc, .heavydiscourage2	;62.5% chance to heavily discourage and would rather do damage
 	jp .nextMove	;else neither encourage nor discourage
 .skipout
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -728,6 +728,9 @@ AIMoveChoiceModification3:
 	jp .nextMove
 	
 AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer switching
+	ld a, [wUnusedC000]
+	set 5, a ; sets the bit that signifies trainer has intelligent switching
+	ld [wUnusedC000], a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;high chance to switch if afflicted with toxic-style poison
 	ld a, [wEnemyBattleStatus3]

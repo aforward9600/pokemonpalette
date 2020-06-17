@@ -1504,25 +1504,7 @@ EnemySendOutFirstMon:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;AI trainer switching & sendout is handled in this block
 .next
-	ld b, $FF
-.next2
-	inc b
-	ld a, [wEnemyMonPartyPos]
-	cp b
-	jr z, .next2
-	ld hl, wEnemyMon1
-	ld a, b
-	ld [wWhichPokemon], a
-	push bc
-	ld bc, wEnemyMon2 - wEnemyMon1
-	call AddNTimes
-	pop bc
-	inc hl	;check the HP of the pokemon being switched to
-	ld a, [hli]
-	ld c, a
-	ld a, [hl]
-	or c
-	jr z, .next2	;go to next pkmn in roster if this one has zero HP
+	callba AISelectWhichMonSendOut
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .next3
 	ld a, [wWhichPokemon]
