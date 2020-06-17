@@ -174,6 +174,7 @@ SetAISwitched:
 ;this function handles selecting which mon in an AI trainer should be sent out
 AISelectWhichMonSendOut:
 	ld b, $FF
+	
 .partyloop	;the party loop, using b as a counter, grabs the position of the mon that is not currently out
 	inc b
 	ld a, [wEnemyMonPartyPos]	;wEnemyMonPartyPos is 0-indexed (1st mon is position 0). This address holds FF at the start of a battle.

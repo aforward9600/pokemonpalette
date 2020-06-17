@@ -1192,6 +1192,12 @@ wSlotMachineBet:: ; cd50
 
 wSavedPlayerFacingDirection:: ; cd50
 
+;joenote - block of data that holds a score for the switch desireability of each AI trainer mon
+;like in golf, a higher score is considered undesireable
+;gets overwritten with zeroes at the end of battle 
+wAIPartyMonScores:: ;cd50
+	;6 bytes
+
 wWhichAnimationOffsets:: ; cd50
 ; 0 = cut animation, 1 = boulder dust animation
 	ds 9
