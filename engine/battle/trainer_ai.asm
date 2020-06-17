@@ -617,7 +617,7 @@ AIMoveChoiceModification3:
 	cp $20
 	jp c, .givepref	;(12.5% chance) slightly encourage to spice things up
 	cp $A0	;don't set carry flag if number is >= this value
-	jp nc, .notEffectiveMove	;62.5% chance to slightly discourage and would rather do damage
+	jp nc, .heavydiscourage2	;62.5% chance to slightly discourage and would rather do damage
 	jp .nextMove	;else neither encourage nor discourage
 .skipout
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
