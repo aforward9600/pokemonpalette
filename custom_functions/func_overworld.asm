@@ -46,8 +46,6 @@ IsRunning:
 	ld[wUnusedD119], a
 	ret
 	
-<<<<<<< HEAD
-=======
 
 ;joenote - allows for using HMs on the overworld with just a button press
 CheckForSmartHMuse:
@@ -571,4 +569,4 @@ CheckSouthMap:
 	xor a
 	ret
 ;***************************************************************************************************
->>>>>>> 468807d... free up tons of space in rom bank 0
+
