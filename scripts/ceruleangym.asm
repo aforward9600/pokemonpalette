@@ -157,6 +157,7 @@ CeruleanGymText7:
 
 CeruleanGymText_5c7d8:
 	TX_FAR _CeruleanGymText_5c7d8
+	;joenote - now plays an unused item sfx for getting a badge
 	TX_SFX_KEY_ITEM ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
 	TX_BLINK
 	db "@"

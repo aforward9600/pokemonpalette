@@ -161,7 +161,8 @@ PewterGymText6:
 
 PewterGymText_5c4bc:
 	TX_FAR _PewterGymText_5c4bc
-	TX_SFX_LEVEL_UP ; probably supposed to play SFX_GET_ITEM_1 but the wrong music bank is loaded
+	;TX_SFX_LEVEL_UP ; probably supposed to play SFX_GET_ITEM_1 but the wrong music bank is loaded
+	TX_SFX_KEY_ITEM	;joenote - play an unused sfx instead (triggered by playing GET_KEY_ITEM in battle)
 	TX_FAR _PewterGymText_5c4c1
 	db "@"
 

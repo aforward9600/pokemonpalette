@@ -178,7 +178,8 @@ VermilionGymText6:
 
 VermilionGymText7:
 	TX_FAR _ReceivedTM24Text
-	TX_SFX_KEY_ITEM
+	;TX_SFX_KEY_ITEM	;joenote - wrong SFX played
+	TX_SFX_ITEM_1
 	TX_FAR _TM24ExplanationText
 	db "@"
 
@@ -188,6 +189,7 @@ VermilionGymText8:
 
 ReceivedThunderbadgeText:
 	TX_FAR _ReceivedThunderbadgeText
+	TX_SFX_KEY_ITEM	;joenote - play an unused sfx instead (triggered by playing GET_KEY_ITEM in battle)
 	db "@"
 
 VermilionGymText2:

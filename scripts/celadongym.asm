@@ -188,6 +188,7 @@ CeladonGymText_48a5e:
 
 CeladonGymText_48a63:
 	TX_FAR _CeladonGymText_48a63
+	TX_SFX_KEY_ITEM	;joenote - play an unused sfx instead (triggered by playing GET_KEY_ITEM in battle)
 	db "@"
 
 CeladonGymText_48a68:

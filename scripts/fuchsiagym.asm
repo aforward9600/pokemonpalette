@@ -180,6 +180,7 @@ KogaBeforeBattleText:
 
 KogaAfterBattleText:
 	TX_FAR _KogaAfterBattleText
+	TX_SFX_KEY_ITEM	;joenote - play an unused sfx instead (triggered by playing GET_KEY_ITEM in battle)
 	db "@"
 
 KogaExplainToxicText:
@@ -192,7 +193,8 @@ FuchsiaGymText9:
 
 FuchsiaGymText10:
 	TX_FAR _ReceivedTM06Text
-	TX_SFX_KEY_ITEM
+	;TX_SFX_KEY_ITEM	;joenote - wrong SFX played
+	TX_SFX_ITEM_1
 
 TM06ExplanationText:
 	TX_FAR _TM06ExplanationText
