@@ -581,7 +581,7 @@ TextCommand0A::
 ; plays sounds
 ; this actually handles various command ID's, not just 0B
 ; (no arguments)
-TextCommand0B::
+TextCommand0B::	;joenote - modified to make SFX_GET_KEY_ITEM play a previously unused sound effect in battle (for getting a badge)
 	pop hl
 	push bc
 	dec hl
@@ -602,9 +602,13 @@ TextCommand0B::
 	jr z, .pokemonCry
 	cp $16
 	jr z, .pokemonCry
+	cp $11
+	jr z, .keyitem
+.playnormally
 	ld a, [hl]
 	call PlaySound
 	call WaitForSoundToFinish
+.finishnormally
 	pop hl
 	pop bc
 	jp NextTextCommand
@@ -616,6 +620,19 @@ TextCommand0B::
 	pop hl
 	pop bc
 	jp NextTextCommand
+.keyitem
+	push de
+	ld a, [wAudioROMBank]
+	cp BANK(Audio2_UpdateMusic)
+	jr nz, .playnormally	;don't do anything special if we're not in audio bank 2
+	callba Music_GetKeyItemInBattle
+.musicWaitLoop ; wait for music to finish playing
+	ld a, [wChannelSoundIDs + Ch6]
+	and a ; music off?
+	jr nz, .musicWaitLoop
+	pop de
+	jr .finishnormally
+	
 
 ; format: text command ID, sound ID or cry ID
 TextCommandSounds::

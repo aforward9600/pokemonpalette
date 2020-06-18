@@ -540,6 +540,19 @@ INCLUDE "engine/menu/bills_pc.asm"
 INCLUDE "audio/engine_2.asm"
 
 
+Music_GetKeyItemInBattle::	;joenote - if SFX_GET_KEY_ITEM plays in battle, play a previously unused SFX
+	; begin playing the "caught mon" sound effect
+	ld a, SFX_CAUGHT_MON
+	call PlaySoundWaitForCurrent
+	; then immediately overwrite the channel pointers
+	ld hl, wChannelCommandPointers + Ch4 * 2
+	ld de, SFX_08_unused2_Ch4
+	call Audio2_OverwriteChannelPointer
+	ld de, SFX_08_unused2_Ch5
+	call Audio2_OverwriteChannelPointer
+	ld de, SFX_08_unused2_Ch6
+	jp Audio2_OverwriteChannelPointer
+	
 Music_PokeFluteInBattle::
 	; begin playing the "caught mon" sound effect
 	ld a, SFX_CAUGHT_MON
