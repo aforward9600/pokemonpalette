@@ -35,6 +35,9 @@ It was done to serve as a codebase for others to start their own romhacks.
 - The boulder switches never reset while inside victory road and they will always reset upon leaving
 - While inside victory road, boulders placed on switches will stay there between floor transitions
 - Applied a fix for skipping moves on level up that relies on pokemon levels at the start of battle
+- minor AI tweak to prevent the odd instance of spamming of buff/debuff moves
+- A previously unused sfx plays for getting a badge
+- corrected some wrong gym leader TM sfx
 
 
 #Bugfixes:
@@ -152,6 +155,16 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Full Restore when used in battle to heal HP now undoes the stat changes of brn/par
   - Pokedoll is disallowed during ghost marowak battle
 
+
+- Audio fixes
+  - Fuschia gym plays the correct sfx when getting the TM from Koga
+  - Vermilion gym plays the correct sfx when getting the TM from Surge
+  - Restored sfx for getting a badge
+    - A sfx is supposed to play when getting a badge, but not for all gym leaders and the sfx used is inconsistent
+	- Looks like the idea was dropped in development due to issues with having separate audio banks
+	- However, there is a unique unused sfx in the battle audio bank that signifies getting some kind of important item
+	- This is likely what was going to be used for getting a badge at some point, and it has been restored
+	
 
 - Misc. fixes
   - Cinnabar/seafoam islands coast glitch fixed (no more missingo or artificially loading pokemon data)
