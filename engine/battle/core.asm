@@ -5782,10 +5782,11 @@ AdjustDamageForMoveType:
 	ret
 
 ; function to tell how effective the type of an enemy attack is on the player's current pokemon
-; this doesn't take into account the effects that dual types can have
+; now takes into account the effects that dual types can have
 ; (e.g. 4x weakness / resistance, weaknesses and resistances canceling)
 ; the result is stored in [wTypeEffectiveness]
 ; ($05 is not very effective, $0A is neutral, $14 is super effective)
+; ($00 is immune, $02 is 4x uneffective, $28 is 4x super effective)
 ; as far is can tell, this is only used once in some AI code to help decide which move to use
 AIGetTypeEffectiveness:
 ;joenote - if type-effectiveness bit is set, then do wPlayerMoveType and wEnemyMonType

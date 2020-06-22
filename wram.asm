@@ -7,24 +7,24 @@ ENDM
 
 box_struct_length EQU 25 + NUM_MOVES * 2
 box_struct: MACRO
-\1Species::    db
-\1HP::         dw
-\1BoxLevel::   db
-\1Status::     db
+\1Species::    db	;+$00
+\1HP::         dw	;+$01
+\1BoxLevel::   db	;+$03
+\1Status::     db	;+$04
 \1Type::
-\1Type1::      db
-\1Type2::      db
-\1CatchRate::  db
-\1Moves::      ds NUM_MOVES
-\1OTID::       dw
-\1Exp::        ds 3
-\1HPExp::      dw	
-\1AttackExp::  dw
-\1DefenseExp:: dw
-\1SpeedExp::   dw
-\1SpecialExp:: dw
-\1DVs::        ds 2
-\1PP::         ds NUM_MOVES
+\1Type1::      db	;+$05
+\1Type2::      db	;+$06
+\1CatchRate::  db	;+$07
+\1Moves::      ds NUM_MOVES	;+$08
+\1OTID::       dw	;+$0C
+\1Exp::        ds 3	;+$0E
+\1HPExp::      dw	;+$11
+\1AttackExp::  dw	;+$13
+\1DefenseExp:: dw	;+$15
+\1SpeedExp::   dw	;+$17
+\1SpecialExp:: dw	;+$19
+\1DVs::        ds 2	;+$1B
+\1PP::         ds NUM_MOVES	;+$1D
 ENDM
 
 ;		 - <stat>Exp is MSB while <stat>Exp+1 is LSB
@@ -32,13 +32,13 @@ ENDM
 
 party_struct: MACRO
 	box_struct \1
-\1Level::      db
+\1Level::      db	;+$21
 \1Stats::
-\1MaxHP::      dw
-\1Attack::     dw
-\1Defense::    dw
-\1Speed::      dw
-\1Special::    dw
+\1MaxHP::      dw	;+$22
+\1Attack::     dw	;+$24
+\1Defense::    dw	;+$26
+\1Speed::      dw	;+$28
+\1Special::    dw	;+$2A
 ENDM
 
 battle_struct: MACRO
@@ -71,7 +71,7 @@ wUnusedC000:: ; c000
 ;bit 0 - if set, ai should switch pokemon
 ;bit 1 - if set, ai already acted by switching or using an item this turn
 ;bit 2 - if set, ai can swith or use item but not use a move (only run ai routine 4)
-;bit 3 - used for AIGetTypeEffectiveness
+;bit 3 - used for AIGetTypeEffectiveness (0 = enemy move effectiveness | 1 = player move effectiveness)
 ;bit 4 - if set, current move being handled is a static damaging move 
 ;bit 5 - if set, current ai trainer has ai routine 4 assigned
 ;bit 6 - if set, poison/burn damage algorithm is being called to handle leech seed
@@ -1193,11 +1193,13 @@ wSlotMachineBet:: ; cd50
 wSavedPlayerFacingDirection:: ; cd50
 
 ;joenote - block of data that holds a score for the switch desireability of each AI trainer mon
-;like in golf, a higher score is considered undesireable
 ;gets overwritten with zeroes at the end of battle 
 wAIPartyMonScores:: ;cd50
-	;6 bytes
-
+	;8 bytes
+	;-->6 bytes for roster scores
+	;-->1 byte for storing the best score (wAIPartyMonScores + 6)
+	;-->1 byte for storing the zero-indexed position with the best score (wAIPartyMonScores + 7)
+	
 wWhichAnimationOffsets:: ; cd50
 ; 0 = cut animation, 1 = boulder dust animation
 	ds 9

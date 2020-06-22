@@ -731,6 +731,12 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	ld a, [wUnusedC000]
 	set 5, a ; sets the bit that signifies trainer has intelligent switching
 	ld [wUnusedC000], a
+	push hl
+	push bc
+	callab ScoreAIParty	;carry is cleared if current mon score >= highest score of remaining roster; don't switch
+	pop bc
+	pop hl
+	jp nc, .skipSwitchEnd	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;high chance to switch if afflicted with toxic-style poison
 	ld a, [wEnemyBattleStatus3]
@@ -897,6 +903,21 @@ ReadMove:
 	pop bc
 	pop de
 	pop hl
+	ret
+
+;joenote - takes move in d, returns its power in d and type in e
+ReadMoveForAIscoring:
+	dec d
+	ld a, d
+	ld hl, Moves
+	ld bc, MoveEnd - Moves
+	call AddNTimes
+	inc hl	
+	inc hl ;point to move power
+	ld a, [hli]
+	ld d, a	;store power in d
+	ld a, [hl]
+	ld e, a ;store type in e
 	ret
 
 ; move choice modification methods that are applied for each trainer class
