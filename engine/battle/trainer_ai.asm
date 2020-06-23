@@ -602,6 +602,23 @@ AIMoveChoiceModification3:
 	pop de
 	pop hl
 	jp c, .skipout	;carry flag means the move was found in the list
+	;don't use a status move against a status'd target
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, StatusAilmentMoveEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr nc, .nostatusconflict
+	;joenote - if player pkmn has a nonvolatile status, then heavily discourage using a status move
+	ld a, [wBattleMonStatus]
+	and a
+	jr nz, .heavydiscourage2
+.nostatusconflict
 	ld a, [wEnemyMoveEffect]
 	cp POISON_EFFECT
 	jr nz, .notpoisoneffect
