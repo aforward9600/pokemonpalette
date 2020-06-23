@@ -500,10 +500,84 @@ AIAbortMonSendOut:
 	ld b, $00
 	ld hl, wAIPartyMonScores
 	add hl, bc
-	ld a, [hl]
-	
 	pop bc
+	
+	
+	ld a, [wEnemyBattleStatus3]
+	bit 0, a	;check a for the toxic bit on active mon
+	ld a, [hl]
+	call nz, .dec5	;-5 score if badly poisoned
+	
+	ld a, [wPlayerBattleStatus1]
+	bit 5, a	;check a for trapping move bit 
+	ld a, [hl]
+	call nz, .dec5	;-5 score if stuck in a trapping move
+	
+	ld a, [wEnemyBattleStatus1]
+	bit 7, a	;check a for the confusion bit 
+	ld a, [hl]
+	call nz, .dec2	;-2 score if confused
+	
+	ld a, [wEnemyBattleStatus2]
+	bit 7, a	;check a for the leech seed bit 
+	ld a, [hl]
+	call nz, .dec2	;-2 score if seeded
+	
+	ld a, [wEnemyDisabledMove] ; get disabled move (if any)
+	swap a
+	and $f
+	ld a, [hl]
+	call nz, .dec2	;-2 score if a move is disabled
+	
+	push bc
+	;use b for storage and a for loading
+	ld a, [wEnemyMonAttackMod]	
+	ld b, a 
+	ld a, [wEnemyMonDefenseMod]
+	cp b
+	call c, .ldba	;if a < b, then load a into b
+	ld a, [wEnemyMonSpeedMod]
+	cp b
+	call c, .ldba	;if a < b, then load a into b
+	ld a, [wEnemyMonSpecialMod]
+	cp b
+	call c, .ldba	;if a < b, then load a into b
+	ld a, [wEnemyMonAccuracyMod]
+	cp b
+	call c, .ldba	;if a < b, then load a into b
+	ld a, [wEnemyMonEvasionMod]
+	cp b
+	call c, .ldba	;if a < b, then load a into b
+	ld a, b	;put b back into a
+	pop bc
+	cp $07	;is the lowest stat mod the normal value of 7?
+	jr nc, .compare		;lowest stat mod is not negative (value below 7)
+	push bc
+	ld b, a	;put the lowest mod into b
+	ld a, $07	; put 7 into a
+	sub b	;a = 7 - b, so a becomes 6 (-6 stages) to 1 (-1 stage)
+	ld b, a	;put a back into b
+	;add the lowest mod to the score
+	ld a, [hl]
+	sub b
+	ld [hl], a
+	pop bc
+	
+.compare
+	ld a, [hl]
 	cp b	;(current mon score - highest other mon score)
+	ret
+.dec5
+	dec a
+	dec a
+	dec a
+.dec2
+	dec a
+	dec a
+	ld [hl], a
+	ret
+.ldba
+	ld b, a
 	ret
 
 	
