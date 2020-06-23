@@ -13,31 +13,11 @@ The Lite patch, unlike the full Shin Pokemon Red/Blue, tries to fix bugs and imp
 It was done to serve as a codebase for others to start their own romhacks.
 
 
-#Latest Fixes:
+#Latest Fixes (not yet in the ips patch):
 ---------------
-- Removed the girl from outside Bill's house. She is only supposed to be in the master branch.
-- Reverted the bush in celadon city
-- made checking the ghost marowak flag more robust
-- fixed some text in the saffron house with the pidgey
-- fixed some badge house guy text
-- fixed map objects and text in celadon
-- +1 turn to sleep counter since attacks can happen on wakeup (preserves effective sleep accuracy)
-- transitional turnaround frame is now viewable
-- fixed blank back mon tile 
-- fixed-damage moves now ignore effectiveness text & sfx
-- EXP ALL handles exp correctly when all your battle participants are knocked out
-- exp all has a fix for applying roster flags in reverse order
-- glitched sprites can no longer cause a buffer overflow that corrupts hall of fame data
-- Seafoam islands fast current applied to the right steps on floor B3
-- fixed amazing man glitch using a code tweak from Yellow-version
-- The rival encounters on route 22 now show an exclamation bubble that never showed up originally
-- Each of the two boulder puzzles in seafoam islands will fully reset until completed
-- The boulder switches never reset while inside victory road and they will always reset upon leaving
-- While inside victory road, boulders placed on switches will stay there between floor transitions
-- Applied a fix for skipping moves on level up that relies on pokemon levels at the start of battle
-- minor AI tweak to prevent the odd instance of spamming of buff/debuff moves
-- A previously unused sfx plays for getting a badge
-- corrected some wrong gym leader TM sfx
+- Major expansion to how the AI handles switching
+  - AI routine 4 now scores each mon in its party every turn
+  - These scores are taken into account when deciding to switch or picking a mon to send out
 
 
 #Bugfixes:
