@@ -182,11 +182,10 @@ AISelectWhichMonSendOut:
 	ld a, [wEnemyMonPartyPos]	;wEnemyMonPartyPos is 0-indexed (1st mon is position 0). This address holds FF at the start of a battle.
 	cp b
 	jp z, .seeifdone	;next position if pointing to the same mon
-	ld hl, wEnemyMon1
-	ld a, b
-	ld [wWhichPokemon], a	;else save the new mon's position and point HL to its data for some tests
 	
 	;check the HP of the mon
+	ld a, b
+	ld hl, wEnemyMon1
 	push bc
 	ld bc, wEnemyMon2 - wEnemyMon1
 	call AddNTimes
@@ -197,6 +196,9 @@ AISelectWhichMonSendOut:
 	ld a, [hl]
 	or c
 	jp z, .seeifdone	;go to next pkmn in roster if this one has zero HP
+	
+	ld a, b
+	ld [wWhichPokemon], a	;else save the new mon's position
 	
 	ld a, [wUnusedC000]
 	bit 5, a
@@ -269,6 +271,20 @@ ScoreAIParty:
 	ld [de], a
 	push bc
 	
+	
+	;check the HP of the mon
+	push hl
+	inc hl	
+	ld a, [hli]
+	ld c, a
+	ld a, [hl]
+	or c
+	pop hl
+	jr nz, .next0	;go to next check if hp > 0
+	ld a, $0F
+	ld [de], a
+	jp .next6
+.next0	
 	
 	;+2 score if faster than current player mon's speed
 	ld bc, $28	
@@ -459,7 +475,7 @@ ScoreAIParty:
 	dec b
 	jr z, .donescoring
 	push bc
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, wEnemyMon2 - wEnemyMon1
 	add hl, bc
 	pop bc
 	inc de
