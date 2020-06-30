@@ -304,7 +304,7 @@ ScoreAIParty:
 	call c, .plus	;if carry is set, then player mon has less speed
 	
 	
-	;+2 score if at max hp
+	;+2 score if at or above max base hp
 	ld a, 1
 	call AIRosterScoringCheckIfHPBelowFraction
 	ld b, 2
@@ -312,13 +312,13 @@ ScoreAIParty:
 	call nc, .plus
 	pop af
 	jr nc, .next2
-	;-2 score if less than 1/2 hp
-	ld a, 2
+	;-2 score if less than 3/4 base hp
+	ld a, $34
 	call AIRosterScoringCheckIfHPBelowFraction
 	ld b, 2
 	call c, .minus
-	;-3 more (total of -5) score if less than 1/3 hp
-	ld a, 3
+	;-3 more (total of -5) score if less than 1/2 base hp
+	ld a, 2
 	call AIRosterScoringCheckIfHPBelowFraction
 	ld b, 3
 	call c, .minus
@@ -344,10 +344,10 @@ ScoreAIParty:
 	call nz, .minus
 	pop af
 	jr nz, .next3
-	;-5 if frozen
+	;-9 if frozen
 	ld a, c
 	and (1 << FRZ)
-	ld b, 5
+	ld b, 9
 	call nz, .minus
 .next3
 
@@ -359,14 +359,34 @@ ScoreAIParty:
 	ld a, [wPlayerMovePower]	;get the power of the player's move
 	cp $02	;regular damaging moves have power > 1
 	jr c, .next4	;skip out if the move is not a normal damaging move
+	;get effectiveness of the most recent player move
+	ld a, [wUnusedC000]
+	set 3, a 
+	ld [wUnusedC000], a
+	;preserve the current enemy mon typing
+	ld a, [wEnemyMonType]
+	ld [wAIPartyMonScores + 6], a
+	ld a, [wEnemyMonType + 1]
+	ld [wAIPartyMonScores + 7], a
+	;override the current enemy mon typing with that from the roster pointer
+	ld bc, $05
+	call GetRosterStructData
+	ld [wEnemyMonType], a
+	ld bc, $06
+	call GetRosterStructData
+	ld [wEnemyMonType + 1], a
+	;now get the typing effectiveness
 	push hl
 	push de
-	ld a, [wUnusedC000]
-	set 3, a ;get effectiveness of the most recent player move
-	ld [wUnusedC000], a
 	callab AIGetTypeEffectiveness
 	pop de
 	pop hl
+	;now undo the current mon type override
+	ld a, [wAIPartyMonScores + 6]
+	ld [wEnemyMonType], a
+	ld a, [wAIPartyMonScores + 7]
+	ld [wEnemyMonType + 1], a
+	;now get the move-to-type effectiveness
 	ld a, [wTypeEffectiveness]
 	;skip if effectiveness is neutral
 	cp $0A
@@ -389,10 +409,13 @@ ScoreAIParty:
 	;so give the score -2
 	ld b, 2
 	call .minus
-	;-3 more (-5 total) if the power of the move is 60 or more
-	ld a, [wPlayerMovePower]	;get the power of the player's move
-	cp $3C
-	ld b, 3
+	;minus more based on the power of the move
+	ld a, [wPlayerMovePower]
+	srl a
+	srl a
+	srl a
+	srl a
+	ld b, a
 	call nc, .minus
 .next4
 
@@ -602,6 +625,7 @@ AIAbortMonSendOut:
 ; return carry if enemy trainer's current HP is below 1 / a of the maximum
 ; adapted to work with the roster scoring functions
 ; preserves hl and de
+; the max hp is the base max value since true max hp is calculated upon every sendout and not stored anywhere
 AIRosterScoringCheckIfHPBelowFraction:
 ;first preserve stuff onto the stack
 	push de
@@ -622,8 +646,59 @@ AIRosterScoringCheckIfHPBelowFraction:
 	ld bc, $02
 	call GetRosterStructData
 	cp d	;a = HP LSB an d = MAXHP LSB so do a - d and set carry if negative
-	jr .return
+	jp .return
 .not_one
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	cp $34
+	jr nz, .not3fourths
+	ld bc, $22
+	call GetRosterStructData
+	ld d, a
+	ld bc, $23
+	call GetRosterStructData
+	ld e, a
+	;de now holds the max hp value
+	ld a, d
+	srl a
+	ld d, a
+	ld a, e
+	rra
+	ld e, a
+	;de now holds half max hp
+	ld a, d
+	srl a
+	ld d, a
+	ld a, e
+	rra
+	ld e, a
+	;de now holds 1/4 max hp
+	push hl
+	ld hl, $0000
+	add hl, de
+	add hl, de
+	add hl, de
+	ld d, h
+	ld e, l
+	pop hl
+	;de now holds 3/4ths max hp
+	push de
+	ld bc, $01
+	call GetRosterStructData
+	ld d, a
+	ld bc, $02
+	call GetRosterStructData
+	ld c, a
+	ld a, d
+	ld b, a
+	pop de
+	;now bc holds current hp and de holds 3/4ths max hp
+	ld a, b
+	sub d
+	jr nz, .return
+	ld a, c
+	sub e
+	jr .return
+.not3fourths
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	push hl
 	ld [H_DIVISOR], a
