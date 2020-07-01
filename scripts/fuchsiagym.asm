@@ -62,8 +62,8 @@ FuchsiaGymScript3_75497:
 .asm_754c0
 	ld hl, wObtainedBadges
 	set 4, [hl]
-	ld hl, wBeatGymFlags
-	set 4, [hl]
+	;ld hl, wBeatGymFlags	;joenote - redundant
+	;set 4, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, EVENT_BEAT_FUCHSIA_GYM_TRAINER_5

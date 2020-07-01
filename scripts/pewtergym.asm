@@ -62,8 +62,8 @@ PewterGymScript_5c3df:
 .asm_5c408
 	ld hl, wObtainedBadges
 	set 0, [hl]
-	ld hl, wBeatGymFlags
-	set 0, [hl]
+	;ld hl, wBeatGymFlags	;joenote - redundant
+	;set 0, [hl]
 
 	ld a, HS_GYM_GUY
 	ld [wMissableObjectIndex], a
@@ -186,7 +186,7 @@ PewterGymAfterBattleText1:
 
 PewterGymText3:
 	TX_ASM
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedBadges];[wBeatGymFlags]
 	bit 0, a
 	jr nz, .asm_5c50c
 	ld hl, PewterGymText_5c515

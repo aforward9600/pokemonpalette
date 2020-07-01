@@ -62,8 +62,8 @@ SaffronGymText_5d068:
 .asm_5d091
 	ld hl, wObtainedBadges
 	set 5, [hl]
-	ld hl, wBeatGymFlags
-	set 5, [hl]
+	;ld hl, wBeatGymFlags	;joenote - redundant
+	;set 5, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_SAFFRON_GYM_TRAINER_0, EVENT_BEAT_SAFFRON_GYM_TRAINER_6

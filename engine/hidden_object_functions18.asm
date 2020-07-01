@@ -19,7 +19,7 @@ GymStatues:
 	jr .loop
 .match
 	ld b, [hl]
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedBadges];[wBeatGymFlags]
 	and b
 	cp b
 	tx_pre_id GymStatueText2
@@ -29,14 +29,14 @@ GymStatues:
 	jp PrintPredefTextID
 
 .BadgeFlags:
-	db PEWTER_GYM,   %00000001
-	db CERULEAN_GYM, %00000010
-	db VERMILION_GYM,%00000100
-	db CELADON_GYM,  %00001000
-	db FUCHSIA_GYM,  %00010000
-	db SAFFRON_GYM,  %00100000
-	db CINNABAR_GYM, %01000000
-	db VIRIDIAN_GYM, %10000000
+	db PEWTER_GYM,    %00000001
+	db CERULEAN_GYM,  %00000010
+	db VERMILION_GYM, %00000100
+	db CELADON_GYM,   %00001000
+	db FUCHSIA_GYM,   %00010000
+	db SAFFRON_GYM,   %00100000
+	db CINNABAR_GYM,  %01000000
+	db VIRIDIAN_GYM,  %10000000
 	db $ff
 
 GymStatueText1:

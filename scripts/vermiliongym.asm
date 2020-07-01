@@ -81,8 +81,8 @@ VermilionGymScript_5caaa:
 .asm_5cad3
 	ld hl, wObtainedBadges
 	set 2, [hl]
-	ld hl, wBeatGymFlags
-	set 2, [hl]
+	;ld hl, wBeatGymFlags	;joenote - redundant
+	;set 2, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VERMILION_GYM_TRAINER_0, EVENT_BEAT_VERMILION_GYM_TRAINER_2
@@ -248,7 +248,7 @@ VermilionGymAfterBattleText3:
 
 VermilionGymText5:
 	TX_ASM
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedBadges];[wBeatGymFlags]
 	bit 2, a
 	jr nz, .asm_5cbeb
 	ld hl, VermilionGymText_5cbf4

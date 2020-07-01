@@ -62,8 +62,8 @@ CeladonGymText_48963:
 .asm_4898c
 	ld hl, wObtainedBadges
 	set 3, [hl]
-	ld hl, wBeatGymFlags
-	set 3, [hl]
+	;ld hl, wBeatGymFlags	;joenote - redundant
+	;set 3, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CELADON_GYM_TRAINER_0, EVENT_BEAT_CELADON_GYM_TRAINER_6

@@ -156,8 +156,8 @@ ViridianGymScript3_74995:
 .asm_749be
 	ld hl, wObtainedBadges
 	set 7, [hl]
-	ld hl, wBeatGymFlags
-	set 7, [hl]
+	;ld hl, wBeatGymFlags	;joenote - redundant
+	;set 7, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7

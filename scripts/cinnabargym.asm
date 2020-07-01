@@ -159,8 +159,8 @@ CinnabarGymScript3_75857:
 .asm_75880
 	ld hl, wObtainedBadges
 	set 6, [hl]
-	ld hl, wBeatGymFlags
-	set 6, [hl]
+	;ld hl, wBeatGymFlags	;joenote - redundant
+	;set 6, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CINNABAR_GYM_TRAINER_0, EVENT_BEAT_CINNABAR_GYM_TRAINER_6

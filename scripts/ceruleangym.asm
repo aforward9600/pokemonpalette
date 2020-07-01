@@ -62,8 +62,8 @@ CeruleanGymScript_5c70d:
 .asm_5c736
 	ld hl, wObtainedBadges
 	set 1, [hl]
-	ld hl, wBeatGymFlags
-	set 1, [hl]
+	;ld hl, wBeatGymFlags	;joenote - redundant
+	;set 1, [hl]
 
 	; deactivate gym trainers
 	SetEvents EVENT_BEAT_CERULEAN_GYM_TRAINER_0, EVENT_BEAT_CERULEAN_GYM_TRAINER_1
