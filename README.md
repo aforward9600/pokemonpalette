@@ -15,9 +15,13 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (not yet in the ips patch):
 ---------------
-- Major expansion to how the AI handles switching
-  - AI routine 4 now scores each mon in its party every turn
-  - These scores are taken into account when deciding to switch or picking a mon to send out
+- 
+
+
+#Latest Fixes (most recent ips patch):
+---------------
+- Trainer AI routine 4 has been expanded
+- Fix for crash when the key item text sfx is played
 
 
 #Bugfixes:
@@ -263,6 +267,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - 25% chance to switch if opponent is using a trapping move
   - 25% chance to switch if active pkmn is confused
   - on the lowest stat mod, 12.5% chance to switch per lowered stage
+  - AI routine 4 now scores each mon in its party every turn
+  - These scores are taken into account when deciding to switch or picking a mon to send out
   
 - Trainer ai routine #3 added to the following trainer classes
   - jr trainer M, jr trainer F, hiker, supernerd, engineer, lass, chief, bruno, brock, gentleman, agatha
