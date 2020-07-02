@@ -624,7 +624,9 @@ TextCommand0B::	;joenote - modified to make SFX_GET_KEY_ITEM play a previously u
 	push de
 	ld a, [wAudioROMBank]
 	cp BANK(Audio2_UpdateMusic)
+	pop de
 	jr nz, .playnormally	;don't do anything special if we're not in audio bank 2
+	push de
 	callba Music_GetKeyItemInBattle
 .musicWaitLoop ; wait for music to finish playing
 	ld a, [wChannelSoundIDs + Ch6]
