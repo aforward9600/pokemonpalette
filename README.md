@@ -15,7 +15,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (not yet in the ips patch):
 ---------------
-- 
+- The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
 
 
 #Latest Fixes (most recent ips patch):
@@ -171,6 +171,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #TWEAKS:
 -----------
+- The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
 - Loading AI trainer parties uses the code from pokemon Yellow so as to allow custom movelists
 - If wGymLeaderNo is set to 9 when loading a battle, then the final battle music will play
 - Softlock Warp 
