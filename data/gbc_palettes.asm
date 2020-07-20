@@ -84,11 +84,11 @@ GBCBasePalettes:
 	RGB 31, 31,  0	;unused yellow logo text
 IF DEF(_RED)
 	RGB 17, 23, 10	;unused on title screen
-	RGB 15,  3,  3	;version subtitle text color
+	RGB 23,  3,  3	;version subtitle text color
 ENDC
 IF DEF(_BLUE)
 	RGB 21,  0,  4	;unused on title screen
-	RGB  3,  3, 15	;version subtitle text color
+	RGB  3,  3, 23	;version subtitle text color
 ENDC
 
 	; PAL_LOGO2
