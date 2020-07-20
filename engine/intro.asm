@@ -36,6 +36,10 @@ PlayIntroScene:
 	call UpdateGBCPal_OBP0
 	call UpdateGBCPal_OBP1
 	
+IF DEF(_BLUE)
+	callba BlueIntroOBPal ;gbcnote - jigglypuff object needs its pal in blue version
+ENDC
+	
 	xor a
 	ld [hSCX], a
 	ld b, GENGAR_INTRO_TILES1

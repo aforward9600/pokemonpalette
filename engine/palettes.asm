@@ -999,6 +999,21 @@ TitleMonPals:
 	pop de
 	ret 
 
+BlueIntroOBPal:	;gbcnote - jigglypuff object needs its pal in blue version
+	ld a, [hGBC]
+	and a
+	ret z 
+	ld a, JIGGLYPUFF
+	push de
+	call DeterminePaletteIDOutOfBattle
+	call GetGBCBasePalAddress
+	ld a, CONVERT_OBP0
+	call DMGPalToGBCPal
+	ld a, 0
+	call TransferCurOBPData
+	pop de
+	ret 
+
 INCLUDE "data/sgb_packets.asm"
 
 INCLUDE "data/mon_palettes.asm"
