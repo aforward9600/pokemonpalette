@@ -680,7 +680,7 @@ DMGPalToGBCPal::	;gbcnote - new function
 ; Input:
 ; a = which DMG palette register
 ; de = address of GBC base palette
-and a
+	and a
 	jr nz, .notBGP
 	ld a, [rBGP]
 	ld [wLastBGP], a
@@ -982,6 +982,22 @@ CopySGBBorderTiles:
 	dec b
 	jr nz, .tileLoop
 	ret
+
+;gbcnote - do palette swaps for scrolling title screen mons
+TitleMonPals:
+	ld a, [hGBC]
+	and a
+	ret z 
+	push de
+	ld a, [wcf91]
+	call DeterminePaletteIDOutOfBattle
+	call GetGBCBasePalAddress
+	xor a
+	call DMGPalToGBCPal
+	ld a, 2
+	call TransferCurBGPData
+	pop de
+	ret 
 
 INCLUDE "data/sgb_packets.asm"
 

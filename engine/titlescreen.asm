@@ -140,6 +140,8 @@ ENDC
 	ld a, %11100100
 	ld [rOBP0], a
 	call UpdateGBCPal_OBP0
+	
+	callba TitleMonPals ;gbcnote - update the bg pal for the new title mon
 
 ; make pokemon logo bounce up and down
 	ld bc, hSCY ; background scroll Y
@@ -289,6 +291,8 @@ TitleScreenPickNewMon:
 
 	ld [hl], a
 	call LoadTitleMonSprite
+	
+	callba TitleMonPals ;gbcnote - update the bg pal for the new title mon
 
 	ld a, $90
 	ld [hWY], a
