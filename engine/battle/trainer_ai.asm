@@ -631,10 +631,10 @@ AIMoveChoiceModification3:
 .notpoisoneffect
 .backfromTwave
 	call Random	;else get a random number between 0 and 255
-	cp $20
-	jp c, .givepref	;(12.5% chance) slightly encourage to spice things up
-	cp $A0	;don't set carry flag if number is >= this value
-	jp nc, .heavydiscourage2	;62.5% chance to heavily discourage and would rather do damage
+	cp 100	;don't set carry flag if number is >= this value
+	jp nc, .heavydiscourage2	;60.7% chance to heavily discourage and would rather do damage
+	cp 30
+	jp c, .givepref	;if not discouraged, then there is a 30% chance to slightly encourage to spice things up
 	jp .nextMove	;else neither encourage nor discourage
 .skipout
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
