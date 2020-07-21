@@ -16,6 +16,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 #Latest Fixes (not yet in the ips patch):
 ---------------
 - The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
+- Ai routine #3 has a correction involving favoribility of 0 bp moves
 
 
 #Latest Fixes (most recent ips patch):
@@ -172,6 +173,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 #TWEAKS:
 -----------
 - The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
+  - Scrolling mons on the title screen have their own palettes loaded on the GBC.
+  - In the blue version intro, jigglypuff has it's own palette loaded on the GBC. 
 - Loading AI trainer parties uses the code from pokemon Yellow so as to allow custom movelists
 - If wGymLeaderNo is set to 9 when loading a battle, then the final battle music will play
 - Softlock Warp 
