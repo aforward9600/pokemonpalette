@@ -597,6 +597,22 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMovePower]	;get the base power of the enemy's attack
 	and a	;check if it is zero
 	jr nz, .skipout	;get out of this section if non-zero power
+	;backup check: don't use a status move against a status'd target
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, StatusAilmentMoveEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr nc, .nostatusconflict
+	ld a, [wBattleMonStatus]
+	and a
+	jr nz, .heavydiscourage2
+.nostatusconflict
 	;check on certain moves with zero bp but are handled differently
 	ld a, [wEnemyMoveNum]
 	push hl
