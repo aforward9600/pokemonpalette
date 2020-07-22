@@ -3312,6 +3312,10 @@ wBoxMonNicksEnd::
 wBoxDataEnd::
 
 ; dee2
+	ds 11
+
+wdeed::
+	ds 1
 
 SECTION "Stack", WRAM0[$df00]
 	ds $ff

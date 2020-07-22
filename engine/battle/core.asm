@@ -1071,6 +1071,11 @@ ReplaceFaintedEnemyMon:
 	ld hl, wEnemyHPBarColor
 	ld e, $30
 	call GetBattleHealthBarColor
+	ldPal a, BLACK, DARK_GRAY, LIGHT_GRAY, WHITE
+	ld [rOBP0], a
+	ld [rOBP1], a
+	call UpdateGBCPal_OBP0
+	call UpdateGBCPal_OBP1
 	callab DrawEnemyPokeballs
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
@@ -7498,7 +7503,9 @@ HandleExplodingAnimation:
 PlayMoveAnimation:
 	ld [wAnimationID], a
 	call Delay3
-	predef_jump MoveAnimation
+	predef MoveAnimation
+	callab Func_78e98
+	ret
 
 InitBattle:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -9492,6 +9499,7 @@ PlayBattleAnimationGotID:
 	push de
 	push bc
 	predef MoveAnimation
+	callab Func_78e98
 	pop bc
 	pop de
 	pop hl
