@@ -730,38 +730,44 @@ UncompressMonSprite::
 	ld [wSpriteInputPtr], a    ; fetch sprite input pointer
 	ld a, [hl]
 	ld [wSpriteInputPtr+1], a
+;joenote - expanding this to use 7 rom banks to fit the spaceworld back sprites if desired
 ; define (by index number) the bank that a pokemon's image is in
 ; index = Mew, bank 1
-; index = Kabutops fossil, bank $B
-; index < $1F, bank 9
-; $1F ≤ index < $4A, bank $A
-; $4A ≤ index < $74, bank $B
-; $74 ≤ index < $99, bank $C
-; $99 ≤ index,       bank $D
+; index < $19, bank PICS_1
+; $19 ≤ index < $32, bank PICS_2
+; $32 ≤ index < $58, bank PICS_3
+; $58 ≤ index < $76, bank PICS_4
+; $76 ≤ index < $95, bank PICS_5
+; $95 ≤ index < $B4, bank PICS_6
+; $B4 ≤ index,       bank PICS_7
 	ld a, [wcf91] ; XXX name for this ram location
 	ld b, a
 	cp MEW
 	ld a, BANK(MewPicFront)
 	jr z, .GotBank
 	ld a, b
-	cp FOSSIL_KABUTOPS
-	ld a, BANK(FossilKabutopsPic)
-	jr z, .GotBank
-	ld a, b
-	cp TANGELA + 1
-	ld a, BANK(TangelaPicFront)
+	cp TENTACOOL + 1
+	ld a, BANK(TentacoolPicFront)
 	jr c, .GotBank
 	ld a, b
-	cp MOLTRES + 1
-	ld a, BANK(MoltresPicFront)
+	cp GOLEM + 1
+	ld a, BANK(GolemPicFront)
 	jr c, .GotBank
 	ld a, b
-	cp BEEDRILL + 2
-	ld a, BANK(BeedrillPicFront)
+	cp RAICHU + 3
+	ld a, BANK(RaichuPicFront)
 	jr c, .GotBank
 	ld a, b
-	cp STARMIE + 1
-	ld a, BANK(StarmiePicFront)
+	cp PRIMEAPE + 1
+	ld a, BANK(PrimeapePicFront)
+	jr c, .GotBank
+	ld a, b
+	cp ABRA + 1
+	ld a, BANK(AbraPicFront)
+	jr c, .GotBank
+	ld a, b
+	cp WARTORTLE + 1
+	ld a, BANK(WartortlePicFront)
 	jr c, .GotBank
 	ld a, BANK(VictreebelPicFront)
 .GotBank
