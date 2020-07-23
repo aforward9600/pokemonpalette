@@ -124,8 +124,9 @@ WriteCutOrBoulderDustAnimationOAMBlock:
 	jp WriteOAMBlock
 
 CutOrBoulderDustAnimationTilesAndAttributes:
-	db $FC,$10,$FD,$10
-	db $FE,$10,$FF,$10
+;gbcnote - updated attributes for GBC
+	db $FC,$14,$FD,$14
+	db $FE,$14,$FF,$14
 
 GetCutOrBoulderDustAnimationOffsets:
 	ld hl, wSpriteStateData1 + 4
