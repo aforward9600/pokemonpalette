@@ -20,12 +20,13 @@ ExternalClockTradeAnim:
 TradeAnimCommon:
 	ld a, [wOptions]
 	push af
+	and %110000 ; preserve speaker options
+	ld [wOptions], a
 	ld a, [hSCY]
 	push af
 	ld a, [hSCX]
 	push af
 	xor a
-	ld [wOptions], a
 	ld [hSCY], a
 	ld [hSCX], a
 	push de
@@ -450,6 +451,9 @@ Trade_InitGameboyTransferGfx:
 	ld a, $1
 	ld [H_AUTOBGTRANSFERENABLED], a
 	call ClearScreen
+	;gbcnote - update pal for GBC
+	ld b, SET_PAL_GENERIC
+	call RunPaletteCommand
 	xor a
 	ld [H_AUTOBGTRANSFERENABLED], a
 	call Trade_LoadMonPartySpriteGfx
