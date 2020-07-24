@@ -36,6 +36,7 @@ OakSpeech:
 	call LoadTextBoxTilePatterns
 	call SetDefaultNames
 	predef InitPlayerData2
+	call RunDefaultPaletteCommand	;gbcnote - reinitialize the default palette in case the pointers got cleared
 	ld a, $FF
 	call PlaySound ; stop music
 	ld a, BANK(Music_Routes2)
