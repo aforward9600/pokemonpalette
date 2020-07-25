@@ -983,36 +983,35 @@ CopySGBBorderTiles:
 	jr nz, .tileLoop
 	ret
 
-;gbcnote - do palette swaps for scrolling title screen mons
-TitleMonPals:
+
+;gbcnote - This function loads the palette for a given pokemon index in wcf91 into a specified palette register on the GBC
+;d = CONVERT_OBP0, CONVERT_OBP1, or CONVERT_BGP
+;e = palette register # (0 to 7)
+TransferMonPal:
 	ld a, [hGBC]
 	and a
 	ret z 
-	push de
+	ld a, e
+	push af
+	ld a, d
+	push af
 	ld a, [wcf91]
 	call DeterminePaletteIDOutOfBattle
 	call GetGBCBasePalAddress
-	xor a
+	pop af
+	cp CONVERT_BGP
+	push af
 	call DMGPalToGBCPal
-	ld a, 2
+	pop af
+	jr z, .do_bgp
+	pop af
+	call TransferCurOBPData
+	ret
+.do_bgp
+	pop af
 	call TransferCurBGPData
-	pop de
 	ret 
 
-BlueIntroOBPal:	;gbcnote - jigglypuff object needs its pal in blue version
-	ld a, [hGBC]
-	and a
-	ret z 
-	ld a, JIGGLYPUFF
-	push de
-	call DeterminePaletteIDOutOfBattle
-	call GetGBCBasePalAddress
-	ld a, CONVERT_OBP0
-	call DMGPalToGBCPal
-	ld a, 0
-	call TransferCurOBPData
-	pop de
-	ret 
 
 INCLUDE "data/sgb_packets.asm"
 

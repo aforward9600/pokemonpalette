@@ -37,7 +37,13 @@ PlayIntroScene:
 	call UpdateGBCPal_OBP1
 	
 IF DEF(_BLUE)
-	callba BlueIntroOBPal ;gbcnote - jigglypuff object needs its pal in blue version
+	push de
+	ld d, CONVERT_OBP0
+	ld e, 0
+	ld a, JIGGLYPUFF
+	ld [wcf91], a
+	callba TransferMonPal ;gbcnote - jigglypuff object needs its pal in blue version
+	pop de
 ENDC
 	
 	xor a
