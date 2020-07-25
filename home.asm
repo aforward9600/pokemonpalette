@@ -732,42 +732,34 @@ UncompressMonSprite::
 	ld [wSpriteInputPtr+1], a
 ;joenote - expanding this to use 7 rom banks to fit the spaceworld back sprites if desired
 ; define (by index number) the bank that a pokemon's image is in
-; index = Mew, bank 1
-; index < $19, bank PICS_1
-; $19 ≤ index < $32, bank PICS_2
-; $32 ≤ index < $58, bank PICS_3
-; $58 ≤ index < $76, bank PICS_4
-; $76 ≤ index < $95, bank PICS_5
-; $95 ≤ index < $B4, bank PICS_6
-; $B4 ≤ index,       bank PICS_7
 	ld a, [wcf91] ; XXX name for this ram location
 	ld b, a
 	cp MEW
 	ld a, BANK(MewPicFront)
 	jr z, .GotBank
 	ld a, b
-	cp TENTACOOL + 1
-	ld a, BANK(TentacoolPicFront)
+	cp SHELLDER + 1
+	ld a, BANK(ShellderPicFront)
 	jr c, .GotBank
 	ld a, b
-	cp GOLEM + 1
-	ld a, BANK(GolemPicFront)
+	cp DROWZEE + 1
+	ld a, BANK(DrowzeePicFront)
 	jr c, .GotBank
 	ld a, b
-	cp RAICHU + 3
-	ld a, BANK(RaichuPicFront)
+	cp NINETALES + 1
+	ld a, BANK(NinetalesPicFront)
 	jr c, .GotBank
 	ld a, b
-	cp PRIMEAPE + 1
-	ld a, BANK(PrimeapePicFront)
+	cp KAKUNA + 1
+	ld a, BANK(KakunaPicFront)
 	jr c, .GotBank
 	ld a, b
-	cp ABRA + 1
-	ld a, BANK(AbraPicFront)
+	cp CLEFABLE + 1
+	ld a, BANK(ClefablePicFront)
 	jr c, .GotBank
 	ld a, b
-	cp WARTORTLE + 1
-	ld a, BANK(WartortlePicFront)
+	cp PORYGON + 1
+	ld a, BANK(PorygonPicFront)
 	jr c, .GotBank
 	ld a, BANK(VictreebelPicFront)
 .GotBank
