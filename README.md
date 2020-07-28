@@ -16,7 +16,11 @@ It was done to serve as a codebase for others to start their own romhacks.
 #Latest Fixes (not yet in the ips patch):
 ---------------
 - The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
+- Scrolling mons on the title screen have their own palettes loaded on the GBC.
+- In the blue version intro, jigglypuff has it's own palette loaded on the GBC.
+- Oak-speech nidorino has its color palette on the GBC.
 - Ai routine #3 has a correction involving favoribility of 0 bp moves
+- The formula functions for exp now have underflow protection.
 
 
 #Latest Fixes (most recent ips patch):
