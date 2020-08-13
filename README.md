@@ -21,6 +21,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Oak-speech nidorino has its color palette on the GBC.
 - Ai routine #3 has a correction involving favoribility of 0 bp moves
 - The formula functions for exp now have underflow protection.
+- Added improved general RNG from Prism and Polished Crystal
+- Minor graphical fixes to route 22 rival
 
 
 #Latest Fixes (most recent ips patch):
