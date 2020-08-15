@@ -51,10 +51,21 @@ rLCDC_DEFAULT EQU %11100011
 	or c
 	jr nz, .loop
 
+;joenote - implement RNG from Prism and Polished Crystal
+;Initialize the RNG state. It can be initialized to anything but zero; this is just a simple way of doing it.
+	ld hl, wRNGState
+	ld a, $de
+	ld [hli], a
+	ld a, $ad
+	ld [hli], a
+	ld a, $be
+	ld [hli], a
+	ld [hl], $ef
+
 	call ClearVram
 
 	ld hl, $ff80
-	ld bc, $ffff - $ff80
+	ld bc, $fffe - $ff80	;gbcnote - don't clear hGBC
 	call FillMemory
 
 	call ClearSprites

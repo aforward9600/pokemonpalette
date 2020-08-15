@@ -473,6 +473,13 @@ AIMoveChoiceModification1:
 	ld [hl], a
 	jp .nextMove
 
+EffectsToNotDissuade:
+	db CONFUSION_EFFECT
+	db LEECH_SEED_EFFECT
+	db DISABLE_EFFECT
+	db HEAL_EFFECT
+	db FOCUS_ENERGY_EFFECT
+	db SUBSTITUTE_EFFECT
 StatusAilmentMoveEffects:
 	db $01 ; unused sleep effect
 	db SLEEP_EFFECT
@@ -590,6 +597,22 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMovePower]	;get the base power of the enemy's attack
 	and a	;check if it is zero
 	jr nz, .skipout	;get out of this section if non-zero power
+	;backup check: don't use a status move against a status'd target
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, StatusAilmentMoveEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr nc, .nostatusconflict
+	ld a, [wBattleMonStatus]
+	and a
+	jr nz, .heavydiscourage2
+.nostatusconflict
 	;check on certain moves with zero bp but are handled differently
 	ld a, [wEnemyMoveNum]
 	push hl
@@ -602,23 +625,7 @@ AIMoveChoiceModification3:
 	pop de
 	pop hl
 	jp c, .skipout	;carry flag means the move was found in the list
-	;don't use a status move against a status'd target
-	ld a, [wEnemyMoveEffect]
-	push hl
-	push de
-	push bc
-	ld hl, StatusAilmentMoveEffects
-	ld de, $0001
-	call IsInArray
-	pop bc
-	pop de
-	pop hl
-	jr nc, .nostatusconflict
-	;joenote - if player pkmn has a nonvolatile status, then heavily discourage using a status move
-	ld a, [wBattleMonStatus]
-	and a
-	jr nz, .heavydiscourage2
-.nostatusconflict
+	;don't use poison-effect moves on poison-tpe pokemon
 	ld a, [wEnemyMoveEffect]
 	cp POISON_EFFECT
 	jr nz, .notpoisoneffect
@@ -629,13 +636,31 @@ AIMoveChoiceModification3:
 	cp POISON
 	jr z, .heavydiscourage2
 .notpoisoneffect
+	;See if the move has an effect that should not be dissuaded
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, EffectsToNotDissuade
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr nc, .applybias
 .backfromTwave
-	call Random	;else get a random number between 0 and 255
-	cp $20
-	jp c, .givepref	;(12.5% chance) slightly encourage to spice things up
-	cp $A0	;don't set carry flag if number is >= this value
-	jp nc, .heavydiscourage2	;62.5% chance to heavily discourage and would rather do damage
-	jp .nextMove	;else neither encourage nor discourage
+	jp .nextMove	;neither encourage nor discourage the status move
+.applybias
+;else apply a random bias to the 0 bp move we are on
+	call Random	
+;outcome desired: 	50% chance to heavily discourage and would rather do damage
+;					12.5% chance to slightly encourage
+;					else neither encourage nor discourage
+	cp 128	;don't set carry flag if number is >= this value
+	jp nc, .heavydiscourage2	
+	cp 32
+	jp c, .givepref	;if not discouraged, then there is a chance to slightly encourage to spice things up
+	jp .nextMove	;neither encourage nor discourage
 .skipout
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	push hl

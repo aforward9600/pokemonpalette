@@ -32,6 +32,20 @@ PlayIntroScene:
 	ld [rBGP], a
 	ld [rOBP0], a
 	ld [rOBP1], a
+	call UpdateGBCPal_BGP
+	call UpdateGBCPal_OBP0
+	call UpdateGBCPal_OBP1
+	
+IF DEF(_BLUE)
+	push de
+	ld d, CONVERT_OBP0
+	ld e, 0
+	ld a, JIGGLYPUFF
+	ld [wcf91], a
+	callba TransferMonPal ;gbcnote - jigglypuff object needs its pal in blue version
+	pop de
+ENDC
+	
 	xor a
 	ld [hSCX], a
 	ld b, GENGAR_INTRO_TILES1
@@ -314,6 +328,7 @@ PlayShootingStar:
 	callba LoadCopyrightAndTextBoxTiles
 	ldPal a, BLACK, DARK_GRAY, LIGHT_GRAY, WHITE
 	ld [rBGP], a
+	call UpdateGBCPal_BGP
 	ld c, 180
 	call DelayFrames
 	call ClearScreen

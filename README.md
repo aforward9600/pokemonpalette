@@ -6,7 +6,8 @@ Download the IPS patch file of the version you want and apply it to its respecti
 Always apply patches to a fresh USA ROM or else strange glitches will occur.  
 
 Important Note: If you are using a save file from a previous version, you might be blocked by invisible walls upon loading the game.
-To fix this, you must use the Softlock Warp detailed below to teleport back to Palette Town.
+To fix this, you must use the Softlock Warp detailed below to teleport back to Pallet Town.
+It is best to save outside in Pallet Town before updating to the new patch.
 
 This is primarily a fix-it patch of pokemon red & blue based on the Pret team's disassembly.  
 The Lite patch, unlike the full Shin Pokemon Red/Blue, tries to fix bugs and improve the AI with little else changed.
@@ -15,13 +16,17 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (not yet in the ips patch):
 ---------------
-- 
+-
 
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- Trainer AI routine 4 has been expanded
-- Fix for crash when the key item text sfx is played
+- The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
+- Scrolling mons on the title screen have their own palettes loaded on the GBC.
+- In the blue version intro, jigglypuff has it's own palette loaded on the GBC.
+- Oak-speech nidorino has its color palette on the GBC.
+- Ai routine #3 has a correction involving favoribility of 0 bp moves
+- Minor graphical fixes to route 22 rival
 
 
 #Bugfixes:
@@ -167,10 +172,16 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Each of the two boulder puzzles in seafoam islands will fully reset until completed
   - The boulder switches never reset while inside victory road and they will always reset upon leaving
   - While inside victory road, boulders placed on switches will stay there between floor transitions
+  - The formula functions for exp now have underflow protection.
+  - Added improved general RNG from Prism and Polished Crystal (all DVs are now possible naturally)
 
 
 #TWEAKS:
 -----------
+- The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
+  - Scrolling mons on the title screen have their own palettes loaded on the GBC.
+  - In the blue version intro, jigglypuff has it's own palette loaded on the GBC. 
+  - Oak-speech nidorino has its color palette on the GBC.
 - Loading AI trainer parties uses the code from pokemon Yellow so as to allow custom movelists
 - If wGymLeaderNo is set to 9 when loading a battle, then the final battle music will play
 - Softlock Warp 

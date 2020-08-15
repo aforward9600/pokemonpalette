@@ -158,6 +158,9 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ld [rBGP], a
 	ld [rOBP0], a
 	ld [rOBP1], a
+	call UpdateGBCPal_BGP
+	call UpdateGBCPal_OBP0
+	call UpdateGBCPal_OBP1
 .slideSilhouettesLoop ; slide silhouettes of the player's pic and the enemy's pic onto the screen
 	ld h, b
 	ld l, $40
@@ -1068,6 +1071,11 @@ ReplaceFaintedEnemyMon:
 	ld hl, wEnemyHPBarColor
 	ld e, $30
 	call GetBattleHealthBarColor
+	ldPal a, BLACK, DARK_GRAY, LIGHT_GRAY, WHITE
+	ld [rOBP0], a
+	ld [rOBP1], a
+	call UpdateGBCPal_OBP0
+	call UpdateGBCPal_OBP1
 	callab DrawEnemyPokeballs
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
@@ -7072,6 +7080,9 @@ LoadPlayerBackPic:
 	ld [hli], a ; OAM tile number
 	inc a ; increment tile number
 	ld [hOAMTile], a
+	;gbcnote - load correct palette for hat object
+	ld a, $2
+	ld [hl], a
 	inc hl
 	dec c
 	jr nz, .innerLoop
@@ -7495,7 +7506,9 @@ HandleExplodingAnimation:
 PlayMoveAnimation:
 	ld [wAnimationID], a
 	call Delay3
-	predef_jump MoveAnimation
+	predef MoveAnimation
+	callab Func_78e98
+	ret
 
 InitBattle:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -9489,6 +9502,7 @@ PlayBattleAnimationGotID:
 	push de
 	push bc
 	predef MoveAnimation
+	callab Func_78e98
 	pop bc
 	pop de
 	pop hl

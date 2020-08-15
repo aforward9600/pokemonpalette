@@ -5,11 +5,13 @@ NPC_SPRITES_2 EQU $5
 
 GFX EQU $4
 
-PICS_1 EQU $9
+PICS_1 EQU $2F
 PICS_2 EQU $A
 PICS_3 EQU $B
 PICS_4 EQU $C
 PICS_5 EQU $D
+PICS_6 EQU $30
+PICS_7 EQU $31
 
 INCLUDE "home.asm"
 
@@ -20,8 +22,8 @@ INCLUDE "data/facing.asm"
 
 INCLUDE "engine/black_out.asm"
 
-MewPicFront:: INCBIN "pic/bmon/mew.pic"
-MewPicBack::  INCBIN "pic/monback/mewb.pic"
+;MewPicFront:: INCBIN "pic/bmon/mew.pic"	;moved to a proper rom bank
+;MewPicBack::  INCBIN "pic/monback/mewb.pic"
 ;INCLUDE "data/baseStats/mew.asm"	;this has been moved to be with the other pokemon base stat files
 INCLUDE "data/baseStats/missingno.asm"	;joenote - added basestats for fossil kabutops missingno
 
@@ -259,6 +261,7 @@ INCLUDE "engine/overworld/emotion_bubbles.asm"
 INCLUDE "engine/evolve_trade.asm"
 INCLUDE "engine/battle/moveEffects/substitute_effect.asm"
 INCLUDE "engine/menu/pc.asm"
+
 
 SECTION "bank6",ROMX,BANK[$6]
 
@@ -563,6 +566,43 @@ GyaradosPicFront::    INCBIN "pic/bmon/gyarados.pic"
 GyaradosPicBack::     INCBIN "pic/monback/gyaradosb.pic"
 ShellderPicFront::    INCBIN "pic/bmon/shellder.pic"
 ShellderPicBack::     INCBIN "pic/monback/shellderb.pic"
+
+
+SECTION "Battle (bank 9)", ROMX, BANK[$9]
+INCLUDE "engine/battle/print_type.asm"
+INCLUDE "engine/battle/save_trainer_name.asm"
+INCLUDE "engine/battle/moveEffects/focus_energy_effect.asm"
+
+;bank A stuff
+INCLUDE "engine/battle/moveEffects/leech_seed_effect.asm"
+
+;bank B stuff
+INCLUDE "engine/battle/moveEffects/mist_effect.asm"
+INCLUDE "engine/battle/moveEffects/one_hit_ko_effect.asm"
+
+;bank C stuff
+INCLUDE "engine/battle/display_effectiveness.asm"
+TrainerInfoTextBoxTileGraphics:  INCBIN "gfx/trainer_info.2bpp"
+TrainerInfoTextBoxTileGraphicsEnd:
+BlankLeaderNames:                INCBIN "gfx/blank_leader_names.2bpp"
+CircleTile:                      INCBIN "gfx/circle_tile.2bpp"
+BadgeNumbersTileGraphics:        INCBIN "gfx/badge_numbers.2bpp"
+INCLUDE "engine/items/tmhm.asm"
+INCLUDE "engine/battle/scale_sprites.asm"
+INCLUDE "engine/battle/moveEffects/pay_day_effect.asm"
+INCLUDE "engine/game_corner_slots2.asm"
+
+;bank D stuff
+INCLUDE "engine/titlescreen2.asm"
+INCLUDE "engine/battle/link_battle_versus_text.asm"
+INCLUDE "engine/slot_machine.asm"
+INCLUDE "engine/overworld/pewter_guys.asm"
+INCLUDE "engine/multiply_divide.asm"
+INCLUDE "engine/game_corner_slots.asm"
+
+
+SECTION "Pics 2", ROMX, BANK[PICS_2]
+
 TentacoolPicFront::   INCBIN "pic/bmon/tentacool.pic"
 TentacoolPicBack::    INCBIN "pic/monback/tentacoolb.pic"
 GastlyPicFront::      INCBIN "pic/bmon/gastly.pic"
@@ -577,16 +617,6 @@ PinsirPicFront::      INCBIN "pic/bmon/pinsir.pic"
 PinsirPicBack::       INCBIN "pic/monback/pinsirb.pic"
 TangelaPicFront::     INCBIN "pic/bmon/tangela.pic"
 TangelaPicBack::      INCBIN "pic/monback/tangelab.pic"
-
-
-SECTION "Battle (bank 9)", ROMX, BANK[$9]
-INCLUDE "engine/battle/print_type.asm"
-INCLUDE "engine/battle/save_trainer_name.asm"
-INCLUDE "engine/battle/moveEffects/focus_energy_effect.asm"
-
-
-SECTION "Pics 2", ROMX, BANK[PICS_2]
-
 GrowlithePicFront::   INCBIN "pic/bmon/growlithe.pic"
 GrowlithePicBack::    INCBIN "pic/monback/growlitheb.pic"
 OnixPicFront::        INCBIN "pic/bmon/onix.pic"
@@ -619,6 +649,13 @@ PsyduckPicFront::     INCBIN "pic/bmon/psyduck.pic"
 PsyduckPicBack::      INCBIN "pic/monback/psyduckb.pic"
 DrowzeePicFront::     INCBIN "pic/bmon/drowzee.pic"
 DrowzeePicBack::      INCBIN "pic/monback/drowzeeb.pic"
+
+
+SECTION "Battle (bank A)", ROMX, BANK[$A]
+;migrated content to bank 9
+
+SECTION "Pics 3", ROMX, BANK[PICS_3]
+
 GolemPicFront::       INCBIN "pic/bmon/golem.pic"
 GolemPicBack::        INCBIN "pic/monback/golemb.pic"
 MagmarPicFront::      INCBIN "pic/bmon/magmar.pic"
@@ -651,14 +688,6 @@ JynxPicFront::        INCBIN "pic/bmon/jynx.pic"
 JynxPicBack::         INCBIN "pic/monback/jynxb.pic"
 MoltresPicFront::     INCBIN "pic/bmon/moltres.pic"
 MoltresPicBack::      INCBIN "pic/monback/moltresb.pic"
-
-
-SECTION "Battle (bank A)", ROMX, BANK[$A]
-INCLUDE "engine/battle/moveEffects/leech_seed_effect.asm"
-
-
-SECTION "Pics 3", ROMX, BANK[PICS_3]
-
 ArticunoPicFront::    INCBIN "pic/bmon/articuno.pic"
 ArticunoPicBack::     INCBIN "pic/monback/articunob.pic"
 ZapdosPicFront::      INCBIN "pic/bmon/zapdos.pic"
@@ -673,6 +702,13 @@ VulpixPicFront::      INCBIN "pic/bmon/vulpix.pic"
 VulpixPicBack::       INCBIN "pic/monback/vulpixb.pic"
 NinetalesPicFront::   INCBIN "pic/bmon/ninetales.pic"
 NinetalesPicBack::    INCBIN "pic/monback/ninetalesb.pic"
+
+
+SECTION "Battle (bank B)", ROMX, BANK[$B]
+;migrated content to bank 9
+
+SECTION "Pics 4", ROMX, BANK[PICS_4]
+
 PikachuPicFront::     INCBIN "pic/bmon/pikachu.pic"
 PikachuPicBack::      INCBIN "pic/monback/pikachub.pic"
 RaichuPicFront::      INCBIN "pic/bmon/raichu.pic"
@@ -725,30 +761,15 @@ WeedlePicFront::      INCBIN "pic/bmon/weedle.pic"
 WeedlePicBack::       INCBIN "pic/monback/weedleb.pic"
 KakunaPicFront::      INCBIN "pic/bmon/kakuna.pic"
 KakunaPicBack::       INCBIN "pic/monback/kakunab.pic"
+
+
+SECTION "Battle (bank C)", ROMX, BANK[$C]
+;migrated content to bank 9
+
+SECTION "Pics 5", ROMX, BANK[PICS_5]
+
 BeedrillPicFront::    INCBIN "pic/bmon/beedrill.pic"
 BeedrillPicBack::     INCBIN "pic/monback/beedrillb.pic"
-
-FossilKabutopsPic::   INCBIN "pic/other/fossilkabutops.pic"
-
-
-SECTION "Battle (bank B)", ROMX, BANK[$B]
-
-INCLUDE "engine/battle/display_effectiveness.asm"
-
-TrainerInfoTextBoxTileGraphics:  INCBIN "gfx/trainer_info.2bpp"
-TrainerInfoTextBoxTileGraphicsEnd:
-BlankLeaderNames:                INCBIN "gfx/blank_leader_names.2bpp"
-CircleTile:                      INCBIN "gfx/circle_tile.2bpp"
-BadgeNumbersTileGraphics:        INCBIN "gfx/badge_numbers.2bpp"
-
-INCLUDE "engine/items/tmhm.asm"
-INCLUDE "engine/battle/scale_sprites.asm"
-INCLUDE "engine/battle/moveEffects/pay_day_effect.asm"
-INCLUDE "engine/game_corner_slots2.asm"
-
-
-SECTION "Pics 4", ROMX, BANK[PICS_4]
-
 DodrioPicFront::       INCBIN "pic/bmon/dodrio.pic"
 DodrioPicBack::        INCBIN "pic/monback/dodriob.pic"
 PrimeapePicFront::     INCBIN "pic/bmon/primeape.pic"
@@ -789,6 +810,9 @@ ElectrodePicFront::    INCBIN "pic/bmon/electrode.pic"
 ElectrodePicBack::     INCBIN "pic/monback/electrodeb.pic"
 ClefablePicFront::     INCBIN "pic/bmon/clefable.pic"
 ClefablePicBack::      INCBIN "pic/monback/clefableb.pic"
+
+
+SECTION "Pics 6", ROMX, BANK[PICS_6]
 WeezingPicFront::      INCBIN "pic/bmon/weezing.pic"
 WeezingPicBack::       INCBIN "pic/monback/weezingb.pic"
 PersianPicFront::      INCBIN "pic/bmon/persian.pic"
@@ -807,18 +831,6 @@ PidgeotPicFront::      INCBIN "pic/bmon/pidgeot.pic"
 PidgeotPicBack::       INCBIN "pic/monback/pidgeotb.pic"
 StarmiePicFront::      INCBIN "pic/bmon/starmie.pic"
 StarmiePicBack::       INCBIN "pic/monback/starmieb.pic"
-
-RedPicBack::           INCBIN "pic/trainer/redb.pic"
-OldManPic::            INCBIN "pic/trainer/oldman.pic"
-
-
-SECTION "Battle (bank C)", ROMX, BANK[$C]
-INCLUDE "engine/battle/moveEffects/mist_effect.asm"
-INCLUDE "engine/battle/moveEffects/one_hit_ko_effect.asm"
-
-
-SECTION "Pics 5", ROMX, BANK[PICS_5]
-
 BulbasaurPicFront::    INCBIN "pic/bmon/bulbasaur.pic"
 BulbasaurPicBack::     INCBIN "pic/monback/bulbasaurb.pic"
 VenusaurPicFront::     INCBIN "pic/bmon/venusaur.pic"
@@ -845,6 +857,8 @@ GeodudePicFront::      INCBIN "pic/bmon/geodude.pic"
 GeodudePicBack::       INCBIN "pic/monback/geodudeb.pic"
 PorygonPicFront::      INCBIN "pic/bmon/porygon.pic"
 PorygonPicBack::       INCBIN "pic/monback/porygonb.pic"
+
+SECTION "Pics 7", ROMX, BANK[PICS_7]
 AerodactylPicFront::   INCBIN "pic/bmon/aerodactyl.pic"
 AerodactylPicBack::    INCBIN "pic/monback/aerodactylb.pic"
 MagnemitePicFront::    INCBIN "pic/bmon/magnemite.pic"
@@ -859,6 +873,7 @@ WartortlePicFront::    INCBIN "pic/bmon/wartortle.pic"
 WartortlePicBack::     INCBIN "pic/monback/wartortleb.pic"
 CharizardPicFront::    INCBIN "pic/bmon/charizard.pic"
 CharizardPicBack::     INCBIN "pic/monback/charizardb.pic"
+FossilKabutopsPic::    INCBIN "pic/other/fossilkabutops.pic"
 FossilAerodactylPic::  INCBIN "pic/other/fossilaerodactyl.pic"
 GhostPic::             INCBIN "pic/other/ghost.pic"
 OddishPicFront::       INCBIN "pic/bmon/oddish.pic"
@@ -873,17 +888,13 @@ WeepinbellPicFront::   INCBIN "pic/bmon/weepinbell.pic"
 WeepinbellPicBack::    INCBIN "pic/monback/weepinbellb.pic"
 VictreebelPicFront::   INCBIN "pic/bmon/victreebel.pic"
 VictreebelPicBack::    INCBIN "pic/monback/victreebelb.pic"
-
+MewPicFront:: 		   INCBIN "pic/bmon/mew.pic"
+MewPicBack::  		   INCBIN "pic/monback/mewb.pic"
+RedPicBack::           INCBIN "pic/trainer/redb.pic"
+OldManPic::            INCBIN "pic/trainer/oldman.pic"
 
 SECTION "Battle (bank D)", ROMX, BANK[$D]
-
-INCLUDE "engine/titlescreen2.asm"
-INCLUDE "engine/battle/link_battle_versus_text.asm"
-INCLUDE "engine/slot_machine.asm"
-INCLUDE "engine/overworld/pewter_guys.asm"
-INCLUDE "engine/multiply_divide.asm"
-INCLUDE "engine/game_corner_slots.asm"
-
+;migrated content to bank 9
 
 SECTION "bankE",ROMX,BANK[$E]
 
@@ -1925,7 +1936,7 @@ Underground_Block: INCBIN "gfx/blocksets/underground.bst"
 
 SECTION "bank1C",ROMX,BANK[$1C]
 
-INCLUDE "engine/gamefreak.asm"
+;INCLUDE "engine/gamefreak.asm"	;gbcnote - moved to another bank to make space
 INCLUDE "engine/hall_of_fame.asm"
 INCLUDE "engine/overworld/healing_machine.asm"
 INCLUDE "engine/overworld/player_animations.asm"
@@ -2078,18 +2089,11 @@ INCLUDE "engine/overworld/cut2.asm"
 
 INCLUDE "engine/overworld/ssanne.asm"
 
-RedFishingTilesFront: INCBIN "gfx/red_fishing_tile_front.2bpp"
-RedFishingTilesBack:  INCBIN "gfx/red_fishing_tile_back.2bpp"
-RedFishingTilesSide:  INCBIN "gfx/red_fishing_tile_side.2bpp"
-RedFishingRodTiles:   INCBIN "gfx/red_fishingrod_tiles.2bpp"
-
 INCLUDE "data/animations.asm"
 
 INCLUDE "engine/evolution.asm"
 
 INCLUDE "engine/overworld/elevator.asm"
-
-INCLUDE "engine/items/tm_prices.asm"
 
 
 SECTION "bank2D",ROMX,BANK[$2D]	;joenote - This is a known empty bank. Going to start moving stuff here
@@ -2119,3 +2123,19 @@ INCLUDE "engine/battle/read_trainer_party.asm"
 INCLUDE "data/trainer_moves.asm"
 INCLUDE "data/trainer_parties.asm"
 
+RedFishingTilesFront: INCBIN "gfx/red_fishing_tile_front.2bpp"
+RedFishingTilesBack:  INCBIN "gfx/red_fishing_tile_back.2bpp"
+RedFishingTilesSide:  INCBIN "gfx/red_fishing_tile_side.2bpp"
+RedFishingRodTiles:   INCBIN "gfx/red_fishingrod_tiles.2bpp"
+
+INCLUDE "engine/items/tm_prices.asm"
+
+
+SECTION "bank2E",ROMX,BANK[$2E]	
+;gbcnote - This bank with hold the bg map attributes for the gameboy color among other stuff
+
+;include the bgmap files from pokemon yellow
+INCLUDE "data/bg_map_attributes.asm"
+INCLUDE "engine/bg_map_attributes.asm"
+
+INCLUDE "engine/gamefreak.asm"	;gbcnote - moved here to make space

@@ -597,6 +597,8 @@ wDexRatingNumMonsOwned:: ; cc5c
 	ds 1
 
 wDexRatingText:: ; cc5d
+wTrainerCardBadgeAttributes:: ; cc5d
+;gbcnote - modified to match yellow
 	ds 1
 
 wSlotMachineSavedROMBank:: ; cc5e
@@ -1422,7 +1424,8 @@ wScriptedNPCWalkCounter:: ; cf18
 
 	ds 1
 
-wGBC:: ; cf1a
+;gbcnote - moved to hram
+;wGBC:: ; cf1a
 	ds 1
 
 wOnSGB:: ; cf1b
@@ -1450,7 +1453,11 @@ wPartyMenuHPBarColors:: ; cf1f
 wStatusScreenHPBarColor:: ; cf25
 	ds 1
 
-	ds 7
+	;ds 7
+;joenote - implement RNG from Prism and Polished Crystal
+wRNGState:: ds 4
+wRNGCumulativeDividerPlus:: ds 2
+wRNGCumulativeDividerMinus:: ds 1
 
 wCopyingSGBTileData:: ; cf2d
 
@@ -1461,7 +1468,10 @@ wPalPacket:: ; cf2d
 
 wPartyMenuBlkPacket:: ; cf2e
 ; $30 bytes
-	ds 29
+	ds 9
+;gbcnote - modified to match yellow
+wPartyHPBarAttributes:: ; cf36
+	ds 20
 
 wExpAmountGained:: ; cf4b
 ; 2-byte big-endian number
@@ -2966,7 +2976,20 @@ wRoute18GateCurScript:: ; d669
 	ds 78
 wGameProgressFlagsEnd::
 
-	ds 56
+wGBCBasePalPointers:: 
+	ds NUM_ACTIVE_PALS * 2 ; 8 bytes
+wGBCPal:: 
+	ds PAL_SIZE ; 8 bytes
+wLastBGP:: 
+	ds 1
+wLastOBP0:: 
+	ds 1
+wLastOBP1:: 
+	ds 1 
+wBGPPalsBuffer:: 
+	ds NUM_ACTIVE_PALS * PAL_SIZE ;32 bytes
+	
+	ds 5
 
 wObtainedHiddenItemsFlags::
 	ds 14
@@ -3293,6 +3316,10 @@ wBoxMonNicksEnd::
 wBoxDataEnd::
 
 ; dee2
+	ds 11
+
+wdeed::
+	ds 1
 
 SECTION "Stack", WRAM0[$df00]
 	ds $ff

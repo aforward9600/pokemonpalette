@@ -36,16 +36,20 @@ Route22Script_50ed6:
 	ret
 
 Route22MoveRivalSprite:
+	ld a, SPRITE_FACING_RIGHT
+	ld [hSpriteFacingDirection], a
+	call SetSpriteFacingDirection
 	ld de, Route22RivalMovementData
 	ld a, [wcf0d]
 	cp $1
 	jr z, .asm_50ef1
 	inc de
 .asm_50ef1
-	call MoveSprite
-	ld a, SPRITE_FACING_RIGHT
-	ld [hSpriteFacingDirection], a
-	jp SetSpriteFacingDirectionAndDelay
+	jp MoveSprite
+	;call MoveSprite
+	;ld a, SPRITE_FACING_RIGHT
+	;ld [hSpriteFacingDirection], a
+	;jp SetSpriteFacingDirectionAndDelay
 
 Route22RivalMovementData:
 	db NPC_MOVEMENT_RIGHT
