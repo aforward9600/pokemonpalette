@@ -16,7 +16,12 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (not yet in the ips patch):
 ---------------
--
+- More AI tweaking
+  - AI scoring for switching puts a heavier penalty on potentially switching in a bad type matchup
+  - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
+  - AI layer 3 changes that affect most 0-power moves (with only a few exceptions like heal effects)
+    - now has a hard stop on using 0-power moves on consecutive turns
+	- heavily discourages 0-power moves if below 1/3 hp
 
 
 #Latest Fixes (most recent ips patch):
