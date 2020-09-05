@@ -178,4 +178,42 @@ SwapTurn:	;a simple custom function for swapping whose turn it is in the battle 
 	ld [H_WHOSETURN], a
 	ret
 
-	
+
+
+EnemyBideAccum:
+	ld hl, wEnemyBattleStatus1
+	bit STORING_ENERGY, [hl] ; is mon using bide?
+	ret z
+	xor a
+	ld [wEnemyMoveNum], a
+	ld hl, wDamage
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	ld hl, wEnemyBideAccumulatedDamage + 1
+	ld a, [hl]
+	add c ; accumulate damage taken
+	ld [hld], a
+	ld a, [hl]
+	adc b
+	ld [hl], a
+	ret
+
+PlayerBideAccum:
+	ld hl, wPlayerBattleStatus1
+	bit STORING_ENERGY, [hl] ; is mon using bide?
+	ret z
+	xor a
+	ld [wPlayerMoveNum], a
+	ld hl, wDamage
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	ld hl, wPlayerBideAccumulatedDamage + 1
+	ld a, [hl]
+	add c ; accumulate damage taken
+	ld [hld], a
+	ld a, [hl]
+	adc b
+	ld [hl], a
+	ret
