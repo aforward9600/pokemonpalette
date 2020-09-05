@@ -9611,15 +9611,6 @@ ZeroLastDamage:
 	ret
 
 
-;joenote - function to play cry with stack pushing
-CryFunc:
-	push hl
-	push bc
-	call PlayCry
-	pop bc
-	pop hl
-	ret
-
 ;joenote - caps the stat in bc to 999
 BC999cap:
 	;b register contains high byte & c register contains low byte
