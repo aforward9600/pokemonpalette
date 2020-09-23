@@ -23,6 +23,7 @@ It was done to serve as a codebase for others to start their own romhacks.
     - now has a hard stop on using 0-power moves on consecutive turns
 	- heavily discourages 0-power moves if below 1/3 hp
 - Type immunity prevents trapping moves from taking hold at all
+- Erika uses her pic from yellow version which alters her funerary clothes to a proper kimono
 
 
 #Latest Fixes (most recent ips patch):
