@@ -24,6 +24,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 	- heavily discourages 0-power moves if below 1/3 hp
 - Type immunity prevents trapping moves from taking hold at all
 - Erika uses her pic from yellow version which alters her funerary clothes to a proper kimono
+- Cannot bypass Brock via the start button
 
 
 #Latest Fixes (most recent ips patch):
