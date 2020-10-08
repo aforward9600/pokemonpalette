@@ -16,6 +16,11 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (not yet in the ips patch):
 ---------------
+-
+
+
+#Latest Fixes (most recent ips patch):
+---------------
 - More AI tweaking
   - AI scoring for switching puts a heavier penalty on potentially switching in a bad type matchup
   - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
@@ -25,16 +30,6 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Type immunity prevents trapping moves from taking hold at all
 - Erika uses her pic from yellow version which alters her funerary clothes to a proper kimono
 - Cannot bypass Brock via the start button
-
-
-#Latest Fixes (most recent ips patch):
----------------
-- The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
-- Scrolling mons on the title screen have their own palettes loaded on the GBC.
-- In the blue version intro, jigglypuff has it's own palette loaded on the GBC.
-- Oak-speech nidorino has its color palette on the GBC.
-- Ai routine #3 has a correction involving favoribility of 0 bp moves
-- Minor graphical fixes to route 22 rival
 
 
 #Bugfixes:
@@ -129,6 +124,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - The lower right corner tile of the mon back pic is no longer blanked
   - Amazing man can no longer be triggered by text boxes or the start menu (via a code tweak from Yellow-version)
   - The rival encounters on route 22 now show an exclamation bubble that never showed up originally
+  - Erika uses her pic from yellow version which alters her funerary clothes to a proper kimono
   
 
 - Item Fixes  
@@ -182,6 +178,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - While inside victory road, boulders placed on switches will stay there between floor transitions
   - The formula functions for exp now have underflow protection.
   - Added improved general RNG from Prism and Polished Crystal (all DVs are now possible naturally)
+  - Cannot bypass Brock via the start button
 
 
 #TWEAKS:
@@ -239,6 +236,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Rest's sleep condition increased to 3 turns since attacking on wakeup is now allowed.
   - Acid armor's animation changed so that does not make its user disappear
   - Metronome now classified as a Typeless special damage move to play better with the AI
+  - Type immunity prevents trapping moves from taking hold at all
 
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
@@ -276,6 +274,9 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Static damage moves are randomly preferenced 25% of the time to spice things up
   - Thunder Wave is not used against immune types
   - Poisoning moves discouraged against poison types
+  - AI layer 3 changes that affect most 0-power moves (with only a few exceptions like heal effects)
+    - now has a hard stop on using 0-power moves on consecutive turns
+	- heavily discourages 0-power moves if below 1/3 hp
 
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
   - 25% chance to switch if active pkmn is below 1/3 HP
@@ -288,6 +289,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - on the lowest stat mod, 12.5% chance to switch per lowered stage
   - AI routine 4 now scores each mon in its party every turn
   - These scores are taken into account when deciding to switch or picking a mon to send out
+  - AI scoring for switching puts a heavier penalty on potentially switching in a bad type matchup
+  - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
   
 - Trainer ai routine #3 added to the following trainer classes
   - jr trainer M, jr trainer F, hiker, supernerd, engineer, lass, chief, bruno, brock, gentleman, agatha
