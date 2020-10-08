@@ -22,8 +22,9 @@ _CeladonMartRoofText_484f9::
 _CeladonMartRoofText_484fe::
 	db $0
 	para "@"
-	TX_RAM wcf4b
-	text " contains"
+	;TX_RAM wcf4b
+	;text " contains"
+	text "TM13 contains"	;joenote - don't dynamically call the name as it just messes up the text borders
 	line "ICE BEAM!"
 
 	para "It can freeze the"
@@ -48,8 +49,9 @@ _CeladonMartRoofText_4850a::
 _CeladonMartRoofText_4850f::
 	db $0
 	para "@"
-	TX_RAM wcf4b
-	text " contains"
+	;TX_RAM wcf4b
+	;text " contains"	;joenote - don't dynamically call the name as it just messes up the text borders
+	text "TM48 contains"
 	line "ROCK SLIDE!"
 
 	para "It can spook the"

@@ -322,6 +322,11 @@ ScoreAIParty:
 	call AIRosterScoringCheckIfHPBelowFraction
 	ld b, 3
 	call c, .minus
+	;-5 more (total of -10) score if less than 1/4 base hp
+	ld a, 4
+	call AIRosterScoringCheckIfHPBelowFraction
+	ld b, 5
+	call c, .minus
 .next2	
 
 
@@ -344,10 +349,10 @@ ScoreAIParty:
 	call nz, .minus
 	pop af
 	jr nz, .next3
-	;-9 if frozen
+	;-10 if frozen
 	ld a, c
 	and (1 << FRZ)
-	ld b, 9
+	ld b, 10
 	call nz, .minus
 .next3
 
@@ -391,7 +396,14 @@ ScoreAIParty:
 	;skip if effectiveness is neutral
 	cp $0A
 	jr z, .next4
-	;+5 to score if move has little or no effect
+	;+10 to score if move has no effect
+	cp $01
+	ld b, 10
+	push af
+	call c, .plus
+	pop af
+	jr c, .next4
+	;+5 to score if move has little effect
 	cp $03
 	ld b, 5
 	push af
@@ -406,12 +418,8 @@ ScoreAIParty:
 	pop af
 	jr c, .next4
 	;at this point the move must be super effective
-	;so give the score -2
-	ld b, 2
-	call .minus
-	;minus more based on the power of the move
+	;minus based on the power of the move
 	ld a, [wPlayerMovePower]
-	srl a
 	srl a
 	srl a
 	srl a
