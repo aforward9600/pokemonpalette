@@ -16,7 +16,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (not yet in the ips patch):
 ---------------
--
+- Fixed a transformed pokemon having the wrong palette
 
 
 #Latest Fixes (most recent ips patch):
