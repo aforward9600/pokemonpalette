@@ -265,7 +265,7 @@ LinkMenu:
 	ld a, [wCurrentMenuItem]
 	and a
 	ld a, COLOSSEUM
-	jr nz, .next
+	jp nz, ShinPokemonHandshake ;jr nz, .next
 	ld a, TRADE_CENTER
 .next
 	ld [wd72d], a
@@ -297,6 +297,52 @@ LinkMenu:
 	ld hl, wd72e
 	res 6, [hl]
 	ret
+
+ShinPokemonHandshake:
+;joenote - do a security handshake that checks the version of the other linked game.
+;The other game must be the same version and branch as this one.
+;Otherwise the handshake fails and the connection is cancelled.
+	push af
+	push hl
+	ld hl, wUnknownSerialCounter
+	ld a, $3
+	ld [hli], a
+	xor a
+	ld [hl], a
+	ld [wSerialExchangeNybbleSendData], a
+	call Serial_PrintWaitingTextAndSyncAndExchangeNybble
+	ld a, [wSerialExchangeNybbleReceiveData]
+	and a
+	jr nz, .fail
+	ld hl, HandshakeList
+.loop
+	ld a, [hl]
+	cp $ff
+	jr z, .pass
+	ld [wSerialExchangeNybbleSendData], a
+	ld a, $ff
+	ld [wSerialExchangeNybbleReceiveData], a
+	call Serial_SyncAndExchangeNybble
+	ld a, [wSerialExchangeNybbleReceiveData]
+	cp [hl]
+	jr nz, .fail
+	inc hl
+	jr .loop	
+.fail
+	pop hl
+	pop af
+	jp LinkMenu.choseCancel
+.pass
+	pop hl
+	pop af
+	jp LinkMenu.next
+HandshakeList:	;this serves as a version control passcode with FF as an end-of-list marker
+	db $1
+	db $1
+	db $6
+	db $a
+	db $ff
+
 
 WhereWouldYouLikeText:
 	TX_FAR _WhereWouldYouLikeText
