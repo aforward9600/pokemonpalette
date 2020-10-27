@@ -18,6 +18,9 @@ It was done to serve as a codebase for others to start their own romhacks.
 ---------------
 - Fixed a transformed pokemon having the wrong palette
 - Fixed the cable club text borders having the wrong palette
+- Choosing the cable club colosseum initiates a version control handshake
+  - Will hang and cancel the link if the other game is incompatible with battles
+  - Lite branch only supports battles with other similar lite branch builds
 
 
 #Latest Fixes (most recent ips patch):

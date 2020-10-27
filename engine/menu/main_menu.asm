@@ -340,7 +340,7 @@ HandshakeList:	;this serves as a version control passcode with FF as an end-of-l
 	db $1
 	db $1
 	db $6
-	db $a
+	db $b
 	db $ff
 
 
