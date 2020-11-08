@@ -17,6 +17,12 @@ ENDM
 
 farcall EQUS "callba"
 
+callbs: MACRO	;joenote - added from pokeyellow
+	ld a, BANK(\1)
+	call BankswitchCommon
+	call \1
+	ENDM
+	
 callba: MACRO
 	ld b, BANK(\1)
 	ld hl, \1

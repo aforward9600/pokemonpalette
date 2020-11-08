@@ -1,9 +1,4 @@
 
-StopAllMusic: MACRO
-	ld a, $ff
-	call PlaySound
-ENDM
-
 Ch0    EQU 0
 Ch1    EQU 1
 Ch2    EQU 2

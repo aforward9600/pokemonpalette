@@ -832,7 +832,7 @@ Audio1_notepitch:
 
 Audio1_EnableChannelOutput:
 	ld b, 0
-	ld hl, Audio1_HWChannelEnableMasks
+	call Audio1_9972
 	add hl, bc
 	ld a, [rNR51]
 	or [hl] ; set this channel's bits
@@ -852,7 +852,7 @@ Audio1_EnableChannelOutput:
 ; If this is the SFX noise channel or a music channel whose corresponding
 ; SFX channel is off, apply stereo panning.
 	ld a, [wStereoPanning]
-	ld hl, Audio1_HWChannelEnableMasks
+	call Audio1_9972
 	add hl, bc
 	and [hl]
 	ld d, a
@@ -1244,21 +1244,7 @@ Audio1_ApplyDutyCycle:
 	ret
 
 Audio1_GetNextMusicByte:
-	ld d, 0
-	ld a, c
-	add a
-	ld e, a
-	ld hl, wChannelCommandPointers
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld a, [hld]
-	ld d, a
-	ld a, [de] ; get next music command
-	inc de
-	ld [hl], e ; store address of next command
-	inc hl
-	ld [hl], d
+	call GetNextMusicByte
 	ret
 
 Audio1_GetRegisterPointer:
@@ -1330,6 +1316,7 @@ Audio1_PlaySound::
 	jp nc, .playSfx
 
 .playMusic
+;	call InitMusicVariables	;can replace all this
 	xor a
 	;ld [wUnusedC000], a
 	ld [wDisableChannelOutputWhenSfxEnds], a
@@ -1461,6 +1448,7 @@ Audio1_PlaySound::
 	jr c, .asm_99a3
 	ret
 .asm_99a3
+;	call InitSFXVariables	;can replace all this
 	xor a
 	push de
 	ld h, d
@@ -1554,6 +1542,7 @@ Audio1_PlaySound::
 	jp .sfxChannelLoop
 
 .stopAllAudio
+;	call StopAllAudio	;can replace all this
 	ld a, $80
 	ld [rNR52], a ; sound hardware on
 	ld [rNR30], a ; wave playback on
@@ -1707,6 +1696,20 @@ Audio1_HWChannelBaseAddresses:
 Audio1_HWChannelDisableMasks:
 	db HW_CH1_DISABLE_MASK, HW_CH2_DISABLE_MASK, HW_CH3_DISABLE_MASK, HW_CH4_DISABLE_MASK ; channels 0-3
 	db HW_CH1_DISABLE_MASK, HW_CH2_DISABLE_MASK, HW_CH3_DISABLE_MASK, HW_CH4_DISABLE_MASK ; channels 4-7
+
+Audio1_9972:
+	push af
+	push bc
+	ld a, [wOptions]
+	and %110000 ; channel options
+	srl a
+	ld c, a
+	ld b, 0
+	ld hl, Audio1_HWChannelEnableMasks
+	add hl, bc
+	pop bc
+	pop af
+	ret
 
 Audio1_HWChannelEnableMasks:
 	db HW_CH1_ENABLE_MASK, HW_CH2_ENABLE_MASK, HW_CH3_ENABLE_MASK, HW_CH4_ENABLE_MASK ; channels 0-3

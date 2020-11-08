@@ -810,7 +810,7 @@ Audio3_notepitch:
 
 Audio3_7d66c:
 	ld b, $0
-	ld hl, Unknown_7db9b
+	call Audio3_9972
 	add hl, bc
 	ld a, [rNR51]
 	or [hl]
@@ -827,7 +827,7 @@ Audio3_7d66c:
 	jr nz, .skip
 .sfxNoiseChannel
 	ld a, [wStereoPanning]
-	ld hl, Unknown_7db9b
+	call Audio3_9972
 	add hl, bc
 	and [hl]
 	ld d, a
@@ -1204,21 +1204,7 @@ Audio3_ApplyDutyCycle:
 	ret
 
 Audio3_GetNextMusicByte:
-	ld d, $0
-	ld a, c
-	add a
-	ld e, a
-	ld hl, wChannelCommandPointers
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld a, [hld]
-	ld d, a
-	ld a, [de] ; get next music command
-	inc de
-	ld [hl], e ; store address of next command
-	inc hl
-	ld [hl], d
+	call GetNextMusicByte
 	ret
 
 Audio3_7d8ac:
@@ -1662,7 +1648,20 @@ Unknown_7db8b:
 Unknown_7db93:
 	db $EE, $DD, $BB, $77 ; channels 0-3
 	db $EE, $DD, $BB, $77 ; channels 4-7
-
+Audio3_9972:
+	push af
+	push bc
+	ld a, [wOptions]
+	and %110000 ; channel options
+	srl a
+	ld c, a
+	ld b, 0
+	ld hl, Unknown_7db9b
+	add hl, bc
+	pop bc
+	pop af
+	ret
+	
 Unknown_7db9b:
 	db $11, $22, $44, $88 ; channels 0-3
 	db $11, $22, $44, $88 ; channels 4-7

@@ -1041,9 +1041,7 @@ FadeOutAudio::
 	ld b, a
 	xor a
 	ld [wAudioFadeOutControl], a
-	ld a, $ff
-	ld [wNewSoundID], a
-	call PlaySound
+	call StopAllMusic ;joenote - optimization from pokeyellow
 	ld a, [wAudioSavedROMBank]
 	ld [wAudioROMBank], a
 	ld a, b
@@ -2220,6 +2218,18 @@ UpdateGBCPal_OBP1::
 	pop af
 	ret
 
+Func_3082:: ;added from pokeyellow - update audio so it doesn't "lag"
+	ld a, [H_LOADEDROMBANK]
+	push af
+	call FadeOutAudio
+	callbs Music_DoLowHealthAlarm
+	callbs Audio1_UpdateMusic
+	callbs Audio2_UpdateMusic
+	callbs Audio3_UpdateMusic
+	pop af
+	call BankswitchCommon
+	ret
+
 ; not zero if an NPC movement script is running, the player character is
 ; automatically stepping down from a door, or joypad states are being simulated
 IsPlayerCharacterBeingControlledByGame::
@@ -2681,8 +2691,7 @@ PlayTrainerMusic::
 	ret nz
 	xor a
 	ld [wAudioFadeOutControl], a
-	ld a, $ff
-	call PlaySound
+	call StopAllMusic ; ;joenote - optimization from pokeyellow
 	ld a, BANK(Music_MeetEvilTrainer)
 	ld [wAudioROMBank], a
 	ld [wAudioSavedROMBank], a
@@ -3024,6 +3033,8 @@ BankswitchHome::
 	ld a, [H_LOADEDROMBANK]
 	ld [wBankswitchHomeSavedROMBank], a
 	ld a, [wBankswitchHomeTemp]
+	;fall through
+BankswitchCommon::
 	ld [H_LOADEDROMBANK], a
 	ld [MBC1RomBank], a
 	ret
