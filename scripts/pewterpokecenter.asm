@@ -21,8 +21,7 @@ PewterJigglypuffText:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, .Text
 	call PrintText
-	ld a, $ff
-	call PlaySound	;stop music
+	StopAllMusic
 	ld c, 32
 	call DelayFrames
 	ld hl, JigglypuffFacingDirections

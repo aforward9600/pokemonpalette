@@ -817,7 +817,7 @@ Audio2_notepitch:
 
 Audio2_21d79:
 	ld b, $0
-	call Audio2_9972
+	ld hl, Unknown_222e6
 	add hl, bc
 	ld a, [rNR51]
 	or [hl]
@@ -834,7 +834,7 @@ Audio2_21d79:
 	jr nz, .skip
 .sfxNoiseChannel
 	ld a, [wStereoPanning]
-	call Audio2_9972
+	ld hl, Unknown_222e6
 	add hl, bc
 	and [hl]
 	ld d, a
@@ -1255,7 +1255,21 @@ Audio2_ApplyDutyCycle:
 	ret
 
 Audio2_GetNextMusicByte:
-	call GetNextMusicByte
+	ld d, $0
+	ld a, c
+	add a
+	ld e, a
+	ld hl, wChannelCommandPointers
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld a, [hld]
+	ld d, a
+	ld a, [de] ; get next music command
+	inc de
+	ld [hl], e ; store address of next command
+	inc hl
+	ld [hl], d
 	ret
 
 Audio2_21ff7:
@@ -1323,10 +1337,6 @@ Audio2_PlaySound::
 	jr z, .asm_2204c
 	jp nc, Audio2_2210d
 .asm_2204c
-	call Audio2_InitMusicVariables	;joenote - bringing into line with pokeyellow
-	jp Audio2_2224e
-
-Audio2_InitMusicVariables::
 	xor a
 	;ld [wUnusedC000], a
 	ld [wDisableChannelOutputWhenSfxEnds], a
@@ -1397,7 +1407,7 @@ Audio2_InitMusicVariables::
 	ld [rNR30], a
 	ld a, $77
 	ld [rNR50], a
-	ret
+	jp Audio2_2224e
 
 Audio2_2210d:
 	ld l, a
@@ -1458,15 +1468,6 @@ Audio2_2210d:
 	jr c, .asm_22162
 	ret
 .asm_22162
-	call Audio2_InitSFXVariables	;joenote - bring into line with pokeyellow
-.asm_221ea
-	ld a, c
-	and a
-	jp z, Audio2_2224e
-	dec c
-	jp .asm_22126
-
-Audio2_InitSFXVariables::
 	xor a
 	push de
 	ld h, d
@@ -1548,13 +1549,17 @@ Audio2_InitSFXVariables::
 	add hl, de
 	ld [hl], a
 	ld a, e
-	cp Ch4
-	ret nz
+	cp $4
+	jr nz, .asm_221ea
 	ld a, $8
 	ld [rNR10], a
-	ret
+.asm_221ea
+	ld a, c
+	and a
+	jp z, Audio2_2224e
+	dec c
+	jp .asm_22126
 
-Audio2_StopAllAudio::
 Audio2_221f3:
 	ld a, $80
 	ld [rNR52], a
@@ -1708,20 +1713,6 @@ Unknown_222d6:
 Unknown_222de:
 	db $EE, $DD, $BB, $77 ; channels 0-3
 	db $EE, $DD, $BB, $77 ; channels 4-7
-
-Audio2_9972:
-	push af
-	push bc
-	ld a, [wOptions]
-	and %110000 ; channel options
-	srl a
-	ld c, a
-	ld b, 0
-	ld hl, Unknown_222e6
-	add hl, bc
-	pop bc
-	pop af
-	ret
 
 Unknown_222e6:
 	db $11, $22, $44, $88 ; channels 0-3
