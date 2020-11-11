@@ -45,7 +45,7 @@ SSAnne7RubText:
 	TX_FAR _SSAnne7RubText
 	TX_ASM
 	ld a, [wAudioROMBank]
-	cp BANK(Audio3_UpdateMusic)
+	cp BANK(Audio3_PlaySound)
 	ld [wAudioSavedROMBank], a
 	jr nz, .asm_61908
 	ld a, $ff

@@ -366,9 +366,7 @@ PlayBattleMusic::
 	xor a
 	ld [wAudioFadeOutControl], a
 	ld [wLowHealthAlarm], a
-	dec a
-	ld [wNewSoundID], a
-	call PlaySound ; stop music
+	call StopAllMusic
 	call DelayFrame
 	ld c, BANK(Music_GymLeaderBattle)
 	ld a, [wGymLeaderNo]
@@ -540,39 +538,6 @@ INCLUDE "engine/menu/bills_pc.asm"
 INCLUDE "audio/engine_2.asm"
 
 
-Music_GetKeyItemInBattle::	;joenote - if SFX_GET_KEY_ITEM plays in battle, play a previously unused SFX
-	; begin playing the "caught mon" sound effect
-	ld a, SFX_CAUGHT_MON
-	call PlaySoundWaitForCurrent
-	; then immediately overwrite the channel pointers
-	ld hl, wChannelCommandPointers + Ch4 * 2
-	ld de, SFX_08_unused2_Ch4
-	call Audio2_OverwriteChannelPointer
-	ld de, SFX_08_unused2_Ch5
-	call Audio2_OverwriteChannelPointer
-	ld de, SFX_08_unused2_Ch6
-	jp Audio2_OverwriteChannelPointer
-	
-Music_PokeFluteInBattle::
-	; begin playing the "caught mon" sound effect
-	ld a, SFX_CAUGHT_MON
-	call PlaySoundWaitForCurrent
-	; then immediately overwrite the channel pointers
-	ld hl, wChannelCommandPointers + Ch4 * 2
-	ld de, SFX_08_PokeFlute_Ch4
-	call Audio2_OverwriteChannelPointer
-	ld de, SFX_08_PokeFlute_Ch5
-	call Audio2_OverwriteChannelPointer
-	ld de, SFX_08_PokeFlute_Ch6
-
-Audio2_OverwriteChannelPointer:
-	ld a, e
-	ld [hli], a
-	ld a, d
-	ld [hli], a
-	ret
-
-
 SECTION "Audio Engine 3", ROMX, BANK[AUDIO_3]
 
 PlayPokedexRatingSfx::
@@ -587,9 +552,7 @@ PlayPokedexRatingSfx::
 	jr .getSfxPointer
 .gotSfxPointer
 	push bc
-	ld a, $ff
-	ld [wNewSoundID], a
-	call PlaySoundWaitForCurrent
+	call StopAllMusic
 	pop bc
 	ld b, $0
 	ld hl, PokedexRatingSfxPointers

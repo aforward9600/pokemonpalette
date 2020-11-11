@@ -15,6 +15,12 @@ homecall: MACRO
 	ld [MBC1RomBank], a
 ENDM
 
+callbs: MACRO	;joenote - added from pokeyellow
+	ld a, BANK(\1)
+	call BankswitchCommon
+	call \1
+	ENDM
+
 farcall EQUS "callba"
 
 callba: MACRO
