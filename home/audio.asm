@@ -69,32 +69,12 @@ PlayDefaultMusicCommon::
 UpdateMusic6Times::
 ; This is called when entering a map, before fading out the current music and
 ; playing the default music (i.e. the map's music or biking/surfing music).
-	ld a, [wAudioROMBank]
-	ld b, a
-	cp BANK(Audio1_UpdateMusic)
-	jr nz, .checkForAudio2
-
-; audio 1
-	ld hl, Audio1_UpdateMusic
-	jr .next
-
-.checkForAudio2
-	cp BANK(Audio2_UpdateMusic)
-	jr nz, .audio3
-
-; audio 2
-	ld hl, Audio2_UpdateMusic
-	jr .next
-
-.audio3
-	ld hl, Audio3_UpdateMusic
-
-.next
 	ld c, 6
+UpdateMusicCTimes::
 .loop
 	push bc
 	push hl
-	call Bankswitch
+	callba Audio1_UpdateMusic
 	pop hl
 	pop bc
 	dec c
@@ -137,7 +117,11 @@ PlayMusic::
 	ld [wAudioROMBank], a
 	ld [wAudioSavedROMBank], a
 	ld a, b
+	jp PlaySound
 
+StopAllMusic::
+	ld a, $FF
+	ld [wNewSoundID], a
 ; plays music specified by a. If value is $ff, music is stopped
 PlaySound::
 	push hl
@@ -170,36 +154,7 @@ PlaySound::
 .noFadeOut
 	xor a
 	ld [wNewSoundID], a
-	ld a, [H_LOADEDROMBANK]
-	ld [hSavedROMBank], a
-	ld a, [wAudioROMBank]
-	ld [H_LOADEDROMBANK], a
-	ld [MBC1RomBank], a
-	cp BANK(Audio1_PlaySound)
-	jr nz, .checkForAudio2
-
-; audio 1
-	ld a, b
-	call Audio1_PlaySound
-	jr .next2
-
-.checkForAudio2
-	cp BANK(Audio2_PlaySound)
-	jr nz, .audio3
-
-; audio 2
-	ld a, b
-	call Audio2_PlaySound
-	jr .next2
-
-.audio3
-	ld a, b
-	call Audio3_PlaySound
-
-.next2
-	ld a, [hSavedROMBank]
-	ld [H_LOADEDROMBANK], a
-	ld [MBC1RomBank], a
+	call DetermineAudioFunction
 	jr .done
 
 .fadeOut
@@ -210,9 +165,92 @@ PlaySound::
 	ld [wAudioFadeOutCounter], a
 	ld a, b
 	ld [wAudioFadeOutControl], a
-
 .done
 	pop bc
 	pop de
 	pop hl
+	ret
+
+GetNextMusicByte::
+	ld a, [H_LOADEDROMBANK]
+	push af
+	ld a, [wAudioROMBank]
+	call BankswitchCommon
+	ld d, $0
+	ld a, c
+	add a
+	ld e, a
+	ld hl, wChannelCommandPointers
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld a, [hld]
+	ld d, a
+	ld a, [de]
+	inc de
+	ld [hl], e
+	inc hl
+	ld [hl], d
+	ld e, a
+	pop af
+	call BankswitchCommon
+	ld a, e
+	ret
+
+InitMusicVariables::
+	push hl
+	push de
+	push bc
+	homecall Audio2_InitMusicVariables
+	pop bc
+	pop de
+	pop hl
+	ret
+
+InitSFXVariables::
+	push hl
+	push de
+	push bc
+	homecall Audio2_InitSFXVariables
+	pop bc
+	pop de
+	pop hl
+	ret
+
+StopAllAudio::
+	push hl
+	push de
+	push bc
+	homecall Audio2_StopAllAudio
+	pop bc
+	pop de
+	pop hl
+	ret
+
+DetermineAudioFunction::	
+	ld a, [H_LOADEDROMBANK]
+	push af
+	ld a, [wAudioROMBank]
+	call BankswitchCommon
+; determine the audio function, based on the bank
+	cp BANK(Audio1_PlaySound)
+	jr nz, .checkForBank08
+; bank 02 (audio 1)
+	ld a, b
+	call Audio1_PlaySound
+	jr .done
+.checkForBank08
+	cp BANK(Audio2_PlaySound)
+	jr nz, .checkForBank1F
+; bank 08 (audio 2)
+	ld a, b
+	call Audio2_PlaySound
+	jr .done
+.checkForBank1F
+; bank 1f (audio 3)
+	ld a, b
+	call Audio3_PlaySound
+.done
+	pop af
+	call BankswitchCommon
 	ret

@@ -265,7 +265,7 @@ LinkMenu:
 	ld a, [wCurrentMenuItem]
 	and a
 	ld a, COLOSSEUM
-	jr nz, .next
+	jp nz, ShinPokemonHandshake ;jr nz, .next
 	ld a, TRADE_CENTER
 .next
 	ld [wd72d], a
@@ -297,6 +297,52 @@ LinkMenu:
 	ld hl, wd72e
 	res 6, [hl]
 	ret
+
+ShinPokemonHandshake:
+;joenote - do a security handshake that checks the version of the other linked game.
+;The other game must be the same version and branch as this one.
+;Otherwise the handshake fails and the connection is cancelled.
+	push af
+	push hl
+	ld hl, wUnknownSerialCounter
+	ld a, $3
+	ld [hli], a
+	xor a
+	ld [hl], a
+	ld [wSerialExchangeNybbleSendData], a
+	call Serial_PrintWaitingTextAndSyncAndExchangeNybble
+	ld a, [wSerialExchangeNybbleReceiveData]
+	and a
+	jr nz, .fail
+	ld hl, HandshakeList
+.loop
+	ld a, [hl]
+	cp $ff
+	jr z, .pass
+	ld [wSerialExchangeNybbleSendData], a
+	ld a, $ff
+	ld [wSerialExchangeNybbleReceiveData], a
+	call Serial_SyncAndExchangeNybble
+	ld a, [wSerialExchangeNybbleReceiveData]
+	cp [hl]
+	jr nz, .fail
+	inc hl
+	jr .loop	
+.fail
+	pop hl
+	pop af
+	jp LinkMenu.choseCancel
+.pass
+	pop hl
+	pop af
+	jp LinkMenu.next
+HandshakeList:	;this serves as a version control passcode with FF as an end-of-list marker
+	db $1
+	db $1
+	db $6
+	db $b
+	db $ff
+
 
 WhereWouldYouLikeText:
 	TX_FAR _WhereWouldYouLikeText
@@ -457,6 +503,7 @@ DisplayOptionMenu:
 	coord hl, 2, 16
 	ld de, OptionMenuCancelText
 	call PlaceString
+	call PlaceSoundSetting	;joenote - display the sound setting
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
@@ -479,7 +526,8 @@ DisplayOptionMenu:
 	ld a, [hJoy5]
 	ld b, a
 	and A_BUTTON | B_BUTTON | START | D_RIGHT | D_LEFT | D_UP | D_DOWN ; any key besides select pressed?
-	jr z, .getJoypadStateLoop
+	jp z, .cycleSoundSetting	;joenote - take advantage of pokeyellow sound engine
+	;jr z, .getJoypadStateLoop
 	bit 1, b ; B button pressed?
 	jr nz, .exitMenu
 	bit 3, b ; Start button pressed?
@@ -583,6 +631,23 @@ DisplayOptionMenu:
 .updateTextSpeedXCoord
 	ld [wOptionsTextSpeedCursorX], a ; text speed cursor X coordinate
 	jp .eraseOldMenuCursor
+.cycleSoundSetting	;joenote - cycle through mono, earphone 1, 2, and 3
+	ld a, b
+	and SELECT
+	jp z, .getJoypadStateLoop
+	push bc
+	ld a, [wOptions]
+	push af
+	add $10
+	and %00110000
+	ld b, a
+	pop af
+	and %11001111
+	or b
+	pop bc
+	ld [wOptions], a
+	call PlaceSoundSetting
+	jp .getJoypadStateLoop
 
 TextSpeedOptionText:
 	db   "TEXT SPEED"
@@ -598,6 +663,40 @@ BattleStyleOptionText:
 
 OptionMenuCancelText:
 	db "CANCEL@"
+
+;joenote - show the sound setting on the m enu
+OptionMenuSoundText:
+	dw OptionMenuMono
+	dw OptionMenuEar1
+	dw OptionMenuEar2
+	dw OptionMenuEar3
+OptionMenuMono:
+	db "MONO     @"
+OptionMenuEar1:
+	db "EARPHONE1@"
+OptionMenuEar2:
+	db "EARPHONE2@"
+OptionMenuEar3:
+	db "EARPHONE3@"
+PlaceSoundSetting:
+	ld hl, OptionMenuSoundText
+	ld a, [wOptions]
+	and %00110000
+	swap a
+.loop
+	and a
+	jr z, .done
+	dec a
+	inc hl
+	inc hl
+	jr .loop
+.done
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	coord hl, 10, 16
+	call PlaceString
+	ret
 
 ; sets the options variable according to the current placement of the menu cursors in the options menu
 SetOptionsFromCursorPositions:
@@ -631,7 +730,10 @@ SetOptionsFromCursorPositions:
 .battleStyleShift
 	res 6, d
 .storeOptions
-	ld a, d
+	ld a, [wOptions]	;joenote - preserve sound settings
+	and %00110000
+	or d
+	;ld a, d
 	ld [wOptions], a
 	ret
 
@@ -639,6 +741,7 @@ SetOptionsFromCursorPositions:
 SetCursorPositionsFromOptions:
 	ld hl, TextSpeedOptionData + 1
 	ld a, [wOptions]
+	and %11001111	;joenote - bypass sound settings
 	ld c, a
 	and $3f
 	push bc
