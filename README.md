@@ -16,24 +16,21 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (not yet in the ips patch):
 ---------------
+-  
+
+  
+#Latest Fixes (most recent ips patch):
+---------------
 - Fixed a transformed pokemon having the wrong palette
 - Fixed the cable club text borders having the wrong palette
+- A revision control function has been added that will cancel unsupported cable links
 - Choosing the cable club colosseum initiates a version control handshake
   - Will hang and cancel the link if the other game is incompatible with battles
   - Lite branch only supports battles with other similar lite branch builds
-
-
-#Latest Fixes (most recent ips patch):
----------------
-- More AI tweaking
-  - AI scoring for switching puts a heavier penalty on potentially switching in a bad type matchup
-  - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
-  - AI layer 3 changes that affect most 0-power moves (with only a few exceptions like heal effects)
-    - now has a hard stop on using 0-power moves on consecutive turns
-	- heavily discourages 0-power moves if below 1/3 hp
-- Type immunity prevents trapping moves from taking hold at all
-- Erika uses her pic from yellow version which alters her funerary clothes to a proper kimono
-- Cannot bypass Brock via the start button
+- Audio engine has been back-ported from Yellow version
+  - Fixes some channel conflicts between cries and the low-health alarm
+  - Fixes some audio hiccups with Yellow's color palettes on the GBC
+  - Press SELECT on the option menu to change the audio mixing option
 
 
 #Bugfixes:
