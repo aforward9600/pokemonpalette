@@ -8,7 +8,7 @@ Route2Mons:
 	IF DEF(_RED)
 		db 3,WEEDLE
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 3,CATERPIE
 	ENDC
 	db 2,RATTATA
@@ -17,7 +17,7 @@ Route2Mons:
 		db 4,WEEDLE
 		db 5,WEEDLE
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 4,CATERPIE
 		db 5,CATERPIE
 	ENDC

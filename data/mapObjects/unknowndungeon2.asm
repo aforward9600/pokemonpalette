@@ -11,10 +11,17 @@ UnknownDungeon2Object:
 
 	db 0 ; signs
 
+IF DEF(_GREEN)
+	db 3 ; objects
+	object SPRITE_BALL, 29, 9, STAY, NONE, 1, FULL_RESTORE
+	object SPRITE_BALL, 5, 15, STAY, NONE, 2, PP_UP
+	object SPRITE_BALL, 25,13, STAY, NONE, 3, ULTRA_BALL
+ELSE
 	db 3 ; objects
 	object SPRITE_BALL, 29, 9, STAY, NONE, 1, PP_UP
 	object SPRITE_BALL, 4, 15, STAY, NONE, 2, ULTRA_BALL
 	object SPRITE_BALL, 13, 6, STAY, NONE, 3, FULL_RESTORE
+ENDC
 
 	; warp-to
 	warp_to 29, 1, UNKNOWN_DUNGEON_2_WIDTH ; UNKNOWN_DUNGEON_1

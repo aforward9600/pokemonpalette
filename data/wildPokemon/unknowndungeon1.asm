@@ -8,7 +8,7 @@ DungeonMons1:
 	IF DEF(_RED)
 		db 52,ARBOK
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 52,SANDSLASH
 	ENDC
 	db 49,KADABRA

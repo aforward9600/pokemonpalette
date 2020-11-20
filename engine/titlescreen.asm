@@ -94,7 +94,11 @@ DisplayTitleScreen:
 
 ; put a pokeball in the player's hand
 	ld hl, wOAMBuffer + $28
+IF DEF(_GREEN)
+	ld a, $70
+ELSE
 	ld a, $74
+ENDC
 	ld [hl], a
 
 ; place tiles for title screen copyright
@@ -123,7 +127,9 @@ ENDC
 IF DEF(_BLUE)
 	ld a, SQUIRTLE ; which Pokemon to show first on the title screen
 ENDC
-
+IF DEF(_GREEN)
+	ld a, BULBASAUR ; which Pokemon to show first on the title screen
+ENDC
 	ld [wTitleMonSpecies], a
 	call LoadTitleMonSprite
 	ld a, (vBGMap0 + $300) / $100
@@ -348,7 +354,11 @@ DrawPlayerCharacter:
 	xor a
 	ld [wPlayerCharacterOAMTile], a
 	ld hl, wOAMBuffer
+IF DEF(_GREEN)
+	ld de, $6030
+ELSE
 	ld de, $605a
+ENDC
 	ld b, 7
 .loop
 	push de
@@ -394,7 +404,11 @@ ClearBothBGMaps:
 LoadTitleMonSprite:
 	ld [wcf91], a
 	ld [wd0b5], a
+IF DEF(_GREEN)
+	coord hl, 9, 10
+ELSE
 	coord hl, 5, 10
+ENDC
 	call GetMonHeader
 	jp LoadFrontSpriteByMonIndex
 
@@ -439,6 +453,8 @@ ENDC
 IF DEF(_BLUE)
 	db $61,$62,$63,$64,$65,$66,$67,$68,"@" ; "Blue Version"
 ENDC
-
+IF DEF(_GREEN)
+	db $62,$63,$64,$7F,$65,$66,$67,$68,$69,"@" ; "Green Version"
+ENDC
 NintenText: db "NINTEN@"
 SonyText:   db "SONY@"

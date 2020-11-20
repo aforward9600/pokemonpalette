@@ -3,7 +3,7 @@ ZoneMons2:
 	IF DEF(_RED)
 		db 22,NIDORAN_M
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 22,NIDORAN_F
 	ENDC
 	db 26,RHYHORN

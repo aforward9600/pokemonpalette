@@ -12,7 +12,7 @@ Route25Mons:
 		db 7,METAPOD
 		db 8,CATERPIE
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 8,CATERPIE
 		db 9,METAPOD
 		db 13,PIDGEY

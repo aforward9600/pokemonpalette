@@ -12,7 +12,7 @@ Route7Mons:
 		db 19,MANKEY
 		db 20,MANKEY
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 19,PIDGEY
 		db 19,BELLSPROUT
 		db 17,MEOWTH

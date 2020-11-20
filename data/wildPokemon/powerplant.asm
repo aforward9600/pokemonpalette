@@ -12,7 +12,7 @@ PowerPlantMons:
 		db 37,ELECTABUZZ
 		db 21,PORYGON
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 33,ELECTABUZZ
 		db 33,RAICHU
 		db 36,RAICHU

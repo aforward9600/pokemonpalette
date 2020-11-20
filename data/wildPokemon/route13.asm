@@ -12,7 +12,7 @@ Route13Mons:
 		db 28,GLOOM
 		db 30,GLOOM
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db $14
 		db 24,BELLSPROUT
 		db 25,PIDGEY

@@ -12,7 +12,7 @@ IslandMonsB2:
 		db 30,GOLBAT
 		db 37,SLOWBRO
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 30,SEEL
 		db 30,PSYDUCK
 		db 32,SEEL

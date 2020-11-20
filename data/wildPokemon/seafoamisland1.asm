@@ -12,7 +12,7 @@ IslandMons1:
 		db 28,SHELLDER
 		db 38,GOLDUCK
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 30,SEEL
 		db 30,PSYDUCK
 		db 30,STARYU

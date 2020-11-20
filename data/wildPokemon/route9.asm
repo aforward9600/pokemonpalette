@@ -12,7 +12,7 @@ Route9Mons:
 		db 13,EKANS
 		db 17,EKANS
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 16,RATTATA
 		db 16,SPEAROW
 		db 14,RATTATA
