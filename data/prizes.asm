@@ -17,7 +17,7 @@ PrizeMenuMon1Entries:
 IF DEF(_RED)
 	db NIDORINA
 ENDC
-IF DEF(_BLUE)
+IF (DEF(_BLUE) || DEF(_GREEN))
 	db NIDORINO
 ENDC
 	db "@"
@@ -27,7 +27,7 @@ IF DEF(_RED)
 	coins 180
 	coins 500
 ENDC
-IF DEF(_BLUE)
+IF (DEF(_BLUE) || DEF(_GREEN))
 	coins 120
 	coins 750
 ENDC
@@ -39,7 +39,7 @@ IF DEF(_RED)
 	db DRATINI
 	db SCYTHER
 ENDC
-IF DEF(_BLUE)
+IF (DEF(_BLUE) || DEF(_GREEN))
 	db PINSIR
 	db DRATINI
 ENDC
@@ -52,7 +52,7 @@ IF DEF(_RED)
 	coins 5500
 	coins 9999
 ENDC
-IF DEF(_BLUE)
+IF (DEF(_BLUE) || DEF(_GREEN))
 	coins 2500
 	coins 4600
 	coins 6500

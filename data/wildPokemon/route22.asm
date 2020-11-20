@@ -12,7 +12,7 @@ Route22Mons:
 		db 3,NIDORAN_F
 		db 4,NIDORAN_F
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 3,RATTATA
 		db 3,NIDORAN_F
 		db 4,RATTATA

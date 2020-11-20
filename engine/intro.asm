@@ -464,7 +464,7 @@ FightIntroBackMonEnd:
 
 FightIntroFrontMon:
 
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN))
 	INCBIN "gfx/red/intro_nido_1.2bpp"
 FightIntroFrontMon2:
 	INCBIN "gfx/red/intro_nido_2.2bpp"

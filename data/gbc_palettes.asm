@@ -80,15 +80,23 @@ GBCBasePalettes:
 	RGB  1,  1,  1
 
 	; PAL_LOGO1
+IF DEF(_BLUE)
 	RGB 31, 31, 31	;white bg
 	RGB 31, 31,  0	;unused yellow logo text
+	RGB 21,  0,  4	;unused on title screen
+	RGB  3,  3, 23	;version subtitle text color
+ENDC
 IF DEF(_RED)
+	RGB 31, 31, 31	;white bg
+	RGB 31, 31,  0	;unused yellow logo text
 	RGB 17, 23, 10	;unused on title screen
 	RGB 23,  3,  3	;version subtitle text color
 ENDC
-IF DEF(_BLUE)
-	RGB 21,  0,  4	;unused on title screen
-	RGB  3,  3, 23	;version subtitle text color
+IF DEF(_GREEN)
+	RGB 31, 31, 31	;white bg
+	RGB 31, 31,  0	;unused yellow logo text
+	RGB 17, 23, 10	;unused on title screen
+	RGB  3, 23,  3	;version subtitle text color
 ENDC
 
 	; PAL_LOGO2
@@ -171,38 +179,64 @@ ENDC
 	RGB  3,  3,  3	;reel outline
 
 	; PAL_SLOTS2
+IF DEF(_RED)
 	RGB 31, 31, 31	;"3" icon fill
 	RGB 31, 31,  0	;"3" icon shape color
-IF DEF(_RED)
 	RGB 20,  8, 15	;"3" icon background color
+	RGB  3,  3,  3	;"3" icon outline
 ENDC
 IF DEF(_BLUE)
-	RGB 9,  5, 30	
-ENDC
+	RGB 31, 31, 31	;"3" icon fill
+	RGB 31, 31,  0	;"3" icon shape color
+	RGB  9,  5, 30	;"3" icon background color
 	RGB  3,  3,  3	;"3" icon outline
+ENDC
+IF DEF(_GREEN)
+	RGB 31, 31, 31	;"3" icon fill
+	RGB 31, 31,  0	;"3" icon shape color
+	RGB 12, 21,  7	;"3" icon background color
+	RGB  3,  3,  3	;"3" icon outline
+ENDC
 
 	; PAL_SLOTS3
+IF DEF(_RED)
 	RGB 31, 31, 31	;"2" icon fill
 	RGB  3, 31,  9	;"2" icon shape color
-IF DEF(_RED)
 	RGB 20,  8, 15	;"2" icon background color
+	RGB  3,  3,  3	;"2" icon outline
 ENDC
 IF DEF(_BLUE)
-	RGB 9,  5, 30	
-ENDC
+	RGB 31, 31, 31	;"2" icon fill
+	RGB  3, 31,  9	;"2" icon shape color
+	RGB  9,  5, 30	;"2" icon background color
 	RGB  3,  3,  3	;"2" icon outline
+ENDC
+IF DEF(_GREEN)
+	RGB 31, 31, 31	;"2" icon fill
+	RGB 20,  8, 15	;"2" icon shape color
+	RGB 12, 21,  7	;"2" icon background color
+	RGB  3,  3,  3	;"2" icon outline
+ENDC
 
 	; PAL_SLOTS4
-	RGB 31, 31, 31	;"1" icon fill
 IF DEF(_RED)
+	RGB 31, 31, 31	;"1" icon fill
 	RGB  9,  5, 30	;"1" icon shape color
 	RGB 20,  8, 15	;"1" icon background color
+	RGB  3,  3,  3	;"1" icon outline
 ENDC
 IF DEF(_BLUE)
-	RGB 20,  8, 15
-	RGB 9,  5, 30
-ENDC
+	RGB 31, 31, 31	;"1" icon fill
+	RGB 20,  8, 15	;"1" icon shape color
+	RGB  9,  5, 30	;"1" icon background color
 	RGB  3,  3,  3	;"1" icon outline
+ENDC
+IF DEF(_GREEN)
+	RGB 31, 31, 31	;"1" icon fill
+	RGB  9,  5, 30	;"1" icon shape color
+	RGB 12, 21,  7	;"1" icon background color
+	RGB  3,  3,  3	;"1" icon outline
+ENDC
 
 	; PAL_BLACK
 	RGB 31, 31, 31

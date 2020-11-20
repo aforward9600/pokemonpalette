@@ -13,6 +13,10 @@ This is primarily a fix-it patch of pokemon red & blue based on the Pret team's 
 The Lite patch, unlike the full Shin Pokemon Red/Blue, tries to fix bugs and improve the AI with little else changed.
 It was done to serve as a codebase for others to start their own romhacks.
 
+***Now with Pokemon Green!***
+- The compiler primarily builds using green version's graphics and cerulean cave layout.
+- Use the ips patch with a USA Blue rom.
+
 
 #Latest Fixes (not yet in the ips patch):
 ---------------

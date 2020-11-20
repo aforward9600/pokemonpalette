@@ -12,7 +12,7 @@ ZoneMons3:
 		db 26,TAUROS
 		db 28,KANGASKHAN
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 25,NIDORAN_F
 		db 26,DODUO
 		db 23,VENONAT

@@ -30,4 +30,8 @@ INCLUDE "constants/tilesets.asm"
 INCLUDE "constants/starter_mons.asm"
 INCLUDE "constants/event_constants.asm"
 INCLUDE "constants/text_constants.asm"
+IF DEF(_GREEN)
 INCLUDE "constants/monfrontpic_constants.asm"
+ELSE
+INCLUDE "constants/monfrontpic_constants_green.asm"
+ENDC

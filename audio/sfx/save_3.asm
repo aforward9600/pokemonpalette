@@ -1,6 +1,6 @@
 SFX_Save_3_Ch4:
 	duty 2
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN))
 	squarenote 4, 15, 4, 1792
 	squarenote 3, 14, 4, 1664
 	squarenote 3, 14, 4, 1728
@@ -18,7 +18,7 @@ ENDC
 
 SFX_Save_3_Ch5:
 	duty 2
-IF DEF(_RED)
+IF (DEF(_RED) || DEF(_GREEN))
 	squarenote 4, 0, 8, 0
 	squarenote 3, 13, 4, 1793
 	squarenote 3, 12, 4, 1665

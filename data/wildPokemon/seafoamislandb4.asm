@@ -12,7 +12,7 @@ IslandMonsB4:
 		db 39,SLOWBRO
 		db 32,GOLBAT
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 31,KRABBY
 		db 31,STARYU
 		db 33,KRABBY

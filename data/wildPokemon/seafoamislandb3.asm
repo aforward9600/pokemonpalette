@@ -12,7 +12,7 @@ IslandMonsB3:
 		db 39,SEADRA
 		db 37,DEWGONG
 	ENDC
-	IF DEF(_BLUE)
+	IF (DEF(_BLUE) || DEF(_GREEN))
 		db 31,PSYDUCK
 		db 31,SEEL
 		db 33,PSYDUCK
