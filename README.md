@@ -20,7 +20,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (not yet in the ips patch):
 ---------------
--  
+- Incredibly minor text edits in Green to match the japanese script  
 
   
 #Latest Fixes (most recent ips patch):
@@ -210,7 +210,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 - Fixed mistakes and made adjustments to the game text
   - When a pkmn is caught and fills the box, a reminder is printed that the box is full
-  - Man in cinnabar won't mention raichu evolving
+  - Man in cinnabar won't mention raichu evolving (also applies to the jynx trade in cerulean)
   - Koga correctly says soul badge increases speed
   - Lt. Surge correctly says thunder badge increases defense
   - Correct type effectiveness information & sfx should now be displayed when attacking dual-type pkmn

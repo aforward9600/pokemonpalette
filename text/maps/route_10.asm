@@ -19,6 +19,21 @@ _Route10BattleText2::
 	text "Ha-hahah-ah-ha!"
 	done
 
+IF DEF(_GREEN)
+_Route10EndBattleText2::
+	text "Ha-haha!"
+	line "Hahhhhh ...!"
+	cont "Oh man..."
+	cont "I ate some funny-"
+	cont "tasting shrooms."
+	prompt
+
+_Route10AfterBattleText2::
+	text "Haha-ha-haha!"
+	line "Hahahahaha!"
+	cont "...... ......"
+	done
+ELSE
 _Route10EndBattleText2::
 	text "Ha-haha!"
 	line "Not laughing!"
@@ -31,6 +46,7 @@ _Route10AfterBattleText2::
 	line "Ha-choo!"
 	cont "Snort! Snivel!"
 	done
+ENDC
 
 _Route10BattleText3::
 	text "Hi kid, want to"

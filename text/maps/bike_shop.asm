@@ -1,3 +1,12 @@
+IF DEF(_GREEN)
+_BikeShopText_1d810::
+	text "Hi! Welcome to"
+	line "MIRACLE CYCLE."
+
+	para "Have we got just"
+	line "the BIKE for you!"
+	prompt
+ELSE
 _BikeShopText_1d810::
 	text "Hi! Welcome to"
 	line "our BIKE SHOP."
@@ -5,6 +14,7 @@ _BikeShopText_1d810::
 	para "Have we got just"
 	line "the BIKE for you!"
 	prompt
+ENDC
 
 _BikeShopText_1d815::
 	text "It's a cool BIKE!"

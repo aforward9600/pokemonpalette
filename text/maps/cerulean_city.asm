@@ -216,11 +216,20 @@ _CeruleanCityText13::
 	cont "process."
 	done
 
+IF DEF(_GREEN)
+_CeruleanCityText16::
+	text "Grass and caves"
+	line "handled easily!"
+	cont "MIRACLE CYCLE"
+	done
+
+ELSE
 _CeruleanCityText16::
 	text "Grass and caves"
 	line "handled easily!"
 	cont "BIKE SHOP"
 	done
+ENDC
 
 _CeruleanCityText17::
 	text "CERULEAN CITY"
