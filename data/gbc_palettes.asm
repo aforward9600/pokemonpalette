@@ -173,11 +173,17 @@ ENDC
 
 ;gbcnote - retouched all the slot palettes to match the red/blue coloring
 	; PAL_SLOTS1
+IF DEF(_GREEN)
+	RGB 31, 31, 31	;reel background
+	RGB 21, 12, 15	;reel accents
+	RGB 16,  0,  0	;"7" fill color
+	RGB  3,  3,  3	;reel outline
+ELSE
 	RGB 31, 31, 31	;reel background
 	RGB 21, 12, 15	;reel accents
 	RGB 21, 14,  0	;"7" fill color
 	RGB  3,  3,  3	;reel outline
-
+ENDC
 	; PAL_SLOTS2
 IF DEF(_RED)
 	RGB 31, 31, 31	;"3" icon fill
