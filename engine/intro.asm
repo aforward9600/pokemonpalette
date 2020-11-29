@@ -61,14 +61,22 @@ ENDC
 	ret c
 
 ; hip
+IF DEF(_GREEN)
+	ld a, SFX_SNARE_1
+ELSE
 	ld a, SFX_INTRO_HIP
+ENDC
 	call PlaySound
 	xor a
 	ld [wIntroNidorinoBaseTile], a
 	ld de, IntroNidorinoAnimation1
 	call AnimateIntroNidorino
 ; hop
+IF DEF(_GREEN)
+	ld a, SFX_SNARE_4
+ELSE
 	ld a, SFX_INTRO_HOP
+ENDC
 	call PlaySound
 	ld de, IntroNidorinoAnimation2
 	call AnimateIntroNidorino
@@ -77,12 +85,20 @@ ENDC
 	ret c
 
 ; hip
+IF DEF(_GREEN)
+	ld a, SFX_SNARE_1
+ELSE
 	ld a, SFX_INTRO_HIP
+ENDC
 	call PlaySound
 	ld de, IntroNidorinoAnimation1
 	call AnimateIntroNidorino
 ; hop
+IF DEF(_GREEN)
+	ld a, SFX_SNARE_4
+ELSE
 	ld a, SFX_INTRO_HOP
+ENDC
 	call PlaySound
 	ld de, IntroNidorinoAnimation2
 	call AnimateIntroNidorino
@@ -109,7 +125,11 @@ ENDC
 	lb de, 16 / 2, MOVE_GENGAR_RIGHT
 	call IntroMoveMon
 ; hip
+IF DEF(_GREEN)
+	ld a, SFX_SNARE_1
+ELSE
 	ld a, SFX_INTRO_HIP
+ENDC
 	call PlaySound
 	ld a, (FightIntroFrontMon2 - FightIntroFrontMon) / BYTES_PER_TILE
 	ld [wIntroNidorinoBaseTile], a
@@ -128,14 +148,22 @@ ENDC
 	ret c
 
 ; hip
+IF DEF(_GREEN)
+	ld a, SFX_SNARE_1
+ELSE
 	ld a, SFX_INTRO_HIP
+ENDC
 	call PlaySound
 	xor a
 	ld [wIntroNidorinoBaseTile], a
 	ld de, IntroNidorinoAnimation4
 	call AnimateIntroNidorino
 ; hop
+IF DEF(_GREEN)
+	ld a, SFX_SNARE_1
+ELSE
 	ld a, SFX_INTRO_HOP
+ENDC
 	call PlaySound
 	ld de, IntroNidorinoAnimation5
 	call AnimateIntroNidorino
