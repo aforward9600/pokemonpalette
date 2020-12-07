@@ -18,11 +18,6 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Use the ips patch with a USA Blue rom.
 
 
-#Latest Fixes (not yet in the ips patch):
----------------
-- Incredibly minor text edits in Green to match the japanese script  
-
-  
 #Latest Fixes (most recent ips patch):
 ---------------
 - Fixed a transformed pokemon having the wrong palette
@@ -35,6 +30,13 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Fixes some channel conflicts between cries and the low-health alarm
   - Fixes some audio hiccups with Yellow's color palettes on the GBC
   - Press SELECT on the option menu to change the audio mixing option
+
+
+#Changes not yet in the ips patch files:
+-----------
+- Incredibly minor text edits in Green to match the japanese script
+- Palette & sound edits in Green
+- PP usage is now tracked for both wild and AI trainer pokemon
 
 
 #Bugfixes:

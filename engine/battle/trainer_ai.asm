@@ -1448,7 +1448,24 @@ SwitchEnemyMon:
 	ld hl, wEnemyMonHP
 	ld bc, 4
 	call CopyData	 ;copy hp, number, and status of the active pokemon to its roster position
-
+	
+	;joenote - don't copy PP information if transformed
+	ld a, [wEnemyBattleStatus3]
+	bit 3, a 	;check the state of the enemy transformed bit
+	jr nz, .skiptransformed	;skip ahead if bit is set
+	
+	;joenote - copy PP information
+	ld a, [wEnemyMonPartyPos]
+	ld hl, wEnemyMon1PP
+	ld bc, wEnemyMon2 - wEnemyMon1
+	call AddNTimes
+	ld d, h
+	ld e, l
+	ld hl, wEnemyMonPP
+	ld bc, 4
+	call CopyData
+	
+.skiptransformed
 	ld hl, AIBattleWithdrawText
 	call PrintText
 
