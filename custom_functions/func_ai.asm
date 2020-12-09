@@ -126,7 +126,7 @@ CheckAISwitched:
 	ret
 	
 SetAISwitched:
-	ld a, [wEnemyMonPartyPos]	
+	ld a, [wWhichPokemon]	
 	cp $05
 	jr z, .party5
 	cp $04
@@ -762,8 +762,7 @@ ChooseMovePPTrack:
 	ld h, a
 	ld a, [wUnusedCF8D + 1]
 	ld l, a	
-	ld a, e	;retrieve move number
-	ld b, a
+	ld b, e	;retrieve move number
 ;b holds the move slot (1 to 4)
 
 	call IsTrainerBattlePPCheck
@@ -807,8 +806,7 @@ ChooseMovePPTrack:
 .PPexhausted	;return zero flag if no PP left
 	pop hl
 .flagset
-	xor a
-	ld e, a
+	ld e, 0
 	ld a,  b
 	cp 4
 	jr z, .move4
