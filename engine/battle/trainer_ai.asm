@@ -823,6 +823,22 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 .skipSwitchConfuseEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;12.5% chance to switch if afflicted with sleep counter > 3
+	ld a, [wEnemyMonStatus]
+	and %00000111	;check for sleep counter
+	jr z, .skipSwitchNVSLEEPstatEnd	;no NV status if zero flag set
+	push bc
+	srl a
+	srl a
+	ld b, a
+	call Random
+	and %00000111
+	cp b
+	pop bc
+	jp c, .setSwitch
+.skipSwitchNVSLEEPstatEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;slight chance to switch if afflicted with leech seed
 	ld a, [wEnemyBattleStatus2]
 	bit 7, a	;check a for the leech seed bit (sets or clears zero flag)
@@ -911,12 +927,31 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	call Random	;put a random number in 'a' 
 	cp b; see if a < b and set carry if true
 	pop bc
-	jp c, .setSwitch	;if carry flag is set, switch pkmn
+	jr nc, .skipSwitchEffectiveEnd	;if carry flag is set, switch pkmn
+	;Before switching, flag the mon being switched out.
+	;It will be used as a penalty in scoring since there
+	;is clearly something disfavorable about it.
+	push bc
+	push hl
+	push de
+	ld de, wEnemyMonPartyPos
+	callba SetAISwitched
+	pop de
+	pop bc
+	pop hl
+	jp .setSwitchKeepFlagged	
 .skipSwitchEffectiveEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;do not switch if this pkmn was flagged
+	push hl
+	push bc
+	push de
+	ld de, wEnemyMonPartyPos
 	callba CheckAISwitched
+	pop de
+	pop bc
+	pop hl
 	jp nz, .skipSwitchEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -929,23 +964,27 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	cp $40	;set carry if rand num < $40	/	;25% chance to switch
 	jr nc, .skipSwitchHPend
 	ld a, [wBattleMonSpeed]
+	push bc
 	ld b, a	;store hi byte of player speed in b
 	ld a, [wEnemyMonSpeed]	;store hi byte of enemy speed in a
 	cp b
+	pop bc
 	jr nz, .next1	;if bytes are not equal, then rely on carry bit to see which is greater
 	;else check the lo bytes
 	ld a, [wBattleMonSpeed + 1]
+	push bc
 	ld b, a	;store lo byte of player speed in b
 	ld a, [wEnemyMonSpeed + 1]	;store lo byte of enemy speed in a
 	cp b
+	pop bc
 .next1
 	jp c, .setSwitch	;if carry is set, then enemy mon has less speed --> switch out
 .skipSwitchHPend
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;chance to switch if afflicted with non-volatile status
+;chance to switch if afflicted with non-volatile status (except sleep)
 	ld a, [wEnemyMonStatus]
-	and a	;check for any non-volatile status
+	and %11111000	;check for any non-volatile status except sleep
 	jr z, .skipSwitchNVstatEnd	;no NV status if zero flag set
 	call Random	;put a random number in 'a' between 0 and 255
 	cp $40	;set carry if rand num < $40
@@ -954,6 +993,15 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jr .skipSwitchEnd	;jump to the end and get out of this line is reached.
 .setSwitch	;this line will only be reached if a switch is confirmed.
+	push bc
+	push hl
+	push de
+	ld de, wEnemyMonPartyPos
+	callba ClearAISwitched	;clear any switch flags on the mon being switched out
+	pop de
+	pop bc
+	pop hl
+.setSwitchKeepFlagged
 	call SetSwitchBit
 .skipSwitchEnd
 	ret

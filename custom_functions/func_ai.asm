@@ -87,7 +87,7 @@ SetAISentOut:
 ;joenote - custom functions for determining which trainerAI pkmn have already been switched out before
 ;a=party position of pkmn (like wEnemyMonPartyPos). If checking, zero flag gives bit state (1 means switched out already)	
 CheckAISwitched:
-	ld a, [wEnemyMonPartyPos]	
+	ld a, [de]	
 	cp $05
 	jr z, .party5
 	cp $04
@@ -124,9 +124,48 @@ CheckAISwitched:
 	bit 1, a
 .partyret
 	ret
-	
+
+ClearAISwitched:
+	ld a, [de]	
+	cp $05
+	jr z, .party5
+	cp $04
+	jr z, .party4
+	cp $03
+	jr z, .party3
+	cp $02
+	jr z, .party2
+	cp $01
+	jr z, .party1
+	jr .party0
+.party5
+	ld a, [wUnusedD366]
+	res 6, a
+	jr .partyret
+.party4
+	ld a, [wUnusedD366]
+	res 5, a
+	jr .partyret
+.party3
+	ld a, [wUnusedD366]
+	res 4, a
+	jr .partyret
+.party2
+	ld a, [wUnusedD366]
+	res 3, a
+	jr .partyret
+.party1
+	ld a, [wUnusedD366]
+	res 2, a
+	jr .partyret
+.party0
+	ld a, [wUnusedD366]
+	res 1, a
+.partyret
+	ret
+
 SetAISwitched:
-	ld a, [wWhichPokemon]	
+	ld a, [de]	
 	cp $05
 	jr z, .party5
 	cp $04
@@ -264,6 +303,8 @@ ScoreAIParty:
 	
 	ld a, [wEnemyPartyCount]	;value of 1 to 6
 	ld b, a
+	ld a, [wWhichPokemon]
+	ld c, a
 	ld hl, wEnemyMon1
 	ld de, wAIPartyMonScores
 .scoreloop
@@ -271,6 +312,10 @@ ScoreAIParty:
 	ld [de], a
 	push bc
 	
+	;track which position mon we're on
+	ld a, 6
+	sub b
+	ld [wWhichPokemon], a
 	
 	;check the HP of the mon
 	push hl
@@ -500,7 +545,18 @@ ScoreAIParty:
 	ld b, 3
 	call nz, .plus
 .next6	
+		
 	
+	;-5 score if AISwitch flag has been set for some reason
+	push de
+	ld de, wWhichPokemon
+	call CheckAISwitched
+	pop de
+	jr z, .next7
+	ld b, 5
+	call nz, .minus
+.next7	
+
 
 	pop bc
 	dec b
@@ -513,6 +569,8 @@ ScoreAIParty:
 	jp .scoreloop
 .donescoring
 	pop de
+	ld a, c
+	ld [wWhichPokemon], a
 	jp AIAbortMonSendOut
 .plus
 	ld a, [de]
