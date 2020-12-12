@@ -50,6 +50,11 @@ MainMenu:
 	ld de, NewGameText
 	call PlaceString
 .next2
+;joenote - print the game version
+	coord hl, $00, $11
+	ld de, VersionText
+	call PlaceString
+	
 	ld hl, wd730
 	res 6, [hl]
 	call UpdateSprites
@@ -339,10 +344,11 @@ ShinPokemonHandshake:
 HandshakeList:	;this serves as a version control passcode with FF as an end-of-list marker
 	db $1
 	db $1
-	db $6
+	db $8
 	db $b
 	db $ff
-
+VersionText:
+	db "v1.18L@"
 
 WhereWouldYouLikeText:
 	TX_FAR _WhereWouldYouLikeText
