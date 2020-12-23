@@ -1,5 +1,7 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
+Version 1.18
+
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
@@ -37,6 +39,18 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Incredibly minor text edits in Green to match the japanese script
 - Palette & sound edits in Green
 - PP usage is now tracked for both wild and AI trainer pokemon
+- There is a chance for the AI to switch a sleeping pokemon based on the sleep counter
+  -chance is 0% if counter <= 3
+  -chance is 12.5% if counter > 3
+- Chances to switch have been reduced:
+  - toxic poison - changed probability from 50% to 34%
+  - super effective moves - probability weight reduced by 25%
+  - only switch out from low HP if player outspeeds enemy (gives the enemy one last shot at dealing damage)
+  - an enemy mon is flagged when sent out; non-volatile (except sleeping) status or low hp cannot initiate switching
+  - enemy mon that is recalled back due to a super effective move is flagged; it is demerited from being switched-in
+  - switch flags are all cleared when player sends out a new mon since the situation is now different
+- Patch version now shows on main menu
+- Fixed a scrolling text artifact in the credits when running in GBC-mode
 
 
 #Bugfixes:
