@@ -22,20 +22,6 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- Fixed a transformed pokemon having the wrong palette
-- Fixed the cable club text borders having the wrong palette
-- A revision control function has been added that will cancel unsupported cable links
-- Choosing the cable club colosseum initiates a version control handshake
-  - Will hang and cancel the link if the other game is incompatible with battles
-  - Lite branch only supports battles with other similar lite branch builds
-- Audio engine has been back-ported from Yellow version
-  - Fixes some channel conflicts between cries and the low-health alarm
-  - Fixes some audio hiccups with Yellow's color palettes on the GBC
-  - Press SELECT on the option menu to change the audio mixing option
-
-
-#Changes not yet in the ips patch files:
------------
 - Incredibly minor text edits in Green to match the japanese script
 - Palette & sound edits in Green
 - PP usage is now tracked for both wild and AI trainer pokemon
@@ -53,10 +39,16 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fixed a scrolling text artifact in the credits when running in GBC-mode
 
 
+#Changes not yet in the ips patch files:
+-----------
+-
+
+
 #Bugfixes:
 -----------
 
 - Battle engine fixes
+  - PP usage is now tracked for both wild and AI trainer pokemon
   - Moves no longer have a default 1/256 chance to miss
   - Fixed freeze that occurs in defense stat scaling (def < 4 glitch)
   - Enemy ai ignores type effectiveness for moves that have zero power
