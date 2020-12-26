@@ -1,3 +1,6 @@
+NOTE: RGBDS 0.4.2 and later are known to have issues compiling this repository.
+		Please use RGBDS 0.4.1 or earlier.
+
 # Linux
 
 	sudo apt-get install make git gcc

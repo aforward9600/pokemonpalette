@@ -793,13 +793,13 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	pop hl
 	jp nc, .skipSwitchEnd	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;high chance to switch if afflicted with toxic-style poison
+;better chance to switch if afflicted with toxic-style poison
 	ld a, [wEnemyBattleStatus3]
 	bit 0, a	;check a for the toxic bit (sets or clears zero flag)
 	jr z, .skipSwitchToxicEnd	;not badly poisoned if zero flag set
 	call Random	;put a random number in 'a' between 0 and 255
-	and $01	;use only bit 0
-	jp z, .setSwitch	;switch if zero
+	cp $55	;set carry if rand num < $55
+	jp c, .setSwitch	;34% chance to switch
 .skipSwitchToxicEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -821,6 +821,22 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	cp $40	;set carry if rand num < $40
 	jp c, .setSwitch	;25% chance to switch
 .skipSwitchConfuseEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;12.5% chance to switch if afflicted with sleep counter > 3
+	ld a, [wEnemyMonStatus]
+	and %00000111	;check for sleep counter
+	jr z, .skipSwitchNVSLEEPstatEnd	;no NV status if zero flag set
+	push bc
+	srl a
+	srl a
+	ld b, a
+	call Random
+	and %00000111
+	cp b
+	pop bc
+	jp c, .setSwitch
+.skipSwitchNVSLEEPstatEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;slight chance to switch if afflicted with leech seed
@@ -881,21 +897,6 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 .skipSwitchModEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;do not switch if this pkmn has been switched out before (trapping moves & other stuff prioritized above this)
-	callba CheckAISwitched
-	jp nz, .skipSwitchEnd
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;switch if HP is low. lower HP has higher chance of switching
-	ld a, 3	;
-	call AICheckIfHPBelowFraction
-	jr nc, .skipSwitchHPend	;if hp not below 1/3 then skip to the end of this block
-	call Random	;put a random number in 'a' between 0 and 255
-	cp $40	;set carry if rand num < $40
-	jp c, .setSwitch	;25% chance to switch
-.skipSwitchHPend
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;switch if supereffective move is being used against enemy
 	ld a, [wPlayerMovePower]	;get the power of the player's move
 	cp $2	;regular damaging moves have power > 1
@@ -916,18 +917,74 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 	jr c, .skipSwitchEffectiveEnd	;if so, skip to end of this block
 	push bc
 	ld a, [wPlayerMovePower]	;get the power of the player's move into a
-	ld b, a	;put a into b
+	srl a	;halve the power
+	srl a	;quarter the power
+	ld b, a	;put quarter power into b
+	ld a, [wPlayerMovePower]	;get the power of the player's move into a
+	srl a	;halve the power
+	add b	;add b to get 3/4ths power into a
+	ld b, a
 	call Random	;put a random number in 'a' 
-	and $FF	;use only bits 0 to 7
 	cp b; see if a < b and set carry if true
 	pop bc
-	jp c, .setSwitch	;if carry flag is set, switch pkmn
+	jr nc, .skipSwitchEffectiveEnd	;if carry flag is set, switch pkmn
+	;Before switching, flag the mon being switched out.
+	;It will be used as a penalty in scoring since there
+	;is clearly something disfavorable about it.
+	push bc
+	push hl
+	push de
+	ld de, wEnemyMonPartyPos
+	callba SetAISwitched
+	pop de
+	pop bc
+	pop hl
+	jp .setSwitchKeepFlagged	
 .skipSwitchEffectiveEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;chance to switch if afflicted with non-volatile status
+;do not switch if this pkmn was flagged
+	push hl
+	push bc
+	push de
+	ld de, wEnemyMonPartyPos
+	callba CheckAISwitched
+	pop de
+	pop bc
+	pop hl
+	jp nz, .skipSwitchEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;switch if HP is low. 
+;but don't switch based on low HP if enemy outspeeds player mon
+	ld a, 3	;
+	call AICheckIfHPBelowFraction
+	jr nc, .skipSwitchHPend	;if hp not below 1/3 then skip to the end of this block
+	call Random	;put a random number in 'a' between 0 and 255
+	cp $40	;set carry if rand num < $40	/	;25% chance to switch
+	jr nc, .skipSwitchHPend
+	ld a, [wBattleMonSpeed]
+	push bc
+	ld b, a	;store hi byte of player speed in b
+	ld a, [wEnemyMonSpeed]	;store hi byte of enemy speed in a
+	cp b
+	pop bc
+	jr nz, .next1	;if bytes are not equal, then rely on carry bit to see which is greater
+	;else check the lo bytes
+	ld a, [wBattleMonSpeed + 1]
+	push bc
+	ld b, a	;store lo byte of player speed in b
+	ld a, [wEnemyMonSpeed + 1]	;store lo byte of enemy speed in a
+	cp b
+	pop bc
+.next1
+	jp c, .setSwitch	;if carry is set, then enemy mon has less speed --> switch out
+.skipSwitchHPend
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;chance to switch if afflicted with non-volatile status (except sleep)
 	ld a, [wEnemyMonStatus]
-	and a	;check for any non-volatile status
+	and %11111000	;check for any non-volatile status except sleep
 	jr z, .skipSwitchNVstatEnd	;no NV status if zero flag set
 	call Random	;put a random number in 'a' between 0 and 255
 	cp $40	;set carry if rand num < $40
@@ -936,6 +993,15 @@ AIMoveChoiceModification4:	;this unused routine now handles intelligent trainer 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jr .skipSwitchEnd	;jump to the end and get out of this line is reached.
 .setSwitch	;this line will only be reached if a switch is confirmed.
+	push bc
+	push hl
+	push de
+	ld de, wEnemyMonPartyPos
+	callba ClearAISwitched	;clear any switch flags on the mon being switched out
+	pop de
+	pop bc
+	pop hl
+.setSwitchKeepFlagged
 	call SetSwitchBit
 .skipSwitchEnd
 	ret
@@ -1436,7 +1502,6 @@ SwitchEnemyMon:
 	ld a, $FF
 	ld [wPlayerSelectedMove], a
 .preparewithdraw
-	callba SetAISwitched ;joenote - track the pkmn as being switched out
 ; prepare to withdraw the active monster:
 
 	ld a, [wEnemyMonPartyPos]
@@ -1448,7 +1513,24 @@ SwitchEnemyMon:
 	ld hl, wEnemyMonHP
 	ld bc, 4
 	call CopyData	 ;copy hp, number, and status of the active pokemon to its roster position
-
+	
+	;joenote - don't copy PP information if transformed
+	ld a, [wEnemyBattleStatus3]
+	bit 3, a 	;check the state of the enemy transformed bit
+	jr nz, .skiptransformed	;skip ahead if bit is set
+	
+	;joenote - copy PP information
+	ld a, [wEnemyMonPartyPos]
+	ld hl, wEnemyMon1PP
+	ld bc, wEnemyMon2 - wEnemyMon1
+	call AddNTimes
+	ld d, h
+	ld e, l
+	ld hl, wEnemyMonPP
+	ld bc, 4
+	call CopyData
+	
+.skiptransformed
 	ld hl, AIBattleWithdrawText
 	call PrintText
 

@@ -1513,6 +1513,10 @@ EnemySendOutFirstMon:
 ;AI trainer switching & sendout is handled in this block
 .next
 	callba AISelectWhichMonSendOut
+	push de
+	ld de, wWhichPokemon
+	callba SetAISwitched ;joenote - flag the pokemon being sent out
+	pop de
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .next3
 	ld a, [wWhichPokemon]
@@ -1899,6 +1903,11 @@ LoadEnemyMonFromParty:	;function for link battles
 	ret
 
 SendOutMon:
+	;joenote - reset AI switching tracker since the player is sending out a new pokemon
+	ld a, [wUnusedD366]
+	and %10000001
+	ld [wUnusedD366], a
+
 	callab PrintSendOutMonMessage
 	ld hl, wEnemyMonHP
 	ld a, [hli]
@@ -3209,6 +3218,9 @@ SelectEnemyMove:
 	xor a	;joenote - zero out a
 	callab AIEnemyTrainerChooseMoves
 .chooseRandomMove
+	push de
+	ld d, 0
+.chooseRandomMoveAgain
 	push hl
 	call BattleRandom
 	ld b, $1
@@ -3225,18 +3237,33 @@ SelectEnemyMove:
 	inc hl
 	inc b ; select move 4, [be,ff] (66/256 chance)
 .moveChosen
-	ld a, b
-	dec a
-	ld [wEnemyMoveListIndex], a
-	ld a, [wEnemyDisabledMove]
-	swap a
-	and $f
-	cp b
-	ld a, [hl]
-	pop hl
-	jr z, .chooseRandomMove ; move disabled, try again
+	ld a, d
+	cp $0f
+	jr nz, .notStruggle
+	ld a, STRUGGLE
 	and a
-	jr z, .chooseRandomMove ; move non-existant, try again
+	jp .moveGrabbed
+.notStruggle
+	ld e, b
+;joenote - moved elsewhere to do PP tracking
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	ld a, h
+	ld [wUnusedCF8D], a
+	ld a, l
+	ld [wUnusedCF8D + 1], a
+	callba ChooseMovePPTrack
+	ld a, [wUnusedCF8D]
+	ld h, a
+	ld a, [wUnusedCF8D + 1]
+	ld l, a
+	ld a, e
+	and a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	ld a, [hl]
+.moveGrabbed
+	pop hl
+	jr z, .chooseRandomMoveAgain ; move not available, try again
+	pop de
 .done
 	ld [wEnemySelectedMove], a
 	ret
@@ -6941,9 +6968,7 @@ LoadEnemyMonData:
 	ld [wLearningMovesFromDayCare], a
 	predef WriteMonMoves ; get moves based on current level
 .loadMovePPs
-	ld hl, wEnemyMonMoves
-	ld de, wEnemyMonPP - 1
-	predef LoadMovePPs
+	callba advancedLoadPP	;joenote - this will make sure used PP gets saved in trainer battles
 	ld hl, wMonHBaseStats
 	ld de, wEnemyMonBaseStats
 	ld b, NUM_STATS
@@ -7214,95 +7239,6 @@ HalveAttackDueToBurn:
 	ld b, 1 ; give the enemy a minimum of at least one attack point
 .storeEnemyAttack
 	ld [hl], b
-	ret
-
-CalculateModifiedStats:
-	ld c, 0
-.loop
-	call CalculateModifiedStat
-	inc c
-	ld a, c
-	cp NUM_STATS - 1
-	jr nz, .loop
-	ret
-
-; calculate modified stat for stat c (0 = attack, 1 = defense, 2 = speed, 3 = special)
-CalculateModifiedStat:
-	push bc
-	push bc
-	ld a, [wCalculateWhoseStats]
-	and a
-	ld a, c
-	ld hl, wBattleMonAttack
-	ld de, wPlayerMonUnmodifiedAttack
-	ld bc, wPlayerMonStatMods
-	jr z, .next
-	ld hl, wEnemyMonAttack
-	ld de, wEnemyMonUnmodifiedAttack
-	ld bc, wEnemyMonStatMods
-.next
-	add c
-	ld c, a
-	jr nc, .noCarry1
-	inc b
-.noCarry1
-	ld a, [bc]
-	pop bc
-	ld b, a
-	push bc
-	sla c
-	ld b, 0
-	add hl, bc
-	ld a, c
-	add e
-	ld e, a
-	jr nc, .noCarry2
-	inc d
-.noCarry2
-	pop bc
-	push hl
-	ld hl, StatModifierRatios
-	dec b
-	sla b
-	ld c, b
-	ld b, 0
-	add hl, bc
-	xor a
-	ld [H_MULTIPLICAND], a
-	ld a, [de]
-	ld [H_MULTIPLICAND + 1], a
-	inc de
-	ld a, [de]
-	ld [H_MULTIPLICAND + 2], a
-	ld a, [hli]
-	ld [H_MULTIPLIER], a
-	call Multiply
-	ld a, [hl]
-	ld [H_DIVISOR], a
-	ld b, $4
-	call Divide
-	pop hl
-	ld a, [H_DIVIDEND + 3]
-	sub 999 % $100
-	ld a, [H_DIVIDEND + 2]
-	sbc 999 / $100
-	jp c, .storeNewStatValue
-; cap the stat at 999
-	ld a, 999 / $100
-	ld [H_DIVIDEND + 2], a
-	ld a, 999 % $100
-	ld [H_DIVIDEND + 3], a
-.storeNewStatValue
-	ld a, [H_DIVIDEND + 2]
-	ld [hli], a
-	ld b, a
-	ld a, [H_DIVIDEND + 3]
-	ld [hl], a
-	or b
-	jr nz, .done
-	inc [hl] ; if the stat is 0, bump it up to 1
-.done
-	pop bc
 	ret
 
 ApplyBadgeStatBoosts:
@@ -8750,22 +8686,6 @@ StatsTextStrings:
 	db "SPECIAL@"
 	db "ACCURACY@"
 	db "EVADE@"
-
-StatModifierRatios:
-; first byte is numerator, second byte is denominator
-	db 25, 100  ; 0.25
-	db 28, 100  ; 0.28
-	db 33, 100  ; 0.33
-	db 40, 100  ; 0.40
-	db 50, 100  ; 0.50
-	db 66, 100  ; 0.66
-	db  1,   1  ; 1.00
-	db 15,  10  ; 1.50
-	db  2,   1  ; 2.00
-	db 25,  10  ; 2.50
-	db  3,   1  ; 3.00
-	db 35,  10  ; 3.50
-	db  4,   1  ; 4.00
 
 BideEffect:
 	ld hl, wPlayerBattleStatus1

@@ -1,5 +1,7 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
+Version 1.18
+
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
@@ -18,29 +20,35 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Use the ips patch with a USA Blue rom.
 
 
-#Latest Fixes (not yet in the ips patch):
----------------
-- Incredibly minor text edits in Green to match the japanese script  
-
-  
 #Latest Fixes (most recent ips patch):
 ---------------
-- Fixed a transformed pokemon having the wrong palette
-- Fixed the cable club text borders having the wrong palette
-- A revision control function has been added that will cancel unsupported cable links
-- Choosing the cable club colosseum initiates a version control handshake
-  - Will hang and cancel the link if the other game is incompatible with battles
-  - Lite branch only supports battles with other similar lite branch builds
-- Audio engine has been back-ported from Yellow version
-  - Fixes some channel conflicts between cries and the low-health alarm
-  - Fixes some audio hiccups with Yellow's color palettes on the GBC
-  - Press SELECT on the option menu to change the audio mixing option
+- Incredibly minor text edits in Green to match the japanese script
+- Palette & sound edits in Green
+- PP usage is now tracked for both wild and AI trainer pokemon
+- There is a chance for the AI to switch a sleeping pokemon based on the sleep counter
+  -chance is 0% if counter <= 3
+  -chance is 12.5% if counter > 3
+- Chances to switch have been reduced:
+  - toxic poison - changed probability from 50% to 34%
+  - super effective moves - probability weight reduced by 25%
+  - only switch out from low HP if player outspeeds enemy (gives the enemy one last shot at dealing damage)
+  - an enemy mon is flagged when sent out; non-volatile (except sleeping) status or low hp cannot initiate switching
+  - enemy mon that is recalled back due to a super effective move is flagged; it is demerited from being switched-in
+  - switch flags are all cleared when player sends out a new mon since the situation is now different
+- Patch version now shows on main menu
+- Fixed a scrolling text artifact in the credits when running in GBC-mode
+
+
+#Changes not yet in the ips patch files:
+-----------
+-
 
 
 #Bugfixes:
 -----------
 
 - Battle engine fixes
+  - PP usage is now tracked for both wild and AI trainer pokemon
   - Moves no longer have a default 1/256 chance to miss
   - Fixed freeze that occurs in defense stat scaling (def < 4 glitch)
   - Enemy ai ignores type effectiveness for moves that have zero power

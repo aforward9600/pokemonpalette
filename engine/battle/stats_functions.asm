@@ -124,3 +124,92 @@ UndoBurnParStats:
 	ld [de], a	;reset the stat change bits
 	ret
 
+	
+CalculateModifiedStats:
+	ld c, 0
+.loop
+	call CalculateModifiedStat
+	inc c
+	ld a, c
+	cp NUM_STATS - 1
+	jr nz, .loop
+	ret
+
+; calculate modified stat for stat c (0 = attack, 1 = defense, 2 = speed, 3 = special)
+CalculateModifiedStat:
+	push bc
+	push bc
+	ld a, [wCalculateWhoseStats]
+	and a
+	ld a, c
+	ld hl, wBattleMonAttack
+	ld de, wPlayerMonUnmodifiedAttack
+	ld bc, wPlayerMonStatMods
+	jr z, .next
+	ld hl, wEnemyMonAttack
+	ld de, wEnemyMonUnmodifiedAttack
+	ld bc, wEnemyMonStatMods
+.next
+	add c
+	ld c, a
+	jr nc, .noCarry1
+	inc b
+.noCarry1
+	ld a, [bc]
+	pop bc
+	ld b, a
+	push bc
+	sla c
+	ld b, 0
+	add hl, bc
+	ld a, c
+	add e
+	ld e, a
+	jr nc, .noCarry2
+	inc d
+.noCarry2
+	pop bc
+	push hl
+	ld hl, StatModifierRatios
+	dec b
+	sla b
+	ld c, b
+	ld b, 0
+	add hl, bc
+	xor a
+	ld [H_MULTIPLICAND], a
+	ld a, [de]
+	ld [H_MULTIPLICAND + 1], a
+	inc de
+	ld a, [de]
+	ld [H_MULTIPLICAND + 2], a
+	ld a, [hli]
+	ld [H_MULTIPLIER], a
+	call Multiply
+	ld a, [hl]
+	ld [H_DIVISOR], a
+	ld b, $4
+	call Divide
+	pop hl
+	ld a, [H_DIVIDEND + 3]
+	sub 999 % $100
+	ld a, [H_DIVIDEND + 2]
+	sbc 999 / $100
+	jp c, .storeNewStatValue
+; cap the stat at 999
+	ld a, 999 / $100
+	ld [H_DIVIDEND + 2], a
+	ld a, 999 % $100
+	ld [H_DIVIDEND + 3], a
+.storeNewStatValue
+	ld a, [H_DIVIDEND + 2]
+	ld [hli], a
+	ld b, a
+	ld a, [H_DIVIDEND + 3]
+	ld [hl], a
+	or b
+	jr nz, .done
+	inc [hl] ; if the stat is 0, bump it up to 1
+.done
+	pop bc
+	ret
