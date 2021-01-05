@@ -1544,6 +1544,9 @@ SwitchEnemyMon:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z
+	;joenote - the act of switching clears H_WHOSETURN, so it needs to be set back to 1
+	ld a, $1
+	ld [H_WHOSETURN], a
 	scf
 	ret
 
