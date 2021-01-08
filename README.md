@@ -41,7 +41,9 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Changes not yet in the ips patch files:
 -----------
--
+- fixed minor desync with abbreviated rival music
+- fixed poison/burn/leechseed damage sometimes being applied twice
+- minor changes to support external randomizer
 
 
 #Bugfixes:
