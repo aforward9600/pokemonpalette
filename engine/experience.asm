@@ -48,6 +48,8 @@ CalcExperience:
 	ld [H_MULTIPLIER], a
 	call Multiply
 	
+	ld a, [H_PRODUCT + 0]
+	push af
 	ld a, [H_PRODUCT + 1]
 	push af
 	ld a, [H_PRODUCT + 2]
@@ -74,6 +76,8 @@ CalcExperience:
 	ld b, $4
 	call Divide
 	
+	ld a, [H_QUOTIENT + 0]
+	push af
 	ld a, [H_QUOTIENT + 1]
 	push af
 	ld a, [H_QUOTIENT + 2]
@@ -110,6 +114,10 @@ CalcExperience:
 	ld a, [hExperience]
 	adc b
 	ld [hExperience], a
+	pop bc
+	ld a, [hExperience - 1]
+	adc b
+	ld [hExperience - 1], a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Sum with the second term
 	pop af
@@ -127,6 +135,10 @@ CalcExperience:
 	ld a, [hExperience]
 	adc b
 	ld [hExperience], a
+	pop bc
+	ld a, [hExperience - 1]
+	adc b
+	ld [hExperience - 1], a
 	jr .subFourthTerm
 .subtractSquaredTerm
 	pop bc
@@ -141,6 +153,10 @@ CalcExperience:
 	ld a, [hExperience]
 	sbc b
 	ld [hExperience], a
+	pop bc
+	ld a, [hExperience - 1]
+	sbc b
+	ld [hExperience - 1], a
 	jr c, .underflow
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Subtract the fourth term
@@ -156,7 +172,15 @@ CalcExperience:
 	ld a, [hExperience]
 	sbc b
 	ld [hExperience], a
-	ret nc
+	ld a, [hExperience - 1]
+	sbc b
+	ld [hExperience - 1], a
+	jr c, .underflow 
+;check for overflow into 4th byte
+	and a
+	ret z	;return if 4th byte is zero
+	dec d	;else decrement max level and start over
+	jp CalcExperience
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .underflow
 	xor a
