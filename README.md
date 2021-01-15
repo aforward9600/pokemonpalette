@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.18
+Version 1.18 to 1.19 development
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -44,6 +44,12 @@ It was done to serve as a codebase for others to start their own romhacks.
 - fixed minor desync with abbreviated rival music
 - fixed poison/burn/leechseed damage sometimes being applied twice
 - minor changes to support external randomizer
+- Improved exp calculation for developers who want a level cap between 101 and 255
+  - EXP calculation routine now does math in 4 bytes instead of 3 bytes
+  - Exp calculation result is still capped to 3 bytes regardless of level cap to prevent overflow
+  - The byte cap on the exp result means that certain growth rates may have a level cap
+  - For example, the "slow" growth rate is theorized to cap at level 237
+- Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings.
 
 
 #Bugfixes:
@@ -326,6 +332,14 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Adjustments to learnsets and base stats
   - Mewtwo can learn Swift by TM 
 
+- Engine changes just for developers
+  - The trainer move engine has been backported from Yellow version; trainer movesets can now be fully customized
+  - Improved exp calculation for developers who want a level cap between 101 and 255
+    - EXP calculation routine now does math in 4 bytes instead of 3 bytes
+	- Exp calculation result is still capped to 3 bytes regardless of level cap to prevent overflow
+	- The byte cap on the exp result means that certain growth rates may have a level cap
+	- For example, the "slow" growth rate is theorized to cap at level 237
+  - Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings
 
 
 #CREDITS / SPECIAL THANKS:
