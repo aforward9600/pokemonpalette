@@ -300,16 +300,23 @@ It was done to serve as a codebase for others to start their own romhacks.
 	- heavily discourages 0-power moves if below 1/3 hp
 
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
-  - 25% chance to switch if active pkmn is below 1/3 HP
+  - 25% chance to switch if active pkmn is below 1/3 HP and player also outspeeds AI
   - chance to switch based on power of incoming supereffective move
   - 12.5% chance to switch if a move is disabled
   - 12.5% chance to switch if afflicted with leech seed
-  - 50% chance to switch if afflicted with toxic poison
+  - 34% chance to switch if afflicted with toxic poison
   - 25% chance to switch if opponent is using a trapping move
   - 25% chance to switch if active pkmn is confused
   - on the lowest stat mod, 12.5% chance to switch per lowered stage
-  - AI routine 4 now scores each mon in its party every turn
-  - These scores are taken into account when deciding to switch or picking a mon to send out
+  - There is a chance for the AI to switch a sleeping pokemon based on the sleep counter
+    -chance is 0% if counter <= 3
+	-chance is 12.5% if counter > 3
+  - Additionally, every pokemon in the enemy roster is scored 
+    - based on various criteria to determine which mon gets sent out
+	- score might dictate that the current mon is the best choice and abort switching
+	- an enemy mon is flagged when sent out; non-volatile (except sleeping) status or low hp cannot initiate switching
+	- enemy mon that is recalled back due to a super effective move is flagged; it is demerited from being switched-in
+	- switch flags are all cleared when player sends out a new mon since the situation is now different
   - AI scoring for switching puts a heavier penalty on potentially switching in a bad type matchup
   - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
   
