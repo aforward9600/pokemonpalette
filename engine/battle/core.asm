@@ -401,11 +401,13 @@ MainInBattleLoop:
 	ld [wFirstMonsNotOutYet], a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - if raging, reset rage's accuracy here to prevent degradation
+;	and also decrement the rage counter
 	ld a, [wPlayerBattleStatus2]
 	bit USING_RAGE, a
 	jr z, .not_player_raging
 	ld a, $FF
 	ld [wPlayerMoveAccuracy], a
+	call DecAttackPlayer
 .not_player_raging
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3159,11 +3161,13 @@ SelectEnemyMove:
 .noLinkBattle
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - if raging, reset rage's accuracy here to prevent degradation
+;	and also decrement the rage counter
 	ld a, [wEnemyBattleStatus2]
 	bit USING_RAGE, a
 	jr z, .not_enemy_raging
 	ld a, $FF
 	ld [wEnemyMoveAccuracy], a
+	call DecAttackEnemy
 .not_enemy_raging
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -9123,14 +9127,21 @@ ClearHyperBeam:	;for whoever's turn it is, clear their opponent's hyperbeam stat
 	pop hl
 	ret
 
-RageEffect:
+RageEffect:	;joenote - modified to last 2 to 3 turns
 	ld hl, wPlayerBattleStatus2
+	ld bc, wPlayerNumAttacksLeft
 	ld a, [H_WHOSETURN]
 	and a
 	jr z, .player
 	ld hl, wEnemyBattleStatus2
+	ld bc, wEnemyNumAttacksLeft
 .player
 	set USING_RAGE, [hl] ; mon is now in "rage" mode
+	call BattleRandom
+	and $1
+	inc a
+	inc a
+	ld [bc], a ; set Rage counter to 2 or 3 at random
 	ret
 
 MimicEffect:

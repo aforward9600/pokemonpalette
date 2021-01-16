@@ -144,8 +144,8 @@ AIMoveChoiceModification1:
 	cp SWITCH_AND_TELEPORT_EFFECT	;see if it is a battle-ending effect
 	jp z, .heavydiscourage	;heavily discourage if so
 ;and dont try to use rage either
-	cp RAGE_EFFECT	
-	jp z, .heavydiscourage
+;	cp RAGE_EFFECT	
+;	jp z, .heavydiscourage
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use haze if user has no status or neutral stat mods
