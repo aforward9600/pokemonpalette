@@ -49,7 +49,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Exp calculation result is still capped to 3 bytes regardless of level cap to prevent overflow
   - The byte cap on the exp result means that certain growth rates may have a level cap
   - For example, the "slow" growth rate is theorized to cap at level 237
-- Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings.
+- Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings
+- To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
 
 
 #Bugfixes:
@@ -258,6 +259,9 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Acid armor's animation changed so that does not make its user disappear
   - Metronome now classified as a Typeless special damage move to play better with the AI
   - Type immunity prevents trapping moves from taking hold at all
+  - Changes to Rage
+	- Now only lasts 2 to 3 moves like Bide in order to prevent an infinite loop
+	- As a tradeoff, attack boosts from rage are kept when it ends
 
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
@@ -283,7 +287,6 @@ It was done to serve as a codebase for others to start their own romhacks.
   - heavily discourage roar, teleport, & whirlwind
   - heavily discourage disable against a pkmn already disabled
   - Substitute discouraged if less that 1/4 hp remains
-  - Rage is heavily discouraged
   - Will discourage using Haze if unstatus'd or has net-neutral or better stat mods
   - Will heavily discourage boosting defense against special, OHKO, or static-damaging attacks
 
