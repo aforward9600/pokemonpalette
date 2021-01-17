@@ -37,7 +37,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - switch flags are all cleared when player sends out a new mon since the situation is now different
 - Patch version now shows on main menu
 - Fixed a scrolling text artifact in the credits when running in GBC-mode
-- Softlock teleport sets money to at least if player has less than that
+- Softlock teleport sets money to at least 1000 if player has less than that
 
 
 #Changes not yet in the ips patch files:
