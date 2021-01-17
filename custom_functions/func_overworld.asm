@@ -13,6 +13,15 @@ SoftlockTeleport:
 	res 4, a 
 	set 6, a 
 	ld [wd732], a
+	;make sure player has at least 1000 money
+	ld a, [wPlayerMoney]
+	and a
+	ret nz
+	ld a, [wPlayerMoney + 1]
+	cp $10
+	ret nc
+	ld a, $10
+	ld [wPlayerMoney + 1], a
 	ret
 	
 	
