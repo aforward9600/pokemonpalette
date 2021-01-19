@@ -52,6 +52,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - For example, the "slow" growth rate is theorized to cap at level 237
 - Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings
 - To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
+- Fixed an artifact when title screen 'mons scroll left in GBC-mode 
 
 
 #Bugfixes:
