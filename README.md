@@ -54,6 +54,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
 - Fixed an artifact when title screen 'mons scroll left in GBC-mode 
 - Fixed a bug in AI roster scoring when evaluating type matchups for switching
+- AI will not do actions during Rage or when recharging
 
 
 #Bugfixes:

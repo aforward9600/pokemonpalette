@@ -1120,8 +1120,11 @@ TrainerAI:
 	ret z
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - AI should not use actions if in a move that prevents such a thing
+	ld a, [wEnemyBattleStatus2]
+	and %01100000 
+	ret nz
 	ld a, [wEnemyBattleStatus1]
-	and $73
+	and %01110011 
 	ret nz
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - switch if the switch bit is set	
