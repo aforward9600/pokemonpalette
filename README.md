@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.18 to 1.19 development
+Version 1.19
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -22,29 +22,10 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- Incredibly minor text edits in Green to match the japanese script
-- Palette & sound edits in Green
-- PP usage is now tracked for both wild and AI trainer pokemon
-- There is a chance for the AI to switch a sleeping pokemon based on the sleep counter
-  -chance is 0% if counter <= 3
-  -chance is 12.5% if counter > 3
-- Chances to switch have been reduced:
-  - toxic poison - changed probability from 50% to 34%
-  - super effective moves - probability weight reduced by 25%
-  - only switch out from low HP if player outspeeds enemy (gives the enemy one last shot at dealing damage)
-  - an enemy mon is flagged when sent out; non-volatile (except sleeping) status or low hp cannot initiate switching
-  - enemy mon that is recalled back due to a super effective move is flagged; it is demerited from being switched-in
-  - switch flags are all cleared when player sends out a new mon since the situation is now different
-- Patch version now shows on main menu
-- Fixed a scrolling text artifact in the credits when running in GBC-mode
-- Softlock teleport sets money to at least 1000 if player has less than that
-
-
-#Changes not yet in the ips patch files:
------------
 - fixed minor desync with abbreviated rival music
 - fixed poison/burn/leechseed damage sometimes being applied twice
 - minor changes to support external randomizer
+- AI will not do actions during Rage or when recharging
 - Improved exp calculation for developers who want a level cap between 101 and 255
   - EXP calculation routine now does math in 4 bytes instead of 3 bytes
   - Exp calculation result is still capped to 3 bytes regardless of level cap to prevent overflow
@@ -54,7 +35,10 @@ It was done to serve as a codebase for others to start their own romhacks.
 - To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
 - Fixed an artifact when title screen 'mons scroll left in GBC-mode 
 - Fixed a bug in AI roster scoring when evaluating type matchups for switching
-- AI will not do actions during Rage or when recharging
+
+
+#Changes not yet in the ips patch files:
+-----------
 
 
 #Bugfixes:
@@ -90,6 +74,7 @@ It was done to serve as a codebase for others to start their own romhacks.
     - undoing paralysis is accurate to within 0 to -3 points
     - undoing burn is accurate to within 0 to -1 point
   - PP-up uses are disregarded when determining to use STRUGGLE if one or more moves are disabled
+  - AI will not do actions during Rage or when recharging
 
 	
 - Move fixes
@@ -136,6 +121,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 	  - it's the start of the round without a trapping move active (fixes most issues since Counter always goes second)
 	  - player/enemy pkmn is fully paralyzed or after hurting itself in confusion
     - Crash damage from jump kicks and pkmn hurting itself cannot be Countered
+  - To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
 
 	
 - Graphical Fixes
