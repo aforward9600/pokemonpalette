@@ -144,8 +144,8 @@ AIMoveChoiceModification1:
 	cp SWITCH_AND_TELEPORT_EFFECT	;see if it is a battle-ending effect
 	jp z, .heavydiscourage	;heavily discourage if so
 ;and dont try to use rage either
-	cp RAGE_EFFECT	
-	jp z, .heavydiscourage
+;	cp RAGE_EFFECT	
+;	jp z, .heavydiscourage
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use haze if user has no status or neutral stat mods
@@ -1120,8 +1120,11 @@ TrainerAI:
 	ret z
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - AI should not use actions if in a move that prevents such a thing
+	ld a, [wEnemyBattleStatus2]
+	and %01100000 
+	ret nz
 	ld a, [wEnemyBattleStatus1]
-	and $73
+	and %01110011 
 	ret nz
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - switch if the switch bit is set	
@@ -1544,6 +1547,9 @@ SwitchEnemyMon:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z
+	;joenote - the act of switching clears H_WHOSETURN, so it needs to be set back to 1
+	ld a, $1
+	ld [H_WHOSETURN], a
 	scf
 	ret
 

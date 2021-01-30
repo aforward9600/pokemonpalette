@@ -259,7 +259,7 @@ WildDataPointers:
         ; first byte is encounter rate
         ; followed by 20 bytes:
         ; level, species (ten times)
-
+WildDataLabelStart::
 INCLUDE "data/wildPokemon/nomons.asm"
 INCLUDE "data/wildPokemon/route1.asm"
 INCLUDE "data/wildPokemon/route2.asm"
@@ -319,3 +319,4 @@ INCLUDE "data/wildPokemon/victoryroad2.asm"
 INCLUDE "data/wildPokemon/victoryroad3.asm"
 INCLUDE "data/wildPokemon/victoryroad1.asm"
 INCLUDE "data/wildPokemon/diglettscave.asm"
+WildDataLabelEnd::

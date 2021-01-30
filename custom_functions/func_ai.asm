@@ -441,23 +441,23 @@ ScoreAIParty:
 	;skip if effectiveness is neutral
 	cp $0A
 	jr z, .next4
-	;+10 to score if move has no effect
+	;+15 to score if move has no effect
 	cp $01
+	ld b, 15
+	push af
+	call c, .plus
+	pop af
+	jr c, .next4
+	;+10 to score if move has little effect
+	cp $03
 	ld b, 10
 	push af
 	call c, .plus
 	pop af
 	jr c, .next4
-	;+5 to score if move has little effect
-	cp $03
-	ld b, 5
-	push af
-	call c, .plus
-	pop af
-	jr c, .next4
-	;+2 to score if move is less effective
+	;+5 to score if move is less effective
 	cp $0A
-	ld b, 2
+	ld b, 5
 	push af
 	call c, .plus
 	pop af
@@ -469,7 +469,7 @@ ScoreAIParty:
 	srl a
 	srl a
 	ld b, a
-	call nc, .minus
+	call .minus
 .next4
 
 	

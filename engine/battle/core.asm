@@ -217,6 +217,7 @@ SetScrollXForSlidingPlayerBodyLeft:
 	jr nz, SetScrollXForSlidingPlayerBodyLeft
 	ld a, h
 	ld [rSCX], a
+	ld [hSCX], a
 .loop
 	ld a, [rLY]
 	cp h
@@ -401,9 +402,13 @@ MainInBattleLoop:
 	ld [wFirstMonsNotOutYet], a
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - if raging, reset rage's accuracy here to prevent degradation
+;	and also decrement the rage counter
 	ld a, [wPlayerBattleStatus2]
 	bit USING_RAGE, a
 	jr z, .not_player_raging
+	call DecAttackPlayer
+	call DeactivateRageInA
+	ld [wPlayerBattleStatus2], a
 	ld a, $FF
 	ld [wPlayerMoveAccuracy], a
 .not_player_raging
@@ -2452,8 +2457,7 @@ UseBagItem:
 	ld a, [wPlayerBattleStatus1]
 	bit USING_TRAPPING_MOVE, a ; is the player using a multi-turn move like wrap?
 	jr z, .checkIfMonCaptured
-	ld hl, wPlayerNumAttacksLeft
-	dec [hl]
+	call DecAttackPlayer
 	jr nz, .checkIfMonCaptured
 	ld hl, wPlayerBattleStatus1
 	res USING_TRAPPING_MOVE, [hl] ; not using multi-turn move any more
@@ -3160,9 +3164,13 @@ SelectEnemyMove:
 .noLinkBattle
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - if raging, reset rage's accuracy here to prevent degradation
+;	and also decrement the rage counter
 	ld a, [wEnemyBattleStatus2]
 	bit USING_RAGE, a
 	jr z, .not_enemy_raging
+	call DecAttackEnemy
+	call DeactivateRageInA
+	ld [wEnemyBattleStatus2], a	
 	ld a, $FF
 	ld [wEnemyMoveAccuracy], a
 .not_enemy_raging
@@ -3535,9 +3543,7 @@ MirrorMoveCheck:
 	ld hl, wPlayerBattleStatus1
 	bit ATTACKING_MULTIPLE_TIMES, [hl]
 	jr z, .executeOtherEffects
-	ld a, [wPlayerNumAttacksLeft]
-	dec a
-	ld [wPlayerNumAttacksLeft], a
+	call DecAttackPlayer
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
 	push af	
@@ -3805,8 +3811,7 @@ CheckPlayerStatusConditions:
 ;	ld a, [hl]
 ;	adc b
 ;	ld [hl], a
-	ld hl, wPlayerNumAttacksLeft
-	dec [hl] ; did Bide counter hit 0?
+	call DecAttackPlayer; did Bide counter hit 0?
 	jr z, .UnleashEnergy
 	ld hl, ExecutePlayerMoveDone
 	jp .returnToHL ; unless mon unleashes energy, can't move this turn
@@ -3845,8 +3850,7 @@ CheckPlayerStatusConditions:
 	ld [wPlayerMoveNum], a
 	ld hl, ThrashingAboutText
 	call PrintText
-	ld hl, wPlayerNumAttacksLeft
-	dec [hl] ; did Thrashing About counter hit 0?
+	call DecAttackPlayer; did Thrashing About counter hit 0?
 	ld hl, PlayerCalcMoveDamage ; skip DecrementPP
 	jp nz, .returnToHL
 	push hl
@@ -3866,9 +3870,7 @@ CheckPlayerStatusConditions:
 	jp z, .RageCheck
 	ld hl, AttackContinuesText
 	call PrintText
-	ld a, [wPlayerNumAttacksLeft]
-	dec a ; did multi-turn move end?
-	ld [wPlayerNumAttacksLeft], a
+	call DecAttackPlayer; did multi-turn move end?
 	ld hl, getPlayerAnimationType ; if it didn't, skip damage calculation (deal damage equal to last hit),
 	                ; DecrementPP and MoveHitTest
 	jp .returnToHL
@@ -6360,10 +6362,7 @@ EnemyCheckIfMirrorMoveEffect:
 	ld hl, wEnemyBattleStatus1
 	bit ATTACKING_MULTIPLE_TIMES, [hl] ; is mon hitting multiple times? (example: double kick)
 	jr z, .notMultiHitMove
-	push hl
-	ld hl, wEnemyNumAttacksLeft
-	dec [hl]
-	pop hl
+	call DecAttackEnemy
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - multi-hit attacks like twineedle, double-kick, and fury attack should check damage each time
 	push af	
@@ -6613,8 +6612,7 @@ CheckEnemyStatusConditions:
 ;	ld a, [hl]
 ;	adc b
 ;	ld [hl], a
-	ld hl, wEnemyNumAttacksLeft
-	dec [hl] ; did Bide counter hit 0?
+	call DecAttackEnemy ; did Bide counter hit 0?
 	jr z, .unleashEnergy
 	ld hl, ExecuteEnemyMoveDone
 	jp .enemyReturnToHL ; unless mon unleashes energy, can't move this turn
@@ -6653,8 +6651,7 @@ CheckEnemyStatusConditions:
 	ld [wEnemyMoveNum], a
 	ld hl, ThrashingAboutText
 	call PrintText
-	ld hl, wEnemyNumAttacksLeft
-	dec [hl] ; did Thrashing About counter hit 0?
+	call DecAttackEnemy ; did Thrashing About counter hit 0?
 	ld hl, EnemyCalcMoveDamage ; skip DecrementPP
 	jp nz, .enemyReturnToHL
 	push hl
@@ -6673,8 +6670,7 @@ CheckEnemyStatusConditions:
 	jp z, .checkIfUsingRage
 	ld hl, AttackContinuesText
 	call PrintText
-	ld hl, wEnemyNumAttacksLeft
-	dec [hl] ; did multi-turn move end?
+	call DecAttackEnemy ; did multi-turn move end?
 	ld hl, GetEnemyAnimationType ; if it didn't, skip damage calculation (deal damage equal to last hit),
 	                             ; DecrementPP and MoveHitTest
 	jp .enemyReturnToHL
@@ -9136,14 +9132,21 @@ ClearHyperBeam:	;for whoever's turn it is, clear their opponent's hyperbeam stat
 	pop hl
 	ret
 
-RageEffect:
+RageEffect:	;joenote - modified to last 2 to 3 turns
 	ld hl, wPlayerBattleStatus2
+	ld bc, wPlayerNumAttacksLeft
 	ld a, [H_WHOSETURN]
 	and a
 	jr z, .player
 	ld hl, wEnemyBattleStatus2
+	ld bc, wEnemyNumAttacksLeft
 .player
 	set USING_RAGE, [hl] ; mon is now in "rage" mode
+	call BattleRandom
+	and $1
+	inc a
+	inc a
+	ld [bc], a ; set Rage counter to 2 or 3 at random
 	ret
 
 MimicEffect:
@@ -9551,3 +9554,23 @@ BC999cap:
 .donecapping
 	ret
 
+;joenote - consolidate this to save a bit of space
+DecAttackPlayer:
+	push hl
+	ld hl, wPlayerNumAttacksLeft
+	jr DecAttack
+DecAttackEnemy:
+	push hl
+	ld hl, wEnemyNumAttacksLeft
+	;fall through
+DecAttack:
+	dec [hl]
+	pop hl
+	ret
+
+;Battle status2 in "a"
+;resets the rage bit in "a" if zero flag is set
+DeactivateRageInA:
+	ret nz
+	res USING_RAGE, a
+	ret

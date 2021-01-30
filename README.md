@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.18
+Version 1.19
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -22,26 +22,23 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- Incredibly minor text edits in Green to match the japanese script
-- Palette & sound edits in Green
-- PP usage is now tracked for both wild and AI trainer pokemon
-- There is a chance for the AI to switch a sleeping pokemon based on the sleep counter
-  -chance is 0% if counter <= 3
-  -chance is 12.5% if counter > 3
-- Chances to switch have been reduced:
-  - toxic poison - changed probability from 50% to 34%
-  - super effective moves - probability weight reduced by 25%
-  - only switch out from low HP if player outspeeds enemy (gives the enemy one last shot at dealing damage)
-  - an enemy mon is flagged when sent out; non-volatile (except sleeping) status or low hp cannot initiate switching
-  - enemy mon that is recalled back due to a super effective move is flagged; it is demerited from being switched-in
-  - switch flags are all cleared when player sends out a new mon since the situation is now different
-- Patch version now shows on main menu
-- Fixed a scrolling text artifact in the credits when running in GBC-mode
+- fixed minor desync with abbreviated rival music
+- fixed poison/burn/leechseed damage sometimes being applied twice
+- minor changes to support external randomizer
+- AI will not do actions during Rage or when recharging
+- Improved exp calculation for developers who want a level cap between 101 and 255
+  - EXP calculation routine now does math in 4 bytes instead of 3 bytes
+  - Exp calculation result is still capped to 3 bytes regardless of level cap to prevent overflow
+  - The byte cap on the exp result means that certain growth rates may have a level cap
+  - For example, the "slow" growth rate is theorized to cap at level 237
+- Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings
+- To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
+- Fixed an artifact when title screen 'mons scroll left in GBC-mode 
+- Fixed a bug in AI roster scoring when evaluating type matchups for switching
 
 
 #Changes not yet in the ips patch files:
 -----------
--
 
 
 #Bugfixes:
@@ -77,6 +74,7 @@ It was done to serve as a codebase for others to start their own romhacks.
     - undoing paralysis is accurate to within 0 to -3 points
     - undoing burn is accurate to within 0 to -1 point
   - PP-up uses are disregarded when determining to use STRUGGLE if one or more moves are disabled
+  - AI will not do actions during Rage or when recharging
 
 	
 - Move fixes
@@ -123,6 +121,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 	  - it's the start of the round without a trapping move active (fixes most issues since Counter always goes second)
 	  - player/enemy pkmn is fully paralyzed or after hurting itself in confusion
     - Crash damage from jump kicks and pkmn hurting itself cannot be Countered
+  - To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
 
 	
 - Graphical Fixes
@@ -204,6 +203,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - If wGymLeaderNo is set to 9 when loading a battle, then the final battle music will play
 - Softlock Warp 
   - instantly teleport back to your mom's house if you get stuck or are unable to move after updating to a new patch
+  - sets money to at least 1000 if you have less than that
   - Intructions to perform:
     - go to the start menu and put the cursor on OPTION
 	- press and hold DOWN on the d-pad (the cursor will now be on EXIT)
@@ -250,6 +250,9 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Acid armor's animation changed so that does not make its user disappear
   - Metronome now classified as a Typeless special damage move to play better with the AI
   - Type immunity prevents trapping moves from taking hold at all
+  - Changes to Rage
+	- Now only lasts 2 to 3 moves like Bide in order to prevent an infinite loop
+	- As a tradeoff, attack boosts from rage are kept when it ends
 
 - Adjustment to stat mods, conditions, and items
   - Sleep does not prevent choosing a move
@@ -275,7 +278,6 @@ It was done to serve as a codebase for others to start their own romhacks.
   - heavily discourage roar, teleport, & whirlwind
   - heavily discourage disable against a pkmn already disabled
   - Substitute discouraged if less that 1/4 hp remains
-  - Rage is heavily discouraged
   - Will discourage using Haze if unstatus'd or has net-neutral or better stat mods
   - Will heavily discourage boosting defense against special, OHKO, or static-damaging attacks
 
@@ -292,16 +294,23 @@ It was done to serve as a codebase for others to start their own romhacks.
 	- heavily discourages 0-power moves if below 1/3 hp
 
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
-  - 25% chance to switch if active pkmn is below 1/3 HP
+  - 25% chance to switch if active pkmn is below 1/3 HP and player also outspeeds AI
   - chance to switch based on power of incoming supereffective move
   - 12.5% chance to switch if a move is disabled
   - 12.5% chance to switch if afflicted with leech seed
-  - 50% chance to switch if afflicted with toxic poison
+  - 34% chance to switch if afflicted with toxic poison
   - 25% chance to switch if opponent is using a trapping move
   - 25% chance to switch if active pkmn is confused
   - on the lowest stat mod, 12.5% chance to switch per lowered stage
-  - AI routine 4 now scores each mon in its party every turn
-  - These scores are taken into account when deciding to switch or picking a mon to send out
+  - There is a chance for the AI to switch a sleeping pokemon based on the sleep counter
+    -chance is 0% if counter <= 3
+	-chance is 12.5% if counter > 3
+  - Additionally, every pokemon in the enemy roster is scored 
+    - based on various criteria to determine which mon gets sent out
+	- score might dictate that the current mon is the best choice and abort switching
+	- an enemy mon is flagged when sent out; non-volatile (except sleeping) status or low hp cannot initiate switching
+	- enemy mon that is recalled back due to a super effective move is flagged; it is demerited from being switched-in
+	- switch flags are all cleared when player sends out a new mon since the situation is now different
   - AI scoring for switching puts a heavier penalty on potentially switching in a bad type matchup
   - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
   
@@ -324,6 +333,14 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Adjustments to learnsets and base stats
   - Mewtwo can learn Swift by TM 
 
+- Engine changes just for developers
+  - The trainer move engine has been backported from Yellow version; trainer movesets can now be fully customized
+  - Improved exp calculation for developers who want a level cap between 101 and 255
+    - EXP calculation routine now does math in 4 bytes instead of 3 bytes
+	- Exp calculation result is still capped to 3 bytes regardless of level cap to prevent overflow
+	- The byte cap on the exp result means that certain growth rates may have a level cap
+	- For example, the "slow" growth rate is theorized to cap at level 237
+  - Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings
 
 
 #CREDITS / SPECIAL THANKS:

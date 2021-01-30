@@ -197,8 +197,10 @@ ReadTrainer:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 
 .FinishUp
+;joenote - prevent prize money from being capped at 9999
 ; clear wAmountMoneyWon addresses
 	xor a
+	ld [wTrainerBaseMoney - 1], a
 	ld de, wAmountMoneyWon
 	ld [de], a
 	inc de
@@ -210,10 +212,11 @@ ReadTrainer:
 .LastLoop
 ; update wAmountMoneyWon addresses (money to win) based on enemy's level
 	ld hl, wTrainerBaseMoney + 1
-	ld c, 2 ; wAmountMoneyWon is a 3-byte number
+	ld c, 3 ; wAmountMoneyWon is a 3-byte number
 	push bc
 	predef AddBCDPredef
 	pop bc
+	inc de
 	inc de
 	inc de
 	dec b

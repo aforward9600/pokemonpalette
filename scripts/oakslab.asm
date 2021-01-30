@@ -191,10 +191,16 @@ OaksLabScript7:
 	ret
 
 OaksLabScript8:
-	ld a, [wPlayerStarter]
-	cp STARTER1
-	jr z, .Charmander
+	;ld a, [wPlayerStarter]
+	;cp STARTER1
+	;jr z, .Charmander
+	;cp STARTER2
+	;jr z, .Squirtle
+	;jr .Bulbasaur
+	ld a, [wRivalStarterTemp]
 	cp STARTER2
+	jr z, .Charmander
+	cp STARTER3
 	jr z, .Squirtle
 	jr .Bulbasaur
 .Charmander
@@ -801,6 +807,7 @@ OaksLabText2:
 	ld [wRivalStarterTemp], a
 	ld a, $3
 	ld [wRivalStarterBallSpriteIndex], a
+PlayerStarter1Label::
 	ld a, STARTER1
 	ld b, $2
 	jr OaksLabScript_1d133
@@ -811,6 +818,7 @@ OaksLabText3:
 	ld [wRivalStarterTemp], a
 	ld a, $4
 	ld [wRivalStarterBallSpriteIndex], a
+PlayerStarter2Label::
 	ld a, STARTER2
 	ld b, $3
 	jr OaksLabScript_1d133
@@ -821,6 +829,7 @@ OaksLabText4:
 	ld [wRivalStarterTemp], a
 	ld a, $2
 	ld [wRivalStarterBallSpriteIndex], a
+PlayerStarter3Label::
 	ld a, STARTER3
 	ld b, $4
 
