@@ -393,6 +393,15 @@ UpdateMovingBgTiles::
 
 ; water
 
+;joenote - fixes a strange incident where $FF is written to this one byte of a water tile
+	ld hl, vTileset + $14 * $10 + $08
+	ld a, [hl]
+	cp $ff
+	jr nz, .tile_okay
+	xor a
+	ld [hl], a
+.tile_okay
+
 	ld hl, vTileset + $14 * $10
 	ld c, $10
 
