@@ -863,7 +863,7 @@ ChooseMovePPTrack:
 	jp .back
 .PPexhausted	;return zero flag if no PP left
 	pop hl
-.flagset
+.flagset	;d is holding flags for unusable moves
 	ld e, 0
 	ld a,  b
 	cp 4
@@ -890,44 +890,94 @@ ChooseMovePPTrack:
 	ld [wUnusedCF8D + 1], a
 	ret
 
+
+;this function will try to pick a trainer's preferred choice of move
+;while also taking into account unusable moves
 IsTrainerBattlePPCheck:
 	ld a, [wIsInBattle]
 	cp 2
 	ret nz
+
+;first, adjust the scores in the backup buffer so that unusable moves are maxed out (based on flags in d)
+	push hl
 	push de
+	ld hl, wBuffer + NUM_MOVES
+	ld e, NUM_MOVES
+.loop
+	rr d
+	call c, .disabled_move
+	inc hl
+	dec e
+	jr nz, .loop
+	pop de
+	pop hl
+	
+;now determine if the randomly chosen move is a preferred move that is usuable
+	ld a, [hl]
+	and a
+	jr z, .next	;not preferred if zero; else check against backup score
 	push hl
 	push bc
-	
-.loop1
-	dec b
-	jr z, .doneloop1
-	dec hl
-	jr .loop1
-.doneloop1
+	ld bc, NUM_MOVES
+	add hl, bc
+	pop bc
+	ld a, [hl]
+	pop hl
+	cp $ff
+	jr nz, .done	;the preferred move is not unuseable so we're good to go
+.next	
 
-	ld c, NUM_MOVES
-	ld de, wEnemyMonPP
+;so the randomly picked move is either not preferred or is preferred but unusable
+;in that case, pick the move with the lowest score moving towards the left and circling back if needed
+	push hl
+	push de
+	push bc
+	;move HL to the backup score buffer and set the loop counter
+	push bc
+	ld bc, NUM_MOVES
+	add hl, bc
+	pop bc
+	ld c, NUM_MOVES	
+	;initialize current score as best score
+	ld a, [hl]
+	ld e, a
+	;initialize current move position as best move
+	ld d, b
 .loop2
-	ld a, [de]
-	ld b, a
-	ld a, [hl]	
-	and b
-	jr nz, .done	
-	inc hl
-	inc de
+	ld a, [hl]
+	cp e
+	call c, .updateBestScore
+	dec hl
+	dec b
+	call z, .circleB
 	dec c
 	jr nz, .loop2
-.done
-	;zero flag set by this point if all moves were ran through
 	pop bc
-	pop hl
+	ld b, d
 	pop de
-	ret nz
+	pop hl
+
+.done
 	ld hl, wEnemyMonMoves
 	push bc
 	ld c, b
 	ld b, 0
 	dec bc
+	add hl, bc
+	pop bc
+	ret
+.disabled_move
+	ld a, $ff
+	ld [hl], a
+	ret
+.updateBestScore
+	ld e, a
+	ld d, b
+	ret
+.circleB
+	ld b, NUM_MOVES
+	push bc
+	ld bc, NUM_MOVES
 	add hl, bc
 	pop bc
 	ret
