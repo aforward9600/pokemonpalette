@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.19
+Version 1.19.1 (hotfix)
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
