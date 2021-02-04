@@ -2143,6 +2143,7 @@ WavyScreen_SetSCX:
 	jr nz, WavyScreen_SetSCX ; wait until it's H-blank
 	ld a, [hl]
 	ld [rSCX], a
+	ld [hSCX], a
 	inc hl
 	ld a, [hl]
 	cp d ; have we reached the end?

@@ -337,6 +337,7 @@ ScrollTitleScreenGameVersion:
 
 	ld a, h
 	ld [rSCX], a
+	ld [hSCX], a
 
 .wait2
 	ld a, [rLY]
