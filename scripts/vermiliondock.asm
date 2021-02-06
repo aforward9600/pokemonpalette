@@ -168,12 +168,7 @@ VermilionDock_1dc7c:
 	ld h, $0
 	ld l, $80
 .asm_1dc86
-	ld a, [rLY]
-	cp l
-	jr nz, .asm_1dc86
-	ld a, h
-	ld [rSCX], a
-	ld [hSCX], a
+	predef BGLayerScrollingUpdate	;joenote - consolidated into a predef that also fixes some issues
 .asm_1dc8e
 	ld a, [rLY]
 	cp h

@@ -154,6 +154,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ld a, c
 	ld [hSCX], a
 	call DelayFrame
+	call DelayFrame	;joenote - do one extra frame to make sure the screen can update.
 	ld a, %11100100 ; inverted palette for silhouette effect
 	ld [rBGP], a
 	ld [rOBP0], a
@@ -212,12 +213,7 @@ SlidePlayerHeadLeft:
 	ret
 
 SetScrollXForSlidingPlayerBodyLeft:
-	ld a, [rLY]
-	cp l
-	jr nz, SetScrollXForSlidingPlayerBodyLeft
-	ld a, h
-	ld [rSCX], a
-	ld [hSCX], a
+	predef BGLayerScrollingUpdate	;joenote - consolidated into a predef that also fixes some issues
 .loop
 	ld a, [rLY]
 	cp h

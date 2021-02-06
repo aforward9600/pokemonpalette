@@ -68,14 +68,7 @@ _TitleScroll:
 	jr _TitleScroll
 
 .ScrollBetween:
-.wait
-	ld a, [rLY] ; rLY
-	cp l
-	jr nz, .wait
-
-	ld a, h
-	ld [rSCX], a
-	ld [hSCX], a
+	predef BGLayerScrollingUpdate	;joenote - consolidated into a predef that also fixes some issues
 
 .wait2
 	ld a, [rLY] ; rLY
