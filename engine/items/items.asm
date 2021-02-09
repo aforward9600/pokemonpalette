@@ -1382,8 +1382,17 @@ ItemUseMedicine:
 	push de
 	ld d, a
 	callab CalcExperience ; calculate experience for next level and store it at $ff96
+;joenote - do not allow candy if CalcExperience capped the level
+	ld a, [wCurEnemyLVL]
+	cp d
 	pop de
 	pop hl
+	jr z, .candy_continue
+	dec a
+	ld [hl], a
+	ld [wCurEnemyLVL], a
+	jr .vitaminNoEffect
+.candy_continue
 	ld bc, wPartyMon1Exp - wPartyMon1Level
 	add hl, bc ; hl now points to MSB of experience
 ; update experience to minimum for new level

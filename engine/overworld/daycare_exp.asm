@@ -9,10 +9,15 @@ IncrementDayCareMonExp:
 	inc [hl]
 	ret nz
 	dec hl
-	inc [hl]
+;	inc [hl]
+;	ld a, [hl]
+;	cp $50
+;	ret c
+;	ld a, $50
+;	ld [hl], a
+;joenote - set the cap at $FFFFFF exp
 	ld a, [hl]
-	cp $50
-	ret c
-	ld a, $50
-	ld [hl], a
+	cp $FF
+	ret z
+	inc [hl]
 	ret
