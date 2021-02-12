@@ -9,23 +9,60 @@ CalcLevelFromExperience:
 	inc d ; increment level
 	call CalcExperience
 	push hl
-	ld hl, wLoadedMonExp + 2 ; current exp
+;	ld hl, wLoadedMonExp + 2 ; current exp
 ; compare exp needed for level d with current exp
-	ld a, [hExperience + 2]
-	ld c, a
-	ld a, [hld]
-	sub c
-	ld a, [hExperience + 1]
-	ld c, a
-	ld a, [hld]
-	sbc c
+;	ld a, [hExperience + 2]
+;	ld c, a
+;	ld a, [hld]
+;	sub c
+;	ld a, [hExperience + 1]
+;	ld c, a
+;	ld a, [hld]
+;	sbc c
+;	ld a, [hExperience]
+;	ld c, a
+;	ld a, [hl]
+;	sbc c
+;	pop hl
+;	jr nc, .loop ; if current exp >= exp needed for level d, try the next level
+;	dec d ; since the needed exp has not been reached on this loop iteration, go back to the previous d value and return
+;	ret
+;joenote - The difference in exp does not matter and is not used. I need some more flexibility.
+;		What only matters is finding if  the current exp is less than the needed exp.
+;		To that end, start with comparing the most significant byte and start working down.
+;		'a' holds current exp and 'c' holds needed exp.
+	ld hl, wLoadedMonExp 
+	;hl is now pointing to current exp
 	ld a, [hExperience]
 	ld c, a
+	ld a, [hli]
+	cp c
+	jr c, .dec_and_ret	;If 'a' byte is less than 'c' byte, the needed exp has not been reached.
+	jr nz, .pop_and_loop	;If 'a' byte is not equal to 'c' byte, the needed exp has been exceeded.
+	;highest bytes are equal, so check middle bytes
+	ld a, [hExperience + 1]
+	ld c, a
+	ld a, [hli]
+	cp c
+	jr c, .dec_and_ret	;If 'a' byte is less than 'c' byte, the needed exp has not been reached.
+	jr nz, .pop_and_loop	;If 'a' byte is not equal to 'c' byte, the needed exp has been exceeded.
+	;middle bytes are equal, so check lower bytes
+	ld a, [hExperience + 2]
+	ld c, a
 	ld a, [hl]
-	sbc c
+	cp c
+	jr c, .dec_and_ret	;If 'a' byte is less than 'c' byte, the needed exp has not been reached.
+	jr z, .exact_ret	;If 'a' byte is equal to 'c' byte, the needed exp has been reached exactly.
+	;else the needed exp has been exceeded.
+.pop_and_loop	;since the needed exp was exceeded on this loop iteration, loop back
 	pop hl
-	jr nc, .loop ; if exp needed for level d is not greater than exp, try the next level
-	dec d ; since the exp was too high on the last loop iteration, go back to the previous value and return
+	jr .loop
+.dec_and_ret	;since the needed exp has not been reached on this loop iteration, go back to the previous d value and return
+	pop hl
+	dec d
+	ret	
+.exact_ret	;simply return because the exact exp threshold has been reached
+	pop hl
 	ret
 
 ; calculates the amount of experience needed for level d
