@@ -409,8 +409,10 @@ StatusScreen2:
 	pop af
 	ld [wLoadedMonLevel], a
 	ld de, wLoadedMonExp
-	coord hl, 12, 4
-	lb bc, 3, 7
+;	coord hl, 12, 4
+;	lb bc, 3, 7
+	coord hl, 11, 4	;joenote - print 8 digit exp number
+	lb bc, 3, 8 
 	call PrintNumber ; exp
 	call CalcExpToLevelUp
 	ld de, wLoadedMonExp
