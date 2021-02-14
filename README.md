@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.19.1 (hotfix)
+Version 1.19.2 developement
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -39,6 +39,17 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Changes not yet in the ips patch files:
 -----------
+- Prevent infinite loop for 'mons hitting level softcap when maxl_level is set greater than 237
+- Fixed water tile strangeness during vblank
+- Prevent vblank from running twice in a row during direct-SCX scrolling; fixes scroll artifacting
+- Fixed a problem where lack of a move terminator on one NPC was causing writes to the shadow ram
+- Fixed rare candies to recognize a level softcap when maxl_level is set greater than 237
+- Adjusted daycare to allow exp values over $500000
+- Male-only and female-only pokemon will show a gender symbol if the feature is active
+- Fixed infinite loop at 100+ level softcaps
+- Fix exp bar divide by zero at 100+ level softcaps
+- Allow up to 8 digits when displaying experience on the status screen
+- The L: tile now prints if level is three digits
 
 
 #Bugfixes:
