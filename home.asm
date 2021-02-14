@@ -512,17 +512,17 @@ PrintStatusConditionNotFainted:
 ; INPUT:
 ; hl = destination address
 ; [wLoadedMonLevel] = level
-PrintLevel::
-	ld a, $6e ; ":L" tile ID
-	ld [hli], a
-	ld c, 2 ; number of digits
-	ld a, [wLoadedMonLevel] ; level
-	cp 100
-	jr c, PrintLevelCommon
-; if level at least 100, write over the ":L" tile
-	dec hl
-	inc c ; increment number of digits to 3
-	jr PrintLevelCommon
+PrintLevel::	;joenote - just fall through to PrintLevelFull to save some space.
+;	ld a, $6e ; ":L" tile ID
+;	ld [hli], a
+;	ld c, 2 ; number of digits
+;	ld a, [wLoadedMonLevel] ; level
+;	cp 100
+;	jr c, PrintLevelCommon
+;; if level at least 100, write over the ":L" tile
+;	dec hl
+;	inc c ; increment number of digits to 3
+;	jr PrintLevelCommon
 
 ; prints the level without leaving off ":L" regardless of level
 ; INPUT:
