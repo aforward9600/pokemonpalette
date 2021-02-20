@@ -642,23 +642,36 @@ CanWalkOntoTile:
 	bit 7, d           ; check if going upwards (d=$ff)
 	jr nz, .upwards
 	add d
-	cp $5
-	jr c, .impassable  ; if c2x2+d < 5, don't go ;bug: this tests probably were supposed to prevent sprites
-	jr .checkHorizontal                          ; from walking out too far, but this line makes sprites get stuck
-.upwards                                         ; whenever they walked upwards 5 steps
-	sub $1                                       ; on the other hand, the amount a sprite can walk out to the
-	jr c, .impassable  ; if d2x2 == 0, don't go  ; right of bottom is not limited (until the counter overflows)
+;bug: this tests probably were supposed to prevent sprites
+; from walking out too far, but this line makes sprites get stuck
+; whenever they walked upwards 5 steps
+; on the other hand, the amount a sprite can walk out to the
+; right of bottom is not limited (until the counter overflows)
+
+;joenote - time to fix this
+;	cp $5	; if c2x2+d < 5, don't go 
+;	jr c, .impassable  
+	cp $E	;joenote - if wanting to move downwards, don't go if c2x2+d > $D (that's 5 spaces from inital position)
+	jr nc, .impassable
+	jr .checkHorizontal                          
+.upwards                                         
+	sub $1	
+	cp $3	;joenote - if wanting to move upwards, don't go if c2x2 -1 < 3 (that's 5 spaces from inital position)
+	jr c, .impassable  
 .checkHorizontal
 	ld d, a
 	ld a, [hl]         ; c2x3 (sprite X displacement, initialized at $8, keep track of where a sprite did go)
 	bit 7, e           ; check if going left (e=$ff)
 	jr nz, .left
 	add e
-	cp $5              ; compare, but no conditional jump like in the vertical check above (bug?)
+;	cp $5              ; compare, but no conditional jump like in the vertical check above (bug?)
+	cp $E	;joenote - if wanting to move right, don't go if c2x3+e > $D (that's 5 spaces from inital position)
+	jr nc, .impassable
 	jr .passable
 .left
-	sub $1
-	jr c, .impassable  ; if d2x3 == 0, don't go
+	sub $1	
+	cp $3	;joenote - if wanting to move left, don't go if c2x3 - 1 < 3 (that's 5 spaces from inital position)
+	jr c, .impassable  
 .passable
 	ld [hld], a        ; update c2x3
 	ld [hl], d         ; update c2x2
