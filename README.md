@@ -49,7 +49,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fixed infinite loop at 100+ level softcaps
 - Fix exp bar divide by zero at 100+ level softcaps
 - Allow up to 8 digits when displaying experience on the status screen
-- The L: tile now prints if level is three digits
+- L: block doesn't disappear when level hits three digits
+- Fixed bugged npc movement constraints
 
 
 #Bugfixes:
