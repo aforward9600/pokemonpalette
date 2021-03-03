@@ -1,4 +1,12 @@
 _UpdateSprites:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - It's not a good idea for PrepareOAMData to run in Vblank in the middle of updating sprites
+;			If it does, then sprites can end up being left out and not sent to the OAM buffer.
+;			Prevent this by making sure there is plenty of time to update sprites before Vblank hits when rLY=90
+	ld a, [rLY]
+	cp $40
+	jr nc, _UpdateSprites
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld h, $c1
 	inc h
 	ld a, $e    ; wSpriteStateData2 + $0e
