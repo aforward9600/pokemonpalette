@@ -2804,6 +2804,12 @@ SetSpriteFacingDirectionAndDelay::
 	jp DelayFrames
 
 SetSpriteFacingDirection::
+;joenote - indicator that sprite's facing is being forced
+	ld a, $1
+	ld [H_SPRITEDATAOFFSET], a
+	call GetPointerWithinSpriteStateData2
+	ld a, 1
+	ld [hl], a
 	ld a, $9
 	ld [H_SPRITEDATAOFFSET], a
 	call GetPointerWithinSpriteStateData1

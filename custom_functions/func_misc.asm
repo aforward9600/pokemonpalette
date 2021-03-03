@@ -47,6 +47,32 @@ BGLayerScrollingUpdate:
 	ret
 	
 	
+
+;joenote - this will check to see if facing is being forced on a sprite that normally has random facing	
+CheckForcedFacing:
+	ld h, $c2
+	ld a, [H_CURRENTSPRITEOFFSET]
+	add $1
+	ld l, a
+	ld a, [hl]
+	cp 1
+	ld a, 0
+	ld [hl], a
+	jr nz, .clearcarryret
+	ld h, $c1
+	ld a, [H_CURRENTSPRITEOFFSET]
+	add $9
+	ld l, a
+	ld a, [hl]
+	swap a
+	ld d, a
+	scf
+	ret
+.clearcarryret
+	xor a
+	ret
+	
+	
 	
 ;joenote - moved this here to save space in Home bank
 _PrintNumber:

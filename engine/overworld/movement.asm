@@ -189,6 +189,13 @@ UpdateNPCSprite:
 	jr .determineDirection
 .randomMovement
 	call GetTileSpriteStandsOn
+	push hl
+	push de
+	callba CheckForcedFacing
+	ld a, d
+	pop de
+	pop hl
+	jr c, .determineDirection
 	call Random
 .determineDirection
 	ld b, a
