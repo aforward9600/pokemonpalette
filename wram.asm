@@ -856,19 +856,14 @@ wSimulatedJoypadStatesIndex:: ; cd38
 ; 0 if the joypad state is not being simulated
 	ds 1
 
-wWastedByteCD39:: ; cd39
-; written to but nothing ever reads it
-	ds 1
+;joenote - replace wasted bytes and put them to use
+;3 bytes
+wPrintNumDE:: ;cd39
+	ds 3
 
-wWastedByteCD3A:: ; cd3a
-; written to but nothing ever reads it
-	ds 1
-
-wOverrideSimulatedJoypadStatesMask:: ; cd3b
+wOverrideSimulatedJoypadStatesMask:: ; cd3c	;joenote - bumped down from cd3b
 ; mask indicating which real button presses can override simulated ones
 ; XXX is it ever not 0?
-	ds 1
-
 	ds 1
 
 wFallingObjectsMovementData:: ; cd3d

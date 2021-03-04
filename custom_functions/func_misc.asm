@@ -75,6 +75,7 @@ CheckForcedFacing:
 	
 	
 ;joenote - moved this here to save space in Home bank
+		;Now loads value at DE from a backup location
 _PrintNumber:
 ; Print the c-digit, b-byte value at de.
 ; Allows 2 to 8 digits. For 1-digit numbers, add
@@ -83,6 +84,9 @@ _PrintNumber:
 ; in bits 7 and 6 of b respectively.
 	call GetPredefRegisters
 	push bc
+	push de
+	ld de, wPrintNumDE
+	
 	xor a
 	ld [H_PASTLEADINGZEROES], a
 	ld [H_NUMTOPRINT], a
@@ -198,6 +202,8 @@ endm
 	ld a, "0"
 	add b
 	ld [hli], a
+	pop de
+	
 	pop de
 	dec de
 	pop bc

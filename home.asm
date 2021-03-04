@@ -3163,7 +3163,6 @@ MoveSprite_::
 	ld [wSimulatedJoypadStatesEnd], a
 	dec a
 	ld [wJoyIgnore], a
-	ld [wWastedByteCD3A], a
 	ret
 
 ; divides [hDividend2] by [hDivisor2] and stores the quotient in [hQuotient2]
@@ -4303,6 +4302,17 @@ PrintNumber::
 ; the value to char "0" instead of calling PrintNumber.
 ; Flags LEADING_ZEROES and LEFT_ALIGN can be given
 ; in bits 7 and 6 of b respectively.
+;joenote - make a backup of the value at DE and load from there.
+	push de
+	ld a, [de]
+	ld [wPrintNumDE], a
+	inc de
+	ld a, [de]
+	ld [wPrintNumDE + 1], a
+	inc de
+	ld a, [de]
+	ld [wPrintNumDE + 2], a
+	pop de
 	predef _PrintNumber
 	ret
 
