@@ -1319,24 +1319,18 @@ ChooseNextMon:
 
 ; called when player is out of usable mons.
 ; prints appropriate lose message, sets carry flag if player blacked out (special case for initial rival fight)
+;joenote - enabled losing text for all rival fights
 HandlePlayerBlackOut:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr z, .notSony1Battle
 	ld a, [wCurOpponent]
 	cp OPP_SONY1
-	jr nz, .notSony1Battle
-	coord hl, 0, 0  ; sony 1 battle
-	lb bc, 8, 21
-	call ClearScreenArea
-	call ScrollTrainerPicAfterBattle
-	ld c, 40
-	call DelayFrames
-	ld hl, Sony1WinText
-	call PrintText
-	ld a, [wCurMap]
-	cp OAKS_LAB
-	ret z            ; starter battle in oak's lab: don't black out
+	jr z, .RivalBattle
+	cp OPP_SONY2
+	jr z, .RivalBattle
+	cp OPP_SONY3
+	jr z, .RivalBattle
 .notSony1Battle
 	ld b, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
@@ -1353,10 +1347,23 @@ HandlePlayerBlackOut:
 	call ClearScreen
 	scf
 	ret
+.RivalBattle
+	coord hl, 0, 0  ; sony 1 battle
+	lb bc, 8, 21
+	call ClearScreenArea
+	call ScrollTrainerPicAfterBattle
+	ld c, 40
+	call DelayFrames
+	call PrintEndBattleText
+	ld a, [wCurMap]
+	cp OAKS_LAB
+	ret z            ; starter battle in oak's lab: don't black out
+	jr .notSony1Battle
 
-Sony1WinText:
-	TX_FAR _Sony1WinText
-	db "@"
+;joenote - not needed anymore
+;Sony1WinText:
+;	TX_FAR _Sony1WinText
+;	db "@"
 
 PlayerBlackedOutText2:
 	TX_FAR _PlayerBlackedOutText2
