@@ -55,6 +55,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Attempt at fixing issues where NPCs face the wrong way during scripted events
 - Reactivated lost text that was meant to play when you lose to your rival
 - Fixed the incorrect encounter data in the power plant
+- Fixed an issue where catching a transformed ditto gives it 0 DVs
 
 
 #Bugfixes:
