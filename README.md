@@ -57,6 +57,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fixed the incorrect encounter data in the power plant
 - Fixed an issue where catching a transformed ditto gives it 0 DVs
 - Fixed the instant-text glitch that can happen in the bike shop
+- Fixed using escape rope in bill's house and the fan club
 
 
 #Bugfixes:
