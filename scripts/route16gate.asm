@@ -38,10 +38,11 @@ Route16GateScript0:
 	ld a, $1
 	ld [wRoute16GateCurScript], a
 	ret
-.asm_4970e
-	ld a, $2
-	ld [wRoute16GateCurScript], a
-	ret
+.asm_4970e	;joenote - edited to prevent brute-forcing past the gate guard
+	;ld a, $2
+	;ld [wRoute16GateCurScript], a
+	;ret
+	jp Route16GateScript2
 
 CoordsData_49714:
 	db $07,$04
