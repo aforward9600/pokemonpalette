@@ -2584,7 +2584,11 @@ PartyMenuOrRockOrRun:
 	ld [wd0b5], a
 	call GetMonHeader
 	ld de, vFrontPic
-	call LoadMonFrontSprite
+	call IsGhostBattle	;joenote - do a test for the ghost battle and load ghost pic if confirmed
+	push af
+	call nz, LoadMonFrontSprite
+	pop af
+	call z, LoadGhostPic
 	jr .enemyMonPicReloaded
 .doEnemyMonAnimation
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7512,26 +7516,9 @@ InitBattleCommon:
 	ld a, $2
 	ld [wIsInBattle], a
 	jp _InitBattleCommon
-
-InitWildBattle:
-	ld a, $1
-	ld [wIsInBattle], a
-	call LoadEnemyMonData
-	call DoBattleTransitionAndInitBattleVariables
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joenote - use a bit to determine if this is a ghost marowak battle
-	ld a, [wUnusedD721]
-	bit 3, a
-	res 3, a	;reset after done checking it
-	ld [wUnusedD721], a
-	jr nz, .isGhost
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;	ld a, [wCurOpponent]
-;	cp MAROWAK
-;	jr z, .isGhost
-	call IsGhostBattle
-	jr nz, .isNoGhost
-.isGhost
+	
+;joenote - make this its own function
+LoadGhostPic:
 	ld hl, wMonHSpriteDim
 	ld a, $66
 	ld [hli], a   ; write sprite dimensions
@@ -7559,6 +7546,28 @@ InitWildBattle:
 	call LoadMonFrontSprite ; load ghost sprite
 	pop af
 	ld [wcf91], a
+	ret
+
+InitWildBattle:
+	ld a, $1
+	ld [wIsInBattle], a
+	call LoadEnemyMonData
+	call DoBattleTransitionAndInitBattleVariables
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - use a bit to determine if this is a ghost marowak battle
+	ld a, [wUnusedD721]
+	bit 3, a
+	res 3, a	;reset after done checking it
+	ld [wUnusedD721], a
+	jr nz, .isGhost
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;	ld a, [wCurOpponent]
+;	cp MAROWAK
+;	jr z, .isGhost
+	call IsGhostBattle
+	jr nz, .isNoGhost
+.isGhost
+	call LoadGhostPic
 	jr .spriteLoaded
 .isNoGhost
 	ld de, vFrontPic
