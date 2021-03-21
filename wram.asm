@@ -859,6 +859,7 @@ wSimulatedJoypadStatesIndex:: ; cd38
 ;joenote - replace wasted bytes and put them to use
 ;3 bytes
 wPrintNumDE:: ;cd39
+wTempColCoords::	;temp location for collision tile coordinates
 	ds 3
 
 wOverrideSimulatedJoypadStatesMask:: ; cd3c	;joenote - bumped down from cd3b

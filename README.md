@@ -63,6 +63,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fixed amazing man glitch in the route 16 gate
 - Fixed tower ghost pic not loading after exiting status screen
 - Fixed being able to leave the safari zone without clearing the event
+- Fixed bumping into invisible shrub
 
 
 #Bugfixes:
