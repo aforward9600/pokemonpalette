@@ -3,7 +3,15 @@ SoftlockTeleport:
 	ld a, [hJoyInput]
 	cp D_DOWN + B_BUTTON + SELECT
 	ret nz
+	CheckEvent EVENT_GOT_POKEDEX
 	ld a, [wCurrentMenuItem]
+	jr nz, .next
+	;do this stuff if pokedex has not been obtained
+	cp 5
+	ret nz
+	callba ItemUseNotTime
+	ret
+.next
 	cp 6 
 	ret nz
 	ld a, PALLET_TOWN

@@ -64,6 +64,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fixed tower ghost pic not loading after exiting status screen
 - Fixed being able to leave the safari zone without clearing the event
 - Fixed bumping into invisible shrub
+- Softlock teleport will now say it cannot be used if you don't have the pokedex yet
 
 
 #Bugfixes:
