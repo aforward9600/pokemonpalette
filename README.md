@@ -65,6 +65,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fixed being able to leave the safari zone without clearing the event
 - Fixed bumping into invisible shrub
 - Softlock teleport will now say it cannot be used if you don't have the pokedex yet
+- Minor tweak to Pallet Town object data for Prof Oak
 
 
 #Bugfixes:
