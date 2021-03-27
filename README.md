@@ -67,6 +67,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Softlock teleport will now say it cannot be used if you don't have the pokedex yet
 - Minor tweak to Pallet Town object data for Prof Oak
 - Added ledge to route 25 to prevent softlock
+- Fixed menu not clearing if A is held after saving
 
 
 #Bugfixes:
