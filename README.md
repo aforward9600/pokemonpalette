@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.19.2 developement
+Version 1.20 developement(1)
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
