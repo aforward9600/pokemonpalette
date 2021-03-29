@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.20 developement(1)
+Version 1.20
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -22,30 +22,12 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- fixed minor desync with abbreviated rival music
-- fixed poison/burn/leechseed damage sometimes being applied twice
-- minor changes to support external randomizer
-- AI will not do actions during Rage or when recharging
-- Improved exp calculation for developers who want a level cap between 101 and 255
-  - EXP calculation routine now does math in 4 bytes instead of 3 bytes
-  - Exp calculation result is still capped to 3 bytes regardless of level cap to prevent overflow
-  - The byte cap on the exp result means that certain growth rates may have a level cap
-  - For example, the "slow" growth rate is theorized to cap at level 237
-- Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings
-- To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
-- Fixed an artifact when title screen 'mons scroll left in GBC-mode 
-- Fixed a bug in AI roster scoring when evaluating type matchups for switching
-
-
-#Changes not yet in the ips patch files:
------------
 - Prevent infinite loop for 'mons hitting level softcap when maxl_level is set greater than 237
 - Fixed water tile strangeness during vblank
 - Prevent vblank from running twice in a row during direct-SCX scrolling; fixes scroll artifacting
 - Fixed a problem where lack of a move terminator on one NPC was causing writes to the shadow ram
 - Fixed rare candies to recognize a level softcap when maxl_level is set greater than 237
 - Adjusted daycare to allow exp values over $500000
-- Male-only and female-only pokemon will show a gender symbol if the feature is active
 - Fixed infinite loop at 100+ level softcaps
 - Fix exp bar divide by zero at 100+ level softcaps
 - Allow up to 8 digits when displaying experience on the status screen
@@ -69,6 +51,11 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Added ledge to route 25 to prevent softlock
 - Fixed menu not clearing if A is held after saving
 - Minor tweaks to the Rival's object data in various maps
+
+
+#Changes not yet in the ips patch files:
+-----------
+- 
 
 
 #Bugfixes:
@@ -167,8 +154,13 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Amazing man can no longer be triggered by text boxes or the start menu (via a code tweak from Yellow-version)
   - The rival encounters on route 22 now show an exclamation bubble that never showed up originally
   - Erika uses her pic from yellow version which alters her funerary clothes to a proper kimono
-  
+  - Fixed amazing man glitch when triggered by a hidden object
+  - Fixed amazing man glitch in the route 16 gate
+  - Fixed tower ghost pic not loading after exiting status screen
+  - Added ledge to route 25 to prevent softlock
+  - Fixed bumping into invisible shrub
 
+  
 - Item Fixes  
   - Great ball has a ball factor of 12 now
   - Stone evolutions cannot be triggered via level-up anymore
@@ -221,6 +213,14 @@ It was done to serve as a codebase for others to start their own romhacks.
   - The formula functions for exp now have underflow protection.
   - Added improved general RNG from Prism and Polished Crystal (all DVs are now possible naturally)
   - Cannot bypass Brock via the start button
+  - Fixed bugged npc movement constraints
+  - Fixed the instant-text glitch that can happen in the bike shop
+  - Fixed using escape rope in bill's house and the fan club
+  - Fixed being able to leave the safari zone without clearing the event
+  - Fixed holding left to force past the cycling road guards
+  - Minor tweak to Pallet Town object data for Prof Oak
+  - Fixed menu not clearing if A is held after saving
+  - Minor tweaks to the Rival's object data in various maps
 
 
 #TWEAKS:
@@ -245,6 +245,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 - The surfboard, a nugget, and TM 15 are hidden items added to the vermilion dock
 - Blaine has a touched-up battle sprite so he doesn't look like an alien
   - Snagged this off reddit, but original artist unknown (let me know if this is yours)
+- L: block doesn't disappear when level hits three digits
+
 
 - Fixed mistakes and made adjustments to the game text
   - When a pkmn is caught and fills the box, a reminder is printed that the box is full
@@ -266,6 +268,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - PC has a text prompt to tell you if its full after depositing
   - Exp.all now prints one message when splitting exp instead of for each party member
   - text is now properly flipped in one of the saffron houses
+  - Reactivated lost text that was meant to play when you lose to your rival
+  
 
 - Adjustments to moves  
   - Stat-down moves no longer have a 25% miss chance in AI matches
@@ -371,6 +375,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 	- The byte cap on the exp result means that certain growth rates may have a level cap
 	- For example, the "slow" growth rate is theorized to cap at level 237
   - Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings
+  - Adjusted daycare to allow exp values over $500000
+  - Allow up to 8 digits when displaying experience on the status screen
 
 
 #CREDITS / SPECIAL THANKS:
