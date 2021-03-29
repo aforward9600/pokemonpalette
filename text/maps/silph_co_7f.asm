@@ -173,8 +173,9 @@ _SilphCo7Text_51ec8::
 	prompt
 
 _SilphCo7Text_51ecd::
-	text "<RIVAL>: How can"
-	line "I put this?"
+	text "Uh,"
+	line "how can I put"
+	cont "this?"
 
 	para "You're not good"
 	line "enough to play"

@@ -383,6 +383,11 @@ UpdateMovingBgTiles::
 	and a
 	ret z ; no animations if indoors (or if a menu set this to 0)
 
+;joenote - fixes a strange incident where $FF is written to this one byte of a water tile
+	ld a,[rLY]
+	cp $90 ; check if not in vblank period??? (maybe if vblank is too long)
+	ret c
+
 	ld a, [hMovingBGTilesCounter1]
 	inc a
 	ld [hMovingBGTilesCounter1], a

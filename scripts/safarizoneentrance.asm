@@ -110,9 +110,19 @@ SafariZoneEntranceScriptPointers:
 .SafariZoneEntranceScript6
 	call SafariZoneEntranceScript_752b4
 	ret nz
+	call .CheckSafariStatus
 	call Delay3
 	ld a, [wcf0d]
 	ld [wSafariZoneEntranceCurScript], a
+	ret
+.CheckSafariStatus	;joenote - data in wcf0d isn't part of the game save, so a check needs to be done.
+	CheckEvent EVENT_SAFARI_GAME_OVER
+	ret nz
+	CheckEvent EVENT_IN_SAFARI_ZONE
+	ret z
+	;if the safari event is going on but not in game-over, then wcf0d needs to hold $05
+	ld a, 5
+	ld [wcf0d], a
 	ret
 
 SafariZoneEntranceAutoWalk:

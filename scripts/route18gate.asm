@@ -38,10 +38,11 @@ Route18GateScript0:
 	ld a, $1
 	ld [wRoute18GateCurScript], a
 	ret
-.asm_498c6
-	ld a, $2
-	ld [wRoute18GateCurScript], a
-	ret
+.asm_498c6	;joenote - edited to prevent brute-forcing past the gate guard
+	;ld a, $2
+	;ld [wRoute18GateCurScript], a
+	;ret
+	jp Route18GateScript2
 
 CoordsData_498cc:
 	db $03,$04

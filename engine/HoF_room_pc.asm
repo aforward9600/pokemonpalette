@@ -122,13 +122,7 @@ ScrollCreditsMonLeft:
 	ret
 
 ScrollCreditsMonLeft_SetSCX:
-	ld a, h
-	ld [hSCX], a
-	ld a, [rLY]
-	cp l
-	jr nz, ScrollCreditsMonLeft_SetSCX
-	ld a, h
-	ld [rSCX], a
+	predef BGLayerScrollingUpdate	;joenote - consolidated into a predef that also fixes some issues
 .loop
 	ld a, [rLY]
 	cp h

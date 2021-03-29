@@ -235,9 +235,9 @@ wSpriteStateData1:: ; c100
 ; C1x7: intra-animation-frame counter (counting upwards to 4 until c1x8 is incremented)
 ; C1x8: animation frame counter (increased every 4 updates, hold four states (totalling to 16 walking frames)
 ; C1x9: facing direction (0: down, 4: up, 8: left, $c: right)
-; C1xA
-; C1xB
-; C1xC
+; C1xA: adjusted Y coordinate (read for collision)
+; C1xB: adjusted X coordinate (read for collision)
+; C1xC: facing during collision with another sprite
 ; C1xD
 ; C1xE
 ; C1xF
@@ -276,26 +276,26 @@ endm
 	; ds $10 * $10
 
 
-;SECTION "Sprite State Data 2", WRAM0[$c200]
+SECTION "Sprite State Data 2", WRAM0[$c200]
 
 wSpriteStateData2:: ; c200
 ; more data for all sprites on the current map
 ; holds info for 16 sprites with $10 bytes each
 ; player sprite is always sprite 0
 ; C2x0: walk animation counter (counting from $10 backwards when moving)
-; C2x1:
-; C2x2: Y displacement (initialized at 8, supposed to keep moving sprites from moving too far, but bugged)
-; C2x3: X displacement (initialized at 8, supposed to keep moving sprites from moving too far, but bugged)
+; C2x1: joenote - make this 1 in order to enforce a given facing direction on a randomly turning sprite
+; C2x2: Y displacement (initialized at 8, supposed to keep moving sprites from moving too far)
+; C2x3: X displacement (initialized at 8, supposed to keep moving sprites from moving too far)
 ; C2x4: Y position (in 2x2 tile grid steps, topmost 2x2 tile has value 4)
 ; C2x5: X position (in 2x2 tile grid steps, leftmost 2x2 tile has value 4)
 ; C2x6: movement byte 1 (determines whether a sprite can move, $ff:not moving, $fe:random movements, others unknown)
 ; C2x7: (?) (set to $80 when in grass, else $0; may be used to draw grass above the sprite)
 ; C2x8: delay until next movement (counted downwards, status (c1x1) is set to ready if reached 0)
-; C2x9
+; C2x9: backup storage of facing direction (0: down, 4: up, 8: left, $c: right)
 ; C2xA
 ; C2xB
 ; C2xC
-; C2xD
+; C2xD: picture ID
 ; C2xE: sprite image base offset (in video ram, player always has value 1, used to compute c1x2)
 ; C2xF
 spritestatedata2: MACRO
@@ -856,19 +856,15 @@ wSimulatedJoypadStatesIndex:: ; cd38
 ; 0 if the joypad state is not being simulated
 	ds 1
 
-wWastedByteCD39:: ; cd39
-; written to but nothing ever reads it
-	ds 1
+;joenote - replace wasted bytes and put them to use
+;3 bytes
+wPrintNumDE:: ;cd39
+wTempColCoords::	;temp location for collision tile coordinates
+	ds 3
 
-wWastedByteCD3A:: ; cd3a
-; written to but nothing ever reads it
-	ds 1
-
-wOverrideSimulatedJoypadStatesMask:: ; cd3b
+wOverrideSimulatedJoypadStatesMask:: ; cd3c	;joenote - bumped down from cd3b
 ; mask indicating which real button presses can override simulated ones
 ; XXX is it ever not 0?
-	ds 1
-
 	ds 1
 
 wFallingObjectsMovementData:: ; cd3d

@@ -154,6 +154,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ld a, c
 	ld [hSCX], a
 	call DelayFrame
+	call DelayFrame	;joenote - do one extra frame to make sure the screen can update.
 	ld a, %11100100 ; inverted palette for silhouette effect
 	ld [rBGP], a
 	ld [rOBP0], a
@@ -212,12 +213,7 @@ SlidePlayerHeadLeft:
 	ret
 
 SetScrollXForSlidingPlayerBodyLeft:
-	ld a, [rLY]
-	cp l
-	jr nz, SetScrollXForSlidingPlayerBodyLeft
-	ld a, h
-	ld [rSCX], a
-	ld [hSCX], a
+	predef BGLayerScrollingUpdate	;joenote - consolidated into a predef that also fixes some issues
 .loop
 	ld a, [rLY]
 	cp h
@@ -1323,24 +1319,18 @@ ChooseNextMon:
 
 ; called when player is out of usable mons.
 ; prints appropriate lose message, sets carry flag if player blacked out (special case for initial rival fight)
+;joenote - enabled losing text for all rival fights
 HandlePlayerBlackOut:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr z, .notSony1Battle
 	ld a, [wCurOpponent]
 	cp OPP_SONY1
-	jr nz, .notSony1Battle
-	coord hl, 0, 0  ; sony 1 battle
-	lb bc, 8, 21
-	call ClearScreenArea
-	call ScrollTrainerPicAfterBattle
-	ld c, 40
-	call DelayFrames
-	ld hl, Sony1WinText
-	call PrintText
-	ld a, [wCurMap]
-	cp OAKS_LAB
-	ret z            ; starter battle in oak's lab: don't black out
+	jr z, .RivalBattle
+	cp OPP_SONY2
+	jr z, .RivalBattle
+	cp OPP_SONY3
+	jr z, .RivalBattle
 .notSony1Battle
 	ld b, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
@@ -1357,10 +1347,23 @@ HandlePlayerBlackOut:
 	call ClearScreen
 	scf
 	ret
+.RivalBattle
+	coord hl, 0, 0  ; sony 1 battle
+	lb bc, 8, 21
+	call ClearScreenArea
+	call ScrollTrainerPicAfterBattle
+	ld c, 40
+	call DelayFrames
+	call PrintEndBattleText
+	ld a, [wCurMap]
+	cp OAKS_LAB
+	ret z            ; starter battle in oak's lab: don't black out
+	jr .notSony1Battle
 
-Sony1WinText:
-	TX_FAR _Sony1WinText
-	db "@"
+;joenote - not needed anymore
+;Sony1WinText:
+;	TX_FAR _Sony1WinText
+;	db "@"
 
 PlayerBlackedOutText2:
 	TX_FAR _PlayerBlackedOutText2
@@ -2581,7 +2584,11 @@ PartyMenuOrRockOrRun:
 	ld [wd0b5], a
 	call GetMonHeader
 	ld de, vFrontPic
-	call LoadMonFrontSprite
+	call IsGhostBattle	;joenote - do a test for the ghost battle and load ghost pic if confirmed
+	push af
+	call nz, LoadMonFrontSprite
+	pop af
+	call z, LoadGhostPic
 	jr .enemyMonPicReloaded
 .doEnemyMonAnimation
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7509,26 +7516,9 @@ InitBattleCommon:
 	ld a, $2
 	ld [wIsInBattle], a
 	jp _InitBattleCommon
-
-InitWildBattle:
-	ld a, $1
-	ld [wIsInBattle], a
-	call LoadEnemyMonData
-	call DoBattleTransitionAndInitBattleVariables
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joenote - use a bit to determine if this is a ghost marowak battle
-	ld a, [wUnusedD721]
-	bit 3, a
-	res 3, a	;reset after done checking it
-	ld [wUnusedD721], a
-	jr nz, .isGhost
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;	ld a, [wCurOpponent]
-;	cp MAROWAK
-;	jr z, .isGhost
-	call IsGhostBattle
-	jr nz, .isNoGhost
-.isGhost
+	
+;joenote - make this its own function
+LoadGhostPic:
 	ld hl, wMonHSpriteDim
 	ld a, $66
 	ld [hli], a   ; write sprite dimensions
@@ -7556,6 +7546,28 @@ InitWildBattle:
 	call LoadMonFrontSprite ; load ghost sprite
 	pop af
 	ld [wcf91], a
+	ret
+
+InitWildBattle:
+	ld a, $1
+	ld [wIsInBattle], a
+	call LoadEnemyMonData
+	call DoBattleTransitionAndInitBattleVariables
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - use a bit to determine if this is a ghost marowak battle
+	ld a, [wUnusedD721]
+	bit 3, a
+	res 3, a	;reset after done checking it
+	ld [wUnusedD721], a
+	jr nz, .isGhost
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;	ld a, [wCurOpponent]
+;	cp MAROWAK
+;	jr z, .isGhost
+	call IsGhostBattle
+	jr nz, .isNoGhost
+.isGhost
+	call LoadGhostPic
 	jr .spriteLoaded
 .isNoGhost
 	ld de, vFrontPic

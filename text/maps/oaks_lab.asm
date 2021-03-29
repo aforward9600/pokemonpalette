@@ -261,8 +261,9 @@ _OaksLabText_1d3be::
 	prompt
 
 _OaksLabText_1d3c3::
-	text "<RIVAL>: Yeah! Am"
-	line "I great or what?"
+	text "Yeah!"
+	line "Am I great or"
+	cont "what?"
 	prompt
 
 _OaksLabRivalToughenUpText::

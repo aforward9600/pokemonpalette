@@ -1118,10 +1118,10 @@ _UseNextMonText::
 	text "Use next #MON?"
 	done
 
-_Sony1WinText::
-	text "<RIVAL>: Yeah! Am"
-	line "I great or what?"
-	prompt
+;_Sony1WinText::	;joenote - made redundant
+;	text "<RIVAL>: Yeah! Am"
+;	line "I great or what?"
+;	prompt
 
 _PlayerBlackedOutText2::
 	text "<PLAYER> is out of"

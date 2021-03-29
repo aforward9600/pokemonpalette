@@ -62,11 +62,15 @@ BikeShopText1:
 	call PlaceString
 	ld hl, BikeShopText_1d815
 	call PrintText
+;joenote - from pokeyellow: This fixes the bike shop insta-text glitch.
+;just need to move it up a few lines.
+	ld hl, wd730
+	res 6, [hl]
 	call HandleMenuInput
 	bit 1, a
 	jr nz, .cancel
-	ld hl, wd730
-	res 6, [hl]
+;	ld hl, wd730
+;	res 6, [hl]
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .cancel

@@ -762,9 +762,7 @@ ItemUseSurfboard:
 .storeSimulatedButtonPress
 	ld a, b
 	ld [wSimulatedJoypadStatesEnd], a
-	xor a
-	ld [wWastedByteCD39], a
-	inc a
+	ld a, 1
 	ld [wSimulatedJoypadStatesIndex], a
 	ret
 
@@ -1382,8 +1380,17 @@ ItemUseMedicine:
 	push de
 	ld d, a
 	callab CalcExperience ; calculate experience for next level and store it at $ff96
+;joenote - do not allow candy if CalcExperience capped the level
+	ld a, [wCurEnemyLVL]
+	cp d
 	pop de
 	pop hl
+	jr z, .candy_continue
+	dec a
+	ld [hl], a
+	ld [wCurEnemyLVL], a
+	jr .vitaminNoEffect
+.candy_continue
 	ld bc, wPartyMon1Exp - wPartyMon1Level
 	add hl, bc ; hl now points to MSB of experience
 ; update experience to minimum for new level
@@ -1533,6 +1540,11 @@ ItemUseEscapeRope:
 	jr nz, .notUsable
 	ld a, [wCurMap]
 	cp AGATHAS_ROOM
+	jr z, .notUsable
+;joenote - added from pokeyellow; do not allow in Bill's house or the Fan Club
+	cp BILLS_HOUSE
+	jr z, .notUsable
+	cp POKEMON_FAN_CLUB
 	jr z, .notUsable
 	ld a, [wCurMapTileset]
 	ld b, a

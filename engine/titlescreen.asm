@@ -330,13 +330,7 @@ TitleScreenScrollInMon:
 	ret
 
 ScrollTitleScreenGameVersion:
-.wait
-	ld a, [rLY]
-	cp l
-	jr nz, .wait
-
-	ld a, h
-	ld [rSCX], a
+	predef BGLayerScrollingUpdate	;joenote - consolidated into a predef that also fixes some issues
 
 .wait2
 	ld a, [rLY]

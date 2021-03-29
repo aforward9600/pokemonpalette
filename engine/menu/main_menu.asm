@@ -343,12 +343,12 @@ ShinPokemonHandshake:
 	jp LinkMenu.next
 HandshakeList:	;this serves as a version control passcode with FF as an end-of-list marker
 	db $1
-	db $1
-	db $9
+	db $2
+	db $0
 	db $b
 	db $ff
 VersionText:
-	db "v1.19.1L@"
+	db "v1.20L@"
 
 WhereWouldYouLikeText:
 	TX_FAR _WhereWouldYouLikeText
