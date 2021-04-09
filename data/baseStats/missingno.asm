@@ -1,5 +1,5 @@
 MissingnoBaseStats:
-db FOSSIL_KABUTOPS ; pokedex id
+db MISSINGNO_B5 ; pokedex id
 db 128 ; base hp
 db 128 ; base attack
 db 128 ; base defense
@@ -9,9 +9,9 @@ db BIRD ; species type 1
 db NORMAL ; species type 2
 db 1 ; catch rate
 db 255 ; base exp yield
-INCBIN "pic/other/fossilkabutops.pic",0,1 ; $66, sprite dimensions
-dw FossilKabutopsPic
-dw KabutopsPicBack
+INCBIN "pic/other/missingno.pic",0,1 ; $77, sprite dimensions
+dw MissingnoPic
+dw OldManPic	;use old man for back pic as a placeholder
 ; attacks known at lvl 0
 db WATER_GUN
 db SKY_ATTACK
