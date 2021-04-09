@@ -701,11 +701,19 @@ color_index = 0
 		ld b, a	;"B" now holds the palette data
 		and %11	;"A" now has just the value for the shade of palette color 0
 		call .GetColorAddress
-		;now load the value that HL points to into wGBCPal offset by the loop
+		push de
+		;get the palett color value in de
 		ld a, [hli]
-		ld [wGBCPal + color_index * 2], a
+		ld e, a
 		ld a, [hl]
+		ld d, a
+		predef GBCGamma
+		;now load the value that HL points to into wGBCPal offset by the loop
+		ld a, e
+		ld [wGBCPal + color_index * 2], a
+		ld a, d
 		ld [wGBCPal + color_index * 2 + 1], a
+		pop de
 
 		IF color_index < (NUM_COLORS + -1)
 			ld a, b	;restore the palette data back into "A"

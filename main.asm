@@ -2478,3 +2478,4 @@ INCLUDE "data/bg_map_attributes.asm"
 INCLUDE "engine/bg_map_attributes.asm"
 
 INCLUDE "engine/gamefreak.asm"	;gbcnote - moved here to make space
+INCLUDE "custom_functions/func_gamma.asm"
