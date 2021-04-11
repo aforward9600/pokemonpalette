@@ -322,4 +322,5 @@ hDisableJoypadPolling EQU $FFF9
 
 hJoyInput EQU $FFF8
 
-hGBC EQU $FFFE ;gbcnote - 0 if DMG, != 0 if GBC
+hRGB EQU $FFFB	;3 bytes ;joenote - used to store color RGB color values for color correction
+hGBC EQU $FFFE ;gbcnote - 0 if DMG, != 0 if GBC, =2 for gamma shader
