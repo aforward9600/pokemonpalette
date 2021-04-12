@@ -159,7 +159,6 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ld [rBGP], a
 	ld [rOBP0], a
 	ld [rOBP1], a
-	call UpdateGBCPal_BGP
 	call UpdateGBCPal_OBP0
 	call UpdateGBCPal_OBP1
 .slideSilhouettesLoop ; slide silhouettes of the player's pic and the enemy's pic onto the screen
@@ -171,6 +170,14 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ld h, $0
 	ld l, $60
 	call SetScrollXForSlidingPlayerBodyLeft ; end background scrolling on line $60
+	
+	;gbcnote - update BGP here so screen isn't revealed when scrolling is out of place
+	push af
+	ld a, b
+	cp $72
+	call z, UpdateGBCPal_BGP
+	pop af
+	
 	call SlidePlayerHeadLeft
 	ld a, c
 	ld [hSCX], a
