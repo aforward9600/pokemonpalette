@@ -52,7 +52,7 @@ PalletTownScript1:
 	ld [wJoyIgnore], a
 	ld a, HS_PALLET_TOWN_OAK
 	ld [wMissableObjectIndex], a
-	predef ShowObject
+	predef ShowObject2
 
 	; trigger the next script
 	ld a, 2

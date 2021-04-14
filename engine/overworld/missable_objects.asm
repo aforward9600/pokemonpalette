@@ -123,10 +123,50 @@ IsObjectHidden:
 	ld [$ffe5], a
 	ret
 
+
+;joenote - This is just for sprites that appear on the same map during a scripted event.
+;It pre-loads their facing so they don't look down for one frame.
+ShowObject2:
+	ld hl, wMissableObjectList
+	ld a, [wMissableObjectIndex]
+	ld b, a
+.loop
+	ld a, [hli]
+	cp $ff
+	jr z, ShowObject ; not missable -> not hidden
+	ld a, [hli]
+	cp b
+	jr nz, .loop
+	dec hl
+	dec hl
+	ld a, [hl]
+	ld b, a	;map sprite offset is in b
+	swap a
+	add $09
+	ld l, a
+	ld a, $c1
+	ld h, a	;hl points to map sprite facing
+	ld a, b
+	dec a
+	add a
+	push hl
+	ld hl, wMapSpriteData
+	add l
+	ld l, a
+	ld a, [hl]        ; read movement byte 2
+	pop hl
+	cp $FF
+	jr z, ShowObject
+	and $0F
+	sla a
+	sla a
+	and $0F
+	ld [hl], a
+	;fall through
+	
 ; adds missable object (items, leg. pokemon, etc.) to the map
 ; [wMissableObjectIndex]: index of the missable object to be added (global index)
 ShowObject:
-ShowObject2:
 	ld hl, wMissableObjectFlags
 	ld a, [wMissableObjectIndex]
 	ld c, a
