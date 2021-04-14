@@ -85,6 +85,7 @@ NOT_VBLANKED EQU 1
 	ld [H_VBLANKOCCURRED], a
 .halt
 	halt
+	nop	;joenote - due to a processor bug, nop after halt is best practice
 	ld a, [H_VBLANKOCCURRED]
 	and a
 	jr nz, .halt
