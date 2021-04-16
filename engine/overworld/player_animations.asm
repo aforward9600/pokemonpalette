@@ -510,6 +510,10 @@ _HandleMidJump:
 	ld a, [wPlayerJumpingYScreenCoordsIndex]
 	ld c, a
 	inc a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;60fps - only update every other tick
+	call Ledge60fps
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	cp $10
 	jr nc, .finishedJump
 	ld [wPlayerJumpingYScreenCoordsIndex], a
@@ -536,6 +540,26 @@ _HandleMidJump:
 	res 7, [hl] ; not simulating joypad states any more
 	xor a
 	ld [wJoyIgnore], a
+	ret
+
+Ledge60fps:
+	push hl
+	push af
+	ld h, $c2
+	ld l, $0a
+	ld a, [wUnusedD721]
+	bit 4, a
+	ld a, [hl]
+	jr nz, .is60fps
+	xor a
+	jr .end
+.is60fps
+	xor $01
+.end
+	ld [hl], a
+	pop af
+	sub [hl]
+	pop hl
 	ret
 
 PlayerJumpingYScreenCoords:
