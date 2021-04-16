@@ -292,7 +292,7 @@ wSpriteStateData2:: ; c200
 ; C2x7: (?) (set to $80 when in grass, else $0; may be used to draw grass above the sprite)
 ; C2x8: delay until next movement (counted downwards, status (c1x1) is set to ready if reached 0)
 ; C2x9: backup storage of facing direction (0: down, 4: up, 8: left, $c: right)
-; C2xA
+; C2xA	60fps
 ; C2xB
 ; C2xC
 ; C2xD: picture ID
@@ -3074,8 +3074,9 @@ wWhichDungeonWarp:: ; d71e
 wUnusedD71F:: ; d71f	;joenote - used as a backup address for the wDamage value
 	ds 2
 wUnusedD721:: ; d721	;joenote - use to set various wram flags
-	;bit 3 - ghost marowak battle if set
 	ds 1
+	;bit 3 - ghost marowak battle if set
+	;bit 4 - 60fps testing flag
 ;;;;;;;;;;;;;;joenote - use these unused locations for debugging and parsing DV scores
 wUnusedD722:: 
 	ds 4

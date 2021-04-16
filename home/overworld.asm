@@ -39,7 +39,10 @@ EnterMap::
 	ld [wJoyIgnore], a
 
 OverworldLoop::
-	call DelayFrame
+	;call DelayFrame	;60fps
+	ld a, [wUnusedD721]
+	bit 4, a
+	call z, DelayFrame
 OverworldLoopLessDelay::
 	call DelayFrame
 	call LoadGBPal
