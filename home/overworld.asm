@@ -40,8 +40,7 @@ EnterMap::
 
 OverworldLoop::
 	;call DelayFrame	;60fps
-	ld a, [wUnusedD721]
-	bit 4, a
+	call Check60fps
 	call z, DelayFrame
 OverworldLoopLessDelay::
 	call DelayFrame
@@ -237,7 +236,14 @@ OverworldLoopLessDelay::
 	jp c, OverworldLoop
 
 .noCollision
-	ld a, $08
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;60fps - counter is doubled
+	call Check60fps
+	ld a, $8
+	jr z, .pc60fpsCounter
+	ld a, $10
+.pc60fpsCounter
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld [wWalkCounter], a
 	jr .moveAhead2
 
@@ -1352,7 +1358,19 @@ AdvancePlayerSprite::
 	ld [wXCoord], a
 .afterUpdateMapCoords
 	ld a, [wWalkCounter] ; walking animation counter
-	cp $07
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;60fps - counter is doubled
+	push bc
+	ld b, a
+	call Check60fps
+	ld a, b
+	ld b, $07
+	jr z, .pc60fpsCounterComp
+	ld b, $0F
+.pc60fpsCounterComp
+	cp b
+	pop bc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jp nz, .scrollBackgroundAndSprites
 ; if this is the first iteration of the animation
 	ld a, c
@@ -1499,8 +1517,14 @@ AdvancePlayerSprite::
 	ld b, a
 	ld a, [wSpriteStateData1 + 5] ; delta X
 	ld c, a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;60fps - halve the x & y deltas
+	call Check60fps
+	jr nz, .xy60fpsEnd
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	sla b
 	sla c
+.xy60fpsEnd
 	ld a, [hSCY]
 	add b
 	ld [hSCY], a ; update background scroll Y
@@ -2293,3 +2317,8 @@ ForceBikeOrSurf::
 	ld hl, LoadPlayerSpriteGraphics
 	call Bankswitch
 	jp PlayDefaultMusic ; update map/player state?
+
+Check60fps:
+	ld a, [wUnusedD721]
+	bit 4, a
+	ret
