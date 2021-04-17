@@ -556,7 +556,7 @@ Ledge60fps:
 .is60fps
 	xor $01
 .end
-	ld [hl], a
+	;ld [hl], a	;already updated during UpdatePlayerSprite.moving
 	pop af
 	sub [hl]
 	pop hl
