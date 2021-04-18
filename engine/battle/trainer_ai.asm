@@ -1586,7 +1586,13 @@ AICureStatus:	;joenote - modified to be more robust and also undo stat changes o
 	call AddNTimes
 	xor a
 	ld [hl], a ; clear status in enemy team roster
-	callab UndoBurnParStats ;undo stat changes if burned or paralyzed
+	ld a, [H_WHOSETURN]
+	push af
+	ld a, $01 	;forcibly set it to the AI's turn
+	ld [H_WHOSETURN], a
+	callab UndoBurnParStats	;undo brn/par stat changes
+	pop af
+	ld [H_WHOSETURN], a
 	xor a
 	ld [wEnemyMonStatus], a ; clear status in active enemy data
 	ld [wEnemyToxicCounter], a	;clear toxic counter
