@@ -258,17 +258,14 @@ AIMoveChoiceModification1:
 	;else continue onward
 .noSubImm	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	ld a, [wEnemyMovePower]
-	and a
-	jp nz, .nextMove	;go to next move if the current move is not zero-power
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;At this line onward all moves are assumed to be zero power
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;Heavily discourage healing moves if HP is full. Encourage if hp is low
+;Heavily discourage healing or exploding moves if HP is full. Encourage if hp is low
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp HEAL_EFFECT	;see if it is a healing move
-	jr nz, .notahealingmove	;skip out if move is not a healing move
+	jr z, .heal_explode	;skip out if move is not
+	cp EXPLODE_EFFECT	;what about an explosion effect?
+	jr nz, .not_heal_explode	;skip out if move is not
+.heal_explode
 	ld a, 1	;
 	call AICheckIfHPBelowFraction
 	jp nc, .heavydiscourage	;if hp not below 1/1 max hp then heavily discourage
@@ -280,9 +277,15 @@ AIMoveChoiceModification1:
 	ld a, 3	;
 	call AICheckIfHPBelowFraction
 	jp nc, .nextMove	;if hp is 1/3 or more, get next move
-	dec [hl]	;else slightly encourage
+	dec [hl]	;else slightly encourage (less than 1/3 hp)
 	jp .nextMove	;get next move
-.notahealingmove
+.not_heal_explode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	ld a, [wEnemyMovePower]
+	and a
+	jp nz, .nextMove	;go to next move if the current move is not zero-power
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;At this line onward all moves are assumed to be zero power
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use moves that are blocked by mist
