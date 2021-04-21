@@ -1212,6 +1212,7 @@ MewPicBack::  		   INCBIN "pic/monback/mewb.pic"
 ENDC
 RedPicBack::           INCBIN "pic/trainer/redb.pic"
 OldManPic::            INCBIN "pic/trainer/oldman.pic"
+MissingnoPic::         INCBIN "pic/other/missingno.pic"
 
 SECTION "Battle (bank D)", ROMX, BANK[$D]
 ;migrated content to bank 9

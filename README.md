@@ -55,6 +55,19 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Changes not yet in the ips patch files:
 -----------
+- (b1)
+- Added built-in gamma shader for backlit LCD screens (press SELECT at the copyright screen)
+- On battle load, stopped the GBC GBPal from updating before graphics are in the right position
+- (b2)
+- Fixed some issues where npcs that appear on screen are looking down for 1 frame
+- Fixed some menu screen flicker
+- added nop after halt commands (safety prevention for a rare processor bug)
+- Added an option to make the overworld run in 60fps (feature is still a bit rusty)
+- (b3)
+- Fixed issue where paralyzed enemies might move first
+- (b4)
+- Rearranged some stuff with trainer AI
+- Gave AI some guidance on explosion effects 
 - 
 
 
