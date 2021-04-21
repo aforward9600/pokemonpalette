@@ -163,6 +163,86 @@ AIMoveChoiceModification1:
 ;	jp z, .heavydiscourage
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use dream eater if enemy not asleep, otherwise encourage it
+	ld a, [wEnemyMoveEffect]	;load the move effect
+	cp DREAM_EATER_EFFECT	;see if it is dream eater
+	jr nz, .notdreameater	;skip out if move is not dream eater
+	ld a, [wBattleMonStatus]	;load the player pkmn non-volatile status
+	and $7	;check bits 0 to 2 for sleeping turns
+	jp z, .heavydiscourage	;heavily discourage using dream eater on non-sleeping pkmn
+	dec [hl]	;else slightly encourage dream eater's use on a sleeping pkmn
+	jp .nextMove
+.notdreameater	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use counter against a non-applicable move
+	ld a, [wEnemyMoveNum]	
+	cp COUNTER
+	jr nz, .countercheck_end	;if this move is not counter then jump out
+	ld a, [wPlayerMovePower]
+	and a
+	jp z, .heavydiscourage	;heavily discourage counter if enemy is using zero-power move
+	ld a, [wPlayerMoveType]
+	cp NORMAL
+	jr z, .countercheck_end	; continue on if countering a normal move
+	cp FIGHTING
+	jr z, .countercheck_end	; continue on if countering a fighting move
+	cp BIRD
+	jr z, .countercheck_end	; continue on if countering STRUGGLE or other typeless move
+	jp .heavydiscourage	;else heavily discourage since the player move type is not applicable to counter
+.countercheck_end
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - do not use moves that are ineffective against substitute if a substitute is up
+	ld a, [wPlayerBattleStatus2]
+	bit HAS_SUBSTITUTE_UP, a	;check for substitute bit
+	jr z, .noSubImm	;if the substitute bit is not set, then skip out of this block
+	ld a, [wEnemyMoveEffect]	;get the move effect into a
+	push hl
+	push de
+	push bc
+	ld hl, SubstituteImmuneEffects
+	ld de, $0001
+	call IsInArray	;see if a is found in the hl array (carry flag set if true)
+	pop bc
+	pop de
+	pop hl
+	jp c, .heavydiscourage	;carry flag means the move effect is blocked by substitute
+	;else continue onward
+.noSubImm	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Heavily discourage healing or exploding moves if HP is full. Encourage if hp is low
+;Exploding has a slight preference over healing because overall this hurts the player more than the AI
+	ld a, [wEnemyMoveEffect]	;load the move effect
+	cp HEAL_EFFECT	;see if it is a healing move
+	jr z, .heal_explode	;skip out if move is not
+	cp EXPLODE_EFFECT	;what about an explosion effect?
+	jr nz, .not_heal_explode	;skip out if move is not
+	dec [hl]	;give a slight edge to exploding
+.heal_explode
+	ld a, 1	;
+	call AICheckIfHPBelowFraction
+	jp nc, .heavydiscourage	;heavy discourage if hp at max (heal +5 & explode +4)
+	inc [hl]	;1/2 hp to max hp - slight discourage (heal +1 & explode 0)
+	ld a, 2	;
+	call AICheckIfHPBelowFraction
+	jp nc, .nextMove	;if hp is 1/2 or more, get next move
+	dec [hl]	;else 1/3 to 1/2 hp - neutral (heal 0 & explode -1)
+	ld a, 3	;
+	call AICheckIfHPBelowFraction
+	jp nc, .nextMove	;if hp is 1/3 or more, get next move
+	dec [hl]	;else 0 to 1/3 hp - slight preference (heal -1 & explode -2)
+	jp .nextMove	;get next move
+.not_heal_explode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	ld a, [wEnemyMovePower]
+	and a
+	jp nz, .nextMove	;go to next move if the current move is not zero-power
+;At this line onward all moves are assumed to be zero power
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use haze if user has no status or neutral stat mods
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp HAZE_EFFECT	;see if it is haze
@@ -208,91 +288,9 @@ AIMoveChoiceModification1:
 .notsubstitute
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - do not use dream eater if enemy not asleep, otherwise encourage it
-	ld a, [wEnemyMoveEffect]	;load the move effect
-	cp DREAM_EATER_EFFECT	;see if it is dream eater
-	jr nz, .notdreameater	;skip out if move is not dream eater
-	ld a, [wBattleMonStatus]	;load the player pkmn non-volatile status
-	and $7	;check bits 0 to 2 for sleeping turns
-	jp z, .heavydiscourage	;heavily discourage using dream eater on non-sleeping pkmn
-	dec [hl]	;else slightly encourage dream eater's use on a sleeping pkmn
-	jp .nextMove
-.notdreameater	
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - do not use counter against a non-applicable move
-	ld a, [wEnemyMoveNum]	
-	cp COUNTER
-	jr nz, .countercheck_end	;if this move is not counter then jump out
-	ld a, [wPlayerMovePower]
-	and a
-	jp z, .heavydiscourage	;heavily discourage counter if enemy is using zero-power move
-	ld a, [wPlayerMoveType]
-	cp NORMAL
-	jr z, .countercheck_end	; continue on if countering a normal move
-	cp FIGHTING
-	jr z, .countercheck_end	; continue on if countering a fighting move
-	cp BIRD
-	jr z, .countercheck_end	; continue on if countering STRUGGLE or other typeless move
-	jp .heavydiscourage	;else heavily discourage since the player move type is not applicable to counter
-.countercheck_end
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - do not use moves that are ineffective against substitute if a substitute is up
-	push hl	;save hl register on the stack
-	ld hl, wPlayerBattleStatus2
-	bit HAS_SUBSTITUTE_UP, [hl]	;check hl for substitute bit
-	pop hl	;restore original hl data from the stack
-	jr z, .noSubImm	;if the substitute bit is not set, then skip out of this block
-	ld a, [wEnemyMoveEffect]	;get the move effect into a
-	push hl
-	push de
-	push bc
-	ld hl, SubstituteImmuneEffects
-	ld de, $0001
-	call IsInArray	;see if a is found in the hl array (carry flag set if true)
-	pop bc
-	pop de
-	pop hl
-	jp c, .heavydiscourage	;carry flag means the move effect is blocked by substitute
-	;else continue onward
-.noSubImm	
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;Heavily discourage healing or exploding moves if HP is full. Encourage if hp is low
-	ld a, [wEnemyMoveEffect]	;load the move effect
-	cp HEAL_EFFECT	;see if it is a healing move
-	jr z, .heal_explode	;skip out if move is not
-	cp EXPLODE_EFFECT	;what about an explosion effect?
-	jr nz, .not_heal_explode	;skip out if move is not
-.heal_explode
-	ld a, 1	;
-	call AICheckIfHPBelowFraction
-	jp nc, .heavydiscourage	;if hp not below 1/1 max hp then heavily discourage
-	inc [hl]	;slightly discourage by default (1/2 hp to max-1 hp)
-	ld a, 2	;
-	call AICheckIfHPBelowFraction
-	jp nc, .nextMove	;if hp is 1/2 or more, get next move
-	dec [hl]	;else return preference to neutral (1/3 to 1/2 hp)
-	ld a, 3	;
-	call AICheckIfHPBelowFraction
-	jp nc, .nextMove	;if hp is 1/3 or more, get next move
-	dec [hl]	;else slightly encourage (less than 1/3 hp)
-	jp .nextMove	;get next move
-.not_heal_explode
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	ld a, [wEnemyMovePower]
-	and a
-	jp nz, .nextMove	;go to next move if the current move is not zero-power
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;At this line onward all moves are assumed to be zero power
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use moves that are blocked by mist
-	push hl	;save hl register on the stack
-	ld hl, wPlayerBattleStatus2
-	bit PROTECTED_BY_MIST, [hl]	;check hl for mist bit
-	pop hl	;restore original hl data from the stack
+	ld a, [wPlayerBattleStatus2]
+	bit PROTECTED_BY_MIST, a	;check for mist bit
 	jr z, .noMistImm	;if the mist bit is not set, then skip out of this block
 	ld a, [wEnemyMoveEffect]	;get the move effect into a
 	push hl
@@ -470,9 +468,10 @@ AIMoveChoiceModification1:
 	ld a, [wPlayerBattleStatus1]	;load the player pkmn volatile status
 	and $80	;check bit 7 for confusion bit
 	jp nz, .heavydiscourage	;heavily discourage using zero-power confusion moves on confused pkmn
-	jp .nextMove	;if opponent is not confused, then neither encourage or discourage and go to next move
 .notconfuse
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;don't use a status move against a status'd target
 	ld a, [wEnemyMoveEffect]
 	push hl
 	push de
@@ -483,17 +482,56 @@ AIMoveChoiceModification1:
 	pop bc
 	pop de
 	pop hl
-	jp nc, .nextMove
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;joenote - if player pkmn has no nonvolatile status, then don't encourage/discourage and get next move
+	jr nc, .nostatusconflict
 	ld a, [wBattleMonStatus]
 	and a
-	jp z, .nextMove
+	jr nz, .heavydiscourage
+.nostatusconflict
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-.heavydiscourage	;joenote - added marker
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote: fix spamming of buff/debuff moves
+	;See if the move has an effect that should not be dissuaded
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, EffectsToNotDissuade
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jp c, .skipoutspam	;If found on list, do not run anti-spam on it
+;heavily discourage 0 BP moves if health is below 1/3 max
+	ld a, 3
+	call AICheckIfHPBelowFraction
+	jp c, .heavydiscourage
+;heavily discourage 0 BP moves if one was used just previously
+	ld a, [wAILastMovePower]
+	and a
+	jp z, .heavydiscourage
+;else apply a random bias to the 0 bp move we are on
+	call Random	
+;outcome desired: 	50% chance to heavily discourage and would rather do damage
+;					12.5% chance to slightly encourage
+;					else neither encourage nor discourage
+	cp 128	;don't set carry flag if number is >= this value
+	jp nc, .heavydiscourage	
+	cp 32
+	jp c, .givepref	;if not discouraged, then there is a chance to slightly encourage to spice things up
+	;else neither encourage nor discourage
+.skipoutspam
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - end of this AI layer
+	jp .nextMove
+.heavydiscourage
 	ld a, [hl]
 	add $5 ; heavily discourage move
 	ld [hl], a
+	jp .nextMove
+.givepref	;joenote - added marker
+	dec [hl] ; slightly encourage this move
 	jp .nextMove
 
 EffectsToNotDissuade:
@@ -503,6 +541,7 @@ EffectsToNotDissuade:
 	db HEAL_EFFECT
 	db FOCUS_ENERGY_EFFECT
 	db SUBSTITUTE_EFFECT
+	;fall through
 StatusAilmentMoveEffects:
 	db $01 ; unused sleep effect
 	db SLEEP_EFFECT
@@ -516,23 +555,10 @@ SubstituteImmuneEffects:	;joenote - added this table to track for substitute imm
 	db POISON_EFFECT
 	db PARALYZE_EFFECT
 	db CONFUSION_EFFECT
-	db ATTACK_DOWN1_EFFECT
-	db DEFENSE_DOWN1_EFFECT
-	db SPEED_DOWN1_EFFECT
-	db SPECIAL_DOWN1_EFFECT
-	db ACCURACY_DOWN1_EFFECT
-	db EVASION_DOWN1_EFFECT
-	db ATTACK_DOWN2_EFFECT
-	db DEFENSE_DOWN2_EFFECT
-	db SPEED_DOWN2_EFFECT
-	db SPECIAL_DOWN2_EFFECT
-	db ACCURACY_DOWN2_EFFECT
-	db EVASION_DOWN2_EFFECT
 	db DRAIN_HP_EFFECT
 	db LEECH_SEED_EFFECT
 	db DREAM_EATER_EFFECT
-	db $FF
-
+	;fall through
 MistBlockEffects:	;joenote - added this table to track for things blocked by mist
 	db ATTACK_DOWN1_EFFECT
 	db DEFENSE_DOWN1_EFFECT
@@ -615,40 +641,9 @@ AIMoveChoiceModification3:
 	ret z ; no more moves in move set
 	inc de
 	call ReadMove
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
-;joenote: fix spamming of buff/debuff moves
-	ld a, [wEnemyMovePower]	;get the base power of the enemy's attack
-	and a	;check if it is zero
-	jr nz, .skipout	;get out of this section if non-zero power
-	;backup check: don't use a status move against a status'd target
-	ld a, [wEnemyMoveEffect]
-	push hl
-	push de
-	push bc
-	ld hl, StatusAilmentMoveEffects
-	ld de, $0001
-	call IsInArray
-	pop bc
-	pop de
-	pop hl
-	jr nc, .nostatusconflict
-	ld a, [wBattleMonStatus]
-	and a
-	jr nz, .heavydiscourage2
-.nostatusconflict
-	;check on certain moves with zero bp but are handled differently
-	ld a, [wEnemyMoveNum]
-	push hl
-	push de
-	push bc
-	ld hl, SpecialZeroBPMoves
-	ld de, $0001
-	call IsInArray	;see if a is found in the hl array (carry flag set if true)
-	pop bc
-	pop de
-	pop hl
-	jp c, .skipout	;carry flag means the move was found in the list
-	;don't use poison-effect moves on poison-tpe pokemon
+;don't use poison-effect moves on poison-tpe pokemon
 	ld a, [wEnemyMoveEffect]
 	cp POISON_EFFECT
 	jr nz, .notpoisoneffect
@@ -659,41 +654,29 @@ AIMoveChoiceModification3:
 	cp POISON
 	jr z, .heavydiscourage2
 .notpoisoneffect
-	;See if the move has an effect that should not be dissuaded
-	ld a, [wEnemyMoveEffect]
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;check on certain moves with zero bp but are handled differently
+	ld a, [wEnemyMoveNum]
 	push hl
 	push de
 	push bc
-	ld hl, EffectsToNotDissuade
+	ld hl, SpecialZeroBPMoves
 	ld de, $0001
-	call IsInArray
+	call IsInArray	;see if a is found in the hl array (carry flag set if true)
 	pop bc
 	pop de
 	pop hl
-	jr nc, .applybias
-.backfromTwave
-	jp .nextMove	;neither encourage nor discourage the status move
-.applybias
-;heavily discourage 0 BP moves if health is below 1/3 max
-	ld a, 3
-	call AICheckIfHPBelowFraction
-	jp c, .heavydiscourage2
-;heavily discourage 0 BP moves if one was used just previously
-	ld a, [wAILastMovePower]
+	jp c, .specialBPend	;If found on list, treat it as if it were a damaging move
+
+	;otherise only handle moves that deal damage from here on out
+	ld a, [wEnemyMovePower]
 	and a
-	jp z, .heavydiscourage2
-;else apply a random bias to the 0 bp move we are on
-	call Random	
-;outcome desired: 	50% chance to heavily discourage and would rather do damage
-;					12.5% chance to slightly encourage
-;					else neither encourage nor discourage
-	cp 128	;don't set carry flag if number is >= this value
-	jp nc, .heavydiscourage2	
-	cp 32
-	jp c, .givepref	;if not discouraged, then there is a chance to slightly encourage to spice things up
-	jp .nextMove	;neither encourage nor discourage
-.skipout
+	jp z, .nextMove	;go to next move if the current move is zero-power
+.specialBPend
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - heavily discourage attack moves that have no effect due to typing
 	push hl
 	push bc
 	push de
@@ -705,8 +688,7 @@ AIMoveChoiceModification3:
 	pop de
 	pop bc
 	pop hl
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - heavily discourage attack moves that have no effect due to typing
+
 	ld a, [wTypeEffectiveness]	;get the effectiveness
 	and a 	;check if it's zero
 	jr nz, .skipout2	;skip if it's not immune
@@ -716,10 +698,10 @@ AIMoveChoiceModification3:
 	ld [hl], a
 	jp .nextMove
 .skipout2
-	;if thunder wave is being used against a non-immune target, jump back a bit since it's not a damaging move
+	;if thunder wave is being used against a non-immune target, neither encourage nor discourage it
 	ld a, [wEnemyMoveNum]
 	cp THUNDER_WAVE
-	jp z, .backfromTwave
+	jp z, .nextMove
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - do not use ohko moves on faster opponents, since they will auto-miss
