@@ -165,13 +165,21 @@ ItemUseBall:
 .notOldManBattle
 ; If the player is fighting the ghost Marowak, set the value that indicates the
 ; Pokémon can't be caught and skip the capture calculations.
-	ld a, [wCurMap]
-	cp POKEMONTOWER_6
-	jr nz, .loop
-	ld a, [wEnemyMonSpecies2]
-	cp MAROWAK
+	;ld a, [wCurMap]
+	;cp POKEMONTOWER_6
+	;jr nz, .loop
+	;ld a, [wEnemyMonSpecies2]
+	;cp MAROWAK
+	;ld b, $10 ; can't be caught value
+	;jp z, .setAnimData
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - use a bit to determine if this is a ghost marowak battle
+	ld a, [wUnusedD721]
+	bit 3, a
+	jr z, .loop
 	ld b, $10 ; can't be caught value
-	jp z, .setAnimData
+	jp .setAnimData
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Get the first random number. Let it be called Rand1.
 ; Rand1 must be within a certain range according the kind of ball being thrown.
