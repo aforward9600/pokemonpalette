@@ -144,7 +144,11 @@ PokemonTower2Text1:
 	call SaveEndBattleTextPointers
 	ld a, OPP_SONY2
 	ld [wCurOpponent], a
-
+	
+	;joenote - deactivate the ss anne rival fight if it's been skipped
+	ld a, $04
+	ld [wSSAnne2CurScript], a
+	
 	; select which team to use during the encounter
 	ld a, [wRivalStarter]
 	cp STARTER2
