@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.20
+Version 1.21 (beta)
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -68,7 +68,15 @@ It was done to serve as a codebase for others to start their own romhacks.
 - (b4)
 - Rearranged some stuff with trainer AI
 - Gave AI some guidance on explosion effects 
-- 
+- (b5)
+- Rearranged trainer AI and moved more agressive move use to AI layer 1 (all trainers except Cueball and Youngster)
+- Streamlined how the ghost marowak battle is triggered (now allows for non-ghost marowaks in pokemon tower)
+- Fixed a coordinate typo in pokemon tower left by gamefreak
+- If SS Anne is skipped and the pokemon tower rival battle is initiated, the SS Anne rival battle is deactivated
+- Safari zone "ran away" math is adjusted to be more accurate (level*1 changes to level*1.5 as the base value used)
+- Trainer AI layer settings have been completely redone
+- (b6)
+- Only set gamma shader flag if in GBC mode
 
 
 #Bugfixes:
