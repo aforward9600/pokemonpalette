@@ -402,13 +402,63 @@ ScoreAIParty:
 .next3
 
 
-	;adjust score for most recent player move
-	ld a, [wActionResultOrTookBattleTurn]
+	;adjust score for the active player mon moves
+	;first back up player move power and type
+	ld a, [wPlayerMovePower]
+	ld b, a
+	ld a, [wPlayerMoveType]
+	ld c, a
+	push bc
+	;back up wBuffer, then use wBuffer to store the current enemy mon score
+	ld a, [wBuffer]
+	push af
+	ld a, [de]
+	ld [wBuffer], a
+	;set loop counter to 4
+	ld c, $04
+.playermoveloop
+	;update the current score to be the lowest
+	ld a, [de]
+	ld b, a
+	ld a, [wBuffer]
+	cp b
+	jr c, .playermoveloop_wBuffer	;if wBuffer < DE score, set DE score to wBuffer
+	ld a, b	;else update wBuffer 
+	ld [wBuffer], a
+.playermoveloop_wBuffer
+	ld [de], a
+	;decrement counter, then exit out of loop if 4 moves reached
+	ld a, c
+	sub $01	;use sub instead of dec in order to affect carry bit
+	ld c, a
+	jp c, .playermoveloop_done
+	;grab a player mon move
+	push hl
+	ld b, $00
+	ld hl, wBattleMonMoves
+	add hl, bc
+	ld a, [hl]
+	pop hl
+	;do nothing if this is a null move
 	and a
-	jr nz, .next4	;skip if the player switched or used an item
+	jr z, .playermoveloop
+	;save the player move power and type
+	push bc
+	push de
+	push hl
+	ld d, a
+	callba ReadMoveForAIscoring
+	ld a, e
+	ld [wPlayerMoveType], a
+	ld a, d
+	ld [wPlayerMovePower], a
+	pop hl
+	pop de
+	pop bc
+	
 	ld a, [wPlayerMovePower]	;get the power of the player's move
 	cp $02	;regular damaging moves have power > 1
-	jr c, .next4	;skip out if the move is not a normal damaging move
+	jr c, .playermoveloop	;skip out if the move is not a normal damaging move
 	;get effectiveness of the most recent player move
 	ld a, [wUnusedC000]
 	set 3, a 
@@ -419,18 +469,22 @@ ScoreAIParty:
 	ld a, [wEnemyMonType + 1]
 	ld [wAIPartyMonScores + 7], a
 	;override the current enemy mon typing with that from the roster pointer
+	push bc
 	ld bc, $05
 	call GetRosterStructData
 	ld [wEnemyMonType], a
 	ld bc, $06
 	call GetRosterStructData
 	ld [wEnemyMonType + 1], a
+	pop bc
 	;now get the typing effectiveness
+	push bc
 	push hl
 	push de
 	callab AIGetTypeEffectiveness
 	pop de
 	pop hl
+	pop bc
 	;now undo the current mon type override
 	ld a, [wAIPartyMonScores + 6]
 	ld [wEnemyMonType], a
@@ -440,28 +494,28 @@ ScoreAIParty:
 	ld a, [wTypeEffectiveness]
 	;skip if effectiveness is neutral
 	cp $0A
-	jr z, .next4
+	jp z, .playermoveloop
 	;+15 to score if move has no effect
 	cp $01
 	ld b, 15
 	push af
 	call c, .plus
 	pop af
-	jr c, .next4
+	jp c, .playermoveloop
 	;+10 to score if move has little effect
 	cp $03
 	ld b, 10
 	push af
 	call c, .plus
 	pop af
-	jr c, .next4
+	jp c, .playermoveloop
 	;+5 to score if move is less effective
 	cp $0A
 	ld b, 5
 	push af
 	call c, .plus
 	pop af
-	jr c, .next4
+	jp c, .playermoveloop
 	;at this point the move must be super effective
 	;minus based on the power of the move
 	ld a, [wPlayerMovePower]
@@ -469,7 +523,17 @@ ScoreAIParty:
 	srl a
 	srl a
 	ld b, a
-	call .minus
+	call .minus	
+	jp .playermoveloop
+.playermoveloop_done
+	;restore player move power and type as well as wBuffer
+	pop af
+	ld [wBuffer], a
+	pop bc
+	ld a, c
+	ld [wPlayerMoveType], a
+	ld a, b
+	ld [wPlayerMovePower], a
 .next4
 
 	
