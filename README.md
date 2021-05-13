@@ -77,6 +77,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Trainer AI layer settings have been completely redone
 - (b6)
 - Only set gamma shader flag if in GBC mode
+- Switching AI now scores against all player mon moves
 
 
 #Bugfixes:
