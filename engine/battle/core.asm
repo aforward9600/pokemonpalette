@@ -4633,7 +4633,8 @@ GetDamageVarsForPlayerAttack:
 	ld a, [wCriticalHitOrOHKO]
 	and a ; check for critical hit
 	jr z, .done
-	sla e ; double level if it was a critical hit
+	;joenote - do this in damage calculation
+	;sla e ; double level if it was a critical hit
 .done
 	ld a, 1
 	and a
@@ -4761,7 +4762,8 @@ GetDamageVarsForEnemyAttack:
 	ld a, [wCriticalHitOrOHKO]
 	and a ; check for critical hit
 	jr z, .done
-	sla e ; double level if it was a critical hit
+	;joenote - do this in damage calculation
+	;sla e ; double level if it was a critical hit
 .done
 	ld a, $1
 	and a
@@ -4872,14 +4874,28 @@ CalculateDamage:
 	ld [hl], a
 
 ; Multiply level by 2
+;joenote - made this more efficient by using shifts and rotates
 	ld a, e ; level
-	add a
-	jr nc, .nc
-	push af
-	ld a, 1
-	ld [hl], a
-	pop af
-.nc
+;	add a
+;	jr nc, .nc
+;	push af
+;	ld a, 1
+;	ld [hl], a
+;	pop af
+;.nc
+	sla a
+	rl [hl]
+;joenote - double the effective level here if critical hit instead of GetDamageVars functions
+	push bc
+	ld b, a
+	ld a, [wCriticalHitOrOHKO]
+	cp 1
+	ld a, b
+	pop bc
+	jr c, .nocrit
+	sla a
+	rl [hl]
+.nocrit
 	inc hl
 	ldi [hl], a
 
