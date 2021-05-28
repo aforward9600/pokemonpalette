@@ -78,6 +78,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 - (b6)
 - Only set gamma shader flag if in GBC mode
 - Switching AI now scores against all player mon moves
+- (b7)
+- Fixed wrong crit damage for lvl > 127
 
 
 #Bugfixes:
