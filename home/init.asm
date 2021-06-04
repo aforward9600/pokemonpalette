@@ -53,10 +53,11 @@ rLCDC_DEFAULT EQU %11100011
 
 ;joenote - implement RNG from Prism and Polished Crystal
 ;Initialize the RNG state. It can be initialized to anything but zero; this is just a simple way of doing it.
+;First two bytes of the state are taken from whatever random garbage is in hram to get an initial seed.
 	ld hl, wRNGState
-	ld a, $de
+	ld a, [$ffb1]
 	ld [hli], a
-	ld a, $ad
+	ld a, [$ffd5]
 	ld [hli], a
 	ld a, $be
 	ld [hli], a
