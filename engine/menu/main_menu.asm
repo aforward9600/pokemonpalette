@@ -344,11 +344,11 @@ ShinPokemonHandshake:
 HandshakeList:	;this serves as a version control passcode with FF as an end-of-list marker
 	db $1
 	db $2
-	db $0
+	db $1
 	db $b
 	db $ff
 VersionText:
-	db "v1.20L@"
+	db "v1.21L@"
 
 WhereWouldYouLikeText:
 	TX_FAR _WhereWouldYouLikeText
@@ -510,6 +510,7 @@ DisplayOptionMenu:
 	ld de, OptionMenuCancelText
 	call PlaceString
 	call PlaceSoundSetting	;joenote - display the sound setting
+	call Show60FPSSetting	;60fps - display current setting
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
@@ -562,6 +563,9 @@ DisplayOptionMenu:
 	cp 13 ; cursor in Battle Style section?
 	jr z, .cursorInBattleStyle
 	cp 16 ; cursor on Cancel?
+	push af
+	call z, Toggle60FPSSetting	;60fps - toggle if left/right pressed over cancel
+	pop af
 	jr z, .loop
 .cursorInTextSpeed
 	bit 5, b ; Left pressed?
@@ -670,7 +674,7 @@ BattleStyleOptionText:
 OptionMenuCancelText:
 	db "CANCEL@"
 
-;joenote - show the sound setting on the m enu
+;joenote - show the sound setting on the menu
 OptionMenuSoundText:
 	dw OptionMenuMono
 	dw OptionMenuEar1
@@ -703,6 +707,35 @@ PlaceSoundSetting:
 	coord hl, 10, 16
 	call PlaceString
 	ret
+	
+;60fps - show the fps setting on the menu when activated
+OptionMenu60FPSText:
+	dw OptionMenu60FPSON
+	dw OptionMenu60FPSOFF
+OptionMenu60FPSON:
+	db "60FPS@"
+OptionMenu60FPSOFF:
+	db "     @"
+Toggle60FPSSetting:
+	ld a, [wUnusedD721]
+	xor %00010000
+	ld [wUnusedD721], a
+	;fall through
+Show60FPSSetting:
+	ld hl, OptionMenu60FPSText
+	ld a, [wUnusedD721]
+	bit 4, a
+	jr nz, .done
+	inc hl
+	inc hl
+.done
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	coord hl, $0E, $0F
+	call PlaceString
+	ret
+
 
 ; sets the options variable according to the current placement of the menu cursors in the options menu
 SetOptionsFromCursorPositions:

@@ -358,7 +358,32 @@ PlayShootingStar:
 	ld [rBGP], a
 	call UpdateGBCPal_BGP
 	ld c, 180
+	;call DelayFrames
+	
+	;joenote - activate gamma shader if select is pressed at copyright screen
+.gammaloop
+	call DelayFrame
+	push bc
+	call ReadJoypad
+	pop bc
+	ld a, [hJoyInput]
+	and SELECT
+	jr z, .skipgamma
+
+	ld a, [hGBC]
+	and a
+	jr z, .skipgamma	;do not activate if not in GBC mode
+
+	ld a, 2
+	ld [hGBC], a
+	jr .endgammaloop
+.skipgamma	
+	dec c
+	jr nz, .gammaloop
+.endgammaloop
+	inc c
 	call DelayFrames
+	
 	call ClearScreen
 	call DisableLCD
 	xor a

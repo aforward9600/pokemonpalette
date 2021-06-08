@@ -51,6 +51,12 @@ CoordsData_60b45:
 	db $10,$0A,$FF
 
 PokemonTower6Script4:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - clear bit to indicate the ghost marowak battle has ended
+	ld a, [wUnusedD721]
+	res 3, a
+	ld [wUnusedD721], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, PokemonTower6Script_60b02

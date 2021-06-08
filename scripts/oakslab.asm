@@ -38,7 +38,7 @@ OaksLabScript0:
 	ret nz
 	ld a, HS_OAKS_LAB_OAK_2
 	ld [wMissableObjectIndex], a
-	predef ShowObject
+	predef ShowObject2
 	ld hl, wd72e
 	res 4, [hl]
 

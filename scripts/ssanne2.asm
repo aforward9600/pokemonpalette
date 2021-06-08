@@ -34,7 +34,7 @@ SSAnne2Script0:
 	ld [$ffdb], a
 	ld a, HS_SS_ANNE_2_RIVAL
 	ld [wMissableObjectIndex], a
-	predef ShowObject
+	predef ShowObject2
 	call Delay3
 	ld a, $2
 	ld [H_SPRITEINDEX], a

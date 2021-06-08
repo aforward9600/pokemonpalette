@@ -165,13 +165,21 @@ ItemUseBall:
 .notOldManBattle
 ; If the player is fighting the ghost Marowak, set the value that indicates the
 ; Pokémon can't be caught and skip the capture calculations.
-	ld a, [wCurMap]
-	cp POKEMONTOWER_6
-	jr nz, .loop
-	ld a, [wEnemyMonSpecies2]
-	cp MAROWAK
+	;ld a, [wCurMap]
+	;cp POKEMONTOWER_6
+	;jr nz, .loop
+	;ld a, [wEnemyMonSpecies2]
+	;cp MAROWAK
+	;ld b, $10 ; can't be caught value
+	;jp z, .setAnimData
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;joenote - use a bit to determine if this is a ghost marowak battle
+	ld a, [wUnusedD721]
+	bit 3, a
+	jr z, .loop
 	ld b, $10 ; can't be caught value
-	jp z, .setAnimData
+	jp .setAnimData
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Get the first random number. Let it be called Rand1.
 ; Rand1 must be within a certain range according the kind of ball being thrown.
@@ -923,7 +931,13 @@ ItemUseMedicine:
 	push hl
 	ld hl, wPlayerBattleStatus3
 	res BADLY_POISONED, [hl] ; heal Toxic status
+	ld a, [H_WHOSETURN]
+	push af
+	xor a	;forcibly set it to the player's turn
+	ld [H_WHOSETURN], a
 	callab UndoBurnParStats	;undo brn/par stat changes
+	pop af
+	ld [H_WHOSETURN], a
 	pop hl
 	xor a
 	ld [wBattleMonStatus], a ; remove the status ailment in the in-battle pokemon data
@@ -1186,7 +1200,13 @@ ItemUseMedicine:
 	jr z, .clearParBrn	;do not adjust the stats if not currently in battle
 	push hl
 	push de
-	callab UndoBurnParStats
+	ld a, [H_WHOSETURN]
+	push af
+	xor a	;forcibly set it to the player's turn
+	ld [H_WHOSETURN], a
+	callab UndoBurnParStats	;undo brn/par stat changes
+	pop af
+	ld [H_WHOSETURN], a
 	pop de
 	pop hl
 .clearParBrn

@@ -153,3 +153,4 @@ PredefPointers::
 	add_predef OaksAideScript
 	add_predef BGLayerScrollingUpdate
 	add_predef _PrintNumber
+	add_predef GBCGamma

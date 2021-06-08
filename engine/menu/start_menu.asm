@@ -10,6 +10,7 @@ DisplayStartMenu::
 RedisplayStartMenu::
 	callba DrawStartMenu
 	callba PrintSafariZoneSteps ; print Safari Zone info, if in Safari Zone
+	call LoadGBPal	;joenote - moved this here for smoother whiteout transition
 	call UpdateSprites
 .loop
 	call HandleMenuInput

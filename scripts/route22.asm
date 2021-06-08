@@ -36,20 +36,16 @@ Route22Script_50ed6:
 	ret
 
 Route22MoveRivalSprite:
-	ld a, SPRITE_FACING_RIGHT
-	ld [hSpriteFacingDirection], a
-	call SetSpriteFacingDirection
 	ld de, Route22RivalMovementData
 	ld a, [wcf0d]
 	cp $1
 	jr z, .asm_50ef1
 	inc de
 .asm_50ef1
-	jp MoveSprite
-	;call MoveSprite
-	;ld a, SPRITE_FACING_RIGHT
-	;ld [hSpriteFacingDirection], a
-	;jp SetSpriteFacingDirectionAndDelay
+	call MoveSprite
+	ld a, SPRITE_FACING_RIGHT
+	ld [hSpriteFacingDirection], a
+	jp SetSpriteFacingDirectionAndDelay
 
 Route22RivalMovementData:
 	db NPC_MOVEMENT_RIGHT
@@ -99,7 +95,7 @@ Route22Script0:
 ; Show rival's sprite before executing the event's routine.
 	ld a, HS_ROUTE_22_RIVAL_1
 	ld [wMissableObjectIndex], a
-	predef ShowObject
+	predef ShowObject2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $1
 	ld [wEmotionBubbleSpriteIndex], a
@@ -260,7 +256,7 @@ Route22Script_5104e:
 ; Show rival's sprite before executing the event's routine.
 	ld a, HS_ROUTE_22_RIVAL_2
 	ld [wMissableObjectIndex], a
-	predef ShowObject
+	predef ShowObject2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $2
 	ld [wEmotionBubbleSpriteIndex], a

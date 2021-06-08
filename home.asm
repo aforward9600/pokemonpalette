@@ -565,11 +565,13 @@ GetMonHeader::
 	push af
 	ld a, [wd0b5]
 	ld [wd11e], a
-;joenote - fossil kabutops is used for the missingno with a basestats file, so this need to be modified
-	;ld de, FossilKabutopsPic
-	;ld b, $66 ; size of Kabutops fossil and Ghost sprites
-	cp FOSSIL_KABUTOPS ; Kabutops fossil
-	jr z, .fossilkabutops	;.specialID
+;joenote - modifying for a stable missingno that can be loaded
+	cp MISSINGNO_B5 ; stablized missingno with actual stats
+	jr z, .missingno	
+	ld de, FossilKabutopsPic
+	ld b, $66 ; size of Kabutops fossil and Ghost sprites
+	cp FOSSIL_KABUTOPS
+	jr z, .specialID
 	ld de, GhostPic
 	cp MON_GHOST ; Ghost
 	jr z, .specialID
@@ -603,8 +605,8 @@ GetMonHeader::
 ;	ld bc, MonBaseStatsEnd - MonBaseStats
 ;	ld a, BANK(MewBaseStats)
 ;	call FarCopyData
-;do this for fossil kabutops missingno instead
-.fossilkabutops
+;do this for missingno instead
+.missingno
 	ld hl, MissingnoBaseStats
 	ld de, wMonHeader
 	ld bc, MonBaseStatsEnd - MonBaseStats

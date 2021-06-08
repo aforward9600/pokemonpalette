@@ -1,8 +1,9 @@
+;joenote - LoadGBPal instances moved to RedisplayStartMenu
 StartMenu_Pokedex:
 	predef ShowPokedexMenu
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call Delay3
-	call LoadGBPal
+	;call LoadGBPal
 	call UpdateSprites
 	jp RedisplayStartMenu
 
@@ -26,7 +27,7 @@ StartMenu_Pokemon:
 .exitMenu
 	call GBPalWhiteOutWithDelay3
 	call RestoreScreenTilesAndReloadTilePatterns
-	call LoadGBPal
+	;call LoadGBPal
 	jp RedisplayStartMenu
 .chosePokemon
 	call SaveScreenTilesToBuffer1
@@ -520,7 +521,7 @@ StartMenu_TrainerInfo:
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call RunDefaultPaletteCommand
 	call ReloadMapData
-	call LoadGBPal
+	;call LoadGBPal
 	pop af
 	ld [hTilesetType], a
 	jp RedisplayStartMenu
