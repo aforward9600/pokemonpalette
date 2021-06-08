@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.21 (beta)
+Version 1.21
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -22,64 +22,28 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- Prevent infinite loop for 'mons hitting level softcap when maxl_level is set greater than 237
-- Fixed water tile strangeness during vblank
-- Prevent vblank from running twice in a row during direct-SCX scrolling; fixes scroll artifacting
-- Fixed a problem where lack of a move terminator on one NPC was causing writes to the shadow ram
-- Fixed rare candies to recognize a level softcap when maxl_level is set greater than 237
-- Adjusted daycare to allow exp values over $500000
-- Fixed infinite loop at 100+ level softcaps
-- Fix exp bar divide by zero at 100+ level softcaps
-- Allow up to 8 digits when displaying experience on the status screen
-- L: block doesn't disappear when level hits three digits
-- Fixed bugged npc movement constraints
-- Fixed an issue where overworld sprites won't load after scripted movement during map scrolling
-- Attempt at fixing issues where NPCs face the wrong way during scripted events
-- Reactivated lost text that was meant to play when you lose to your rival
-- Fixed the incorrect encounter data in the power plant
-- Fixed an issue where catching a transformed ditto gives it 0 DVs
-- Fixed the instant-text glitch that can happen in the bike shop
-- Fixed using escape rope in bill's house and the fan club
-- Fixed amazing man glitch when triggered by a hidden object
-- Fixed holding left to force past the cycling road guards
-- Fixed amazing man glitch in the route 16 gate
-- Fixed tower ghost pic not loading after exiting status screen
-- Fixed being able to leave the safari zone without clearing the event
-- Fixed bumping into invisible shrub
-- Softlock teleport will now say it cannot be used if you don't have the pokedex yet
-- Minor tweak to Pallet Town object data for Prof Oak
-- Added ledge to route 25 to prevent softlock
-- Fixed menu not clearing if A is held after saving
-- Minor tweaks to the Rival's object data in various maps
+- Added built-in gamma shader for backlit LCD screens (press SELECT at the copyright screen)
+- On battle load, stopped the GBC GBPal from updating before graphics are in the right position
+- Fixed some issues where npcs that appear on screen are looking down for 1 frame
+- Fixed some menu screen flicker
+- Added nop after halt commands (safety prevention for a rare processor bug)
+- Added an option to make the overworld run in 60fps
+ - Feature is a proof-of-concept and is still a bit rusty
+ - Toggle by placing the cursor in the options screen over CANCEL and pressing left or right
+- Fixed issue where paralyzed enemies might move first
+- Rearranged some stuff with trainer AI
+- Gave AI some guidance on explosion effects 
+- Rearranged trainer AI and moved more agressive move use to AI layer 1 (all trainers except Cueball and Youngster)
+- Fixed a coordinate typo in pokemon tower left by gamefreak
+- Trainer AI layer settings have been completely redone
+- Switching AI now scores against all player mon moves
+- Fixed wrong crit damage for lvl > 127
+- Initialize RNG with random seed
 
 
 #Changes not yet in the ips patch files:
 -----------
-- (b1)
-- Added built-in gamma shader for backlit LCD screens (press SELECT at the copyright screen)
-- On battle load, stopped the GBC GBPal from updating before graphics are in the right position
-- (b2)
-- Fixed some issues where npcs that appear on screen are looking down for 1 frame
-- Fixed some menu screen flicker
-- added nop after halt commands (safety prevention for a rare processor bug)
-- Added an option to make the overworld run in 60fps (feature is still a bit rusty)
-- (b3)
-- Fixed issue where paralyzed enemies might move first
-- (b4)
-- Rearranged some stuff with trainer AI
-- Gave AI some guidance on explosion effects 
-- (b5)
-- Rearranged trainer AI and moved more agressive move use to AI layer 1 (all trainers except Cueball and Youngster)
-- Streamlined how the ghost marowak battle is triggered (now allows for non-ghost marowaks in pokemon tower)
-- Fixed a coordinate typo in pokemon tower left by gamefreak
-- If SS Anne is skipped and the pokemon tower rival battle is initiated, the SS Anne rival battle is deactivated
-- Safari zone "ran away" math is adjusted to be more accurate (level*1 changes to level*1.5 as the base value used)
-- Trainer AI layer settings have been completely redone
-- (b6)
-- Only set gamma shader flag if in GBC mode
-- Switching AI now scores against all player mon moves
-- (b7)
-- Fixed wrong crit damage for lvl > 127
+-
 
 
 #Bugfixes:
@@ -116,6 +80,7 @@ It was done to serve as a codebase for others to start their own romhacks.
     - undoing burn is accurate to within 0 to -1 point
   - PP-up uses are disregarded when determining to use STRUGGLE if one or more moves are disabled
   - AI will not do actions during Rage or when recharging
+  - Fixed wrong crit damage for lvl > 127
 
 	
 - Move fixes
@@ -245,16 +210,20 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Minor tweak to Pallet Town object data for Prof Oak
   - Fixed menu not clearing if A is held after saving
   - Minor tweaks to the Rival's object data in various maps
+  - Added nop after halt commands (safety prevention for a rare processor bug)
+  - Fixed a coordinate typo in pokemon tower left by gamefreak
 
 
 #TWEAKS:
 -----------
+- Added built-in gamma shader for backlit LCD screens in GBC mode (press SELECT at the copyright screen)
 - The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
   - Scrolling mons on the title screen have their own palettes loaded on the GBC.
   - In the blue version intro, jigglypuff has it's own palette loaded on the GBC. 
   - Oak-speech nidorino has its color palette on the GBC.
-- Loading AI trainer parties uses the code from pokemon Yellow so as to allow custom movelists
-- If wGymLeaderNo is set to 9 when loading a battle, then the final battle music will play
+- Added an option to make the overworld run in 60fps
+ - Feature is a proof-of-concept and is still a bit rusty
+ - Toggle by placing the cursor in the options screen over CANCEL and pressing left or right
 - Softlock Warp 
   - instantly teleport back to your mom's house if you get stuck or are unable to move after updating to a new patch
   - sets money to at least 1000 if you have less than that
@@ -393,6 +362,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Mewtwo can learn Swift by TM 
 
 - Engine changes just for developers
+  - If wGymLeaderNo is set to 9 when loading a battle, then the final battle music will play
   - The trainer move engine has been backported from Yellow version; trainer movesets can now be fully customized
   - Improved exp calculation for developers who want a level cap between 101 and 255
     - EXP calculation routine now does math in 4 bytes instead of 3 bytes
@@ -402,6 +372,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Trainer battle prize money uses 3 bytes instead of 2, lifting the 9999 cap on winnings
   - Adjusted daycare to allow exp values over $500000
   - Allow up to 8 digits when displaying experience on the status screen
+  - Streamlined how the ghost marowak battle is triggered (now allows for non-ghost marowaks in pokemon tower)
 
 
 #CREDITS / SPECIAL THANKS:
