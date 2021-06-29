@@ -1426,8 +1426,9 @@ DisplayListMenuID::
 	ld [wTopMenuItemX], a
 	ld a, A_BUTTON | B_BUTTON | SELECT
 	ld [wMenuWatchedKeys], a
-	ld c, 10
-	call DelayFrames
+	homecall PrepareOAMData	;joenote - makes mart menus cleaner by updating the OAM sprite table ahead of vblank
+	;ld c, 10
+	;call DelayFrames
 
 DisplayListMenuIDLoop::	
 	xor a
