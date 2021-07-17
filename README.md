@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.21
+Version 1.22 beta
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -41,9 +41,13 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Initialize RNG with random seed
 
 
-#Changes not yet in the ips patch files:
+#Changes not yet in the release branch:
 -----------
--
+(b1)  
+- Fixed scripted NPC-following movement in 60fps mode
+- Applied Rangi's reformatting to key item bit fields
+- Fixed some NPC ghosting in mart menus in GBC mode
+- Greatly increased the speed and performance of spin tiles
 
 
 #Bugfixes:
