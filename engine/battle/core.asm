@@ -4539,7 +4539,7 @@ GetDamageVarsForPlayerAttack:
 ; reflect and light screen boosts do not cap the stat at 999, so weird things will happen during stats scaling if
 ; a Pokemon with 512 or more Defense has used Reflect, or if a Pokemon with 512 or more Special has used Light Screen
 ;;;;;joenote - adding in a 999 cap
-	call BC999cap
+	predef BC999cap
 ;;;
 .physicalAttackCritCheck
 	ld hl, wBattleMonAttack
@@ -4559,6 +4559,7 @@ GetDamageVarsForPlayerAttack:
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
 	pop bc
+	predef CritHitStatsPlayerPhysical	;joenote - adjust stats for critical hits
 	jr .scaleStats
 .specialAttack
 	ld hl, wEnemyMonSpecial
@@ -4574,7 +4575,7 @@ GetDamageVarsForPlayerAttack:
 ; reflect and light screen boosts do not cap the stat at 999, so weird things will happen during stats scaling if
 ; a Pokemon with 512 or more Defense has used Reflect, or if a Pokemon with 512 or more Special has used Light Screen
 ;;;;;joenote - adding in a 999 cap
-	call BC999cap
+	predef BC999cap
 ;;;
 .specialAttackCritCheck
 	ld hl, wBattleMonSpecial
@@ -4594,6 +4595,7 @@ GetDamageVarsForPlayerAttack:
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
 	pop bc
+	predef CritHitStatsPlayerSpecial	;joenote - adjust stats for critical hits
 ; if either the offensive or defensive stat is too large to store in a byte, scale both stats by dividing them by 4
 ; this allows values with up to 10 bits (values up to 1023) to be handled
 ; anything larger will wrap around
@@ -4668,7 +4670,7 @@ GetDamageVarsForEnemyAttack:
 ; reflect and light screen boosts do not cap the stat at 999, so weird things will happen during stats scaling if
 ; a Pokemon with 512 or more Defense has used Reflect, or if a Pokemon with 512 or more Special has used Light Screen
 ;;;;;joenote - adding in a 999 cap
-	call BC999cap
+	predef BC999cap
 ;;;
 .physicalAttackCritCheck
 	ld hl, wEnemyMonAttack
@@ -4688,6 +4690,7 @@ GetDamageVarsForEnemyAttack:
 	call GetEnemyMonStat
 	ld hl, H_PRODUCT + 2
 	pop bc
+	predef CritHitStatsEnemyPhysical	;joenote - adjust stats for critical hits
 	jr .scaleStats
 .specialAttack
 	ld hl, wBattleMonSpecial
@@ -4703,7 +4706,7 @@ GetDamageVarsForEnemyAttack:
 ; reflect and light screen boosts do not cap the stat at 999, so weird things will happen during stats scaling if
 ; a Pokemon with 512 or more Defense has used Reflect, or if a Pokemon with 512 or more Special has used Light Screen
 ;;;;;joenote - adding in a 999 cap
-	call BC999cap
+	predef BC999cap
 ;;;
 .specialAttackCritCheck
 	ld hl, wEnemyMonSpecial
@@ -4723,6 +4726,7 @@ GetDamageVarsForEnemyAttack:
 	call GetEnemyMonStat
 	ld hl, H_PRODUCT + 2
 	pop bc
+	predef CritHitStatsEnemySpecial	;joenote - adjust stats for critical hits
 ; if either the offensive or defensive stat is too large to store in a byte, scale both stats by dividing them by 4
 ; this allows values with up to 10 bits (values up to 1023) to be handled
 ; anything larger will wrap around
@@ -4910,6 +4914,16 @@ CalculateDamage:
 ; Add 2
 	inc [hl]
 	inc [hl]
+	
+;joenote - ; Add 2 more if critical hit (very slight crit damage increase but greatly simplifies some algebra)
+	push af
+	ld a, [wCriticalHitOrOHKO]
+	cp 1
+	jr c, .nocrit2
+	inc [hl]
+	inc [hl]
+.nocrit2
+	pop af
 
 	inc hl ; multiplier
 
@@ -9566,26 +9580,6 @@ ZeroLastDamage:
 	pop af
 	ret
 
-
-;joenote - caps the stat in bc to 999
-BC999cap:
-	;b register contains high byte & c register contains low byte
-	ld a, c ;let's work on low byte first. Note that decimal 999 is $03E7 in hex.
-	sub 999 % $100 ;a = a - ($03E7 % $100). Gives a = a - $E7. A byte % $100 always gives the lesser nibble.
-	;Note that if a < $E7 then the carry bit 'c' in the flag register gets set due to overflowing with a negative result.
-	ld a, b ;now let's work on the high byte
-	sbc 999 / $100 ;a = a - ($03E7 / $100 + c_flag). Gives a = a - ($03 + c_flag). A byte / $100 always gives the greater nibble.
-	;Note again that if a < $03 then the carry bit remains set. 
-	;If the bit is already set from the lesser nibble, then its addition here can still make it remain set if a is low enough.
-	jr c, .donecapping ;jump to next marker if the c_flag is set. This only remains set if BC <  the cap of $03E7.
-	;else let's continue and set the 999 cap
-	ld a, 999 / $100 ; else load $03 into a
-	ld b, a ;and store it as the high byte
-	ld a, 999 % $100 ; else load $E7 into a
-	ld c, a ;and store it as the low byte
-	;now registers b & c together contain $03E7 for a capped stat value of 999
-.donecapping
-	ret
 
 ;joenote - consolidate this to save a bit of space
 DecAttackPlayer:
