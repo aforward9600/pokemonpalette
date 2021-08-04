@@ -9313,10 +9313,10 @@ DisableEffect:
 	and a
 	ld hl, wBattleMonPP
 	jr nz, .enemyTurn
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
+;	ld a, [wLinkState]	;joenote - non-link enemy mons now have PP, so always run checks during disable effect
+;	cp LINK_STATE_BATTLING
 	pop hl ; wEnemyMonMoves
-	jr nz, .playerTurnNotLinkBattle
+;	jr nz, .playerTurnNotLinkBattle
 ; .playerTurnLinkBattle
 	push hl
 	ld hl, wEnemyMonPP
@@ -9336,7 +9336,7 @@ DisableEffect:
 	pop hl
 	and a
 	jr z, .pickMoveToDisable ; pick another move if this one had 0 PP
-.playerTurnNotLinkBattle
+;.playerTurnNotLinkBattle
 ; non-link battle enemies have unlimited PP so the previous checks aren't needed
 	call BattleRandom
 	and $7
