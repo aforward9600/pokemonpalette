@@ -5235,40 +5235,57 @@ ApplyAttackToEnemyPokemon:
 	ld [de], a
 	jr ApplyDamageToEnemyPokemon
 .specialDamage
+	push bc	;joenote - set up special damage to use 2 bytes BC in order to account for psywave
+	ld bc, $0000
 	ld hl, wBattleMonLevel
 	ld a, [hl]
-	ld b, a ; Seismic Toss deals damage equal to the user's level
+	ld c, a ; Seismic Toss deals damage equal to the user's level
 	ld a, [wPlayerMoveNum]
 	cp SEISMIC_TOSS
 	jr z, .storeDamage
 	cp NIGHT_SHADE
 	jr z, .storeDamage
-	ld b, SONICBOOM_DAMAGE ; 20
+	ld c, SONICBOOM_DAMAGE ; 20
 	cp SONICBOOM
 	jr z, .storeDamage
-	ld b, DRAGON_RAGE_DAMAGE ; 40
+	ld c, DRAGON_RAGE_DAMAGE ; 40
 	cp DRAGON_RAGE
 	jr z, .storeDamage
-; Psywave
+; Psywave	;joenote - adjusted to account for underflow/overflow
 	ld a, [hl]
-	ld b, a
+	ld c, a
 	srl a
-	add b
-	ld b, a ; b = level * 1.5
+	add c
+	ld c, a 
+	ld a, b	
+	adc $00
+	ld b, a; bc = level * 1.5
+	;joenote - make the level at least 1 for psywave
+	or c
+	jr nz, .loop
+	inc c
 ; loop until a random number in the range [1, b) is found
+;joenote - adjusted for 2 bytes bc
 .loop
 	call BattleRandom
-	and a
-	jr z, .loop
-	cp b
-	jr nc, .loop
+	;and a
+	;jr z, .loop
+	;cp b
+	;jr nc, .loop
+	;ld b, a
+	and b
 	ld b, a
-.storeDamage ; store damage value at b
+	call BattleRandom
+	cp c
+	jr nc, .loop
+	ld c, a
+.storeDamage ; store damage value at b ;joenote - changed to bc
 	ld hl, wDamage
-	xor a
+	ld a, b ;xor a
 	ld [hli], a
-	ld a, b
+	ld a, c
 	ld [hl], a
+	pop bc
 
 ApplyDamageToEnemyPokemon:
 	ld hl, wDamage
