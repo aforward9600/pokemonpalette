@@ -49,6 +49,24 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fixed some NPC ghosting in mart menus in GBC mode
 - Greatly increased the speed and performance of spin tiles
 
+(b5)
+- Made adjustments to critical hit damage
+  - Damage factor is now 2*(2*level)/5 + 4 instead of 2*(2*level)/5 + 2 to simplify some algebra
+  - If non-crit damage would be >= crit damage, the regular modified stat values are applied instead
+
+(b6)
+- GF bug: Fixed a conflict where transforming while disabled can leave the new moves disabled
+- Non-link enemy mons now have PP, so always run checks for 0 PP during disable effect
+- GF bug: Fixed an issue with the silph co 11f elevator doors
+- GF bug: Bike music stops playing now when going down a hole
+- GF bug: Can no longer walk up to 4 steps with a fainted team
+- Special damage effect now uses 2 bytes for damage instead of 1
+- Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
+- GF bug: Fixed a typo so now transformed 'mons retain their original palette
+- Consolidated the code used for stat scaling
+- GF bug: fixed transformed 'mons reseting their moves when learning a level-up move
+- GF bug: pp-restoring items no longer affect transformed moves and only restore the original moves
+
 
 #Bugfixes:
 -----------
@@ -71,7 +89,6 @@ It was done to serve as a codebase for others to start their own romhacks.
      - now matches how enemy mon's recharge bit is cleared upon being frozen
      - this prevents getting stuck in a loop unable to do anything on your turn
   - Blaine will not use a healing item at full HP
-  - Move slots cannot be rearranged when transformed (prevents acquiring glitch moves).
   - The BIRD type has been reinstated and renamed to TYPELESS. It acts as a universally neutral type (particularly for Struggle)
   - AI trainers have priority on switching or using an item
   - AI type effectiveness function now takes type 1 and 2 into account together 
@@ -88,11 +105,15 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 	
 - Move fixes
+  - Transform-related fixes:
+    - Move slots cannot be rearranged when transformed (prevents acquiring glitch moves).
+    - Transform will no longer copy the opponent's Transform move. It's swapped-out for Struggle
+    - Enemy DVs can no longer be manipulated by having it use transform multiple times
   - dire hit/focus energy now quadruples crit rate instead of quarters
   - sleep now normal-chance hits a pkmn recharging from hyperbeam, but has no effect if it's already status-effected
   - the fly/dig invulnerability bit is cleared when a pkmn hurts itself from confusion or is fully paralyzed
   - psywave damage is always min 1 be it an opponent or yourself (prevents desync)
-  - Substitute fixes
+  - Substitute-related fixes:
     - all hp drain moves (including dream eater and leech seed) miss against substitute
     - substitute will not work if it would bring you to exactly 0 hp
     - zero power moves that inflict stat-downs, sleep, or paralyze will not affect a substitute
@@ -100,7 +121,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 	- recoil damage from jump kicks or hurting oneself in confusion is now applied to user's substitute
   - healing moves work with restoring exactly 255 or 511 hp 
   - light screen and reflect now have a cap of 999
-  - Haze removing sleep/freeze will not prevent a multi-turn move from getting stuck
+  - Haze removing sleep/freeze will not prevent a multi-turn move from getting stuck (also fixes the sleep-trap glitch)
      - Fixed by allowing sleeping/frozen pkmn to use a move after haze restores them
      - on the plus size, haze now restores both opponent and user's status conditions as was intended in gen 1
   - Haze resets the enemy and player toxic counter
@@ -110,7 +131,6 @@ It was done to serve as a codebase for others to start their own romhacks.
   - fixed-damage moves (seismic toss, dragon rage, etc) can no longer critically hit
   - fixed-damage moves now obey type immunities
   - fixed-damage moves now ignore effectiveness text & sfx
-  - Transform will no longer copy the opponent's Transform move. It's swapped-out for Struggle
   - Struggle is now TYPELESS so that it can always neutrally damage something
   - Metronome & mirror move will not increment PP if the user is transformed
      - This prevents adding PP to hidden dummy moves that prevent a pkmn from going into Struggle
@@ -192,7 +212,6 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Vending machine now checks for the correct amount of money
   - Prevented byte overflow when determining the trash can with 2nd switch in vermillion gym
   - Hidden nugget in safari entrance now obtainable
-  - Enemy DVs can no longer be manipulated by having it use transform multiple times
   - Slot machine reel bug fixed
   - Fixed oversights in reel functionality to better match Gamfreak's intent
   - The lift key in the rocket hideout drops during the end of battle text like in Yellow-version
