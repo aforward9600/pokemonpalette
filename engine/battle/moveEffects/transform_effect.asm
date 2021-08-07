@@ -200,8 +200,4 @@ CopyDataTransform:
 	ld a, c
 	or b	;is counter zero?
 	jr nz, CopyDataTransform
-	ret	
-	
-ClearDisableOnTransform:
-	
 	ret
