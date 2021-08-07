@@ -2149,6 +2149,12 @@ ItemUsePPRestore:
 	ld a, [wPlayerMonNumber]
 	cp b ; is the pokemon whose PP was restored active in battle?
 	jr nz, .skipUpdatingInBattleData
+	
+	;joenote - do not update active mon if it is transformed
+	ld a, [wPlayerBattleStatus3]
+	bit 3, a ; is the mon transformed?
+	jp nz, .skipUpdatingInBattleData
+	
 	ld hl, wPartyMon1PP
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
