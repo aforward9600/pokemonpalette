@@ -4600,34 +4600,7 @@ GetDamageVarsForPlayerAttack:
 ; this allows values with up to 10 bits (values up to 1023) to be handled
 ; anything larger will wrap around
 .scaleStats
-	ld a, [hli]
-	ld l, [hl]
-	ld h, a ; hl = player's offensive stat
-	or b ; is either high byte nonzero?
-	jr z, .next ; if not, we don't need to scale
-; bc /= 4 (scale enemy's defensive stat)
-	srl b
-	rr c
-	srl b
-	rr c
-; defensive stat can actually end up as 0, leading to a division by 0 freeze during damage calculation
-; hl /= 4 (scale player's offensive stat)
-	srl h
-	rr l
-	srl h
-	rr l
-	ld a, l
-	or h ; is the player's offensive stat 0?
-	jr nz, .next_0;joenote - move to custom section for fixing freeze
-	inc l ; if the player's offensive stat is 0, bump it up to 1
-;;;;;;;joenote fix aforementioned freeze
-.next_0
-	ld a, c	;load lo defense byte into 'a'
-	or b 	;OR 'a' with hi defense byte 'b'
-	jr nz, .next	;if defense not zero, then move on
-	inc c	;otherwise increment the low defense byte by 1
-;;;;;;;
-.next
+	call GetDamageVarsScaleStats
 	ld b, l ; b = player's offensive stat (possibly scaled)
 	        ; (c already contains enemy's defensive stat (possibly scaled))
 	ld a, [wBattleMonLevel]
@@ -4731,34 +4704,7 @@ GetDamageVarsForEnemyAttack:
 ; this allows values with up to 10 bits (values up to 1023) to be handled
 ; anything larger will wrap around
 .scaleStats
-	ld a, [hli]
-	ld l, [hl]
-	ld h, a ; hl = enemy's offensive stat
-	or b ; is either high byte nonzero?
-	jr z, .next ; if not, we don't need to scale
-; bc /= 4 (scale player's defensive stat)
-	srl b
-	rr c
-	srl b
-	rr c
-; defensive stat can actually end up as 0, leading to a division by 0 freeze during damage calculation
-; hl /= 4 (scale enemy's offensive stat)
-	srl h
-	rr l
-	srl h
-	rr l
-	ld a, l
-	or h ; is the enemy's offensive stat 0?
-	jr nz, .next_0;joenote - move to custom section for fixing freeze
-	inc l ; if the player's offensive stat is 0, bump it up to 1
-;;;;;;;joenote fix aforementioned freeze
-.next_0
-	ld a, c	;load lo defense byte into 'a'
-	or b 	;OR 'a' with hi defense byte 'b'
-	jr nz, .next	;if defense not zero, then move on
-	inc c	;otherwise increment the low defense byte by 1
-;;;;;;;
-.next
+	call GetDamageVarsScaleStats
 	ld b, l ; b = enemy's offensive stat (possibly scaled)
 	        ; (c already contains player's defensive stat (possibly scaled))
 	ld a, [wEnemyMonLevel]
@@ -4772,6 +4718,37 @@ GetDamageVarsForEnemyAttack:
 	ld a, $1
 	and a
 	and a
+	ret
+	
+GetDamageVarsScaleStats:	;joenote - consolidated into its own function to save space
+	ld a, [hli]
+	ld l, [hl]
+	ld h, a ; hl = offensive stat
+	or b ; is either high byte nonzero?
+	jr z, .next ; if not, we don't need to scale
+; bc /= 4 (scale defensive stat)
+	srl b
+	rr c
+	srl b
+	rr c
+; defensive stat can actually end up as 0, leading to a division by 0 freeze during damage calculation
+; hl /= 4 (scale offensive stat)
+	srl h
+	rr l
+	srl h
+	rr l
+	ld a, l
+	or h ; is the offensive stat 0?
+	jr nz, .next_0;joenote - move to custom section for fixing freeze
+	inc l ; if the offensive stat is 0, bump it up to 1
+;;;;;;;joenote fix aforementioned freeze
+.next_0
+	ld a, c	;load lo defense byte into 'a'
+	or b 	;OR 'a' with hi defense byte 'b'
+	jr nz, .next	;if defense not zero, then move on
+	inc c	;otherwise increment the low defense byte by 1
+;;;;;;;
+.next
 	ret
 
 ; get stat c of enemy mon
