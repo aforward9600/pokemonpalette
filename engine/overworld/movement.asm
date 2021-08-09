@@ -121,6 +121,13 @@ UpdateNPCSprite:
 	add a
 	ld hl, wMapSpriteData
 	add l
+	
+;joenote - Increment H if A overflows. Otherwise H will hold $D4 instead of $D5 like it should.
+;This fixes some issues with the 15th map object.
+	jr nc, .no_carry
+	inc h
+.no_carry
+	
 	ld l, a
 	ld a, [hl]        ; read movement byte 2
 	ld [wCurSpriteMovement2], a
