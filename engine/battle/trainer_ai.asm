@@ -219,7 +219,22 @@ AIMoveChoiceModification1:
 	jr z, .heal_explode	;skip out if move is not
 	cp EXPLODE_EFFECT	;what about an explosion effect?
 	jr nz, .not_heal_explode	;skip out if move is not
-	dec [hl]	;give a slight edge to exploding
+	dec [hl]	;otherwise give a slight edge to exploding
+	
+	;since this is an explosion effect, it would be good to heavily discourage if
+	;the opponent is in fly/dig state and the exploder is for-sure faster than the opponent
+	ld a, [wPlayerBattleStatus1]
+	bit 6, a
+	jr z, .heal_explode	;proceed as normal if player is not in fly/dig
+	push hl
+	push bc
+	push de
+	call StrCmpSpeed	;do a speed compare
+	pop de
+	pop bc
+	pop hl
+	jp c, .heavydiscourage	;a set carry bit means the ai 'mon is faster, so heavily discourage
+	
 .heal_explode
 	ld a, 1	;
 	call AICheckIfHPBelowFraction
