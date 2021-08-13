@@ -27,8 +27,9 @@ _ViridianGymText_74ad3::
 	cont "the EARTHBADGE!@@"
 
 _ViridianGymText_74ad9::
-	text "Having lost, I"
-	line "cannot face my"
+	text "Having lost to"
+	line "you yet again, I"
+	cont "cannot face my"
 	cont "underlings!"
 	cont "TEAM ROCKET is"
 	cont "finished forever!"
