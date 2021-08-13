@@ -104,11 +104,13 @@ ViridianGymArrowMovement7:
 ViridianGymArrowMovement8:
 	db D_RIGHT,$09,$FF
 
-ViridianGymArrowMovement9:
-	db D_UP,$08,$FF
-
-ViridianGymArrowMovement10:
+ViridianGymArrowMovement9:	;joenote - swapped the stop-tiles associated with arrow movement 9 and 10,
+	;db D_UP,$08,$FF		;so the movement distance needs to be swapped as well
 	db D_UP,$06,$FF
+	
+ViridianGymArrowMovement10:
+	;db D_UP,$06,$FF
+	db D_UP,$08,$FF
 
 ViridianGymArrowMovement11:
 	db D_LEFT,$06,$FF
