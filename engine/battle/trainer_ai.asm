@@ -1378,6 +1378,7 @@ SetSwitchBit:
 	ret
 
 DecrementAICount:
+	call UndoEnemySelectionPPDecrement	;joenote - undo the pp decrement of already-selected move if applicable
 	ld hl, wAICount
 	dec [hl]
 	scf
@@ -1504,6 +1505,11 @@ AISwitchIfEnoughMons:
 
 	ld a, d ; how many available monsters are there?
 	cp 2 ; don't bother if only 1
+	
+	push af
+	call nc, UndoEnemySelectionPPDecrement	;joenote - undo the pp decrement of already-selected move if applicable
+	pop af
+	
 	jp nc, SwitchEnemyMon
 	and a
 	ret
@@ -1746,4 +1752,38 @@ StrCmpSpeed:	;joenote - function for AI to compare pkmn speeds
 	;zero flag set means speeds equal
 	;carry flag not set means player pkmn faster
 	;carry flag set means ai pkmn faster
+	ret
+
+;joenote - get the enemy move that has already been selected
+;if it is found in the move list, increment the pp that was deducted when selecting the move
+UndoEnemySelectionPPDecrement:
+	push hl
+	push bc
+	push de
+	ld a, [wEnemySelectedMove]
+	and a
+	jr z, .return	;return if the selected move is 00
+	cp NUM_ATTACKS + 1
+	jr nc, .return	;return if the selected move is invalid (> max number of moves)
+	ld d, a
+	ld e, NUM_MOVES
+	ld bc, wEnemyMonPP - wEnemyMonMoves
+	ld hl, wEnemyMonMoves
+.loop
+	ld a, [hl]
+	and a
+	jr z, .return
+	cp d
+	jr z, .found
+	inc hl
+	dec e
+	jr z, .return
+	jr .loop
+.found
+	add hl, bc
+	inc [hl]
+.return
+	pop de
+	pop bc
+	pop hl
 	ret
