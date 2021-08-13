@@ -3206,8 +3206,9 @@ SelectEnemyMove:
 	and (1 << CHARGING_UP) | (1 << THRASHING_ABOUT) ; using a charging move or thrash/petal dance
 	ret nz
 	ld a, [wEnemyMonStatus]
-	;and SLP | 1 << FRZ ; sleeping or frozen
-	and (1 << FRZ)	;joedebug - sleep won't waste turn
+	;and SLP | 1 << FRZ ; sleeping or frozen	
+	;joedebug - sleep won't waste turn on wakeup, but it will if wakeup won't occur	(prevents PP decrementing with AI)	
+	and (1 << FRZ) | SLP_NOMOVE  ; is mon frozen or won't wake up?							
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call nz, NoAttackAICall	;joenote - get ai routines. flag register is preserved
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
