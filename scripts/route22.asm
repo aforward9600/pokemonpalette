@@ -92,7 +92,7 @@ Route22Script0:
 	ld a, MUSIC_MEET_RIVAL
 	call PlayMusic
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Show rival's sprite before executing the event's routine.
+;wispnote - Show rival's sprite before executing the event's routine.
 	ld a, HS_ROUTE_22_RIVAL_1
 	ld [wMissableObjectIndex], a
 	predef ShowObject2
@@ -253,7 +253,7 @@ Route22Script_5104e:
 	call PlaySound
 	callba Music_RivalAlternateTempo
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Show rival's sprite before executing the event's routine.
+;wispnote - Show rival's sprite before executing the event's routine.
 	ld a, HS_ROUTE_22_RIVAL_2
 	ld [wMissableObjectIndex], a
 	predef ShowObject2

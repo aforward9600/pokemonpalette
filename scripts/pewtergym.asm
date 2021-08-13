@@ -68,13 +68,12 @@ PewterGymScript_5c3df:
 	ld a, HS_GYM_GUY
 	ld [wMissableObjectIndex], a
 	predef HideObject
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; wispnote - No longer necessary since the missable object is hidden until encounter.
-	; ld a, HS_ROUTE_22_RIVAL_1
-	; ld [wMissableObjectIndex], a
-	; predef HideObject
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+	;if the first route 22 rival battle was skipped, clear the events and hide the associated npc
+	;joenote - have to have this if the battle was skipped
+	ld a, HS_ROUTE_22_RIVAL_1
+	ld [wMissableObjectIndex], a
+	predef HideObject
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 
 	; deactivate gym trainers
