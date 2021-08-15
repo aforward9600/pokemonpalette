@@ -130,6 +130,7 @@ AIMoveChoiceModificationFunctionPointers:
 	dw AIMoveChoiceModification4 ; ;joenote - repurposed unused routine for trainer switching
 
 ; discourages moves that cause no damage but only a status ailment if player's mon already has one
+; joenote - reworked so that it now discourages doing things that are generally useless
 AIMoveChoiceModification1:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - kick out if no-attack bit is set
@@ -244,6 +245,39 @@ AIMoveChoiceModification1:
 	dec [hl]	;else 0 to 1/3 hp - slight preference (heal -1 & explode -2)
 	jp .nextMove	;get next move
 .not_heal_explode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Randomly discourage 2-turn moves if confused or paralyzed
+	;check for 2-turn move
+	ld a, [wEnemyMoveEffect]
+	cp FLY_EFFECT
+	jr z, .twoturncheck_par
+	cp CHARGE_EFFECT
+	jr nz, .twoturndone
+	
+.twoturncheck_par
+	;handle paralysis
+	ld a, [wEnemyMonStatus]
+	bit PAR, a
+	jr z, .twoturncheck_confused
+	call Random
+	cp $70
+	jr nc, .twoturncheck_confused
+	inc [hl]	;random chance to discourage if paralyzed
+	inc [hl]
+	
+.twoturncheck_confused
+	;handle confusion
+	ld a, [wEnemyBattleStatus1]
+	bit 7, a ;check confusion bit
+	jr z, .twoturndone
+	call Random
+	cp $C0
+	jr nc, .twoturndone
+	inc [hl]	;random chance to discourage if confused
+	inc [hl]
+	
+.twoturndone
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wEnemyMovePower]
@@ -637,6 +671,7 @@ AIMoveChoiceModification2:
 ; encourages moves that are effective against the player's mon (even if non-damaging).
 ; discourage damaging moves that are ineffective or not very effective against the player's mon,
 ; unless there's no damaging move that deals at least neutral damage
+; joenote - updated to also do some more advanced battle strategies
 AIMoveChoiceModification3:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - kick out if no-attack bit is set
