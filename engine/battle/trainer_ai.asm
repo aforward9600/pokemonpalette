@@ -226,13 +226,7 @@ AIMoveChoiceModification1:
 	ld a, [wPlayerBattleStatus1]
 	bit 6, a
 	jr z, .heal_explode	;proceed as normal if player is not in fly/dig
-	push hl
-	push bc
-	push de
 	call StrCmpSpeed	;do a speed compare
-	pop de
-	pop bc
-	pop hl
 	jp c, .heavydiscourage	;a set carry bit means the ai 'mon is faster, so heavily discourage
 	
 .heal_explode
@@ -595,6 +589,12 @@ SpecialZeroBPMoves:	;joenote - added this table to tracks 0 bp moves that should
 	db THUNDER_WAVE
 	db $FF
 	
+OtherZeroBPEffects:	;joenote - added to keep track of some outliers
+	db LEECH_SEED_EFFECT
+	db DISABLE_EFFECT
+	db CONFUSION_EFFECT
+	db $FF
+
 ; slightly encourage moves with specific effects.
 ; in particular, stat-modifying moves and other move effects
 ; that fall in-between
@@ -664,11 +664,78 @@ AIMoveChoiceModification3:
 	jr nz, .notpoisoneffect
 	ld a, [wBattleMonType]
 	cp POISON
-	jr z, .heavydiscourage2
+	jp z, .heavydiscourage2
 	ld a, [wBattleMonType + 1]
 	cp POISON
-	jr z, .heavydiscourage2
+	jp z, .heavydiscourage2
 .notpoisoneffect
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;slightly discourage using most offensive moves against fly/dig opponent if faster than opponent
+	ld a, [wPlayerBattleStatus1]
+	bit 6, a
+	jr z, .endflydigcheck	;proceed as normal if player is not in fly/dig
+	
+	call StrCmpSpeed	;do a speed compare
+	jr c, .flydigcheck_faster	;a set carry bit means the ai 'mon is faster
+	ld a, [wEnemyMoveNum]
+	cp QUICK_ATTACK
+	jr z, .flydigcheck_faster
+
+.flydigcheck_notfaster
+	jr .endflydigcheck
+
+.flydigcheck_faster
+	;slightly discourage stuff that will just miss
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, MistBlockEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr c, .flydigcheck_discourage
+
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, StatusAilmentMoveEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+
+	jr c, .flydigcheck_discourage
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, OtherZeroBPEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr c, .flydigcheck_discourage
+
+	ld a, [wEnemyMovePower]
+	and a
+	jr z, .endflydigcheck
+
+	ld a, [wEnemyMoveEffect]
+	cp FLY_EFFECT
+	jr z, .endflydigcheck
+	cp CHARGE_EFFECT
+	jr z, .endflydigcheck
+	
+.flydigcheck_discourage
+	inc [hl]
+.endflydigcheck
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;check on certain moves with zero bp but are handled differently
@@ -723,13 +790,7 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp OHKO_EFFECT	;see if it is ohko move
 	jr nz, .skipout3	;skip ahead if not ohko move
-	push hl
-	push bc
-	push de
 	call StrCmpSpeed	;do a speed compare
-	pop de
-	pop bc
-	pop hl
 	jp c, .nextMove	;ai is fast enough so ohko move viable
 	;else ai is slower so don't bother
 	jp .heavydiscourage2
@@ -1737,13 +1798,16 @@ AIBattleUseItemText:
 	db "@"
 
 StrCmpSpeed:	;joenote - function for AI to compare pkmn speeds
+	push bc
+	push de
+	push hl
 	ld de, wBattleMonSpeed ; player speed value
 	ld hl, wEnemyMonSpeed ; enemy speed value
 	ld c, $2	;bytes to copy
 .spdcmploop	
 	ld a, [de]	
 	cp [hl]
-	ret nz
+	jr nz, .return
 	inc de
 	inc hl
 	dec c
@@ -1752,6 +1816,10 @@ StrCmpSpeed:	;joenote - function for AI to compare pkmn speeds
 	;zero flag set means speeds equal
 	;carry flag not set means player pkmn faster
 	;carry flag set means ai pkmn faster
+.return
+	pop hl
+	pop de
+	pop bc
 	ret
 
 ;joenote - get the enemy move that has already been selected
