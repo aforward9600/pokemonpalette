@@ -27,8 +27,34 @@ SeafoamIslands5Script4:
 	ret
 
 SeafoamIslands5Script0:
+;joenote - check if player entering via water warps, and allow the scripted movement if so
+	ld hl, wFlags_D733
+	bit 2, [hl]
+	jr nz, .waterwarp_entering
+	;next behavior is different depending on if events are set
+	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
+	jr nz, .waterwarp_entering
+	;check if just in front of the warp-out tiles (exiting)
+	ld hl, Seafoam5WaterWarpOutArray
+	call ArePlayerCoordsInArray
+	jr nc, .donewaterwarpcheck
+	;do a scripted movement for exiting
+	ld hl, wFlags_D733
+	set 2, [hl]
+	ld de, Seafoam5RLEMovementExitFromWater
+	ld hl, wSimulatedJoypadStatesEnd
+	call DecodeRLEList
+	dec a
+	ld [wSimulatedJoypadStatesIndex], a
+	call StartSimulatingJoypadStates
+	ld a, $1
+	ld [wSeafoamIslands5CurScript], a
+	ret
+.donewaterwarpcheck
+	
 	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
 	ret z
+.waterwarp_entering
 	ld hl, .Coords
 	call ArePlayerCoordsInArray
 	ret nc
@@ -58,6 +84,16 @@ SeafoamIslands5Script0:
 	db $10,$14
 	db $10,$15
 	db $FF
+
+;joenote - move space automatically if entering/exiting this map from the water warps
+Seafoam5RLEMovementExitFromWater:
+	db D_DOWN,1
+	db $ff
+;joenote - coordinate of the water spaces for handling warps
+Seafoam5WaterWarpOutArray:	;y,x
+	db $10,$14
+	db $10,$15
+	db $ff
 
 SeafoamIslands5Script1:
 	ld a, [wSimulatedJoypadStatesIndex]
