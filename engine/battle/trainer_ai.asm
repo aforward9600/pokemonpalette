@@ -744,8 +744,8 @@ AIMoveChoiceModification3:
 	pop bc
 	pop de
 	pop hl
-
 	jr c, .flydigcheck_discourage
+
 	ld a, [wEnemyMoveEffect]
 	push hl
 	push de
@@ -833,7 +833,7 @@ AIMoveChoiceModification3:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote: static damage value moves should not be accounted for typing
-;at the same type, randomly bump their preference to spice things up
+;at the same time, randomly bump their preference to spice things up
 	ld a, [wEnemyMovePower]	;get the base power of the enemy's attack
 	cp $1	;check if it is 1. special damage moves assumed to have 1 base power
 	jr nz, .skipout4	;skip down if it's not a special damage move
@@ -843,9 +843,27 @@ AIMoveChoiceModification3:
 	jp .nextMove	;else neither encourage nor discourage
 .skipout4
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;if the type effectiveness is neutral, slight preference if there is STAB
 	ld a, [wTypeEffectiveness]
 	cp $0A
-	jp z, .nextMove
+	jr nz, .notneutraleffective
+	push bc
+	ld a, [wEnemyMoveType]
+	ld b, a
+	ld a, [wEnemyMonType1]
+	cp b
+	pop bc
+	jp z, .givepref
+	push bc
+	ld a, [wEnemyMoveType]
+	ld b, a
+	ld a, [wEnemyMonType2]
+	cp b
+	pop bc
+	jp z, .givepref
+	jp .nextMove
+.notneutraleffective
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	jr c, .notEffectiveMove
 	;at this line, move is super effective
 .givepref	;joenote - added marker
