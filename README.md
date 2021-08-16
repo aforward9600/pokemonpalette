@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.22 beta
+Version 1.22
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -22,50 +22,42 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- Added built-in gamma shader for backlit LCD screens (press SELECT at the copyright screen)
-- On battle load, stopped the GBC GBPal from updating before graphics are in the right position
-- Fixed some issues where npcs that appear on screen are looking down for 1 frame
-- Fixed some menu screen flicker
-- Added nop after halt commands (safety prevention for a rare processor bug)
-- Added an option to make the overworld run in 60fps
- - Feature is a proof-of-concept and is still a bit rusty
- - Toggle by placing the cursor in the options screen over CANCEL and pressing left or right
-- Fixed issue where paralyzed enemies might move first
-- Rearranged some stuff with trainer AI
-- Gave AI some guidance on explosion effects 
-- Rearranged trainer AI and moved more agressive move use to AI layer 1 (all trainers except Cueball and Youngster)
-- Fixed a coordinate typo in pokemon tower left by gamefreak
-- Trainer AI layer settings have been completely redone
-- Switching AI now scores against all player mon moves
-- Fixed wrong crit damage for lvl > 127
-- Initialize RNG with random seed
+- Fixed scripted NPC-following movement in 60fps mode
+- Fixed some NPC ghosting in mart menus in GBC mode
+- Greatly increased the speed and performance of spin tiles
+- Fixed rival facing in silph co after battle
+- Fixed issue with route 22 phantom rival appearing if the first battle was skipped
+- Stopped AI from decrementing PP on item usage and switching
+- Stopped AI from decrementing PP when it doesn't wake up from sleep
+- Fixed a conflict where transforming while disabled can leave the new moves disabled
+- Fixed an issue with the silph co 11f elevator doors
+- Bike music stops playing now when going down a hole
+- Can no longer walk up to 4 steps with a fainted team
+- Fixed a typo so now transformed 'mons retain their original palette
+- Fixed transformed 'mons reseting their moves when learning a level-up move
+- PP-restoring items no longer affect transformed moves and only restore the original moves
+- Made adjustments to critical hit damage
+  - Damage factor is now 2*(2*level)/5 + 4 instead of 2*(2*level)/5 + 2 to simplify some algebra
+  - If non-crit damage would be >= crit damage, the regular modified stat values are applied instead
+- Fixed a missed increment that makes a map's 15th object not update its facing properly
+- Adjusted two spin-stop tiles in Viridian Gym
+- Adjusted some of Giovanni's final lines for clarity
+- Made Agility's animation more apparent
+- Water warps in seafoam island 4 & 5 are now scripted movement
+- AI layer 1: discourage exploding effects if faster than a player in fly/dig state
+- AI layer 1: randomly discourage usage of 2-turn moves when confused/paralyzed
+- AI layer 3: added some strategy to handle when the player uses fly/dig
+- AI layer 3: slightly preference regular effectiveness moves if STAB exists
+- Special damage effect now uses 2 bytes for damage instead of 1
+- Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
+- Applied Rangi's reformatting to key item bit fields
+- Consolidated the code used for stat scaling
+- Added AI layer 3 to Juggler
 
 
 #Changes not yet in the release branch:
 -----------
-(b1)  
-- Fixed scripted NPC-following movement in 60fps mode
-- Applied Rangi's reformatting to key item bit fields
-- Fixed some NPC ghosting in mart menus in GBC mode
-- Greatly increased the speed and performance of spin tiles
-
-(b5)
-- Made adjustments to critical hit damage
-  - Damage factor is now 2*(2*level)/5 + 4 instead of 2*(2*level)/5 + 2 to simplify some algebra
-  - If non-crit damage would be >= crit damage, the regular modified stat values are applied instead
-
-(b6)
-- GF bug: Fixed a conflict where transforming while disabled can leave the new moves disabled
-- Non-link enemy mons now have PP, so always run checks for 0 PP during disable effect
-- GF bug: Fixed an issue with the silph co 11f elevator doors
-- GF bug: Bike music stops playing now when going down a hole
-- GF bug: Can no longer walk up to 4 steps with a fainted team
-- Special damage effect now uses 2 bytes for damage instead of 1
-- Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
-- GF bug: Fixed a typo so now transformed 'mons retain their original palette
-- Consolidated the code used for stat scaling
-- GF bug: fixed transformed 'mons reseting their moves when learning a level-up move
-- GF bug: pp-restoring items no longer affect transformed moves and only restore the original moves
+-
 
 
 #Bugfixes:
@@ -102,6 +94,9 @@ It was done to serve as a codebase for others to start their own romhacks.
   - PP-up uses are disregarded when determining to use STRUGGLE if one or more moves are disabled
   - AI will not do actions during Rage or when recharging
   - Fixed wrong crit damage for lvl > 127
+  - Made adjustments to critical hit damage
+    - Damage factor is now 2*(2*level)/5 + 4 instead of 2*(2*level)/5 + 2 to simplify some algebra
+    - If non-crit damage would be >= crit damage, the regular modified stat values are applied instead
 
 	
 - Move fixes
@@ -109,6 +104,9 @@ It was done to serve as a codebase for others to start their own romhacks.
     - Move slots cannot be rearranged when transformed (prevents acquiring glitch moves).
     - Transform will no longer copy the opponent's Transform move. It's swapped-out for Struggle
     - Enemy DVs can no longer be manipulated by having it use transform multiple times
+    - Fixed a conflict where transforming while disabled can leave the new moves disabled
+    - Fixed a typo so now transformed 'mons retain their original palette
+    - Fixed transformed 'mons reseting their moves when learning a level-up move
   - dire hit/focus energy now quadruples crit rate instead of quarters
   - sleep now normal-chance hits a pkmn recharging from hyperbeam, but has no effect if it's already status-effected
   - the fly/dig invulnerability bit is cleared when a pkmn hurts itself from confusion or is fully paralyzed
@@ -172,6 +170,10 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Fixed tower ghost pic not loading after exiting status screen
   - Added ledge to route 25 to prevent softlock
   - Fixed bumping into invisible shrub
+  - Fixed an issue with the silph co 11f elevator doors
+  - Fixed a missed increment that makes a map's 15th object not update its facing properly
+  - Adjusted two spin-stop tiles in Viridian Gym
+  - Made Agility's animation more apparent
 
   
 - Item Fixes  
@@ -194,7 +196,8 @@ It was done to serve as a codebase for others to start their own romhacks.
     - Full restore at max hp undoes the stat changes of brn/par
   - Full Restore when used in battle to heal HP now undoes the stat changes of brn/par
   - Pokedoll is disallowed during ghost marowak battle
-
+  - PP-restoring items no longer affect transformed moves and only restore the original moves
+  
 
 - Audio fixes
   - Fuschia gym plays the correct sfx when getting the TM from Koga
@@ -204,10 +207,12 @@ It was done to serve as a codebase for others to start their own romhacks.
 	- Looks like the idea was dropped in development due to issues with having separate audio banks
 	- However, there is a unique unused sfx in the battle audio bank that signifies getting some kind of important item
 	- This is likely what was going to be used for getting a badge at some point, and it has been restored
+  - Bike music stops playing now when going down a hole
 	
 
 - Misc. fixes
   - Cinnabar/seafoam islands coast glitch fixed (no more missingo or artificially loading pokemon data)
+  - Can no longer walk up to 4 steps with a fainted team
   - Catching a transformed pokemon no longer defaults to catching a ditto
   - Vending machine now checks for the correct amount of money
   - Prevented byte overflow when determining the trash can with 2nd switch in vermillion gym
@@ -235,6 +240,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Minor tweaks to the Rival's object data in various maps
   - Added nop after halt commands (safety prevention for a rare processor bug)
   - Fixed a coordinate typo in pokemon tower left by gamefreak
+  - Water warps in seafoam island 4 & 5 are now scripted movement
 
 
 #TWEAKS:
@@ -262,6 +268,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Blaine has a touched-up battle sprite so he doesn't look like an alien
   - Snagged this off reddit, but original artist unknown (let me know if this is yours)
 - L: block doesn't disappear when level hits three digits
+- Greatly increased the speed and performance of spin tiles
 
 
 - Fixed mistakes and made adjustments to the game text
@@ -285,6 +292,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Exp.all now prints one message when splitting exp instead of for each party member
   - text is now properly flipped in one of the saffron houses
   - Reactivated lost text that was meant to play when you lose to your rival
+  - Adjusted some of Giovanni's final lines for clarity
   
 
 - Adjustments to moves  
@@ -330,6 +338,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Substitute discouraged if less that 1/4 hp remains
   - Will discourage using Haze if unstatus'd or has net-neutral or better stat mods
   - Will heavily discourage boosting defense against special, OHKO, or static-damaging attacks
+  - Discourage exploding effects if faster than a player in fly/dig state
+  - Randomly discourage usage of 2-turn moves when confused/paralyzed
 
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
@@ -342,6 +352,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - AI layer 3 changes that affect most 0-power moves (with only a few exceptions like heal effects)
     - now has a hard stop on using 0-power moves on consecutive turns
 	- heavily discourages 0-power moves if below 1/3 hp
+  - Added some strategy to handle when the player uses fly/dig
+  - Slightly preference regular effectiveness moves if STAB exists
 
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
   - 25% chance to switch if active pkmn is below 1/3 HP and player also outspeeds AI
@@ -366,7 +378,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   
 - Trainer ai routine #3 added to the following trainer classes
   - jr trainer M/F, tamer, scientist, lass, gentleman, black belt, bird keeper, engineer, 
-  - chief, bruno, brock, agatha
+  - chief, bruno, brock, agatha, juggler
 - Trainer ai routine #4 added to the following trainer classes
   -cueball, psychic, hiker, rocket, black belt, tamer, lass, jr trainer M/F, cooltrainer M/F, gentleman, pokemaniac 
   -all rival phases, prof.oak, chief, gym leaders, elite-4
@@ -396,6 +408,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Adjusted daycare to allow exp values over $500000
   - Allow up to 8 digits when displaying experience on the status screen
   - Streamlined how the ghost marowak battle is triggered (now allows for non-ghost marowaks in pokemon tower)
+  - Special damage effect now uses 2 bytes for damage instead of 1
+  - Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
 
 
 #CREDITS / SPECIAL THANKS:

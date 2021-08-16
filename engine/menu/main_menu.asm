@@ -344,11 +344,11 @@ ShinPokemonHandshake:
 HandshakeList:	;this serves as a version control passcode with FF as an end-of-list marker
 	db $1
 	db $2
-	db $1
+	db $2
 	db $b
 	db $ff
 VersionText:
-	db "v1.22Lb6@"
+	db "v1.22L@"
 
 WhereWouldYouLikeText:
 	TX_FAR _WhereWouldYouLikeText
