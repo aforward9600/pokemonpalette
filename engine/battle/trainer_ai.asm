@@ -1187,7 +1187,7 @@ TrainerClassMoveChoiceModifications:
 	db 1,2,0  ; SUPER_NERD
 	db 1,4,0    ; HIKER
 	db 1,0    ; BIKER
-	db 1,0  ; BURGLAR
+	db 1,3,0  ; BURGLAR
 	db 1,3,0    ; ENGINEER
 	db 1,2,0  ; JUGGLER_X
 	db 1,3,0  ; FISHER
