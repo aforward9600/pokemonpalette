@@ -544,7 +544,36 @@ AIMoveChoiceModification1:
 	pop bc
 	pop de
 	pop hl
-	jp c, .skipoutspam	;If found on list, do not run anti-spam on it
+	jr nc, .spamprotection	;If not found on list, run anti-spam on it
+
+;let's try to blind the AI a bit so that it won't just status the player immediately after using
+;a restorative item or switching
+	;if found on list of spam-exempt moves, is this a status move?
+	;skip if not
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, StatusAilmentMoveEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr c, .skipoutspam
+	
+	;if it is a status move, did the player use an item or switch last round?
+	;skip if not
+	ld a, [wActionResultOrTookBattleTurn]
+	and a
+	jr z, .skipoutspam
+	
+	;50% chance that the AI predicts the player would switch or use an item
+	call Random
+	rla
+	jr c, .skipoutspam
+	
+.spamprotection
 ;heavily discourage 0 BP moves if health is below 1/3 max
 	ld a, 3
 	call AICheckIfHPBelowFraction
