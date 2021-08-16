@@ -46,6 +46,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Water warps in seafoam island 4 & 5 are now scripted movement
 - AI layer 1: discourage exploding effects if faster than a player in fly/dig state
 - AI layer 1: randomly discourage usage of 2-turn moves when confused/paralyzed
+- AI Layer 1: 50% chance that the AI is blind to a player switching ir using an item
 - AI layer 3: added some strategy to handle when the player uses fly/dig
 - AI layer 3: slightly preference regular effectiveness moves if STAB exists
 - Special damage effect now uses 2 bytes for damage instead of 1
@@ -53,6 +54,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Applied Rangi's reformatting to key item bit fields
 - Consolidated the code used for stat scaling
 - Added AI layer 3 to Juggler
+- Forest tileset is now treated as an outside area
 
 
 #Changes not yet in the release branch:
@@ -241,6 +243,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Added nop after halt commands (safety prevention for a rare processor bug)
   - Fixed a coordinate typo in pokemon tower left by gamefreak
   - Water warps in seafoam island 4 & 5 are now scripted movement
+  - Forest tileset is now treated as an outside area
 
 
 #TWEAKS:
@@ -340,7 +343,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Will heavily discourage boosting defense against special, OHKO, or static-damaging attacks
   - Discourage exploding effects if faster than a player in fly/dig state
   - Randomly discourage usage of 2-turn moves when confused/paralyzed
-
+  - 50% chance that the AI is blind to a player switching ir using an item
+  
 - Trainer ai routine #3 (choosing effective moves) has been modified
   - It now heavily discourages moves that would have no effect due to type immunity
   - zero-power buffing/debuffing moves are randomly preferenced 12.5% of the time to spice things up
