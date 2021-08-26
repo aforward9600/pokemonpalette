@@ -550,6 +550,7 @@ MainInBattleLoop:
 .enemyMovesFirst
 	ld a, $1
 	ld [H_WHOSETURN], a
+	ld [H_WHOFIRST], a	;joenote - let's track this for general problem solving
 	callab TrainerAI
 	jr c, .AIActionUsedEnemyFirst
 	call ExecuteEnemyMove
@@ -577,6 +578,8 @@ MainInBattleLoop:
 	jp MainInBattleLoop
 .playerMovesFirst	;joenote - reorganizing this so enemy AI item use and switching has priority over player moves
 ;#1 - handle enemy switching or using an item
+	xor a
+	ld [H_WHOFIRST], a	;joenote - let's track this for general problem solving
 	ld a, $1
 	ld [H_WHOSETURN], a
 	callab TrainerAI
@@ -3724,6 +3727,10 @@ CheckPlayerStatusConditions:
 	ld a, [hl]
 	and a
 	jr z, .ConfusedCheck
+	
+	predef PlayerDisableHandler	;joenote - fix a rare oversight with Disable
+	ld a, [hl]
+	
 	dec a
 	ld [hl], a
 	and $f ; did Disable counter hit 0?
@@ -6511,6 +6518,10 @@ CheckEnemyStatusConditions:
 	ld a, [hl]
 	and a
 	jr z, .checkIfConfused
+	
+	predef EnemyDisableHandler	;joenote - fix a rare oversight with Disable
+	ld a, [hl]
+	
 	dec a ; decrement disable counter
 	ld [hl], a
 	and $f ; did disable counter hit 0?
@@ -9335,7 +9346,8 @@ DisableEffect:
 ; non-link battle enemies have unlimited PP so the previous checks aren't needed
 	call BattleRandom
 	and $7
-	inc a ; 1-8 turns disabled
+	;inc a ; 1-8 turns disabled
+	set 3, a ;joenote - will handle this a different way (0-7 turns with bit 3 initialized)
 	inc c ; move 1-4 will be disabled
 	swap c
 	add c ; map disabled move to high nibble of wEnemyDisabledMove / wPlayerDisabledMove

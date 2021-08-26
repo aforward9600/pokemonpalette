@@ -159,3 +159,5 @@ PredefPointers::
 	add_predef CritHitStatsEnemyPhysical
 	add_predef CritHitStatsEnemySpecial
 	add_predef BC999cap
+	add_predef PlayerDisableHandler
+	add_predef EnemyDisableHandler

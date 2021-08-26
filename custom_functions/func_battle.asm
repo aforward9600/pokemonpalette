@@ -217,3 +217,74 @@ PlayerBideAccum:
 	adc b
 	ld [hl], a
 	ret
+
+
+	
+;These functions try to handle and correct situations where 
+;the disable effect, with a counter of 1, applied to a slower 'mon
+;will cause the effect to immediately wear off.
+PlayerDisableHandler:
+	call GetPredefRegisters
+	;hl points to wPlayerDisabledMove at this line
+	
+	ld a, [hl]
+	bit 3, a	;bit 3 is set if this is the first round of the effect
+	ret z	;return if not first round
+	;else reset the bit and increment the counter
+	res 3, a
+	inc a
+	ld [hl], a
+	;counter is now 1 to 8 for the rest of the duration
+	
+	;now see if the counter is > 1 and return if true
+	and $0F
+	cp $02
+	ret nc
+	
+	;now test to see if going second in the round
+	ld a, [H_WHOFIRST]
+	and a
+	ret z	;return if going first
+	
+	;now confirmed that: 
+	;--> the counter is initialized to 1 this round. 
+	;--> going second this round.
+	;Therefore, increment the counter 
+	ld a, [hl]
+	inc a
+	ld [hl], a
+.return
+	ret
+
+EnemyDisableHandler:
+	call GetPredefRegisters
+	;hl points to wEnemyDisabledMove at this line
+	
+	ld a, [hl]
+	bit 3, a	;bit 3 is set if this is the first round of the effect
+	ret z	;return if not first round
+	;else reset the bit and increment the counter
+	res 3, a
+	inc a
+	ld [hl], a
+	;counter is now 1 to 8 for the rest of the duration
+	
+	;now see if the counter is > 1 and return if true
+	and $0F
+	cp $02
+	ret nc
+	
+	;now test to see if going second in the round
+	ld a, [H_WHOFIRST]
+	and a
+	ret nz	;return if going first
+	
+	;now confirmed that: 
+	;--> the counter is initialized to 1 this round. 
+	;--> going second this round.
+	;Therefore, increment the counter 
+	ld a, [hl]
+	inc a
+	ld [hl], a
+.return
+	ret
