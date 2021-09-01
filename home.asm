@@ -3365,16 +3365,9 @@ GetName::
 	jr nz, .notMachine	;if the list type is not items, then A cannot be referring to a machine
 	;At this line, definitely working with an item list. So see if it's a machine or item
 	cp HM_01
-	;jp nc, GetMachineName	;joenote - function removed. Handle list-based tm & hm names here.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;joenote - do some stuff if the item is a machine
-	jr c, .notMachine
-	sub (HM_01 - 1)	;need to shift things because tm and hm constants are offset by +$C3 from the first item constant
-	ld [wd0b5], a
-	ld a, TMHM_NAME	
-	ld [wNameListType], a
+	jp nc, GetMachineName	;joenote - function removed. Handle list-based tm & hm names here.
 .notMachine
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 	ld a, [H_LOADEDROMBANK]
 	push af
 	push hl

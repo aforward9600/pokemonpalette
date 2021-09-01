@@ -55,6 +55,11 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Consolidated the code used for stat scaling
 - Added AI layer 3 to Juggler
 - Forest tileset is now treated as an outside area
+- Added some underflow and overflow protection to switch scoring
+- Fixed an issue with Disable's counter on slower 'mons
+- Fixed a bug in the GetName: function that treated lists over 195 entries as item lists
+- AI switch scoring now penalizes bad match-ups between player and enemy 'mon types
+- Minor adjustments to switch scoring
 
 
 #Changes not yet in the release branch:
@@ -152,6 +157,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 	  - player/enemy pkmn is fully paralyzed or after hurting itself in confusion
     - Crash damage from jump kicks and pkmn hurting itself cannot be Countered
   - To prevent infinite loops, Rage ends after 2 to 3 turns (attack boosts are kept)
+  - Fixed an issue with Disable's counter on slower 'mons
 
 	
 - Graphical Fixes
@@ -244,6 +250,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Fixed a coordinate typo in pokemon tower left by gamefreak
   - Water warps in seafoam island 4 & 5 are now scripted movement
   - Forest tileset is now treated as an outside area
+  - Fixed a bug in the GetName: function that treated lists over 195 entries as item lists
 
 
 #TWEAKS:
@@ -379,7 +386,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 	- switch flags are all cleared when player sends out a new mon since the situation is now different
   - AI scoring for switching puts a heavier penalty on potentially switching in a bad type matchup
   - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
-  
+  - AI switch scoring now penalizes bad match-ups between player and enemy 'mon types
+
 - Trainer ai routine #3 added to the following trainer classes
   - jr trainer M/F, tamer, scientist, lass, gentleman, black belt, bird keeper, engineer, 
   - chief, bruno, brock, agatha, juggler
