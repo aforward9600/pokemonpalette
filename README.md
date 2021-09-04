@@ -48,7 +48,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - AI layer 1: randomly discourage usage of 2-turn moves when confused/paralyzed
 - AI Layer 1: 50% chance that the AI is blind to a player switching ir using an item
 - AI layer 3: added some strategy to handle when the player uses fly/dig
-- AI layer 3: slightly preference regular effectiveness moves if STAB exists
+- AI layer 3: slightly preference regular effectiveness moves if STAB exists (25% chance per move)
 - Special damage effect now uses 2 bytes for damage instead of 1
 - Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
 - Applied Rangi's reformatting to key item bit fields
@@ -364,7 +364,7 @@ It was done to serve as a codebase for others to start their own romhacks.
     - now has a hard stop on using 0-power moves on consecutive turns
 	- heavily discourages 0-power moves if below 1/3 hp
   - Added some strategy to handle when the player uses fly/dig
-  - Slightly preference regular effectiveness moves if STAB exists
+  - Slightly preference regular effectiveness moves if STAB exists (25% chance per move)
 
 - Trainer ai routine #4 is no longer unused. It now does rudimentary trainer switching.
   - 25% chance to switch if active pkmn is below 1/3 HP and player also outspeeds AI
