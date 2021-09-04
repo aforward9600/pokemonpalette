@@ -548,8 +548,7 @@ AIMoveChoiceModification1:
 
 ;let's try to blind the AI a bit so that it won't just status the player immediately after using
 ;a restorative item or switching
-	;if found on list of spam-exempt moves, is this a status move?
-	;skip if not
+	;effect found on list of spam-exempt moves, is this a status move?
 	ld a, [wEnemyMoveEffect]
 	push hl
 	push de
@@ -560,18 +559,18 @@ AIMoveChoiceModification1:
 	pop bc
 	pop de
 	pop hl
-	jr c, .skipoutspam
+	jr nc, .skipoutspam	;skip if not in the list of status effects
 	
-	;if it is a status move, did the player use an item or switch last round?
-	;skip if not
+	;effect is a status move, did the player use an item or switch?
 	ld a, [wActionResultOrTookBattleTurn]
 	and a
-	jr z, .skipoutspam
+	jr z, .skipoutspam	;skip if player did not use an item or switch
 	
 	;50% chance that the AI predicts the player would switch or use an item
 	call Random
 	rla
-	jr c, .skipoutspam
+	jr c, .skipoutspam	;if carry set, then proceed as normal
+	;else run spam protection on the status move
 	
 .spamprotection
 ;heavily discourage 0 BP moves if health is below 1/3 max
@@ -872,10 +871,19 @@ AIMoveChoiceModification3:
 	jp .nextMove	;else neither encourage nor discourage
 .skipout4
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;if the type effectiveness is neutral, slight preference if there is STAB
+;jump if the move is not very effective
 	ld a, [wTypeEffectiveness]
 	cp $0A
+	jr c, .notEffectiveMove
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;if the type effectiveness is neutral, randomly apply slight preference if there is STAB
 	jr nz, .notneutraleffective
+	
+	;25% chance to check for and prefer a stab move
+	call Random
+	cp 192
+	jp c, .nextMove
+	
 	push bc
 	ld a, [wEnemyMoveType]
 	ld b, a
@@ -893,7 +901,6 @@ AIMoveChoiceModification3:
 	jp .nextMove
 .notneutraleffective
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	jr c, .notEffectiveMove
 	;at this line, move is super effective
 .givepref	;joenote - added marker
 	dec [hl] ; slightly encourage this move
