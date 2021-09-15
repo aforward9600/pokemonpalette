@@ -1638,19 +1638,20 @@ ChannelerPic::     INCBIN "pic/trainer/channeler.pic"
 AgathaPic::        INCBIN "pic/trainer/agatha.pic"
 LancePic::         INCBIN "pic/trainer/lance.pic"
 
-INCLUDE "data/mapHeaders/tradecenter.asm"
-INCLUDE "scripts/tradecenter.asm"
-INCLUDE "data/mapObjects/tradecenter.asm"
-TradeCenterBlocks: INCBIN "maps/tradecenter.blk"
+;joenote - moved to a different bank
+;INCLUDE "data/mapHeaders/tradecenter.asm"
+;INCLUDE "scripts/tradecenter.asm"
+;INCLUDE "data/mapObjects/tradecenter.asm"
+;TradeCenterBlocks: INCBIN "maps/tradecenter.blk"
 
-INCLUDE "data/mapHeaders/colosseum.asm"
-INCLUDE "scripts/colosseum.asm"
-INCLUDE "data/mapObjects/colosseum.asm"
-ColosseumBlocks: INCBIN "maps/colosseum.blk"
+;INCLUDE "data/mapHeaders/colosseum.asm"
+;INCLUDE "scripts/colosseum.asm"
+;INCLUDE "data/mapObjects/colosseum.asm"
+;ColosseumBlocks: INCBIN "maps/colosseum.blk"
 
-INCLUDE "engine/give_pokemon.asm"
+;INCLUDE "engine/give_pokemon.asm"
 
-INCLUDE "engine/predefs.asm"
+;INCLUDE "engine/predefs.asm"
 
 
 SECTION "bank14",ROMX,BANK[$14]
@@ -2183,6 +2184,22 @@ INCLUDE "scripts/silphco11.asm"
 INCLUDE "data/mapObjects/silphco11.asm"
 SilphCo11Blocks: INCBIN "maps/silphco11.blk"
 
+;joenote - moved these here
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+INCLUDE "data/mapHeaders/tradecenter.asm"
+INCLUDE "scripts/tradecenter.asm"
+INCLUDE "data/mapObjects/tradecenter.asm"
+TradeCenterBlocks: INCBIN "maps/tradecenter.blk"
+
+INCLUDE "data/mapHeaders/colosseum.asm"
+INCLUDE "scripts/colosseum.asm"
+INCLUDE "data/mapObjects/colosseum.asm"
+ColosseumBlocks: INCBIN "maps/colosseum.blk"
+
+INCLUDE "engine/give_pokemon.asm"
+
+INCLUDE "engine/predefs.asm"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 INCLUDE "engine/hidden_object_functions18.asm"
 
 
