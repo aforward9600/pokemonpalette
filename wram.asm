@@ -3098,7 +3098,7 @@ wd728:: ; d728
 ; bit 7: set by ItemUseCardKey, which is leftover code from a previous implementation of the Card Key
 			;joenote - repurposed for exp all message now
 	ds 1
-
+wLowHealthTonePairs::	;d729			;in battle, used as a counter for low hp alarm tone pairs
 	ds 1
 
 wBeatGymFlags:: ; d72a
