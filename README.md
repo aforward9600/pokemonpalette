@@ -440,3 +440,6 @@ It was done to serve as a codebase for others to start their own romhacks.
   - krazsen
   - kmalove
   - zycain
+
+  
+The shinpokered repository was branched from pret/pokered at merge pull request #185 committed on Jul 2, 2018
