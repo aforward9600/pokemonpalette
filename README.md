@@ -60,6 +60,8 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fixed a bug in the GetName: function that treated lists over 195 entries as item lists
 - AI switch scoring now penalizes bad match-ups between player and enemy 'mon types
 - Minor adjustments to switch scoring
+- Can now cut grass in the plateau tileset
+- Fix jump kick effect doing 0 crash damage
 
 
 #Changes not yet in the release branch:
@@ -279,6 +281,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Snagged this off reddit, but original artist unknown (let me know if this is yours)
 - L: block doesn't disappear when level hits three digits
 - Greatly increased the speed and performance of spin tiles
+- Can cut the grass on the plateau tileset
 
 
 - Fixed mistakes and made adjustments to the game text
