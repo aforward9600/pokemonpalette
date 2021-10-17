@@ -161,3 +161,4 @@ PredefPointers::
 	add_predef BC999cap
 	add_predef PlayerDisableHandler
 	add_predef EnemyDisableHandler
+	add_predef SetAttackAnimPal

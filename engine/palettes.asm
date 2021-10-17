@@ -1002,6 +1002,7 @@ CopySGBBorderTiles:
 ;gbcnote - This function loads the palette for a given pokemon index in wcf91 into a specified palette register on the GBC
 ;d = CONVERT_OBP0, CONVERT_OBP1, or CONVERT_BGP
 ;e = palette register # (0 to 7)
+;if wcf91 has bit 7 set, then it the address holds a specific palette instead of a 'mon
 TransferMonPal:
 	ld a, [hGBC]
 	and a
@@ -1011,7 +1012,10 @@ TransferMonPal:
 	ld a, d
 	push af
 	ld a, [wcf91]
-	call DeterminePaletteIDOutOfBattle
+	cp VICTREEBEL+1
+	jr c, .isMon
+	sub VICTREEBEL+1
+.back	
 	call GetGBCBasePalAddress
 	pop af
 	cp CONVERT_BGP
@@ -1025,8 +1029,10 @@ TransferMonPal:
 .do_bgp
 	pop af
 	call TransferCurBGPData
-	ret 
-
+	ret
+.isMon	
+	call DeterminePaletteIDOutOfBattle
+	jr .back
 
 INCLUDE "data/sgb_packets.asm"
 

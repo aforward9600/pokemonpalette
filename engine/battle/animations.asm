@@ -554,10 +554,11 @@ AnimationShakeScreenHorizontallySlow:
 SetAnimationPalette:
 	ld a, [wOnSGB]
 	and a
-	ld a, $e4
+	;ld a, $e4	;redundant
 	jr z, .notSGB
-	ld a, $f0
-	ld [wAnimPalette], a
+	;ld a, $f0
+	;ld [wAnimPalette], a
+	predef SetAttackAnimPal	;joenote - new function to handle animation palettes
 	ld b, $e4
 	ld a, [wAnimationID]
 	cp TRADE_BALL_DROP_ANIM
