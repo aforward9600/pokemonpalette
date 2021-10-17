@@ -62,6 +62,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Minor adjustments to switch scoring
 - Can now cut grass in the plateau tileset
 - Fix jump kick effect doing 0 crash damage
+- On GBC, moves animations are colored according to type
 
 
 #Changes not yet in the release branch:
@@ -184,6 +185,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Fixed a missed increment that makes a map's 15th object not update its facing properly
   - Adjusted two spin-stop tiles in Viridian Gym
   - Made Agility's animation more apparent
+  - On GBC, moves animations are colored according to type
 
   
 - Item Fixes  
