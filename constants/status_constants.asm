@@ -4,6 +4,7 @@ PSN EQU 3
 BRN EQU 4
 FRZ EQU 5
 PAR EQU 6
+SLP_NOMOVE EQU %110	;joenote - sleep counter for when choosing won't be used on wakeup
 
 ; volatile statuses 1
 STORING_ENERGY           EQU 0 ; Bide

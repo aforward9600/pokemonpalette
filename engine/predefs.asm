@@ -154,3 +154,11 @@ PredefPointers::
 	add_predef BGLayerScrollingUpdate
 	add_predef _PrintNumber
 	add_predef GBCGamma
+	add_predef CritHitStatsPlayerPhysical
+	add_predef CritHitStatsPlayerSpecial
+	add_predef CritHitStatsEnemyPhysical
+	add_predef CritHitStatsEnemySpecial
+	add_predef BC999cap
+	add_predef PlayerDisableHandler
+	add_predef EnemyDisableHandler
+	add_predef SetAttackAnimPal

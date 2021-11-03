@@ -1426,8 +1426,9 @@ DisplayListMenuID::
 	ld [wTopMenuItemX], a
 	ld a, A_BUTTON | B_BUTTON | SELECT
 	ld [wMenuWatchedKeys], a
-	ld c, 10
-	call DelayFrames
+	homecall PrepareOAMData	;joenote - makes mart menus cleaner by updating the OAM sprite table ahead of vblank
+	;ld c, 10
+	;call DelayFrames
 
 DisplayListMenuIDLoop::	
 	xor a
@@ -3354,8 +3355,18 @@ GetName::
 
 	; TM names are separate from item names.
 	; BUG: This applies to all names instead of just items.
+	;joenote - fixing the aforementioned bug
+	push bc
+	ld b, a
+	ld a, [wNameListType]
+	cp ITEM_NAME
+	ld a, b
+	pop bc
+	jr nz, .notMachine	;if the list type is not items, then A cannot be referring to a machine
+	;At this line, definitely working with an item list. So see if it's a machine or item
 	cp HM_01
-	jp nc, GetMachineName
+	jp nc, GetMachineName	;joenote - function removed. Handle list-based tm & hm names here.
+.notMachine
 
 	ld a, [H_LOADEDROMBANK]
 	push af

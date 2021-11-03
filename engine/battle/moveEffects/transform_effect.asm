@@ -69,6 +69,7 @@ TransformEffect_:
 	;de is now pointing to DVs
 	ld a, [H_WHOSETURN]
 	and a
+	push af	;joenote - save the turn result
 	ld bc, wPlayerBattleStatus3
 	jr z, .next
 ; save enemy mon DVs at wTransformedEnemyMonOriginalDVs
@@ -93,6 +94,21 @@ TransformEffect_:
 	ld a, [bc]
 	set TRANSFORMED, a ; mon is now transformed
 	ld [bc], a
+
+;joenote - handle a conflict with disable
+	pop af	;get the saved turn result
+	jr nz, .undo_enemy_disable
+.undo_player_disable
+	xor a
+	ld [wPlayerDisabledMove], a
+	ld [wPlayerDisabledMoveNumber], a
+	jr .undo_disable_end
+.undo_enemy_disable
+	xor a
+	ld [wEnemyDisabledMove], a
+	ld [wEnemyDisabledMoveNumber], a
+.undo_disable_end
+	
 ; DVs
 	ld a, [hli]
 	ld [de], a
@@ -184,4 +200,4 @@ CopyDataTransform:
 	ld a, c
 	or b	;is counter zero?
 	jr nz, CopyDataTransform
-	ret	
+	ret

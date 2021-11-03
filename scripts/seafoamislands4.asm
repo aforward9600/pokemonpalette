@@ -58,8 +58,39 @@ SeafoamIslands4ScriptPointers:
 ; wispnote - Added a check for the righ bank size which executes
 ; a different JoyPad sequence to simulate the current.
 SeafoamIslands4Script0:
+SeafoamIslands4Script2:
+;joenote - check if player entering/exiting via water warps
+	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
+	jr nz, .donewaterwarpcheck
+	;check if just in front of the warp-out tiles (exiting)
+	ld hl, Seafoam4WaterWarpOutArray
+	call ArePlayerCoordsInArray
+	jr c, .waterwarp_exiting
+	;check if on the warp tiles (entering)
+	ld hl, Seafoam4WaterWarpInArray
+	call ArePlayerCoordsInArray
+	jr c, .waterwarp_entering
+	jr .donewaterwarpcheck
+.waterwarp_exiting
+	;do a scripted movement for exiting
+	ld de, Seafoam4RLEMovementExitFromWater
+	jr .simJoyPadFromBanksSeafoamIslands4
+.waterwarp_entering
+	;do a scripted movement for entering
+	ld de, Seafoam4RLEMovementEnterFromWater
+	ld hl, wFlags_D733
+	res 2, [hl]
+	jr .simJoyPadFromBanksSeafoamIslands4_noset
+.donewaterwarpcheck
+
 	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
 	ret z
+	
+	;check if this is script 2 stuff
+	ld a, [wSeafoamIslands4CurScript]
+	cp 2
+	jp z, SeafoamIslands4Script2_stuff
+	
 	ld a, [wYCoord]
 	cp $8
 	jr nz, .checkEntryFromRightBank
@@ -81,13 +112,14 @@ SeafoamIslands4Script0:
 .isEntryFromLeftBank
 	ld de, RLEMovement46632
 .simJoyPadFromBanksSeafoamIslands4
+	ld hl, wFlags_D733
+	set 2, [hl]
+.simJoyPadFromBanksSeafoamIslands4_noset
 	ld hl, wSimulatedJoypadStatesEnd
 	call DecodeRLEList
 	dec a
 	ld [wSimulatedJoypadStatesIndex], a
 	call StartSimulatingJoypadStates
-	ld hl, wFlags_D733
-	set 2, [hl]
 	ld a, $1
 	ld [wSeafoamIslands4CurScript], a
 	ret
@@ -107,7 +139,25 @@ RLEMovementRightBank:
 	db $ff
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;joenote - move space automatically if entering/exiting this map from the water warps
+Seafoam4RLEMovementExitFromWater:
+	db D_DOWN,1
+	db $ff
+Seafoam4RLEMovementEnterFromWater:
+	db D_UP,2
+	db $ff
+;joenote - coordinate of the water spaces for handling warps
+Seafoam4WaterWarpOutArray:	;y,x
+	db $10,$14
+	db $10,$15
+	db $ff
+Seafoam4WaterWarpInArray:	;y,x
+	db $11,$14
+	db $11,$15
+	db $ff
+
 SeafoamIslands4Script1:
+SeafoamIslands4Script3:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
@@ -115,9 +165,10 @@ SeafoamIslands4Script1:
 	ld [wSeafoamIslands4CurScript], a
 	ret
 
-SeafoamIslands4Script2:
-	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
-	ret z
+;SeafoamIslands4Script2:	;joenote - kick this off from script 0 instead
+;	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
+;	ret z
+SeafoamIslands4Script2_stuff:
 	ld a, [wXCoord]
 	cp $12
 	jr z, .asm_4665e
@@ -157,13 +208,13 @@ RLEData_46688:
 	db D_DOWN,$04
 	db $FF
 
-SeafoamIslands4Script3:
-	ld a, [wSimulatedJoypadStatesIndex]
-	and a
-	ret nz
-	ld a, $0
-	ld [wSeafoamIslands4CurScript], a
-	ret
+;SeafoamIslands4Script3:	;joenote - this is redundant, and can be combined with script 1
+;	ld a, [wSimulatedJoypadStatesIndex]
+;	and a
+;	ret nz
+;	ld a, $0
+;	ld [wSeafoamIslands4CurScript], a
+;	ret
 
 SeafoamIslands4TextPointers:
 	dw BoulderText

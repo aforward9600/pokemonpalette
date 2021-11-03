@@ -554,10 +554,11 @@ AnimationShakeScreenHorizontallySlow:
 SetAnimationPalette:
 	ld a, [wOnSGB]
 	and a
-	ld a, $e4
+	;ld a, $e4	;redundant
 	jr z, .notSGB
-	ld a, $f0
-	ld [wAnimPalette], a
+	;ld a, $f0
+	;ld [wAnimPalette], a
+	predef SetAttackAnimPal	;joenote - new function to handle animation palettes
 	ld b, $e4
 	ld a, [wAnimationID]
 	cp TRADE_BALL_DROP_ANIM
@@ -1935,13 +1936,13 @@ AnimationShootManyBallsUpward:
 UpwardBallsAnimXCoordinatesPlayerTurn:
 ; List of x coordinates for each pillar of "energy" balls in the
 ; AnimationShootManyBallsUpward animation. It's unused in the game.
-	db $10, $40, $28, $18, $38, $30
+	db $10, $40, $28;, $18, $38, $30	;joenote - abbreviate this to save some space
 	db $FF ; list terminator
 
 UpwardBallsAnimXCoordinatesEnemyTurn:
 ; List of x coordinates for each pillar of "energy" balls in the
 ; AnimationShootManyBallsUpward animation. It's unused in the game.
-	db $60, $90, $78, $68, $88, $80
+	db $60, $90, $78;, $68, $88, $80
 	db $FF ; list terminator
 
 AnimationMinimizeMon:

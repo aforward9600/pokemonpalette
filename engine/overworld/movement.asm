@@ -121,6 +121,13 @@ UpdateNPCSprite:
 	add a
 	ld hl, wMapSpriteData
 	add l
+	
+;joenote - Increment H if A overflows. Otherwise H will hold $D4 instead of $D5 like it should.
+;This fixes some issues with the 15th map object.
+	jr nc, .no_carry
+	inc h
+.no_carry
+	
 	ld l, a
 	ld a, [hl]        ; read movement byte 2
 	ld [wCurSpriteMovement2], a
@@ -810,6 +817,19 @@ DoScriptedNPCMovement:
 	ld a, [wd730]
 	bit 7, a
 	ret z
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;60fps - update animations every other frame and halve movement
+	ld de, $00
+	ld a, [wUnusedD721]
+	bit 4, a
+	jr z, .not60fps
+	call sprite60fps
+	ld e, b
+	ld d, $01
+.not60fps
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
 	ld hl, wd72e
 	bit 7, [hl]
 	set 7, [hl]
@@ -828,6 +848,9 @@ DoScriptedNPCMovement:
 	call GetSpriteScreenYPointer
 	ld c, SPRITE_FACING_UP
 	ld a, -2
+	
+	add d	;60fps
+	
 	jr .move
 .checkIfMovingDown
 	cp NPC_MOVEMENT_DOWN
@@ -835,6 +858,9 @@ DoScriptedNPCMovement:
 	call GetSpriteScreenYPointer
 	ld c, SPRITE_FACING_DOWN
 	ld a, 2
+	
+	sub d	;60fps
+	
 	jr .move
 .checkIfMovingLeft
 	cp NPC_MOVEMENT_LEFT
@@ -842,6 +868,9 @@ DoScriptedNPCMovement:
 	call GetSpriteScreenXPointer
 	ld c, SPRITE_FACING_LEFT
 	ld a, -2
+	
+	add d	;60fps
+	
 	jr .move
 .checkIfMovingRight
 	cp NPC_MOVEMENT_RIGHT
@@ -849,6 +878,9 @@ DoScriptedNPCMovement:
 	call GetSpriteScreenXPointer
 	ld c, SPRITE_FACING_RIGHT
 	ld a, 2
+	
+	sub d	;60fps
+	
 	jr .move
 .noMatch
 	cp $ff
@@ -865,6 +897,12 @@ DoScriptedNPCMovement:
 	ld [hl], a ; facing direction
 	call AnimScriptedNPCMovement
 	ld hl, wScriptedNPCWalkCounter
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;60fps - every other frame, do not decrement walk counter
+	ld a, [hl]
+	add e
+	ld [hl], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	dec [hl]
 	ret nz
 	ld a, 8
@@ -942,6 +980,9 @@ AdvanceScriptedNPCAnimFrameCounter:
 	ld l, a
 	ld a, [hl] ; intra-animation frame counter
 	inc a
+	
+	sub e	;60fps
+	
 	ld [hl], a
 	cp 4
 	ret nz
@@ -949,7 +990,7 @@ AdvanceScriptedNPCAnimFrameCounter:
 	ld [hl], a ; reset intra-animation frame counter
 	inc l
 	ld a, [hl] ; animation frame counter
-	inc a
+	inc a	
 	and $3
 	ld [hl], a
 	ld [hSpriteAnimFrameCounter], a

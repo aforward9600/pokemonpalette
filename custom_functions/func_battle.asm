@@ -217,3 +217,170 @@ PlayerBideAccum:
 	adc b
 	ld [hl], a
 	ret
+
+
+	
+;These functions try to handle and correct situations where 
+;the disable effect, with a counter of 1, applied to a slower 'mon
+;will cause the effect to immediately wear off.
+PlayerDisableHandler:
+	call GetPredefRegisters
+	;hl points to wPlayerDisabledMove at this line
+	
+	ld a, [hl]
+	bit 3, a	;bit 3 is set if this is the first round of the effect
+	ret z	;return if not first round
+	;else reset the bit and increment the counter
+	res 3, a
+	inc a
+	ld [hl], a
+	;counter is now 1 to 8 for the rest of the duration
+	
+	;now see if the counter is > 1 and return if true
+	and $0F
+	cp $02
+	ret nc
+	
+	;now test to see if going second in the round
+	ld a, [H_WHOFIRST]
+	and a
+	ret z	;return if going first
+	
+	;now confirmed that: 
+	;--> the counter is initialized to 1 this round. 
+	;--> going second this round.
+	;Therefore, increment the counter 
+	ld a, [hl]
+	inc a
+	ld [hl], a
+.return
+	ret
+
+EnemyDisableHandler:
+	call GetPredefRegisters
+	;hl points to wEnemyDisabledMove at this line
+	
+	ld a, [hl]
+	bit 3, a	;bit 3 is set if this is the first round of the effect
+	ret z	;return if not first round
+	;else reset the bit and increment the counter
+	res 3, a
+	inc a
+	ld [hl], a
+	;counter is now 1 to 8 for the rest of the duration
+	
+	;now see if the counter is > 1 and return if true
+	and $0F
+	cp $02
+	ret nc
+	
+	;now test to see if going second in the round
+	ld a, [H_WHOFIRST]
+	and a
+	ret nz	;return if going first
+	
+	;now confirmed that: 
+	;--> the counter is initialized to 1 this round. 
+	;--> going second this round.
+	;Therefore, increment the counter 
+	ld a, [hl]
+	inc a
+	ld [hl], a
+.return
+	ret
+
+	
+	
+SetAttackAnimPal:
+	call GetPredefRegisters
+	
+	ld a, $f0
+	ld [wAnimPalette], a
+	
+	ld a, [hGBC]
+	and a
+	ret z 
+	
+	ld a, [wIsInBattle]
+	and a
+	ret z
+
+	;only continue for valid move animations
+	ld a, [wAnimationID]
+	and a
+	ret z
+	cp STRUGGLE
+	ret nc	
+	
+	ld a, $e4
+	ld [wAnimPalette], a
+	
+	push hl
+	push bc
+	push de
+	ld a, [wcf91]
+	push af
+	
+;doing a move animation, so find its type and apply color
+	ld a, [H_WHOSETURN]
+	and a
+	ld hl, wPlayerMoveType
+	jr z, .playermove
+	ld hl, wEnemyMoveType
+.playermove
+	ld a, [hl]
+	ld bc, $0000
+	ld c, a
+	ld hl, TypePalColorList
+	add hl, bc
+	ld a, [hl]
+	ld b, a
+
+	ld c, 4
+.transfer
+	ld d, CONVERT_OBP0
+	ld e, c
+	dec e
+	ld a, b	
+	add VICTREEBEL+1
+	ld [wcf91], a
+	push bc
+	callba TransferMonPal
+	pop bc
+	dec c
+	jr nz, .transfer
+	
+	pop af
+	ld [wcf91], a
+	pop de
+	pop bc
+	pop hl
+	ret	
+TypePalColorList:
+	db PAL_BW;normal
+	db PAL_GREYMON;fighting
+	db PAL_MEWMON;flying
+	db PAL_PURPLEMON;poison
+	db PAL_BROWNMON;ground
+	db PAL_GREYMON;rock
+	db PAL_BW;untyped
+	db PAL_GREENMON;bug
+	db PAL_PURPLEMON;ghost
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_BW;unused
+	db PAL_REDMON;fire
+	db PAL_BLUEMON;water
+	db PAL_GREENMON;grass
+	db PAL_YELLOWMON;electric
+	db PAL_PINKMON;psychic
+	db PAL_CYANMON;ice
+	db PAL_REDMON;dragon

@@ -130,6 +130,7 @@ AIMoveChoiceModificationFunctionPointers:
 	dw AIMoveChoiceModification4 ; ;joenote - repurposed unused routine for trainer switching
 
 ; discourages moves that cause no damage but only a status ailment if player's mon already has one
+; joenote - reworked so that it now discourages doing things that are generally useless
 AIMoveChoiceModification1:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - kick out if no-attack bit is set
@@ -219,7 +220,16 @@ AIMoveChoiceModification1:
 	jr z, .heal_explode	;skip out if move is not
 	cp EXPLODE_EFFECT	;what about an explosion effect?
 	jr nz, .not_heal_explode	;skip out if move is not
-	dec [hl]	;give a slight edge to exploding
+	dec [hl]	;otherwise give a slight edge to exploding
+	
+	;since this is an explosion effect, it would be good to heavily discourage if
+	;the opponent is in fly/dig state and the exploder is for-sure faster than the opponent
+	ld a, [wPlayerBattleStatus1]
+	bit 6, a
+	jr z, .heal_explode	;proceed as normal if player is not in fly/dig
+	call StrCmpSpeed	;do a speed compare
+	jp c, .heavydiscourage	;a set carry bit means the ai 'mon is faster, so heavily discourage
+	
 .heal_explode
 	ld a, 1	;
 	call AICheckIfHPBelowFraction
@@ -235,6 +245,39 @@ AIMoveChoiceModification1:
 	dec [hl]	;else 0 to 1/3 hp - slight preference (heal -1 & explode -2)
 	jp .nextMove	;get next move
 .not_heal_explode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Randomly discourage 2-turn moves if confused or paralyzed
+	;check for 2-turn move
+	ld a, [wEnemyMoveEffect]
+	cp FLY_EFFECT
+	jr z, .twoturncheck_par
+	cp CHARGE_EFFECT
+	jr nz, .twoturndone
+	
+.twoturncheck_par
+	;handle paralysis
+	ld a, [wEnemyMonStatus]
+	bit PAR, a
+	jr z, .twoturncheck_confused
+	call Random
+	cp $70
+	jr nc, .twoturncheck_confused
+	inc [hl]	;random chance to discourage if paralyzed
+	inc [hl]
+	
+.twoturncheck_confused
+	;handle confusion
+	ld a, [wEnemyBattleStatus1]
+	bit 7, a ;check confusion bit
+	jr z, .twoturndone
+	call Random
+	cp $C0
+	jr nc, .twoturndone
+	inc [hl]	;random chance to discourage if confused
+	inc [hl]
+	
+.twoturndone
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wEnemyMovePower]
@@ -501,7 +544,35 @@ AIMoveChoiceModification1:
 	pop bc
 	pop de
 	pop hl
-	jp c, .skipoutspam	;If found on list, do not run anti-spam on it
+	jr nc, .spamprotection	;If not found on list, run anti-spam on it
+
+;let's try to blind the AI a bit so that it won't just status the player immediately after using
+;a restorative item or switching
+	;effect found on list of spam-exempt moves, is this a status move?
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, StatusAilmentMoveEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr nc, .skipoutspam	;skip if not in the list of status effects
+	
+	;effect is a status move, did the player use an item or switch?
+	ld a, [wActionResultOrTookBattleTurn]
+	and a
+	jr z, .skipoutspam	;skip if player did not use an item or switch
+	
+	;50% chance that the AI predicts the player would switch or use an item
+	call Random
+	rla
+	jr c, .skipoutspam	;if carry set, then proceed as normal
+	;else run spam protection on the status move
+	
+.spamprotection
 ;heavily discourage 0 BP moves if health is below 1/3 max
 	ld a, 3
 	call AICheckIfHPBelowFraction
@@ -580,6 +651,12 @@ SpecialZeroBPMoves:	;joenote - added this table to tracks 0 bp moves that should
 	db THUNDER_WAVE
 	db $FF
 	
+OtherZeroBPEffects:	;joenote - added to keep track of some outliers
+	db LEECH_SEED_EFFECT
+	db DISABLE_EFFECT
+	db CONFUSION_EFFECT
+	db $FF
+
 ; slightly encourage moves with specific effects.
 ; in particular, stat-modifying moves and other move effects
 ; that fall in-between
@@ -622,6 +699,7 @@ AIMoveChoiceModification2:
 ; encourages moves that are effective against the player's mon (even if non-damaging).
 ; discourage damaging moves that are ineffective or not very effective against the player's mon,
 ; unless there's no damaging move that deals at least neutral damage
+; joenote - updated to also do some more advanced battle strategies
 AIMoveChoiceModification3:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote - kick out if no-attack bit is set
@@ -649,11 +727,78 @@ AIMoveChoiceModification3:
 	jr nz, .notpoisoneffect
 	ld a, [wBattleMonType]
 	cp POISON
-	jr z, .heavydiscourage2
+	jp z, .heavydiscourage2
 	ld a, [wBattleMonType + 1]
 	cp POISON
-	jr z, .heavydiscourage2
+	jp z, .heavydiscourage2
 .notpoisoneffect
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;slightly discourage using most offensive moves against fly/dig opponent if faster than opponent
+	ld a, [wPlayerBattleStatus1]
+	bit 6, a
+	jr z, .endflydigcheck	;proceed as normal if player is not in fly/dig
+	
+	call StrCmpSpeed	;do a speed compare
+	jr c, .flydigcheck_faster	;a set carry bit means the ai 'mon is faster
+	ld a, [wEnemyMoveNum]
+	cp QUICK_ATTACK
+	jr z, .flydigcheck_faster
+
+.flydigcheck_notfaster
+	jr .endflydigcheck
+
+.flydigcheck_faster
+	;slightly discourage stuff that will just miss
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, MistBlockEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr c, .flydigcheck_discourage
+
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, StatusAilmentMoveEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr c, .flydigcheck_discourage
+
+	ld a, [wEnemyMoveEffect]
+	push hl
+	push de
+	push bc
+	ld hl, OtherZeroBPEffects
+	ld de, $0001
+	call IsInArray
+	pop bc
+	pop de
+	pop hl
+	jr c, .flydigcheck_discourage
+
+	ld a, [wEnemyMovePower]
+	and a
+	jr z, .endflydigcheck
+
+	ld a, [wEnemyMoveEffect]
+	cp FLY_EFFECT
+	jr z, .endflydigcheck
+	cp CHARGE_EFFECT
+	jr z, .endflydigcheck
+	
+.flydigcheck_discourage
+	inc [hl]
+.endflydigcheck
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;check on certain moves with zero bp but are handled differently
@@ -708,13 +853,7 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMoveEffect]	;load the move effect
 	cp OHKO_EFFECT	;see if it is ohko move
 	jr nz, .skipout3	;skip ahead if not ohko move
-	push hl
-	push bc
-	push de
 	call StrCmpSpeed	;do a speed compare
-	pop de
-	pop bc
-	pop hl
 	jp c, .nextMove	;ai is fast enough so ohko move viable
 	;else ai is slower so don't bother
 	jp .heavydiscourage2
@@ -722,7 +861,7 @@ AIMoveChoiceModification3:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;joenote: static damage value moves should not be accounted for typing
-;at the same type, randomly bump their preference to spice things up
+;at the same time, randomly bump their preference to spice things up
 	ld a, [wEnemyMovePower]	;get the base power of the enemy's attack
 	cp $1	;check if it is 1. special damage moves assumed to have 1 base power
 	jr nz, .skipout4	;skip down if it's not a special damage move
@@ -732,10 +871,36 @@ AIMoveChoiceModification3:
 	jp .nextMove	;else neither encourage nor discourage
 .skipout4
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;jump if the move is not very effective
 	ld a, [wTypeEffectiveness]
 	cp $0A
-	jp z, .nextMove
 	jr c, .notEffectiveMove
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;if the type effectiveness is neutral, randomly apply slight preference if there is STAB
+	jr nz, .notneutraleffective
+	
+	;25% chance to check for and prefer a stab move
+	call Random
+	cp 192
+	jp c, .nextMove
+	
+	push bc
+	ld a, [wEnemyMoveType]
+	ld b, a
+	ld a, [wEnemyMonType1]
+	cp b
+	pop bc
+	jp z, .givepref
+	push bc
+	ld a, [wEnemyMoveType]
+	ld b, a
+	ld a, [wEnemyMonType2]
+	cp b
+	pop bc
+	jp z, .givepref
+	jp .nextMove
+.notneutraleffective
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;at this line, move is super effective
 .givepref	;joenote - added marker
 	dec [hl] ; slightly encourage this move
@@ -1068,7 +1233,7 @@ TrainerClassMoveChoiceModifications:
 	db 1,3,0  ; BEAUTY
 	db 1,2,4,0  ; PSYCHIC_TR
 	db 1,3,0  ; ROCKER
-	db 1,0    ; JUGGLER
+	db 1,3,0    ; JUGGLER
 	db 1,3,4,0    ; TAMER
 	db 1,3,0    ; BIRD_KEEPER
 	db 1,3,4,0    ; BLACKBELT
@@ -1363,6 +1528,7 @@ SetSwitchBit:
 	ret
 
 DecrementAICount:
+	call UndoEnemySelectionPPDecrement	;joenote - undo the pp decrement of already-selected move if applicable
 	ld hl, wAICount
 	dec [hl]
 	scf
@@ -1489,6 +1655,11 @@ AISwitchIfEnoughMons:
 
 	ld a, d ; how many available monsters are there?
 	cp 2 ; don't bother if only 1
+	
+	push af
+	call nc, UndoEnemySelectionPPDecrement	;joenote - undo the pp decrement of already-selected move if applicable
+	pop af
+	
 	jp nc, SwitchEnemyMon
 	and a
 	ret
@@ -1716,13 +1887,16 @@ AIBattleUseItemText:
 	db "@"
 
 StrCmpSpeed:	;joenote - function for AI to compare pkmn speeds
+	push bc
+	push de
+	push hl
 	ld de, wBattleMonSpeed ; player speed value
 	ld hl, wEnemyMonSpeed ; enemy speed value
 	ld c, $2	;bytes to copy
 .spdcmploop	
 	ld a, [de]	
 	cp [hl]
-	ret nz
+	jr nz, .return
 	inc de
 	inc hl
 	dec c
@@ -1731,4 +1905,42 @@ StrCmpSpeed:	;joenote - function for AI to compare pkmn speeds
 	;zero flag set means speeds equal
 	;carry flag not set means player pkmn faster
 	;carry flag set means ai pkmn faster
+.return
+	pop hl
+	pop de
+	pop bc
+	ret
+
+;joenote - get the enemy move that has already been selected
+;if it is found in the move list, increment the pp that was deducted when selecting the move
+UndoEnemySelectionPPDecrement:
+	push hl
+	push bc
+	push de
+	ld a, [wEnemySelectedMove]
+	and a
+	jr z, .return	;return if the selected move is 00
+	cp NUM_ATTACKS + 1
+	jr nc, .return	;return if the selected move is invalid (> max number of moves)
+	ld d, a
+	ld e, NUM_MOVES
+	ld bc, wEnemyMonPP - wEnemyMonMoves
+	ld hl, wEnemyMonMoves
+.loop
+	ld a, [hl]
+	and a
+	jr z, .return
+	cp d
+	jr z, .found
+	inc hl
+	dec e
+	jr z, .return
+	jr .loop
+.found
+	add hl, bc
+	inc [hl]
+.return
+	pop de
+	pop bc
+	pop hl
 	ret

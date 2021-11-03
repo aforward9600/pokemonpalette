@@ -1,4 +1,5 @@
 ; returns whether the player is standing on a door tile in carry
+;joenote - added InteriorDoorTileIDs from pokeyellow to fix an issue with the silph co 11f elevator
 IsPlayerStandingOnDoorTile:
 	push de
 	ld hl, DoorTileIDPointers
@@ -39,6 +40,7 @@ DoorTileIDPointers:
 	dbw LAB,         LabDoorTileIDs
 	dbw FACILITY,    FacilityDoorTileIDs
 	dbw PLATEAU,     PlateauDoorTileIDs
+	dbw INTERIOR,    InteriorDoorTileIDs
 	db $ff
 
 OverworldDoorTileIDs:
@@ -73,3 +75,6 @@ FacilityDoorTileIDs:
 
 PlateauDoorTileIDs:
 	db $3b,$1b,$00
+
+InteriorDoorTileIDs:
+	db $04,$15,$00

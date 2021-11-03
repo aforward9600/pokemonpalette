@@ -16,7 +16,7 @@ _SchoolText2::
 _SchoolText3::
 	text "FISSURE."
 	para "HORN DRILL."
-	para "GUILOTINE."
+	para "GUILLOTINE."
 	
 	para "They take out"
 	line "#MON with just"

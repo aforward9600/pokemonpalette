@@ -32,6 +32,12 @@ SetPal_Battle:
 	call CopyData
 	ld a, [wPlayerBattleStatus3]
 	ld hl, wBattleMonSpecies
+
+	bit TRANSFORMED, a
+	jr z, .transformcheck
+	ld hl, wBattleMonSpecies2	;joenote - Fixing a gamefreak typo. Needed for transformed mon's to retain their palette.
+.transformcheck	
+	
 	call DeterminePaletteID
 	ld b, a		;player mon pal in b
 	ld a, [wEnemyBattleStatus3]
@@ -289,9 +295,10 @@ BadgeBlkDataLengths:
 	db 6     ; Earth Badge
 
 DeterminePaletteID:
-	bit TRANSFORMED, a ; a is battle status 3
-	ld a, DEX_DITTO	;ld a, PAL_GREYMON  ; if the mon has used Transform, use Ditto's palette
-	jr nz, DeterminePaletteIDOutOfBattle.skipDexNumConversion ;ret nz
+	;joenote - Don't bother checking. Let a transformed 'mon retain its original palette.
+	;bit TRANSFORMED, a ; a is battle status 3
+	;ld a, PAL_GREYMON  ; if the mon has used Transform, use Ditto's palette
+	;ret nz
 	ld a, [hl]
 DeterminePaletteIDOutOfBattle:
 	ld [wd11e], a
@@ -995,6 +1002,7 @@ CopySGBBorderTiles:
 ;gbcnote - This function loads the palette for a given pokemon index in wcf91 into a specified palette register on the GBC
 ;d = CONVERT_OBP0, CONVERT_OBP1, or CONVERT_BGP
 ;e = palette register # (0 to 7)
+;if wcf91 has bit 7 set, then it the address holds a specific palette instead of a 'mon
 TransferMonPal:
 	ld a, [hGBC]
 	and a
@@ -1004,7 +1012,10 @@ TransferMonPal:
 	ld a, d
 	push af
 	ld a, [wcf91]
-	call DeterminePaletteIDOutOfBattle
+	cp VICTREEBEL+1
+	jr c, .isMon
+	sub VICTREEBEL+1
+.back	
 	call GetGBCBasePalAddress
 	pop af
 	cp CONVERT_BGP
@@ -1018,8 +1029,10 @@ TransferMonPal:
 .do_bgp
 	pop af
 	call TransferCurBGPData
-	ret 
-
+	ret
+.isMon	
+	call DeterminePaletteIDOutOfBattle
+	jr .back
 
 INCLUDE "data/sgb_packets.asm"
 

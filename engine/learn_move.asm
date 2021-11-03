@@ -55,12 +55,22 @@ DontAbandonLearning:
 	ld [hl], a
 	ld a, [wIsInBattle]
 	and a
-	jp z, PrintLearnedMove
+	jp z, PrintLearnedMove	
 	ld a, [wWhichPokemon]
 	ld b, a
 	ld a, [wPlayerMonNumber]
 	cp b
 	jp nz, PrintLearnedMove
+	
+	;joenote - do not update active mon moves if it is transformed
+	push bc
+	ld b, a
+	ld a, [wPlayerBattleStatus3]
+	bit 3, a ; is the mon transformed?
+	ld a, b
+	pop bc
+	jp nz, PrintLearnedMove
+	
 	ld h, d
 	ld l, e
 	ld de, wBattleMonMoves

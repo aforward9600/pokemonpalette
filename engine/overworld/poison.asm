@@ -8,7 +8,8 @@ ApplyOutOfBattlePoisonDamage:
 	call IncrementDayCareMonExp
 	ld a, [wStepCounter]
 	and $3 ; is the counter a multiple of 4?
-	jp nz, .noBlackOut ; only apply poison damage every fourth step
+	;jp nz, .noBlackOut ; only apply poison damage every fourth step
+	jp nz, .skipPoisonEffectAndSound	;joenote - check for blackout every step like in pokeyellow
 	ld [wWhichPokemon], a
 	ld hl, wPartyMon1Status
 	ld de, wPartySpecies
