@@ -54,7 +54,6 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Applied Rangi's reformatting to key item bit fields
 - Consolidated the code used for stat scaling
 - Added AI layer 3 to Juggler
-- Forest tileset is now treated as an outside area
 - Added some underflow and overflow protection to switch scoring
 - Fixed an issue with Disable's counter on slower 'mons
 - Fixed a bug in the GetName: function that treated lists over 195 entries as item lists
@@ -253,7 +252,6 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Added nop after halt commands (safety prevention for a rare processor bug)
   - Fixed a coordinate typo in pokemon tower left by gamefreak
   - Water warps in seafoam island 4 & 5 are now scripted movement
-  - Forest tileset is now treated as an outside area
   - Fixed a bug in the GetName: function that treated lists over 195 entries as item lists
 
 

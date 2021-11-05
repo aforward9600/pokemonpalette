@@ -585,8 +585,6 @@ CheckIfInOutsideMap::
 	ld a, [wCurMapTileset]
 	and a ; most towns/routes have tileset 0 (OVERWORLD)
 	ret z
-	cp FOREST	;joenote - don't forget viridian forest
-	ret z
 	cp PLATEAU ; Route 23 / Indigo Plateau
 	ret
 
