@@ -145,6 +145,9 @@ StartMenu_Pokemon:
 	call ChooseFlyDestination
 	ld a, [wd732]
 	bit 3, a ; did the player decide to fly?
+	push af
+	call nz, .reset_safari
+	pop af
 	jp nz, .goBackToMap
 	call LoadFontTilePatterns
 	ld hl, wd72e
@@ -215,6 +218,7 @@ StartMenu_Pokemon:
 .canTeleport
 	ld hl, .warpToLastPokemonCenterText
 	call PrintText
+	call .reset_safari
 	ld hl, wd732
 	set 3, [hl]
 	set 6, [hl]
@@ -280,6 +284,13 @@ StartMenu_Pokemon:
 	ld hl, .newBadgeRequiredText
 	call PrintText
 	jp .loop
+.reset_safari
+	;reset safari zone
+	ResetEvent EVENT_IN_SAFARI_ZONE
+	xor a
+	ld [wNumSafariBalls], a
+	ld [wSafariZoneEntranceCurScript], a
+	ret
 .newBadgeRequiredText
 	TX_FAR _NewBadgeRequiredText
 	db "@"
