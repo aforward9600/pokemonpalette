@@ -62,7 +62,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Can now cut grass in the plateau tileset
 - Fix jump kick effect doing 0 crash damage
 - On GBC, moves animations are colored according to type
-
+- Can Fly and Teleport out of maps using the Forest tileset
 
 #Changes not yet in the release branch:
 -----------
@@ -253,7 +253,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Fixed a coordinate typo in pokemon tower left by gamefreak
   - Water warps in seafoam island 4 & 5 are now scripted movement
   - Fixed a bug in the GetName: function that treated lists over 195 entries as item lists
-
+  - Can Fly and Teleport out of maps using the Forest tileset
 
 #TWEAKS:
 -----------
