@@ -135,6 +135,8 @@ StartMenu_Pokemon:
 	jp z, .newBadgeRequired
 	call CheckIfInOutsideMap
 	jr z, .canFly
+	call .checkifforest	;allow flying out of forest maps
+	jr z, .canFly
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
@@ -146,7 +148,7 @@ StartMenu_Pokemon:
 	ld a, [wd732]
 	bit 3, a ; did the player decide to fly?
 	push af
-	call nz, .reset_safari
+	call nz, .reset_safari ;make sure to reset the safari zone
 	pop af
 	jp nz, .goBackToMap
 	call LoadFontTilePatterns
@@ -209,6 +211,8 @@ StartMenu_Pokemon:
 .teleport
 	call CheckIfInOutsideMap
 	jr z, .canTeleport
+	call .checkifforest	;allow teleporting out of forest maps
+	jr z, .canTeleport
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
@@ -218,7 +222,7 @@ StartMenu_Pokemon:
 .canTeleport
 	ld hl, .warpToLastPokemonCenterText
 	call PrintText
-	call .reset_safari
+	call .reset_safari	;make sure to reset the safari zone
 	ld hl, wd732
 	set 3, [hl]
 	set 6, [hl]
@@ -290,6 +294,11 @@ StartMenu_Pokemon:
 	xor a
 	ld [wNumSafariBalls], a
 	ld [wSafariZoneEntranceCurScript], a
+	ret
+.checkifforest
+	;used for fly and teleport
+	ld a, [wCurMapTileset]
+	cp FOREST
 	ret
 .newBadgeRequiredText
 	TX_FAR _NewBadgeRequiredText
