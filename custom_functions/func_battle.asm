@@ -336,6 +336,10 @@ SetAttackAnimPal:
 	ld a, [hl]
 	ld b, a
 
+	;make sure to reset palette/shade data into OBP0
+	ld a, %11100100
+	ld [rOBP0], a
+	
 	ld c, 4
 .transfer
 	ld d, CONVERT_OBP0
