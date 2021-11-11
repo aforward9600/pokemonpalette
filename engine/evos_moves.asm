@@ -379,6 +379,7 @@ Evolution_ReloadTilesetTilePatterns:
 	ret z
 	jp ReloadTilesetTilePatterns
 
+;joenote - this has been modified to allow for learning multiple moves at the same level
 LearnMoveFromLevelUp:
 	ld hl, EvosMovesPointerTable
 	ld a, [wd11e] ; species
@@ -406,6 +407,10 @@ LearnMoveFromLevelUp:
 	cp b ; is the move learnt at the mon's current level?
 	ld a, [hli] ; move ID
 	jr nz, .learnSetLoop
+	
+;the move can indeed be learned at this level
+.confirmlearnmove
+	push hl	
 	ld d, a ; ID of move to learn
 	ld a, [wMonDataLocation]
 	and a
@@ -423,7 +428,7 @@ LearnMoveFromLevelUp:
 .checkCurrentMovesLoop ; check if the move to learn is already known
 	ld a, [hli]
 	cp d
-	jr z, .done ; if already known, jump
+	jr z, .movesloop_done ; if already known, jump
 	dec b
 	jr nz, .checkCurrentMovesLoop
 	ld a, d
@@ -432,6 +437,11 @@ LearnMoveFromLevelUp:
 	call GetMoveName
 	call CopyStringToCF4B
 	predef LearnMove
+.movesloop_done
+	pop hl
+	jr .learnSetLoop
+	
+	
 .done
 	ld a, [wcf91]
 	ld [wd11e], a
