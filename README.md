@@ -63,6 +63,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Fix jump kick effect doing 0 crash damage
 - On GBC, moves animations are colored according to type
 - Can Fly and Teleport out of maps using the Forest tileset
+- Pokemon can now learn more than 1 more per level
 
 #Changes not yet in the release branch:
 -----------
@@ -425,6 +426,7 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Streamlined how the ghost marowak battle is triggered (now allows for non-ghost marowaks in pokemon tower)
   - Special damage effect now uses 2 bytes for damage instead of 1
   - Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
+  - Pokemon can now learn more than 1 more per level
 
 
 #CREDITS / SPECIAL THANKS:
