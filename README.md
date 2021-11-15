@@ -1,6 +1,6 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.22
+Version 1.22.1
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
@@ -22,48 +22,18 @@ It was done to serve as a codebase for others to start their own romhacks.
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- Fixed scripted NPC-following movement in 60fps mode
-- Fixed some NPC ghosting in mart menus in GBC mode
-- Greatly increased the speed and performance of spin tiles
-- Fixed rival facing in silph co after battle
-- Fixed issue with route 22 phantom rival appearing if the first battle was skipped
-- Stopped AI from decrementing PP on item usage and switching
-- Stopped AI from decrementing PP when it doesn't wake up from sleep
-- Fixed a conflict where transforming while disabled can leave the new moves disabled
-- Fixed an issue with the silph co 11f elevator doors
-- Bike music stops playing now when going down a hole
-- Can no longer walk up to 4 steps with a fainted team
-- Fixed a typo so now transformed 'mons retain their original palette
-- Fixed transformed 'mons reseting their moves when learning a level-up move
-- PP-restoring items no longer affect transformed moves and only restore the original moves
-- Made adjustments to critical hit damage
-  - Damage factor is now 2*(2*level)/5 + 4 instead of 2*(2*level)/5 + 2 to simplify some algebra
-  - If non-crit damage would be >= crit damage, the regular modified stat values are applied instead
-- Fixed a missed increment that makes a map's 15th object not update its facing properly
-- Adjusted two spin-stop tiles in Viridian Gym
-- Adjusted some of Giovanni's final lines for clarity
-- Made Agility's animation more apparent
-- Water warps in seafoam island 4 & 5 are now scripted movement
-- AI layer 1: discourage exploding effects if faster than a player in fly/dig state
-- AI layer 1: randomly discourage usage of 2-turn moves when confused/paralyzed
-- AI Layer 1: 50% chance that the AI is blind to a player switching ir using an item
-- AI layer 3: added some strategy to handle when the player uses fly/dig
-- AI layer 3: slightly preference regular effectiveness moves if STAB exists (25% chance per move)
-- Special damage effect now uses 2 bytes for damage instead of 1
-- Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
-- Applied Rangi's reformatting to key item bit fields
-- Consolidated the code used for stat scaling
-- Added AI layer 3 to Juggler
-- Added some underflow and overflow protection to switch scoring
-- Fixed an issue with Disable's counter on slower 'mons
-- Fixed a bug in the GetName: function that treated lists over 195 entries as item lists
-- AI switch scoring now penalizes bad match-ups between player and enemy 'mon types
-- Minor adjustments to switch scoring
-- Can now cut grass in the plateau tileset
-- Fix jump kick effect doing 0 crash damage
-- On GBC, moves animations are colored according to type
-- Can Fly and Teleport out of maps using the Forest tileset
+- Fixed messed-up warps dealing with the forest tileset
+- Fixed incorrect animation colors
+- Fixed bugged TH/HM names within text boxes
+- Reworked the level-up movelist for all four 'mons in the Eevee family
+- Readjusted the vertical positioning of some spaceworld back sprites
+- Fixed typos
+- Slightly adjusted some Cinnabar Mansion notes to match the Japanese text
+- Fixed the item clause breaking the AI choosing moves
+- Fixed some minor color errors in non-move battle animations
+- Clarified text of the blocking 'mon in Vermilion city
 - Pokemon can now learn more than 1 more per level
+
 
 #Changes not yet in the release branch:
 -----------
