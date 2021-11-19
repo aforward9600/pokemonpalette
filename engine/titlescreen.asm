@@ -94,7 +94,7 @@ DisplayTitleScreen:
 
 ; put a pokeball in the player's hand
 	ld hl, wOAMBuffer + $28
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, $70
 ELSE
 	ld a, $74
@@ -348,7 +348,7 @@ DrawPlayerCharacter:
 	xor a
 	ld [wPlayerCharacterOAMTile], a
 	ld hl, wOAMBuffer
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld de, $6030
 ELSE
 	ld de, $605a
@@ -398,7 +398,7 @@ ClearBothBGMaps:
 LoadTitleMonSprite:
 	ld [wcf91], a
 	ld [wd0b5], a
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	coord hl, 9, 10
 ELSE
 	coord hl, 5, 10

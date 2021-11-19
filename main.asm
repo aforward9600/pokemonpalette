@@ -183,7 +183,7 @@ PokedexTileGraphics:            INCBIN "gfx/pokedex.2bpp"
 PokedexTileGraphicsEnd:
 WorldMapTileGraphics:           INCBIN "gfx/town_map.2bpp"
 WorldMapTileGraphicsEnd:
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title_green.2bpp"
 ELSE
 PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title.2bpp"
@@ -525,7 +525,7 @@ INCLUDE "engine/hidden_object_functions7.asm"
 
 
 SECTION "Pics 1", ROMX, BANK[PICS_1]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 RhydonPicFront::      INCBIN "pic/rgmon/rhydon.pic"
 RhydonPicBack::       INCBIN "pic/monback/rhydonb.pic"
 KangaskhanPicFront::  INCBIN "pic/rgmon/kangaskhan.pic"
@@ -651,7 +651,7 @@ INCLUDE "engine/game_corner_slots.asm"
 
 
 SECTION "Pics 2", ROMX, BANK[PICS_2]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 TentacoolPicFront::   INCBIN "pic/rgmon/tentacool.pic"
 TentacoolPicBack::    INCBIN "pic/monback/tentacoolb.pic"
 GastlyPicFront::      INCBIN "pic/rgmon/gastly.pic"
@@ -751,7 +751,7 @@ SECTION "Battle (bank A)", ROMX, BANK[$A]
 ;migrated content to bank 9
 
 SECTION "Pics 3", ROMX, BANK[PICS_3]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 GolemPicFront::       INCBIN "pic/rgmon/golem.pic"
 GolemPicBack::        INCBIN "pic/monback/golemb.pic"
 MagmarPicFront::      INCBIN "pic/rgmon/magmar.pic"
@@ -851,7 +851,7 @@ SECTION "Battle (bank B)", ROMX, BANK[$B]
 ;migrated content to bank 9
 
 SECTION "Pics 4", ROMX, BANK[PICS_4]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 PikachuPicFront::     INCBIN "pic/rgmon/pikachu.pic"
 PikachuPicBack::      INCBIN "pic/monback/pikachub.pic"
 RaichuPicFront::      INCBIN "pic/rgmon/raichu.pic"
@@ -963,7 +963,7 @@ SECTION "Battle (bank C)", ROMX, BANK[$C]
 ;migrated content to bank 9
 
 SECTION "Pics 5", ROMX, BANK[PICS_5]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 BeedrillPicFront::    INCBIN "pic/rgmon/beedrill.pic"
 BeedrillPicBack::     INCBIN "pic/monback/beedrillb.pic"
 DodrioPicFront::       INCBIN "pic/rgmon/dodrio.pic"
@@ -1052,7 +1052,7 @@ ClefablePicBack::      INCBIN "pic/monback/clefableb.pic"
 ENDC
 
 SECTION "Pics 6", ROMX, BANK[PICS_6]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 WeezingPicFront::      INCBIN "pic/rgmon/weezing.pic"
 WeezingPicBack::       INCBIN "pic/monback/weezingb.pic"
 PersianPicFront::      INCBIN "pic/rgmon/persian.pic"
@@ -1145,7 +1145,7 @@ PorygonPicBack::       INCBIN "pic/monback/porygonb.pic"
 ENDC
 
 SECTION "Pics 7", ROMX, BANK[PICS_7]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 AerodactylPicFront::   INCBIN "pic/rgmon/aerodactyl.pic"
 AerodactylPicBack::    INCBIN "pic/monback/aerodactylb.pic"
 MagnemitePicFront::    INCBIN "pic/rgmon/magnemite.pic"
@@ -1366,7 +1366,7 @@ INCLUDE "data/mapObjects/safarizoneresthouse4.asm"
 INCLUDE "data/mapHeaders/unknowndungeon2.asm"
 INCLUDE "scripts/unknowndungeon2.asm"
 INCLUDE "data/mapObjects/unknowndungeon2.asm"
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 UnknownDungeon2Blocks: INCBIN "maps/green/unknowndungeon2.blk"
 ELSE
 UnknownDungeon2Blocks: INCBIN "maps/unknowndungeon2.blk"
@@ -1375,7 +1375,7 @@ ENDC
 INCLUDE "data/mapHeaders/unknowndungeon3.asm"
 INCLUDE "scripts/unknowndungeon3.asm"
 INCLUDE "data/mapObjects/unknowndungeon3.asm"
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 UnknownDungeon3Blocks: INCBIN "maps/green/unknowndungeon3.blk"
 ELSE
 UnknownDungeon3Blocks: INCBIN "maps/unknowndungeon3.blk"
@@ -2204,7 +2204,7 @@ INCLUDE "engine/hidden_object_functions18.asm"
 
 
 SECTION "bank19",ROMX,BANK[$19]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 Overworld_GFX:     INCBIN "gfx/tilesets/green/overworld.2bpp"
 ELSE
 Overworld_GFX:     INCBIN "gfx/tilesets/overworld.2bpp"
@@ -2259,7 +2259,7 @@ ForestGate_Block:
 Museum_Block:
 Gate_Block:        INCBIN "gfx/blocksets/gate.bst"
 
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 Forest_GFX:        INCBIN "gfx/tilesets/green/forest.2bpp"
 ELSE
 Forest_GFX:        INCBIN "gfx/tilesets/forest.2bpp"
@@ -2336,7 +2336,7 @@ INCLUDE "data/mapObjects/pewtermart.asm"
 INCLUDE "data/mapHeaders/unknowndungeon1.asm"
 INCLUDE "scripts/unknowndungeon1.asm"
 INCLUDE "data/mapObjects/unknowndungeon1.asm"
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 UnknownDungeon1Blocks: INCBIN "maps/green/unknowndungeon1.blk"
 ELSE
 UnknownDungeon1Blocks: INCBIN "maps/unknowndungeon1.blk"

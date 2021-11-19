@@ -61,7 +61,7 @@ ENDC
 	ret c
 
 ; hip
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HIP
@@ -72,7 +72,7 @@ ENDC
 	ld de, IntroNidorinoAnimation1
 	call AnimateIntroNidorino
 ; hop
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_4
 ELSE
 	ld a, SFX_INTRO_HOP
@@ -85,7 +85,7 @@ ENDC
 	ret c
 
 ; hip
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HIP
@@ -94,7 +94,7 @@ ENDC
 	ld de, IntroNidorinoAnimation1
 	call AnimateIntroNidorino
 ; hop
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_4
 ELSE
 	ld a, SFX_INTRO_HOP
@@ -125,7 +125,7 @@ ENDC
 	lb de, 16 / 2, MOVE_GENGAR_RIGHT
 	call IntroMoveMon
 ; hip
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HIP
@@ -148,7 +148,7 @@ ENDC
 	ret c
 
 ; hip
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HIP
@@ -159,7 +159,7 @@ ENDC
 	ld de, IntroNidorinoAnimation4
 	call AnimateIntroNidorino
 ; hop
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HOP

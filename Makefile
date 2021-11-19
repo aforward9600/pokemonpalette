@@ -49,7 +49,7 @@ $(pokeblue_obj): %_blue.o: %.asm $$(dep)
 
 %_green.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokegreen_obj): %_green.o: %.asm $$(dep)
-	rgbasm -D _GREEN -h -o $@ $*.asm
+	rgbasm -D _GREEN -D _REDGREENJP -D _JPTXT -h -o $@ $*.asm
 
 #gbcnote - use cjsv to compile as GBC+DMG rom
 pokered_opt  = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"

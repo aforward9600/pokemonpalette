@@ -435,7 +435,7 @@ UpdateMovingBgTiles::
 	ld [hMovingBGTilesCounter1], a
 
 	ld a, [wMovingBGTilesCounter2]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	and 2
 	cp 2
 ELSE
@@ -443,7 +443,7 @@ ELSE
 	cp 1
 ENDC
 
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld hl, FlowerTile1
 	jr c, .copy
 	ld hl, FlowerTile2
@@ -465,7 +465,7 @@ ENDC
 	jr nz, .loop
 	ret
 
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 FlowerTile1: INCBIN "gfx/tilesets/green/flower/flower1.2bpp"
 FlowerTile2: INCBIN "gfx/tilesets/green/flower/flower2.2bpp"
 ELSE
