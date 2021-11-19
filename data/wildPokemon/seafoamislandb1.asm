@@ -11,8 +11,18 @@ IslandMonsB1:
 		db 28,SEEL
 		db 38,DEWGONG
 		db 37,SEADRA
-	ENDC
-	IF (DEF(_BLUE) || DEF(_GREEN))
+	ELIF DEF(_BLUEJP)
+		db 30, SHELLDER
+		db 30, KRABBY
+		db 32, STARYU
+		db 32, KRABBY
+		db 28, HORSEA
+		db 30, SEEL
+		db 30, HORSEA
+		db 28, SEEL
+		db 38, DEWGONG
+		db 37, KINGLER
+	ELIF (DEF(_BLUE) || DEF(_GREEN))
 		db 30,SHELLDER
 		db 30,KRABBY
 		db 32,STARYU

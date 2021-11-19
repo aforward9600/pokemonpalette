@@ -9,8 +9,16 @@ ForestMons:
 		db 6,KAKUNA
 		db 4,METAPOD
 		db 3,CATERPIE
-	ENDC
-	IF (DEF(_BLUE) || DEF(_GREEN))
+	ELIF DEF(_BLUEJP)
+		db  4, CATERPIE
+		db  5, METAPOD
+		db  3, CATERPIE
+		db  5, CATERPIE
+		db  4, METAPOD
+		db  6, METAPOD
+		db  4, KAKUNA
+		db  3, WEEDLE
+	ELIF (DEF(_BLUE) || DEF(_GREEN))
 		db 4,CATERPIE
 		db 5,METAPOD
 		db 3,CATERPIE

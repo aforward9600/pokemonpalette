@@ -11,8 +11,18 @@ Route13Mons:
 		db 25,DITTO
 		db 28,GLOOM
 		db 30,GLOOM
-	ENDC
-	IF (DEF(_BLUE) || DEF(_GREEN))
+	ELIF DEF(_BLUEJP)
+		db 24, ODDISH
+		db 25, PIDGEY
+		db 27, PIDGEY
+		db 24, VENONAT
+		db 22, ODDISH
+		db 26, VENONAT
+		db 26, ODDISH
+		db 25, DITTO
+		db 28, GLOOM
+		db 30, GLOOM
+	ELIF (DEF(_BLUE) || DEF(_GREEN))
 		db $14
 		db 24,BELLSPROUT
 		db 25,PIDGEY

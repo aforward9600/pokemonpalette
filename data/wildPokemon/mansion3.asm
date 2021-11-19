@@ -11,8 +11,18 @@ MansionMons3:
 		db 38,WEEZING
 		db 36,PONYTA
 		db 42,MUK
-	ENDC
-	IF (DEF(_BLUE) || DEF(_GREEN))
+	ELIF DEF(_BLUEJP)
+		db 31, GRIMER
+		db 33, GROWLITHE
+		db 35, GRIMER
+		db 32, PONYTA
+		db 34, PONYTA
+		db 40, MUK
+		db 34, GRIMER
+		db 38, MUK
+		db 36, PONYTA
+		db 42, WEEZING
+	ELIF (DEF(_BLUE) || DEF(_GREEN))
 		db 31,GRIMER
 		db 33,VULPIX
 		db 35,GRIMER
