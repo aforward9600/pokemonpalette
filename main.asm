@@ -2236,8 +2236,9 @@ INCLUDE "engine/battle/decrement_pp.asm"
 Version_GFX:
 IF (DEF(_RED) || DEF(_GREEN))
 	INCBIN "gfx/red/redgreenversion.1bpp" ; 10 tiles
-ENDC
-IF DEF(_BLUE)
+ELIF DEF(_BLUEJP)
+	INCBIN "gfx/blue/blueversionjp.1bpp" ; 8 tiles
+ELIF DEF(_BLUE)
 	INCBIN "gfx/blue/blueversion.1bpp" ; 8 tiles
 ENDC
 Version_GFXEnd:
