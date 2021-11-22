@@ -47,6 +47,7 @@ endif
 # _JPTXT modifies any base rom. It restores some japanese text translations that were censored in english.
 # _REDGREENJP modifies _RED or _GREEN. It reverts back certain aspects that were shared between japanese red & green.
 # _BLUEJP modifies _BLUE. It reverts back certain aspects that were unique to japanese blue.
+# _REDJP modifies _RED. It is for minor things exclusive to japanese red.
 # _ORIGBACK modifies any base rom but cannot be used with _REDGREENJP. It sets the front and back sprites to red/blue vanilla.
 
 %_red.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
@@ -67,7 +68,7 @@ $(pokebluejp_obj): %_bluejp.o: %.asm $$(dep)
 
 %_redjp.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokeredjp_obj): %_redjp.o: %.asm $$(dep)
-	rgbasm -D _RED -D _REDGREENJP -D _JPTXT -h -o $@ $*.asm
+	rgbasm -D _RED -D _REDJP -D _REDGREENJP -D _JPTXT -h -o $@ $*.asm
 
 #gbcnote - use cjsv to compile as GBC+DMG rom
 pokered_opt  = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"

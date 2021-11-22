@@ -2234,7 +2234,9 @@ SECTION "bank1A",ROMX,BANK[$1A]
 INCLUDE "engine/battle/decrement_pp.asm"
 
 Version_GFX:
-IF (DEF(_RED) || DEF(_GREEN))
+IF DEF(_REDJP)
+	INCBIN "gfx/red/redgreenversionjp.1bpp" ; 10 tiles
+ELIF (DEF(_RED) || DEF(_GREEN))
 	INCBIN "gfx/red/redgreenversion.1bpp" ; 10 tiles
 ELIF DEF(_BLUEJP)
 	INCBIN "gfx/blue/blueversionjp.1bpp" ; 8 tiles
