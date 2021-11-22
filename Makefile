@@ -4,27 +4,29 @@ pokered_obj := audio_red.o main_red.o text_red.o wram_red.o
 pokeblue_obj := audio_blue.o main_blue.o text_blue.o wram_blue.o
 pokegreen_obj := audio_green.o main_green.o text_green.o wram_green.o
 pokebluejp_obj := audio_bluejp.o main_bluejp.o text_bluejp.o wram_bluejp.o
+pokeredjp_obj := audio_redjp.o main_redjp.o text_redjp.o wram_redjp.o
 
 .SUFFIXES:
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
-.PHONY: all clean red blue green bluejp compare tools
+.PHONY: all clean red blue green bluejp redjp compare tools
 
-roms := pokered.gbc pokeblue.gbc pokegreen.gbc pokebluejp.gbc
+roms := pokered.gbc pokeblue.gbc pokegreen.gbc pokebluejp.gbc pokeredjp.gbc
 
 all: $(roms)
 red: pokered.gbc
 blue: pokeblue.gbc
 green: pokegreen.gbc
 bluejp: pokebluejp.gbc
+redjp: pokeredjp.gbc
 
 # For contributors to make sure a change didn't affect the contents of the rom.
-compare: red blue green bluejp
+compare: red blue green bluejp redjp
 	@$(MD5) roms.md5
 
 clean:
-	rm -f $(roms) $(pokered_obj) $(pokeblue_obj) $(pokegreen_obj) $(pokebluejp_obj) $(roms:.gbc=.sym)
+	rm -f $(roms) $(pokered_obj) $(pokeblue_obj) $(pokegreen_obj) $(pokebluejp_obj) $(pokeredjp_obj) $(roms:.gbc=.sym)
 	find . \( -iname '*.1bpp' -o -iname '*.2bpp' -o -iname '*.pic' \) -exec rm {} +
 	$(MAKE) clean -C tools/
 
@@ -45,6 +47,7 @@ endif
 # _JPTXT modifies any base rom. It restores some japanese text translations that were censored in english.
 # _REDGREENJP modifies _RED or _GREEN. It reverts back certain aspects that were shared between japanese red & green.
 # _BLUEJP modifies _BLUE. It reverts back certain aspects that were unique to japanese blue.
+# _ORIGBACK modifies any base rom but cannot be used with _REDGREENJP. It sets the front and back sprites to red/blue vanilla.
 
 %_red.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokered_obj): %_red.o: %.asm $$(dep)
@@ -62,11 +65,16 @@ $(pokegreen_obj): %_green.o: %.asm $$(dep)
 $(pokebluejp_obj): %_bluejp.o: %.asm $$(dep)
 	rgbasm -D _BLUE -D _BLUEJP -D _JPTXT -h -o $@ $*.asm
 
+%_redjp.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
+$(pokeredjp_obj): %_redjp.o: %.asm $$(dep)
+	rgbasm -D _RED -D _REDGREENJP -D _JPTXT -h -o $@ $*.asm
+
 #gbcnote - use cjsv to compile as GBC+DMG rom
 pokered_opt  = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"
 pokeblue_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON BLUE"
 pokegreen_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON GREEN"
 pokebluejp_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON BLUE"
+pokeredjp_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"
 
 %.gbc: $$(%_obj)
 	rgblink -d -n $*.sym -l pokered.link -o $@ $^
