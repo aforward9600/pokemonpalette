@@ -1448,7 +1448,7 @@ _BoostedText::
 	cont "@@"
 
 _ExpPointsText::
-	TX_NUM wExpAmountGained, 2, 4
+	TX_NUM wExpAmountGained, 2, 5	;joenote - increased to 5 digits
 	text " EXP. Points!"
 	prompt
 
