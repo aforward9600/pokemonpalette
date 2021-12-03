@@ -3,9 +3,10 @@ _SaffronGateText_1dfe7::
 	line "Gee, I'm thirsty,"
 	cont "though!"
 
+;joenote - add a hint on what to give the guard
 	para "I wish that I had"
-	line "some FRESHWATER"
-	cont "right now."
+	line "a VENDING MACHINE"
+	cont "drink right now."
 
 	para "Oh wait there,"
 	line "the road's closed."
