@@ -517,14 +517,22 @@ ShowPokedexDataInternal:
 	coord hl, 12, 6
 	lb bc, 1, 2
 	call PrintNumber ; print feet (height)
+IF DEF (_METRIC)
+	ld a, "."
+ELSE
 	ld a, $60 ; feet symbol tile (one tick)
+ENDC
 	ld [hl], a
 	inc de
 	inc de ; de = address of inches (height)
 	coord hl, 15, 6
 	lb bc, LEADING_ZEROES | 1, 2
 	call PrintNumber ; print inches (height)
+IF DEF(_METRIC)
+	ld a, "m"
+ELSE
 	ld a, $61 ; inches symbol tile (two ticks)
+ENDC
 	ld [hl], a
 ; now print the weight (note that weight is stored in tenths of pounds internally)
 	inc de
@@ -589,9 +597,13 @@ ShowPokedexDataInternal:
 	ret
 
 HeightWeightText:
+IF DEF (_METRIC)
+	db   "HT  ?",".","??","m"
+	next "WT   ???kg@"
+ELSE
 	db   "HT  ?",$60,"??",$61
 	next "WT   ???lb@"
-
+ENDC
 ; XXX does anything point to this?
 PokeText:
 	db "#@"
@@ -622,7 +634,11 @@ DrawTileLine:
 	pop bc
 	ret
 
-INCLUDE "data/pokedex_entries.asm"
+IF DEF(_METRIC)
+	INCLUDE "data/pokedex_entries_metric.asm"
+ELSE
+	INCLUDE "data/pokedex_entries.asm"
+ENDC
 
 PokedexToIndex:
 	; converts the Pokédex number at wd11e to an index
