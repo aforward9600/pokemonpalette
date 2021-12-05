@@ -301,163 +301,163 @@ _TangelaDexEntry::
 	dex
 
 _GrowlitheDexEntry::
-	text "Very protective"
-	next "of its territory."
-	next "It will bark and"
-
-	page "bite to repel"
-	next "intruders from"
-	next "its space"
+	text "Very friendly and"
+	next "faithful to"
+	next "people. It will"
+	
+	page "try to repel"
+	next "enemies with"
+	next "barks and biting"
 	dex
 
 _OnixDexEntry::
-	text "As it grows, the"
-	next "stone portions of"
-	next "its body harden"
-
-	page "to become similar"
-	next "to a diamond, but"
-	next "colored black"
+	text "It usually lives"
+	next "underground. It"
+	next "searches for food"
+	
+	page "while boring its"
+	next "way through the"
+	next "ground at 50 MPH"
 	dex
 
 _FearowDexEntry::
-	text "With its huge and"
-	next "magnificent wings,"
-	next "it can keep aloft"
-
-	page "without ever"
-	next "having to land"
-	next "for rest"
+	text "Its huge majestic"
+	next "wings can keep it"
+	next "aloft in the sky."
+	
+	page "It can remain so"
+	next "for a whole day"
+	next "without landing"
 	dex
 
 _PidgeyDexEntry::
-	text "A common sight in"
-	next "forests and woods."
-	next "It flaps its"
-
-	page "wings at ground"
-	next "level to kick up"
-	next "blinding sand"
+	text "Does not like to"
+	next "fight. It hides"
+	next "in tall grass and"
+	
+	page "overgrowth while"
+	next "hunting for small"
+	next "bugs to eat"
 	dex
 
 _SlowpokeDexEntry::
-	text "Incredibly slow"
-	next "and dopey. It"
-	next "takes 5 seconds"
-
-	page "for it to feel"
-	next "pain when under"
-	next "attack"
+	text "Always vacantly"
+	next "lost in thought,"
+	next "but no one knows"
+	
+	page "what it ponders."
+	next "It fishes well"
+	next "with its tail"
 	dex
 
 _KadabraDexEntry::
-	text "It emits special"
-	next "alpha waves from"
-	next "its body that"
-
-	page "induce headaches"
-	next "just by being"
-	next "close by"
+	text "It happened one"
+	next "morning - a boy"
+	next "with extrasensory"
+	
+	page "powers awoke in"
+	next "bed transformed"
+	next "into a KADABRA"
 	dex
 
 _GravelerDexEntry::
-	text "Rolls down slopes"
-	next "to move. It rolls"
-	next "over any obstacle"
-
-	page "without slowing"
-	next "or changing its"
-	next "direction"
+	text "Be careful while"
+	next "hiking mountain"
+	next "trails. GRAVELER"
+	
+	page "may come rolling"
+	next "down the path"
+	next "without slowing"
 	dex
 
 _ChanseyDexEntry::
-	text "A rare and elusive"
-	next "#MON that is"
-	next "said to bring"
-
-	page "happiness to those"
-	next "who manage to get"
-	next "it"
+	text "It lays several"
+	next "eggs a day. They"
+	next "are apparently"
+	
+	page "rich in nutrients"
+	next "and extremely"
+	next "delicious"
 	dex
 
 _MachokeDexEntry::
-	text "Its muscular body"
-	next "is so powerful, it"
-	next "must wear a power"
-
-	page "save belt to be"
-	next "able to regulate"
-	next "its motions"
+	text "Its formidable"
+	next "body never gets"
+	next "tired. It helps"
+	
+	page "people with work"
+	next "such as moving"
+	next "heavy goods"
 	dex
 
 _MrMimeDexEntry::
-	text "If interrupted"
-	next "while it is"
-	next "miming, it will"
-
-	page "slap around the"
-	next "offender with its"
-	next "broad hands"
+	text "It is adept at"
+	next "tricking people."
+	next "It is said to be"
+	
+	page "able to create"
+	next "walls out of thin"
+	next "air by miming"
 	dex
 
 _HitmonleeDexEntry::
-	text "When in a hurry,"
-	next "its legs lengthen"
-	next "progressively."
-
-	page "It runs smoothly"
-	next "with extra long,"
-	next "loping strides"
+	text "Its legs freely"
+	next "stretch and"
+	next "contract."
+	
+	page "They allow it to"
+	next "hit a distant foe"
+	next "with rising kicks"
 	dex
 
 _HitmonchanDexEntry::
-	text "While apparently"
-	next "doing nothing, it"
-	next "fires punches in"
-
-	page "lightning fast"
-	next "volleys that are"
-	next "impossible to see"
+	text "The spirit of a"
+	next "pro boxer infuses"
+	next "this #MON"
+	
+	page "It throws punches"
+	next "that outspeed a"
+	next "bullet train"
 	dex
 
 _ArbokDexEntry::
-	text "It is rumored that"
-	next "the ferocious"
-	next "warning markings"
-
-	page "on its belly"
-	next "differ from area"
-	next "to area"
+	text "The belly pattern"
+	next "appears to be a"
+	next "frightening face."
+	
+	page "Weak foes will"
+	next "flee just at the"
+	next "pattern's sight"
 	dex
 
 _ParasectDexEntry::
-	text "A host-parasite"
-	next "pair in which the"
-	next "parasite mushroom"
-
-	page "has taken over the"
-	next "host bug. Prefers"
-	next "damp places"
+	text "It scatters toxic"
+	next "spores from the"
+	next "mushroom cap."
+	
+	page "In China, the"
+	next "spores serve as"
+	next "herbal medicine"
 	dex
 
 _PsyduckDexEntry::
-	text "While lulling its"
-	next "enemies with its"
-	next "vacant look, this"
-
-	page "wily #MON will"
-	next "use psychokinetic"
-	next "powers"
+	text "A headache wracks"
+	next "it constantly."
+	next "When the headache"
+	
+	page "gets worse, it"
+	next "starts using"
+	next "mysterious powers"
 	dex
 
 _DrowzeeDexEntry::
-	text "Puts enemies to"
-	next "sleep then eats"
-	next "their dreams."
-
-	page "Occasionally gets"
-	next "sick from eating"
-	next "bad dreams"
+	text "A descendent of"
+	next "the fabled baku,"
+	next "which is said to"
+	
+	page "eat dreams. It is"
+	next "very skilled at"
+	next "hypnotism"
 	dex
 
 _GolemDexEntry::
@@ -471,75 +471,75 @@ _GolemDexEntry::
 	dex
 
 _MagmarDexEntry::
-	text "Its body always"
-	next "burns with an"
-	next "orange glow that"
-
-	page "enables it to"
-	next "hide perfectly"
-	next "among flames"
+	text "Found near mouths"
+	next "of volcanos. This"
+	next "fire-breather’s"
+	
+	page "body temperature"
+	next "is nearly 2,200"
+	next "degrees-Fh"
 	dex
 
 _ElectabuzzDexEntry::
-	text "Normally found"
-	next "near power plants,"
-	next "they can wander"
-
-	page "away and cause"
-	next "major blackouts"
-	next "in cities"
+	text "It loves to feed"
+	next "on electricity."
+	next "It occasionally"
+	
+	page "appears around"
+	next "power plants and"
+	next "sub-stations"
 	dex
 
 _MagnetonDexEntry::
-	text "Formed by several"
-	next "MAGNEMITEs linked"
-	next "together. They"
-
-	page "frequently appear"
-	next "when sunspots"
-	next "flare up"
+	text "A linked cluster"
+	next "formed of several"
+	next "MAGNEMITE. It"
+	
+	page "discharges strong"
+	next "magnetic waves at"
+	next "high voltage"
 	dex
 
 _KoffingDexEntry::
-	text "Because it stores"
-	next "several kinds of"
-	next "toxic gases in"
-
-	page "its body, it is"
-	next "prone to exploding"
-	next "without warning"
+	text "Its thin balloon-"
+	next "like body is"
+	next "inflated by"
+	
+	page "horribly toxic"
+	next "gases. It reeks"
+	next "when it is nearby"
 	dex
 
 _MankeyDexEntry::
-	text "Extremely quick to"
-	next "anger. It could"
-	next "be docile one"
-
-	page "moment then"
-	next "thrashing away"
-	next "the next instant"
+	text "Light and agile"
+	next "on its feet, and"
+	next "ferocious in"
+	
+	page "temperament. When"
+	next "angered, it flies"
+	next "into a frenzy"
 	dex
 
 _SeelDexEntry::
-	text "The protruding"
-	next "horn on its head"
-	next "is very hard."
-
-	page "It is used for"
-	next "bashing through"
-	next "thick ice"
+	text "Covered in light"
+	next "blue fur, its"
+	next "hide is thick and"
+	
+	page "tough. It is"
+	next "active in bitter"
+	next "cold of -40 deg-F"
 	dex
 
 _DiglettDexEntry::
-	text "Lives about one"
-	next "yard underground"
-	next "where it feeds on"
-
-	page "plant roots. It"
-	next "sometimes appears"
-	next "above ground"
+	text "Burrows through"
+	next "the ground at a"
+	next "shallow depth."
+	
+	page "Easy to spot from"
+	next "the raised earth"
+	next "left in its wake"
 	dex
-
+;;;
 _TaurosDexEntry::
 	text "When it targets"
 	next "an enemy, it"
