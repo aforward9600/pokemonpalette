@@ -48,7 +48,7 @@ endif
 # _REDGREENJP modifies _RED or _GREEN. It reverts back certain aspects that were shared between japanese red & green.
 # _BLUEJP modifies _BLUE. It reverts back certain aspects that were unique to japanese blue.
 # _REDJP modifies _RED. It is for minor things exclusive to japanese red.
-# _ORIGBACK modifies any base rom but cannot be used with _REDGREENJP. It sets the front and back sprites to red/blue vanilla.
+# _METRIC modifies any base rom. It converts the pokedex data back to metric units.
 
 %_red.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokered_obj): %_red.o: %.asm $$(dep)
@@ -60,15 +60,15 @@ $(pokeblue_obj): %_blue.o: %.asm $$(dep)
 
 %_green.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokegreen_obj): %_green.o: %.asm $$(dep)
-	rgbasm -D _GREEN -D _REDGREENJP -D _JPTXT -h -o $@ $*.asm
+	rgbasm -D _GREEN -D _REDGREENJP -D _JPTXT -D _METRIC -h -o $@ $*.asm
 
 %_bluejp.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokebluejp_obj): %_bluejp.o: %.asm $$(dep)
-	rgbasm -D _BLUE -D _BLUEJP -D _JPTXT -h -o $@ $*.asm
+	rgbasm -D _BLUE -D _BLUEJP -D _JPTXT -D _METRIC -h -o $@ $*.asm
 
 %_redjp.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokeredjp_obj): %_redjp.o: %.asm $$(dep)
-	rgbasm -D _RED -D _REDJP -D _REDGREENJP -D _JPTXT -h -o $@ $*.asm
+	rgbasm -D _RED -D _REDJP -D _REDGREENJP -D _JPTXT -D _METRIC -h -o $@ $*.asm
 
 #gbcnote - use cjsv to compile as GBC+DMG rom
 pokered_opt  = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"
