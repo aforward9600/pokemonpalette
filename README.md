@@ -1,23 +1,49 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.22.1
+Version 1.22.2
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 Always apply patches to a fresh USA ROM or else strange glitches will occur.  
 
+***Includes Pokemon Green and Japanese Red!***
+- The compiler primarily builds the graphics and cerulean cave layout back to the original japanese release.
+- Pokedex entries adapt the original Green version text that was translated in Fire Red.
+- Pokedex uses metric units.
+- Apply the Green ips patch to a USA Blue rom. Apply the Red-JP ips patch to a USA Red rom.
+
+***Now Includes Japanese Blue!***
+- Primarily builds the lists for encounters, trades, and prizes that were in the never-localized japanese release.
+- Pokedex uses metric units.
+- Apply the ips patch to a USA Blue rom.
 Important Note: If you are using a save file from a previous version, you might be blocked by invisible walls upon loading the game.
 To fix this, you must use the Softlock Warp detailed below to teleport back to Pallet Town.
-It is best to save outside in Pallet Town before updating to the new patch.
 
-This is primarily a fix-it patch of pokemon red & blue based on the Pret team's disassembly.  
-The Lite patch, unlike the full Shin Pokemon Red/Blue, tries to fix bugs and improve the AI with little else changed.
-It was done to serve as a codebase for others to start their own romhacks.
+Notice: New patches might crash upon loading a save from a previous patch.
+		To prevent this from happening, save outside in Pallet Town.
 
-***Now with Pokemon Green!***
-- The compiler primarily builds using green version's graphics and cerulean cave layout.
-- Use the ips patch with a USA Blue rom.
+
+#Compatibility Notes
+-----------
+
+- Compatible with original Gameboy hardware (DMG, Super, Pocket, Color, Advance, SP)
+- Potentially compatible with Pokemon Stadium 1 & 2 (using original Nintendo hardware)
+- Might be possible to use a save from vanilla USA red/blue with this rom hack 
+  - Save outside in Pallet Town before transferring over
+  - Use the Softlock Warp to clear any invisible walls
+- New builds are tested and debugged with the BGB 1.5.8 emulator and verified using original hardware
+- Certain emulators are known to cause bugs due to inaccuracies in replicating the original hardware
+  - Goomba in particular is known to be problematic
+  - Due to the number of emulators in existence, BGB will be used as the supported standard
+- Link trading with an original retail cartridge appears to work properly on real hardware
+- Link trading between the lite and master branches appears to work properly on real hardware
+- Link battles are still largely untested, and they are unsupported in the following ways:
+  - Link battling between a master branch build and any other non-master branch build
+  - Link battling between a lite branch build and any other non-lite branch build
+  - Link battling between builds of dissimilar revisions
+- A revision control function has been added that will cancel unsupported cable links
+
 
 
 #Latest Fixes (most recent ips patch):
@@ -43,6 +69,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Engine improvement: the 1.5x EXP boost function now has overflow protection
 - Engine improvement: EXP Gained can now print up to five digits instead of four
 - Engine Improvement: Pokemon can now learn more than 1 more per level
+- Text with zero frame delay can be toggled in the options menu; press LEFT with the cursor on FAST
 
 
 #Changes not yet in the release branch:
@@ -239,6 +266,10 @@ It was done to serve as a codebase for others to start their own romhacks.
 #TWEAKS:
 -----------
 - Added built-in gamma shader for backlit LCD screens in GBC mode (press SELECT at the copyright screen)
+	- Gamma shader defaults ON if the destination code in the rom header is set to 00 (JP)
+	- Pressing SELECT at the copyright info now switches the shader from its default state
+	- The default state of the gamma shader can be changed with any gameboy rom header editor
+	- Alternately, remove the 'j' in 'cjsv' in the Makefile to compile with a JP destination code
 - The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
   - Scrolling mons on the title screen have their own palettes loaded on the GBC.
   - In the blue version intro, jigglypuff has it's own palette loaded on the GBC. 
@@ -246,6 +277,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Added an option to make the overworld run in 60fps
  - Feature is a proof-of-concept and is still a bit rusty
  - Toggle by placing the cursor in the options screen over CANCEL and pressing left or right
+- Text with zero frame delay can be toggled in the options menu; press LEFT with the cursor on FAST
 - Softlock Warp 
   - instantly teleport back to your mom's house if you get stuck or are unable to move after updating to a new patch
   - sets money to at least 1000 if you have less than that
@@ -407,6 +439,8 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Special damage effect now uses 2 bytes for damage instead of 1
   - Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
   - Pokemon can now learn more than 1 more per level
+  - The 1.5x EXP boost function now has overflow protection
+  - Engine improvement: EXP Gained can now print up to five digits instead of four
 
 
 #CREDITS / SPECIAL THANKS:
