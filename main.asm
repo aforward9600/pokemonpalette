@@ -43,7 +43,7 @@ INCLUDE "engine/print_waiting_text.asm"
 
 INCLUDE "engine/overworld/map_sprite_functions1.asm"
 
-INCLUDE "engine/test_battle.asm"
+;INCLUDE "engine/test_battle.asm"	;joenote - remove to free up space
 
 INCLUDE "engine/overworld/item.asm"
 INCLUDE "engine/overworld/movement.asm"
@@ -56,7 +56,7 @@ INCLUDE "engine/oak_speech.asm"
 
 INCLUDE "engine/special_warps.asm"
 
-INCLUDE "engine/debug1.asm"
+;INCLUDE "engine/debug1.asm"	;joenote - remove to free up space
 
 INCLUDE "engine/menu/naming_screen.asm"
 

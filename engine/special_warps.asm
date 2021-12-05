@@ -11,7 +11,7 @@ SpecialWarpIn:
 .next
 	bit 1, [hl]
 	jr z, .next3
-	call EmptyFunc
+;	call EmptyFunc	;joenote - old debug function. Just returns back and nothing else.
 .next3
 	ld a, 0
 .next2
