@@ -114,6 +114,7 @@ MainMenu:
 	call ClearScreen
 	ld a, PLAYER_DIR_DOWN
 	ld [wPlayerDirection], a
+	ResetEvent EVENT_10E	;joenote - reset ghost marowak for safety
 	ld c, 10
 	call DelayFrames
 	ld a, [wNumHoFTeams]
