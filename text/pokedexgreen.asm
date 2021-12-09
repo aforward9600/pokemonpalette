@@ -317,7 +317,7 @@ _OnixDexEntry::
 	
 	page "while boring its"
 	next "way through the"
-	next "ground at 50 MPH"
+	next "ground at 80 KPH"
 	dex
 
 _FearowDexEntry::
@@ -539,117 +539,117 @@ _DiglettDexEntry::
 	next "the raised earth"
 	next "left in its wake"
 	dex
-;;;
-_TaurosDexEntry::
-	text "When it targets"
-	next "an enemy, it"
-	next "charges furiously"
 
-	page "while whipping its"
-	next "body with its"
-	next "long tails"
+_TaurosDexEntry::
+	text "When it is about"
+	next "to TACKLE, it"
+	next "whips its body"
+	
+	page "repeatedly with"
+	next "its three long"
+	next "tails"
 	dex
 
 _FarfetchdDexEntry::
-	text "The sprig of"
-	next "green onions it"
-	next "holds is its"
-
-	page "weapon. It is"
-	next "used much like a"
-	next "metal sword"
+	text "It always walks"
+	next "about with a"
+	next "plant stalk"
+	
+	page "clamped in its"
+	next "beak used for"
+	next "building its nest"
 	dex
 
 _VenonatDexEntry::
-	text "Lives in the"
-	next "shadows of tall"
-	next "trees where it"
-
-	page "eats insects. It"
-	next "is attracted by"
-	next "light at night"
+	text "Its eyes act as"
+	next "radar, letting it"
+	next "be active in the"
+	
+	page "dark. The eyes"
+	next "can also shoot"
+	next "powerful beams"
 	dex
 
 _DragoniteDexEntry::
-	text "An extremely"
-	next "rarely seen"
-	next "marine #MON."
-
-	page "Its intelligence"
-	next "is said to match"
-	next "that of humans"
+	text "It flys despite"
+	next "its big and bulky"
+	next "physique."
+	
+	page "It can circle the"
+	next "globe in just 16"
+	next "hours"
 	dex
 
 _DoduoDexEntry::
-	text "A bird that makes"
-	next "up for its poor"
-	next "flying with its"
-
-	page "fast foot speed."
-	next "Leaves giant"
-	next "footprints"
+	text "A two-headed"
+	next "#MON that was"
+	next "discovered as a"
+	
+	page "sudden mutation."
+	next "It runs at a pace"
+	next "of over 100 KPH"
 	dex
 
 _PoliwagDexEntry::
-	text "Its newly grown"
-	next "legs prevent it"
-	next "from running. It"
-
-	page "appears to prefer"
-	next "swimming than"
-	next "trying to stand"
+	text "Its slick black"
+	next "skin is thin and"
+	next "damp. Part of its"
+	
+	page "spiral-patterned"
+	next "guts can be seen"
+	next "through the skin"
 	dex
 
 _JynxDexEntry::
-	text "It seductively"
-	next "wiggles its hips"
-	next "as it walks. It"
-
-	page "can cause people"
-	next "to dance in"
-	next "unison with it"
+	text "It speaks using a"
+	next "language that "
+	next "sounds human. "
+	
+	page "Research is under"
+	next "way to determine"
+	next "what it is saying"
 	dex
 
 _MoltresDexEntry::
-	text "Known as the"
-	next "legendary bird of"
-	next "fire. Every flap"
-
-	page "of its wings"
-	next "creates a dazzling"
-	next "flash of flames"
+	text "A legendary bird"
+	next "POKéMON. Those"
+	next "seeing it are"
+	
+	page "awestruck by its"
+	next "orange wings that"
+	next "look like flames"
 	dex
 
 _ArticunoDexEntry::
 	text "A legendary bird"
-	next "#MON that is"
-	next "said to appear to"
-
-	page "doomed people who"
-	next "are lost in icy"
-	next "mountains"
+	next "POKéMON. With its"
+	next "long tail plumes"
+	
+	page "trailing behind,"
+	next "its flying form"
+	next "is magnificent"
 	dex
 
 _ZapdosDexEntry::
 	text "A legendary bird"
-	next "#MON that is"
-	next "said to appear"
-
-	page "from clouds while"
-	next "dropping enormous"
-	next "lightning bolts"
+	next "POKéMON. While it"
+	next "is flying, it"
+	
+	page "makes crackling"
+	next "and snapping"
+	next "sounds"
 	dex
 
 _DittoDexEntry::
-	text "Capable of copying"
-	next "an enemy's genetic"
-	next "code to instantly"
-
-	page "transform itself"
-	next "into a duplicate"
-	next "of the enemy"
+	text "It can freely"
+	next "recombine its own"
+	next "cellular"
+	
+	page "structure to"
+	next "transform into"
+	next "other life-forms"
 	dex
-
+;;;
 _MeowthDexEntry::
 	text "Adores circular"
 	next "objects. Wanders"

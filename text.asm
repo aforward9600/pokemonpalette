@@ -3160,7 +3160,11 @@ _AfterTrade2Text::
 	text " you"
 	line "traded to me"
 
+IF DEF(_BLUEJP)
+	para "went and evolved!"	;Blue-JP uses Kadabra so this makes sense
+ELSE
 	para "is learning fast!"	;joenote - fixed nonsense about evolving
+ENDC
 	done
 
 _WannaTrade3Text::
