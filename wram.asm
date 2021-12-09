@@ -2430,7 +2430,14 @@ wOptions:: ; d355
 
 wObtainedBadges:: ; d356
 	flag_array 8
-
+;	BIT_BOULDERBADGE ; 0
+;	BIT_CASCADEBADGE ; 1
+;	BIT_THUNDERBADGE ; 2
+;	BIT_RAINBOWBADGE ; 3
+;	BIT_SOULBADGE    ; 4
+;	BIT_MARSHBADGE   ; 5
+;	BIT_VOLCANOBADGE ; 6
+;	BIT_EARTHBADGE   ; 7
 	ds 1
 
 wLetterPrintingDelayFlags:: ; d358
