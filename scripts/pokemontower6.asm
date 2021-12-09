@@ -34,9 +34,7 @@ PokemonTower6Script0:
 	call DisplayTextID
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - set a bit to indicate this is a ghost marowak battle
-	ld a, [wUnusedD721]
-	set 3, a
-	ld [wUnusedD721], a
+	SetEvent EVENT_10E
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, MAROWAK
 	ld [wCurOpponent], a
@@ -53,9 +51,7 @@ CoordsData_60b45:
 PokemonTower6Script4:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - clear bit to indicate the ghost marowak battle has ended
-	ld a, [wUnusedD721]
-	res 3, a
-	ld [wUnusedD721], a
+	ResetEvent EVENT_10E
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wIsInBattle]
 	cp $ff

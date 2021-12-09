@@ -270,7 +270,7 @@ const_value = 0
 	const EVENT_BEAT_POKEMONTOWER_6_TRAINER_2        ; 10B, (D768, bit 3)
 	const EVENT_10C                                  ; 10C, (D768, bit 4)
 	const EVENT_10D                                  ; 10D, (D768, bit 5)
-	const EVENT_10E                                  ; 10E, (D768, bit 6)
+	const EVENT_10E   ;activate for ghost marowak    ; 10E, (D768, bit 6)	;joenote
 	const EVENT_BEAT_GHOST_MAROWAK                   ; 10F, (D768, bit 7)
 	const EVENT_110                                  ; 110, (D769, bit 0)
 	const EVENT_BEAT_POKEMONTOWER_7_TRAINER_0        ; 111, (D769, bit 1)
