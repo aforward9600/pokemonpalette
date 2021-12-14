@@ -984,7 +984,11 @@ _DugtrioDexEntry::
 	next "It triggers huge"
 
 	page "earthquakes by"
+IF DEF(_METRIC)
 	next "burrowing 60 miles"
+ELSE
+	next "burrowing 100 km"
+ENDC
 	next "underground"
 	dex
 
