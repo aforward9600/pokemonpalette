@@ -17,11 +17,14 @@ Always apply patches to a fresh USA ROM or else strange glitches will occur.
 - Primarily builds the lists for encounters, trades, and prizes that were in the never-localized japanese release.
 - Pokedex uses metric units.
 - Apply the ips patch to a USA Blue rom.
-Important Note: If you are using a save file from a previous version, you might be blocked by invisible walls upon loading the game.
-To fix this, you must use the Softlock Warp detailed below to teleport back to Pallet Town.
 
-Notice: New patches might crash upon loading a save from a previous patch.
-		To prevent this from happening, save outside in Pallet Town.
+***Updating Your Save File***  
+New patches might crash or have issues upon loading a save from a previous patch or an unpatched game.  
+To prevent this from happening, prepare your save file in the following way:  
+--> Deactivate all special options (such as 60fps mode and NPC toggles).  
+--> Save in the outdoor Pallet Town map.  
+You might be blocked by invisible walls upon loading the game.  
+To fix this, you must use the Softlock Warp detailed below to teleport back to Pallet Town.  
 
 
 #Compatibility Notes
@@ -444,21 +447,31 @@ Notice: New patches might crash upon loading a save from a previous patch.
 
 
 #CREDITS / SPECIAL THANKS:
------------
-- The Pret team for the pokered and pokeyellow disassemblies and all the code comments that came with them.
+--------------------------
+- The Pret team for the pokered and pokeyellow disassemblies and all the code comments that came with them
+- MoriyaFaith's pokejp project for green version assets and code referencing
 - Rangi for the tool Polished Map
+- Exp bar coded by Danny-E 33
+- The Pokemon Prism team for the improved RNG
+- Move deleter/relearner coded by TheFakeMateo for Pokemon Red++
 - Code contributions and bugfixing by wisp92
-- The following for their great tutorials, glitch videos, and explanations across the internet
-  - TheFakeMateo 
-  - Crystal_
-  - ChickasaurusGL
-  - v0id19
-- The following for their help in pointing out and diagnosing bugs 
-  - kadetPirx
-  - JOBOalthor1992
-  - krazsen
-  - kmalove
-  - zycain
+- GLSWV for correcting the metric conversions of height and weight data 
+
+The following folks for their great tutorials, glitch videos, and explanations across the internet
+- TheFakeMateo 
+- Crystal_
+- ChickasaurusGL
+- v0id19
+
+The following folks for their help in pointing out and diagnosing bugs 
+- kadetPirx
+- JOBOalthor1992
+- krazsen
+- kmalove
+- zycain
+- jastolze007 
+- MStern
+- TSinnohTrainer 
 
   
 The shinpokered repository was branched from pret/pokered at merge pull request #185 committed on Jul 2, 2018
