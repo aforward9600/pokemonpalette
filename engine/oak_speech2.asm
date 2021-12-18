@@ -188,14 +188,27 @@ DisplayIntroNameTextBox:
 	db "NAME@"
 
 
-IF DEF(_RED)
+
+IF DEF(_REDJP)
+DefaultNamesPlayer:
+	db   "NEW NAME"
+	next "RED"
+	next "SATOSHI"
+	next "JACK"
+	db   "@"
+DefaultNamesRival:
+	db   "NEW NAME"
+	next "GREEN"
+	next "SHIGERU"
+	next "JOHN"
+	db   "@"
+ELIF DEF(_RED)
 DefaultNamesPlayer:
 	db   "NEW NAME"
 	next "RED"
 	next "ASH"
 	next "JACK"
 	db   "@"
-
 DefaultNamesRival:
 	db   "NEW NAME"
 	next "BLUE"
@@ -204,14 +217,27 @@ DefaultNamesRival:
 	db   "@"
 ENDC
 
-IF DEF(_BLUE)
+
+IF DEF(_BLUEJP)
+DefaultNamesPlayer:
+	db   "NEW NAME"
+	next "BLUE"
+	next "TSUNEKAZU"
+	next "JEAN"
+	db   "@"
+DefaultNamesRival:
+	db   "NEW NAME"
+	next "RED"
+	next "GREEN"
+	next "HIROSHI"
+	db   "@"
+ELIF DEF(_BLUE)
 DefaultNamesPlayer:
 	db   "NEW NAME"
 	next "BLUE"
 	next "GARY"
 	next "JOHN"
 	db   "@"
-
 DefaultNamesRival:
 	db   "NEW NAME"
 	next "RED"
@@ -219,22 +245,23 @@ DefaultNamesRival:
 	next "JACK"
 	db   "@"
 ENDC
+
 
 IF DEF(_GREEN)
 DefaultNamesPlayer:
 	db   "NEW NAME"
 	next "GREEN"
-	next "GARY"
+	next "SHIGERU"
 	next "JOHN"
 	db   "@"
-
 DefaultNamesRival:
 	db   "NEW NAME"
 	next "RED"
-	next "ASH"
+	next "SATOSHI"
 	next "JACK"
 	db   "@"
 ENDC
+
 
 GetDefaultName:
 ; a = name index
@@ -266,7 +293,18 @@ DefaultNamesPlayerListF:
 	db "CLAIRE@"
 	db "JILL@"
 
-IF DEF(_RED)
+IF DEF(_REDJP)
+DefaultNamesPlayerList:
+	db "NEW NAME@"
+	db "RED@"
+	db "SATOSHI@"
+	db "JACK@"
+DefaultNamesRivalList:
+	db "NEW NAME@"
+	db "GREEN@"
+	db "SHIGERU@"
+	db "JOHN@"
+ELIF DEF(_RED)
 DefaultNamesPlayerList:
 	db "NEW NAME@"
 	db "RED@"
@@ -278,7 +316,20 @@ DefaultNamesRivalList:
 	db "GARY@"
 	db "JOHN@"
 ENDC
-IF DEF(_BLUE)
+
+
+IF DEF(_BLUEJP)
+DefaultNamesPlayerList:
+	db "NEW NAME@"
+	db "BLUE@"
+	db "TSUNEKAZU@"
+	db "JEAN@"
+DefaultNamesRivalList:
+	db "NEW NAME@"
+	db "RED@"
+	db "GREEN@"
+	db "HIROSHI@"
+ELIF DEF(_BLUE)
 DefaultNamesPlayerList:
 	db "NEW NAME@"
 	db "BLUE@"
@@ -290,16 +341,18 @@ DefaultNamesRivalList:
 	db "ASH@"
 	db "JACK@"
 ENDC
+
+
 IF DEF(_GREEN)
 DefaultNamesPlayerList:
 	db "NEW NAME@"
 	db "GREEN@"
-	db "GARY@"
+	db "SHIGERU@"
 	db "JOHN@"
 DefaultNamesRivalList:
 	db "NEW NAME@"
 	db "RED@"
-	db "ASH@"
+	db "SATOSHI@"
 	db "JACK@"
 ENDC
 
