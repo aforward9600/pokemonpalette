@@ -310,8 +310,10 @@ hCoordsInFrontOfPlayerMatch EQU $FFEA
 
 hSpriteAnimFrameCounter EQU $FFEA
 
+H_WHOFIRST EQU $FFF2 ; joenote - 0 on player going first, 1 on enemy going first
 H_WHOSETURN EQU $FFF3 ; 0 on player’s turn, 1 on enemy’s turn
-H_WHOFIRST EQU $FFF4 ; joenote - 0 on player going first, 1 on enemy going first
+
+hClearLetterPrintingDelayFlags EQU $FFF4
 
 ; bit 0: draw HP fraction to the right of bar instead of below (for party menu)
 ; bit 1: menu is double spaced
