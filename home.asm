@@ -931,9 +931,16 @@ INCLUDE "home/audio.asm"
 
 
 UpdateSprites::
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;joenote - It's not a good idea for PrepareOAMData to run in Vblank in the middle of updating sprites
+;			If it does, then sprites can end up being left out and not sent to the OAM buffer.
+;			Prevent this by setting a flag that will cause it to be skipped in Vblank
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wUpdateSpritesEnabled]
 	dec a
 	ret nz
+	ld hl, hFlagsFFFA
+	set 0, [hl]	;joenote - do not allow OAM updates  in vblank while updating sprites
 	ld a, [H_LOADEDROMBANK]
 	push af
 	ld a, Bank(_UpdateSprites)
@@ -943,6 +950,8 @@ UpdateSprites::
 	pop af
 	ld [H_LOADEDROMBANK], a
 	ld [MBC1RomBank], a
+	ld hl, hFlagsFFFA
+	res 0, [hl];joenote - allow OAM updates again
 	ret
 
 INCLUDE "data/mart_inventories.asm"

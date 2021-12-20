@@ -26,12 +26,15 @@ VBlank::
 	call VBlankCopy
 	call VBlankCopyDouble
 	call UpdateMovingBgTiles
-	call $ff80 ; hOAMDMA
+	ld a, [hFlagsFFFA]	;see if OAM skip has been enabled (such as while overworld sprites are updating)
+	bit 0, a
+	jr nz, .skipOAM
+	call $ff80 ; hOAMDMA where DMARoutine: is copied
 	ld a, BANK(PrepareOAMData)
 	ld [H_LOADEDROMBANK], a
 	ld [MBC1RomBank], a
 	call PrepareOAMData
-
+.skipOAM
 	; VBlank-sensitive operations end.
 
 	;call Random

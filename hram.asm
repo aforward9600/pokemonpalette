@@ -325,5 +325,7 @@ hDisableJoypadPolling EQU $FFF9
 
 hJoyInput EQU $FFF8
 
+hFlagsFFFA EQU $FFFA	;joenote - added for various uses
+;bit 0 - PrepareOAMData and DMARoutine will not run in Vblank while this bit is set
 hRGB EQU $FFFB	;3 bytes ;joenote - used to store color RGB color values for color correction
 hGBC EQU $FFFE ;gbcnote - 0 if DMG, != 0 if GBC, =2 for gamma shader
