@@ -298,6 +298,9 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
 - L: block doesn't disappear when level hits three digits
 - Greatly increased the speed and performance of spin tiles
 - Can cut the grass on the plateau tileset
+- Initiating the Pokemon Tower rival battle will deactivate the following skippable rival battles
+  - The Cerulean encounter
+  - The SS Anne encounter
 
 
 - Fixed mistakes and made adjustments to the game text
