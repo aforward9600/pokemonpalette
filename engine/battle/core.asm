@@ -4208,15 +4208,24 @@ PrintMoveFailureText:
 	jr z, .playersTurn
 	ld de, wEnemyMoveEffect
 .playersTurn
+
 	ld hl, DoesntAffectMonText
 	ld a, [wDamageMultipliers]
 	and $7f
-	jr z, .gotTextToPrint
-	ld hl, AttackMissedText
+	jr z, .gotTextToPrint	;0 for damage multipliers means defender is immune
+	
+	ld hl, UnaffectedText
 	ld a, [wCriticalHitOrOHKO]
 	cp $ff
-	jr nz, .gotTextToPrint
-	ld hl, UnaffectedText
+	jr z, .gotTextToPrint	;defender is unaffected if the attack was a failed OHKO move
+	
+	ld a, [wMoveMissed]
+	cp 2
+	jr z, .gotTextToPrint	;defender is unaffected if the attack damage was reduced to 0
+	
+.regularMiss
+	ld hl, AttackMissedText
+	
 .gotTextToPrint
 	push de
 	call PrintText
@@ -5855,6 +5864,7 @@ AdjustDamageForMoveType:
 ; if damage is 0, make the move miss
 ; this only occurs if a move that would do 2 or 3 damage is 0.25x effective against the target
 	inc a
+	inc a ;joenote - set wMoveMissed to 2
 	ld [wMoveMissed], a
 .skipTypeImmunity
 	pop bc

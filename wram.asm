@@ -1726,6 +1726,9 @@ wCriticalHitOrOHKO:: ; d05e
 	ds 1
 
 wMoveMissed:: ; d05f
+;0 if didn't miss
+;1 if regular miss
+;2 if miss due to damage being reduced to 0 in calculations
 	ds 1
 
 wPlayerStatsToDouble:: ; d060
