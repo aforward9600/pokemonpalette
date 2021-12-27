@@ -4214,7 +4214,10 @@ PrintMoveFailureText:
 	and $7f
 	jr z, .gotTextToPrint	;0 for damage multipliers means defender is immune
 	
-	ld hl, UnaffectedText
+	;joenote - Replace UnaffectedText with IsUnaffectedText
+	;It's the same thing in english, but it sounds better grammatically.
+	;UnaffectedText can then be commented out.
+	ld hl, IsUnaffectedText
 	ld a, [wCriticalHitOrOHKO]
 	cp $ff
 	jr z, .gotTextToPrint	;defender is unaffected if the attack was a failed OHKO move
@@ -4284,9 +4287,10 @@ KeptGoingAndCrashedText:
 	TX_FAR _KeptGoingAndCrashedText
 	db "@"
 
-UnaffectedText:
-	TX_FAR _UnaffectedText
-	db "@"
+;joenote - Redundant, so it can be commented out
+;UnaffectedText:
+;	TX_FAR _UnaffectedText
+;	db "@"
 
 PrintDoesntAffectText:
 	ld hl, DoesntAffectMonText

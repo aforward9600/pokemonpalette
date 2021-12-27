@@ -1355,10 +1355,11 @@ _KeptGoingAndCrashedText::
 	cont "crashed!"
 	prompt
 
-_UnaffectedText::
-	text "<TARGET>'s"
-	line "unaffected!"
-	prompt
+;joenote - the same in english as _IsUnaffectedText, so it's redundant 
+;_UnaffectedText::
+;	text "<TARGET>'s"
+;	line "unaffected!"
+;	prompt
 
 _DoesntAffectMonText::
 	text "It doesn't affect"
