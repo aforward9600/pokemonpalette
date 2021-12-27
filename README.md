@@ -58,6 +58,7 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
 - Fixed some minor color errors in non-move battle animations
 - Changed color of normal-type attacks to yellow
 - Adjusted the Saffron Guard text for accuracy
+- Attacks reduced to zero damage now say the target is unaffected instead of missing
 
 - The project now compiles Japanese Blue
 - The project now compiles Japanese Red
@@ -303,8 +304,8 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
   - The SS Anne encounter
 
 
-- Fixed mistakes and made adjustments to the game text
-  - When a pkmn is caught and fills the box, a reminder is printed that the box is full
+- Fixed mistakes in the game text
+  - Attacks reduced to zero damage now say the target is unaffected instead of missing
   - Man in cinnabar won't mention raichu evolving (also applies to the jynx trade in cerulean)
   - Koga correctly says soul badge increases speed
   - Lt. Surge correctly says thunder badge increases defense
@@ -312,18 +313,20 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
   - Viridian girl's notebook 2nd page revised for pkmn-catching effectiveness
   - Viridian blackboard BRN info corrected (BRN does not reduce speed)
   - Viridian Blackboard PAR info updated
-  - TM 18 given an actual explanation 
-  - New student in viridian school explains ohko moves
   - Cerulean badge-house guy has updated text
   - Prof. oak's speech plays the correct Nidorino cry
-  - Text for using a TM/HM now refers to the "machine" rather than just "TM"
   - Fixed daycare man capitalization
-  - Clarified "chem" to mean grade in chemistry
   - Fixed capitalization in safari zone entrance
-  - PC has a text prompt to tell you if its full after depositing
-  - Exp.all now prints one message when splitting exp instead of for each party member
-  - text is now properly flipped in one of the saffron houses
   - Reactivated lost text that was meant to play when you lose to your rival
+  - Text for using a TM/HM now refers to the "machine" rather than just "TM"
+  - text is now properly flipped in one of the saffron houses
+- Made adjustments to the game text
+  - When a pkmn is caught and fills the box, a reminder is printed that the box is full
+  - PC has a text prompt to tell you if its full after depositing
+  - TM 18 given an actual explanation 
+  - New student in viridian school explains ohko moves
+  - Clarified "chem" to mean grade in chemistry
+  - Exp.all now prints one message when splitting exp instead of for each party member
   - Adjusted some of Giovanni's final lines for clarity
   
 
