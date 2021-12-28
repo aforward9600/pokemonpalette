@@ -412,6 +412,24 @@ PlayShootingStar:
 	call DelayFrames
 	callba AnimateShootingStar
 	push af
+
+IF (DEF(_REDGREENJP) || DEF(_BLUEJP))
+;joenote - restore "Presents" for the japanese builds
+	coord hl, 7, 11
+	ld de, .presentsTiles
+	ld b, 6
+.presentsTilesLoop
+	ld a, [de]
+	ld [hli], a
+	inc de
+	dec b
+	jr nz, .presentsTilesLoop
+	jr .presentEnd
+.presentsTiles
+	db $67,$68,$69,$6A,$6B,$6C ; "Presents"
+.presentEnd
+ENDC
+
 	pop af
 	jr c, .next ; skip the delay if the user interrupted the animation
 	ld c, 40
