@@ -174,7 +174,13 @@ BattleHudTiles1End:
 BattleHudTiles2:                INCBIN "gfx/battle_hud2.1bpp"
 BattleHudTiles3:                INCBIN "gfx/battle_hud3.1bpp"
 BattleHudTiles3End:
+
+IF DEF(_REDGREENJP)
+NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright_green.2bpp"
+ELSE
 NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright.2bpp"
+ENDC
+
 GamefreakLogoGraphics:          INCBIN "gfx/gamefreak.2bpp"
 GamefreakLogoGraphicsEnd:
 TextBoxGraphics:                INCBIN "gfx/text_box.2bpp"
