@@ -177,6 +177,8 @@ BattleHudTiles3End:
 
 IF DEF(_REDGREENJP)
 NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright_green.2bpp"
+ELIF DEF(_BLUEJP)
+NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright_bluejp.2bpp"
 ELSE
 NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright.2bpp"
 ENDC
