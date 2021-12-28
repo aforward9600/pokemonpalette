@@ -2298,7 +2298,14 @@ INCLUDE "engine/overworld/healing_machine.asm"
 INCLUDE "engine/overworld/player_animations.asm"
 INCLUDE "engine/battle/ghost_marowak_anim.asm"
 INCLUDE "engine/battle/battle_transitions.asm"
+
+;joenote - Implement the japanese map layout based on Rangi's Red/Blue Star project
+IF (DEF(_REDGREENJP) || DEF(_BLUEJP))
+INCLUDE "engine/town_map_jp.asm"
+ELSE
 INCLUDE "engine/town_map.asm"
+ENDC
+
 INCLUDE "engine/mon_party_sprites.asm"
 INCLUDE "engine/in_game_trades.asm"
 INCLUDE "engine/palettes.asm"
