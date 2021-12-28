@@ -59,12 +59,17 @@ PlaceNextChar::
 	ret
 
 Char4ETest::
+	;joenote - add Rangi's line-feed implementation
+	cp "<LF>"
+	jr z, .line_feed
+	
 	cp $4E ; next
 	jr nz, .char4FTest
 	ld bc, 2 * SCREEN_WIDTH
 	ld a, [hFlags_0xFFF6]
 	bit 2, a
 	jr z, .ok
+.line_feed
 	ld bc, SCREEN_WIDTH
 .ok
 	pop hl

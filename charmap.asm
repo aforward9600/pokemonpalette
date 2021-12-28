@@ -147,6 +147,13 @@ charmap "ゅ", $E1
 charmap "ょ", $E2
 charmap "ー", $E3
 
+;joenote - add Rangi's line-feed implementation
+;as well as some of Rangi's font symbols from Red/Blue Star
+charmap "<LF>", $1F
+charmap "<UPDN>", $DD
+charmap "<:L>", $DE
+charmap "<SHINY>", $DF
+
 charmap "<pkmn>", $4A ; PkMn
 charmap "@", $50
 charmap "<PLAYER>", $52
