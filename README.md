@@ -64,15 +64,21 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
 - The project now compiles Japanese Red
 - Green and Red-JP have their original pokedex entries (adapted from Fire Red)
 - Green, Red-JP, and Blue-JP now display metric units in the pokedex
+- Green, Red-JP, and Blue-JP now have the japanese-style town map layout
+- Green, Red-JP, and Blue-JP now have their correct copyright graphics
+- Green, Red-JP, and Blue-JP now have the "PRESENTS" graphic under "Game Freak"
+- Green and Red-JP play the original shooting star sound effect
 
 - Gamma shader defaults ON if the destination code in the rom header is set to 00 (JP)
 - Pressing SELECT at the copyright info now switches the shader from its default state
 - The default state of the gamma shader can be changed with any gameboy rom header editor
 - Alternately, remove the 'j' in 'cjsv' in the Makefile to compile with a JP destination code
 
-- Engine improvement: the 1.5x EXP boost function now has overflow protection
-- Engine improvement: EXP Gained can now print up to five digits instead of four
+- Engine Improvement: the 1.5x EXP boost function now has overflow protection
+- Engine Improvement: EXP Gained can now print up to five digits instead of four
 - Engine Improvement: Pokemon can now learn more than 1 more per level
+- Engine Improvement: the "<LF>" character mapping can be used as a line-feed
+
 - Text with zero frame delay can be toggled in the options menu; press LEFT with the cursor on FAST
 
 
@@ -449,14 +455,15 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
   - Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
   - Pokemon can now learn more than 1 more per level
   - The 1.5x EXP boost function now has overflow protection
-  - Engine improvement: EXP Gained can now print up to five digits instead of four
+  - EXP Gained can now print up to five digits instead of four
+  - The "<LF>" character mapping can be used as a line-feed
 
 
 #CREDITS / SPECIAL THANKS:
 --------------------------
 - The Pret team for the pokered and pokeyellow disassemblies and all the code comments that came with them
 - MoriyaFaith's pokejp project for green version assets and code referencing
-- Rangi for the tool Polished Map
+- Rangi for the tool Polished Map and the jp-style town map from Red/Blue Star
 - Exp bar coded by Danny-E 33
 - The Pokemon Prism team for the improved RNG
 - Move deleter/relearner coded by TheFakeMateo for Pokemon Red++
