@@ -641,7 +641,8 @@ INCLUDE "engine/battle/moveEffects/one_hit_ko_effect.asm"
 INCLUDE "engine/battle/display_effectiveness.asm"
 TrainerInfoTextBoxTileGraphics:  INCBIN "gfx/trainer_info.2bpp"
 TrainerInfoTextBoxTileGraphicsEnd:
-BlankLeaderNames:                INCBIN "gfx/blank_leader_names.2bpp"
+;BlankLeaderNames:                INCBIN "gfx/blank_leader_names.2bpp"
+BlankLeaderNames:                INCBIN "gfx/leader_names.2bpp"	;joenote - restoring the names
 CircleTile:                      INCBIN "gfx/circle_tile.2bpp"
 BadgeNumbersTileGraphics:        INCBIN "gfx/badge_numbers.2bpp"
 INCLUDE "engine/items/tmhm.asm"
