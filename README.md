@@ -425,6 +425,10 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
   - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
   - AI switch scoring now penalizes bad match-ups between player and enemy 'mon types
 
+- Trainer ai routine #3 added to the following trainer classes
+  -brock, surge, sabrina, blaine
+  -bruno, agatha
+
 - Trainer ai routine #4 added to the following trainer classes
   -jr trainer M/F, pokemaniac, hiker, cueball, psychic, tamer, black belt, rocket, cooltrainer M/F, gentleman, channeler
   -all rival phases, all gym leaders, elite-4, prof.oak, chief
