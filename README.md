@@ -81,6 +81,8 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
 ---
 - Text with zero frame delay can be toggled in the options menu; press LEFT with the cursor on FAST
 - Gym leader names have been restored on the trainer card
+---
+- Reverted some AI settings for trainer classes to match the retail releases (holdovers from master branch)
 
 
 #Changes not yet in the release branch:
@@ -423,12 +425,9 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
   - AI scoring imposes a very heavy penalty for potentially switching in pokemon with less than 1/4 HP
   - AI switch scoring now penalizes bad match-ups between player and enemy 'mon types
 
-- Trainer ai routine #3 added to the following trainer classes
-  - jr trainer M/F, tamer, scientist, lass, gentleman, black belt, bird keeper, engineer, 
-  - chief, bruno, brock, agatha, juggler
 - Trainer ai routine #4 added to the following trainer classes
-  -cueball, psychic, hiker, rocket, black belt, tamer, lass, jr trainer M/F, cooltrainer M/F, gentleman, pokemaniac 
-  -all rival phases, prof.oak, chief, gym leaders, elite-4
+  -jr trainer M/F, pokemaniac, hiker, cueball, psychic, tamer, black belt, rocket, cooltrainer M/F, gentleman, channeler
+  -all rival phases, all gym leaders, elite-4, prof.oak, chief
   
 - Trainer AI battles now track which enemy pkmn have already been sent out, so allows for new functionality:
   - Trainer pkmn DVs are remembered between switching, and new ones won't be generated on every send-out
