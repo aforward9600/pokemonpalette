@@ -77,7 +77,7 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
 - Engine Improvement: the 1.5x EXP boost function now has overflow protection
 - Engine Improvement: EXP Gained can now print up to five digits instead of four
 - Engine Improvement: Pokemon can now learn more than 1 more per level
-- Engine Improvement: the "<LF>" character mapping can be used as a line-feed
+- Engine Improvement: the "LF" character mapping can be used as a line-feed
 ---
 - Text with zero frame delay can be toggled in the options menu; press LEFT with the cursor on FAST
 - Gym leader names have been restored on the trainer card
