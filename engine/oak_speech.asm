@@ -5,6 +5,8 @@ SetDefaultNames:
 	push af
 	ld a, [wd732]
 	push af
+	ld a, [wUnusedD721]	;joenote - preserve extra options
+	push af
 	ld hl, wPlayerName
 	ld bc, wBoxDataEnd - wPlayerName
 	xor a
@@ -13,6 +15,8 @@ SetDefaultNames:
 	ld bc, $200
 	xor a
 	call FillMemory
+	pop af
+	ld [wUnusedD721], a	;joenote - restore extra options
 	pop af
 	ld [wd732], a
 	pop af

@@ -174,8 +174,7 @@ ItemUseBall:
 	;jp z, .setAnimData
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - use a bit to determine if this is a ghost marowak battle
-	ld a, [wUnusedD721]
-	bit 3, a
+	CheckEvent EVENT_10E
 	jr z, .loop
 	ld b, $10 ; can't be caught value
 	jp .setAnimData
@@ -1721,8 +1720,7 @@ ItemUsePokedoll:
 	jp nz, ItemUseNotTime
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - if this is a ghost marowak battle, prevent using a pokedoll
-	ld a, [wUnusedD721]
-	bit 3, a
+	CheckEvent EVENT_10E
 	jp nz, ItemUseNotTime
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, $01

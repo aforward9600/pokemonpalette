@@ -61,7 +61,7 @@ ENDC
 	ret c
 
 ; hip
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HIP
@@ -72,7 +72,7 @@ ENDC
 	ld de, IntroNidorinoAnimation1
 	call AnimateIntroNidorino
 ; hop
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_4
 ELSE
 	ld a, SFX_INTRO_HOP
@@ -85,7 +85,7 @@ ENDC
 	ret c
 
 ; hip
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HIP
@@ -94,7 +94,7 @@ ENDC
 	ld de, IntroNidorinoAnimation1
 	call AnimateIntroNidorino
 ; hop
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_4
 ELSE
 	ld a, SFX_INTRO_HOP
@@ -125,7 +125,7 @@ ENDC
 	lb de, 16 / 2, MOVE_GENGAR_RIGHT
 	call IntroMoveMon
 ; hip
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HIP
@@ -148,7 +148,7 @@ ENDC
 	ret c
 
 ; hip
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HIP
@@ -159,7 +159,7 @@ ENDC
 	ld de, IntroNidorinoAnimation4
 	call AnimateIntroNidorino
 ; hop
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	ld a, SFX_SNARE_1
 ELSE
 	ld a, SFX_INTRO_HOP
@@ -359,8 +359,20 @@ PlayShootingStar:
 	call UpdateGBCPal_BGP
 	ld c, 180
 	;call DelayFrames
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
+;joenote - activate/deactivate gamma shader if select is pressed at copyright screen
+;		- Behavior is determined by the destination code in the rom header
+	ld a, [hGBC]
+	and a
+	jr z, .endgammaloop	;do not bother if not in GBC mode
 	
-	;joenote - activate gamma shader if select is pressed at copyright screen
+	;set the default based on the header destination code
+	ld b, a	;B is now 01
+	ld a, [$014A] ;read destination code from rom header (00 for JP or 01 for !JP)
+	xor $01	;invert the code (01 for JP or 00 for !JP)
+	add b ;(A = 02 for JP or 01 for !JP)
+	ld [hGBC], a	;set default shader state (02 for ON or 01 for OFF)
+	
 .gammaloop
 	call DelayFrame
 	push bc
@@ -369,21 +381,23 @@ PlayShootingStar:
 	ld a, [hJoyInput]
 	and SELECT
 	jr z, .skipgamma
-
-	ld a, [hGBC]
-	and a
-	jr z, .skipgamma	;do not activate if not in GBC mode
-
-	ld a, 2
-	ld [hGBC], a
+	
+	;toggle the shader from its default due to pressing SELECT
+	ld a, [$014A] ;read destination code from rom header (00 for JP or 01 for !JP)
+	xor $01	;invert the code (01 for JP or 00 for !JP)
+	ld b, a
+	ld a, $02
+	sub b 	;A is now 01 for JP or 02 for !JP
+	ld [hGBC], a	;Toggle the shader state from the default
 	jr .endgammaloop
+
 .skipgamma	
 	dec c
 	jr nz, .gammaloop
 .endgammaloop
 	inc c
 	call DelayFrames
-	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
 	call ClearScreen
 	call DisableLCD
 	xor a
@@ -398,6 +412,24 @@ PlayShootingStar:
 	call DelayFrames
 	callba AnimateShootingStar
 	push af
+
+IF (DEF(_REDGREENJP) || DEF(_BLUEJP))
+;joenote - restore "Presents" for the japanese builds
+	coord hl, 7, 11
+	ld de, .presentsTiles
+	ld b, 6
+.presentsTilesLoop
+	ld a, [de]
+	ld [hli], a
+	inc de
+	dec b
+	jr nz, .presentsTilesLoop
+	jr .presentEnd
+.presentsTiles
+	db $67,$68,$69,$6A,$6B,$6C ; "Presents"
+.presentEnd
+ENDC
+
 	pop af
 	jr c, .next ; skip the delay if the user interrupted the animation
 	ld c, 40

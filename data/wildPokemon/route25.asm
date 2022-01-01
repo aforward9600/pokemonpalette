@@ -11,8 +11,18 @@ Route25Mons:
 		db 10,ABRA
 		db 7,METAPOD
 		db 8,CATERPIE
-	ENDC
-	IF (DEF(_BLUE) || DEF(_GREEN))
+	ELIF DEF(_BLUEJP)
+		db  8, CATERPIE
+		db  9, METAPOD
+		db 13, PIDGEY
+		db 12, ODDISH
+		db 13, ODDISH
+		db 12, ABRA
+		db 14, ODDISH
+		db 10, ABRA
+		db  7, KAKUNA
+		db  8, WEEDLE
+	ELIF (DEF(_BLUE) || DEF(_GREEN))
 		db 8,CATERPIE
 		db 9,METAPOD
 		db 13,PIDGEY

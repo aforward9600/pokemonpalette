@@ -43,7 +43,7 @@ INCLUDE "engine/print_waiting_text.asm"
 
 INCLUDE "engine/overworld/map_sprite_functions1.asm"
 
-INCLUDE "engine/test_battle.asm"
+;INCLUDE "engine/test_battle.asm"	;joenote - remove to free up space
 
 INCLUDE "engine/overworld/item.asm"
 INCLUDE "engine/overworld/movement.asm"
@@ -56,7 +56,7 @@ INCLUDE "engine/oak_speech.asm"
 
 INCLUDE "engine/special_warps.asm"
 
-INCLUDE "engine/debug1.asm"
+;INCLUDE "engine/debug1.asm"	;joenote - remove to free up space
 
 INCLUDE "engine/menu/naming_screen.asm"
 
@@ -174,7 +174,15 @@ BattleHudTiles1End:
 BattleHudTiles2:                INCBIN "gfx/battle_hud2.1bpp"
 BattleHudTiles3:                INCBIN "gfx/battle_hud3.1bpp"
 BattleHudTiles3End:
+
+IF DEF(_REDGREENJP)
+NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright_green.2bpp"
+ELIF DEF(_BLUEJP)
+NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright_bluejp.2bpp"
+ELSE
 NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright.2bpp"
+ENDC
+
 GamefreakLogoGraphics:          INCBIN "gfx/gamefreak.2bpp"
 GamefreakLogoGraphicsEnd:
 TextBoxGraphics:                INCBIN "gfx/text_box.2bpp"
@@ -183,7 +191,7 @@ PokedexTileGraphics:            INCBIN "gfx/pokedex.2bpp"
 PokedexTileGraphicsEnd:
 WorldMapTileGraphics:           INCBIN "gfx/town_map.2bpp"
 WorldMapTileGraphicsEnd:
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title_green.2bpp"
 ELSE
 PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title.2bpp"
@@ -525,7 +533,7 @@ INCLUDE "engine/hidden_object_functions7.asm"
 
 
 SECTION "Pics 1", ROMX, BANK[PICS_1]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 RhydonPicFront::      INCBIN "pic/rgmon/rhydon.pic"
 RhydonPicBack::       INCBIN "pic/monback/rhydonb.pic"
 KangaskhanPicFront::  INCBIN "pic/rgmon/kangaskhan.pic"
@@ -633,7 +641,8 @@ INCLUDE "engine/battle/moveEffects/one_hit_ko_effect.asm"
 INCLUDE "engine/battle/display_effectiveness.asm"
 TrainerInfoTextBoxTileGraphics:  INCBIN "gfx/trainer_info.2bpp"
 TrainerInfoTextBoxTileGraphicsEnd:
-BlankLeaderNames:                INCBIN "gfx/blank_leader_names.2bpp"
+;BlankLeaderNames:                INCBIN "gfx/blank_leader_names.2bpp"
+BlankLeaderNames:                INCBIN "gfx/leader_names.2bpp"	;joenote - restoring the names
 CircleTile:                      INCBIN "gfx/circle_tile.2bpp"
 BadgeNumbersTileGraphics:        INCBIN "gfx/badge_numbers.2bpp"
 INCLUDE "engine/items/tmhm.asm"
@@ -651,7 +660,7 @@ INCLUDE "engine/game_corner_slots.asm"
 
 
 SECTION "Pics 2", ROMX, BANK[PICS_2]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 TentacoolPicFront::   INCBIN "pic/rgmon/tentacool.pic"
 TentacoolPicBack::    INCBIN "pic/monback/tentacoolb.pic"
 GastlyPicFront::      INCBIN "pic/rgmon/gastly.pic"
@@ -751,7 +760,7 @@ SECTION "Battle (bank A)", ROMX, BANK[$A]
 ;migrated content to bank 9
 
 SECTION "Pics 3", ROMX, BANK[PICS_3]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 GolemPicFront::       INCBIN "pic/rgmon/golem.pic"
 GolemPicBack::        INCBIN "pic/monback/golemb.pic"
 MagmarPicFront::      INCBIN "pic/rgmon/magmar.pic"
@@ -851,7 +860,7 @@ SECTION "Battle (bank B)", ROMX, BANK[$B]
 ;migrated content to bank 9
 
 SECTION "Pics 4", ROMX, BANK[PICS_4]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 PikachuPicFront::     INCBIN "pic/rgmon/pikachu.pic"
 PikachuPicBack::      INCBIN "pic/monback/pikachub.pic"
 RaichuPicFront::      INCBIN "pic/rgmon/raichu.pic"
@@ -963,7 +972,7 @@ SECTION "Battle (bank C)", ROMX, BANK[$C]
 ;migrated content to bank 9
 
 SECTION "Pics 5", ROMX, BANK[PICS_5]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 BeedrillPicFront::    INCBIN "pic/rgmon/beedrill.pic"
 BeedrillPicBack::     INCBIN "pic/monback/beedrillb.pic"
 DodrioPicFront::       INCBIN "pic/rgmon/dodrio.pic"
@@ -1052,7 +1061,7 @@ ClefablePicBack::      INCBIN "pic/monback/clefableb.pic"
 ENDC
 
 SECTION "Pics 6", ROMX, BANK[PICS_6]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 WeezingPicFront::      INCBIN "pic/rgmon/weezing.pic"
 WeezingPicBack::       INCBIN "pic/monback/weezingb.pic"
 PersianPicFront::      INCBIN "pic/rgmon/persian.pic"
@@ -1145,7 +1154,7 @@ PorygonPicBack::       INCBIN "pic/monback/porygonb.pic"
 ENDC
 
 SECTION "Pics 7", ROMX, BANK[PICS_7]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 AerodactylPicFront::   INCBIN "pic/rgmon/aerodactyl.pic"
 AerodactylPicBack::    INCBIN "pic/monback/aerodactylb.pic"
 MagnemitePicFront::    INCBIN "pic/rgmon/magnemite.pic"
@@ -1366,7 +1375,7 @@ INCLUDE "data/mapObjects/safarizoneresthouse4.asm"
 INCLUDE "data/mapHeaders/unknowndungeon2.asm"
 INCLUDE "scripts/unknowndungeon2.asm"
 INCLUDE "data/mapObjects/unknowndungeon2.asm"
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 UnknownDungeon2Blocks: INCBIN "maps/green/unknowndungeon2.blk"
 ELSE
 UnknownDungeon2Blocks: INCBIN "maps/unknowndungeon2.blk"
@@ -1375,7 +1384,7 @@ ENDC
 INCLUDE "data/mapHeaders/unknowndungeon3.asm"
 INCLUDE "scripts/unknowndungeon3.asm"
 INCLUDE "data/mapObjects/unknowndungeon3.asm"
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 UnknownDungeon3Blocks: INCBIN "maps/green/unknowndungeon3.blk"
 ELSE
 UnknownDungeon3Blocks: INCBIN "maps/unknowndungeon3.blk"
@@ -2204,7 +2213,7 @@ INCLUDE "engine/hidden_object_functions18.asm"
 
 
 SECTION "bank19",ROMX,BANK[$19]
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 Overworld_GFX:     INCBIN "gfx/tilesets/green/overworld.2bpp"
 ELSE
 Overworld_GFX:     INCBIN "gfx/tilesets/overworld.2bpp"
@@ -2234,10 +2243,13 @@ SECTION "bank1A",ROMX,BANK[$1A]
 INCLUDE "engine/battle/decrement_pp.asm"
 
 Version_GFX:
-IF (DEF(_RED) || DEF(_GREEN))
+IF DEF(_REDJP)
+	INCBIN "gfx/red/redgreenversionjp.1bpp" ; 10 tiles
+ELIF (DEF(_RED) || DEF(_GREEN))
 	INCBIN "gfx/red/redgreenversion.1bpp" ; 10 tiles
-ENDC
-IF DEF(_BLUE)
+ELIF DEF(_BLUEJP)
+	INCBIN "gfx/blue/blueversionjp.1bpp" ; 8 tiles
+ELIF DEF(_BLUE)
 	INCBIN "gfx/blue/blueversion.1bpp" ; 8 tiles
 ENDC
 Version_GFXEnd:
@@ -2259,7 +2271,7 @@ ForestGate_Block:
 Museum_Block:
 Gate_Block:        INCBIN "gfx/blocksets/gate.bst"
 
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 Forest_GFX:        INCBIN "gfx/tilesets/green/forest.2bpp"
 ELSE
 Forest_GFX:        INCBIN "gfx/tilesets/forest.2bpp"
@@ -2295,7 +2307,14 @@ INCLUDE "engine/overworld/healing_machine.asm"
 INCLUDE "engine/overworld/player_animations.asm"
 INCLUDE "engine/battle/ghost_marowak_anim.asm"
 INCLUDE "engine/battle/battle_transitions.asm"
+
+;joenote - Implement the japanese map layout based on Rangi's Red/Blue Star project
+IF (DEF(_REDGREENJP) || DEF(_BLUEJP))
+INCLUDE "engine/town_map_jp.asm"
+ELSE
 INCLUDE "engine/town_map.asm"
+ENDC
+
 INCLUDE "engine/mon_party_sprites.asm"
 INCLUDE "engine/in_game_trades.asm"
 INCLUDE "engine/palettes.asm"
@@ -2336,7 +2355,7 @@ INCLUDE "data/mapObjects/pewtermart.asm"
 INCLUDE "data/mapHeaders/unknowndungeon1.asm"
 INCLUDE "scripts/unknowndungeon1.asm"
 INCLUDE "data/mapObjects/unknowndungeon1.asm"
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 UnknownDungeon1Blocks: INCBIN "maps/green/unknowndungeon1.blk"
 ELSE
 UnknownDungeon1Blocks: INCBIN "maps/unknowndungeon1.blk"

@@ -1,69 +1,89 @@
 # Shin Pokémon Red and Blue: Lite Patch
 
-Version 1.22
+Version 1.23
 
 Future bugfixes here will be eventually migrated to the Shin Pokemon Red/Blue master branch
 
 Download the IPS patch file of the version you want and apply it to its respective USA rom.  
 Always apply patches to a fresh USA ROM or else strange glitches will occur.  
 
-Important Note: If you are using a save file from a previous version, you might be blocked by invisible walls upon loading the game.
-To fix this, you must use the Softlock Warp detailed below to teleport back to Pallet Town.
-It is best to save outside in Pallet Town before updating to the new patch.
+***Includes Pokemon Green and Japanese Red!***
+- The compiler primarily builds the graphics and cerulean cave layout back to the original japanese release.
+- Pokedex entries adapt the original Green version text that was translated in Fire Red.
+- Pokedex uses metric units.
+- Apply the Green ips patch to a USA Blue rom. Apply the Red-JP ips patch to a USA Red rom.
 
-This is primarily a fix-it patch of pokemon red & blue based on the Pret team's disassembly.  
-The Lite patch, unlike the full Shin Pokemon Red/Blue, tries to fix bugs and improve the AI with little else changed.
-It was done to serve as a codebase for others to start their own romhacks.
+***Now Includes Japanese Blue!***
+- Primarily builds the lists for encounters, trades, and prizes that were in the never-localized japanese release.
+- Pokedex uses metric units.
+- Apply the ips patch to a USA Blue rom.
 
-***Now with Pokemon Green!***
-- The compiler primarily builds using green version's graphics and cerulean cave layout.
-- Use the ips patch with a USA Blue rom.
+***Updating Your Save File***  
+New patches might crash or have issues upon loading a save from a previous patch or an unpatched game.  
+To prevent this from happening, prepare your save file in the following way:  
+--> Deactivate all special options (such as 60fps mode and NPC toggles).  
+--> Save in the outdoor Pallet Town map.  
+You might be blocked by invisible walls upon loading the game.  
+To fix this, you must use the Softlock Warp detailed below to teleport back to Pallet Town.  
+
+
+#Compatibility Notes
+-----------
+
+- Compatible with original Gameboy hardware (DMG, Super, Pocket, Color, Advance, SP)
+- Potentially compatible with Pokemon Stadium 1 & 2 (using original Nintendo hardware)
+- Might be possible to use a save from vanilla USA red/blue with this rom hack 
+  - Save outside in Pallet Town before transferring over
+  - Use the Softlock Warp to clear any invisible walls
+- New builds are tested and debugged with the BGB 1.5.8 emulator and verified using original hardware
+- Certain emulators are known to cause bugs due to inaccuracies in replicating the original hardware
+  - Goomba in particular is known to be problematic
+  - Due to the number of emulators in existence, BGB will be used as the supported standard
+- Link trading with an original retail cartridge appears to work properly on real hardware
+- Link trading between the lite and master branches appears to work properly on real hardware
+- Link battles are still largely untested, and they are unsupported in the following ways:
+  - Link battling between a master branch build and any other non-master branch build
+  - Link battling between a lite branch build and any other non-lite branch build
+  - Link battling between builds of dissimilar revisions
+- A revision control function has been added that will cancel unsupported cable links
+
 
 
 #Latest Fixes (most recent ips patch):
 ---------------
-- Fixed scripted NPC-following movement in 60fps mode
-- Fixed some NPC ghosting in mart menus in GBC mode
-- Greatly increased the speed and performance of spin tiles
-- Fixed rival facing in silph co after battle
-- Fixed issue with route 22 phantom rival appearing if the first battle was skipped
-- Stopped AI from decrementing PP on item usage and switching
-- Stopped AI from decrementing PP when it doesn't wake up from sleep
-- Fixed a conflict where transforming while disabled can leave the new moves disabled
-- Fixed an issue with the silph co 11f elevator doors
-- Bike music stops playing now when going down a hole
-- Can no longer walk up to 4 steps with a fainted team
-- Fixed a typo so now transformed 'mons retain their original palette
-- Fixed transformed 'mons reseting their moves when learning a level-up move
-- PP-restoring items no longer affect transformed moves and only restore the original moves
-- Made adjustments to critical hit damage
-  - Damage factor is now 2*(2*level)/5 + 4 instead of 2*(2*level)/5 + 2 to simplify some algebra
-  - If non-crit damage would be >= crit damage, the regular modified stat values are applied instead
-- Fixed a missed increment that makes a map's 15th object not update its facing properly
-- Adjusted two spin-stop tiles in Viridian Gym
-- Adjusted some of Giovanni's final lines for clarity
-- Made Agility's animation more apparent
-- Water warps in seafoam island 4 & 5 are now scripted movement
-- AI layer 1: discourage exploding effects if faster than a player in fly/dig state
-- AI layer 1: randomly discourage usage of 2-turn moves when confused/paralyzed
-- AI Layer 1: 50% chance that the AI is blind to a player switching ir using an item
-- AI layer 3: added some strategy to handle when the player uses fly/dig
-- AI layer 3: slightly preference regular effectiveness moves if STAB exists (25% chance per move)
-- Special damage effect now uses 2 bytes for damage instead of 1
-- Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
-- Applied Rangi's reformatting to key item bit fields
-- Consolidated the code used for stat scaling
-- Added AI layer 3 to Juggler
-- Added some underflow and overflow protection to switch scoring
-- Fixed an issue with Disable's counter on slower 'mons
-- Fixed a bug in the GetName: function that treated lists over 195 entries as item lists
-- AI switch scoring now penalizes bad match-ups between player and enemy 'mon types
-- Minor adjustments to switch scoring
-- Can now cut grass in the plateau tileset
-- Fix jump kick effect doing 0 crash damage
-- On GBC, moves animations are colored according to type
-- Can Fly and Teleport out of maps using the Forest tileset
-- Pokemon can now learn more than 1 more per level
+- Readjusted the vertical positioning of some spaceworld back sprites
+- Fixed Flying and Teleporting out of maps with the forest tileset
+- Fixed messed-up warps dealing with the forest tileset
+- Fixed incorrect animation colors
+- Fixed some minor color errors in non-move battle animations
+- Changed color of normal-type attacks to yellow
+- Adjusted the Saffron Guard text for accuracy
+- Attacks reduced to zero damage now say the target is unaffected instead of missing
+---
+- The project now compiles Japanese Blue
+- The project now compiles Japanese Red
+- Green and Red-JP have their original pokedex entries (adapted from Fire Red)
+- Green, Red-JP, and Blue-JP now display metric units in the pokedex
+- Green, Red-JP, and Blue-JP now have the japanese-style town map layout
+- Green, Red-JP, and Blue-JP now have their correct copyright graphics
+- Green, Red-JP, and Blue-JP now have the "PRESENTS" graphic under "Game Freak"
+- Green and Red-JP play the original shooting star sound effect
+---
+- Gamma shader defaults ON if the destination code in the rom header is set to 00 (JP)
+- Pressing SELECT at the copyright info now switches the shader from its default state
+- The default state of the gamma shader can be changed with any gameboy rom header editor
+- Alternately, remove the 'j' in 'cjsv' in the Makefile to compile with a JP destination code
+---
+- Engine Improvement: the 1.5x EXP boost function now has overflow protection
+- Engine Improvement: EXP Gained can now print up to five digits instead of four
+- Engine Improvement: Pokemon can now learn more than 1 more per level
+- Engine Improvement: the "LF" character mapping can be used as a line-feed
+---
+- Text with zero frame delay can be toggled in the options menu; press LEFT with the cursor on FAST
+- Gym leader names have been restored on the trainer card
+---
+- Reverted some AI settings for trainer classes to match the retail releases (holdovers from master branch)
+
 
 #Changes not yet in the release branch:
 -----------
@@ -186,8 +206,11 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Adjusted two spin-stop tiles in Viridian Gym
   - Made Agility's animation more apparent
   - On GBC, moves animations are colored according to type
+  - Gym leader names have been restored on the trainer card
+    - These were removed during localization as a simple and expedient solution
+    - So this is more of a correction to the localization than a strict graphical error
 
-  
+
 - Item Fixes  
   - Great ball has a ball factor of 12 now
   - Stone evolutions cannot be triggered via level-up anymore
@@ -259,6 +282,10 @@ It was done to serve as a codebase for others to start their own romhacks.
 #TWEAKS:
 -----------
 - Added built-in gamma shader for backlit LCD screens in GBC mode (press SELECT at the copyright screen)
+	- Gamma shader defaults ON if the destination code in the rom header is set to 00 (JP)
+	- Pressing SELECT at the copyright info now switches the shader from its default state
+	- The default state of the gamma shader can be changed with any gameboy rom header editor
+	- Alternately, remove the 'j' in 'cjsv' in the Makefile to compile with a JP destination code
 - The Gameboy Color palette functionality from pokemon Yellow has been back-ported into the game
   - Scrolling mons on the title screen have their own palettes loaded on the GBC.
   - In the blue version intro, jigglypuff has it's own palette loaded on the GBC. 
@@ -266,6 +293,7 @@ It was done to serve as a codebase for others to start their own romhacks.
 - Added an option to make the overworld run in 60fps
  - Feature is a proof-of-concept and is still a bit rusty
  - Toggle by placing the cursor in the options screen over CANCEL and pressing left or right
+- Text with zero frame delay can be toggled in the options menu; press LEFT with the cursor on FAST
 - Softlock Warp 
   - instantly teleport back to your mom's house if you get stuck or are unable to move after updating to a new patch
   - sets money to at least 1000 if you have less than that
@@ -283,10 +311,13 @@ It was done to serve as a codebase for others to start their own romhacks.
 - L: block doesn't disappear when level hits three digits
 - Greatly increased the speed and performance of spin tiles
 - Can cut the grass on the plateau tileset
+- Initiating the Pokemon Tower rival battle will deactivate the following skippable rival battles
+  - The Cerulean encounter
+  - The SS Anne encounter
 
 
-- Fixed mistakes and made adjustments to the game text
-  - When a pkmn is caught and fills the box, a reminder is printed that the box is full
+- Fixed mistakes in the game text
+  - Attacks reduced to zero damage now say the target is unaffected instead of missing
   - Man in cinnabar won't mention raichu evolving (also applies to the jynx trade in cerulean)
   - Koga correctly says soul badge increases speed
   - Lt. Surge correctly says thunder badge increases defense
@@ -294,18 +325,20 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Viridian girl's notebook 2nd page revised for pkmn-catching effectiveness
   - Viridian blackboard BRN info corrected (BRN does not reduce speed)
   - Viridian Blackboard PAR info updated
-  - TM 18 given an actual explanation 
-  - New student in viridian school explains ohko moves
   - Cerulean badge-house guy has updated text
   - Prof. oak's speech plays the correct Nidorino cry
-  - Text for using a TM/HM now refers to the "machine" rather than just "TM"
   - Fixed daycare man capitalization
-  - Clarified "chem" to mean grade in chemistry
   - Fixed capitalization in safari zone entrance
-  - PC has a text prompt to tell you if its full after depositing
-  - Exp.all now prints one message when splitting exp instead of for each party member
-  - text is now properly flipped in one of the saffron houses
   - Reactivated lost text that was meant to play when you lose to your rival
+  - Text for using a TM/HM now refers to the "machine" rather than just "TM"
+  - text is now properly flipped in one of the saffron houses
+- Made adjustments to the game text
+  - When a pkmn is caught and fills the box, a reminder is printed that the box is full
+  - PC has a text prompt to tell you if its full after depositing
+  - TM 18 given an actual explanation 
+  - New student in viridian school explains ohko moves
+  - Clarified "chem" to mean grade in chemistry
+  - Exp.all now prints one message when splitting exp instead of for each party member
   - Adjusted some of Giovanni's final lines for clarity
   
 
@@ -393,11 +426,12 @@ It was done to serve as a codebase for others to start their own romhacks.
   - AI switch scoring now penalizes bad match-ups between player and enemy 'mon types
 
 - Trainer ai routine #3 added to the following trainer classes
-  - jr trainer M/F, tamer, scientist, lass, gentleman, black belt, bird keeper, engineer, 
-  - chief, bruno, brock, agatha, juggler
+  -brock, surge, sabrina, blaine
+  -bruno, agatha
+
 - Trainer ai routine #4 added to the following trainer classes
-  -cueball, psychic, hiker, rocket, black belt, tamer, lass, jr trainer M/F, cooltrainer M/F, gentleman, pokemaniac 
-  -all rival phases, prof.oak, chief, gym leaders, elite-4
+  -jr trainer M/F, pokemaniac, hiker, cueball, psychic, tamer, black belt, rocket, cooltrainer M/F, gentleman, channeler
+  -all rival phases, all gym leaders, elite-4, prof.oak, chief
   
 - Trainer AI battles now track which enemy pkmn have already been sent out, so allows for new functionality:
   - Trainer pkmn DVs are remembered between switching, and new ones won't be generated on every send-out
@@ -427,24 +461,37 @@ It was done to serve as a codebase for others to start their own romhacks.
   - Special damage effect now uses 2 bytes for damage instead of 1
   - Fixed Psywave underflow/overflow with levels of 0, 1, and above 170
   - Pokemon can now learn more than 1 more per level
+  - The 1.5x EXP boost function now has overflow protection
+  - EXP Gained can now print up to five digits instead of four
+  - The "<LF>" character mapping can be used as a line-feed
 
 
 #CREDITS / SPECIAL THANKS:
------------
-- The Pret team for the pokered and pokeyellow disassemblies and all the code comments that came with them.
-- Rangi for the tool Polished Map
+--------------------------
+- The Pret team for the pokered and pokeyellow disassemblies and all the code comments that came with them
+- MoriyaFaith's pokejp project for green version assets and code referencing
+- Rangi for the tool Polished Map and the jp-style town map from Red/Blue Star
+- Exp bar coded by Danny-E 33
+- The Pokemon Prism team for the improved RNG
+- Move deleter/relearner coded by TheFakeMateo for Pokemon Red++
 - Code contributions and bugfixing by wisp92
-- The following for their great tutorials, glitch videos, and explanations across the internet
-  - TheFakeMateo 
-  - Crystal_
-  - ChickasaurusGL
-  - v0id19
-- The following for their help in pointing out and diagnosing bugs 
-  - kadetPirx
-  - JOBOalthor1992
-  - krazsen
-  - kmalove
-  - zycain
+- GLSWV for correcting the metric conversions of height and weight data 
+
+The following folks for their great tutorials, glitch videos, and explanations across the internet
+- TheFakeMateo 
+- Crystal_
+- ChickasaurusGL
+- v0id19
+
+The following folks for their help in pointing out and diagnosing bugs 
+- kadetPirx
+- JOBOalthor1992
+- krazsen
+- kmalove
+- zycain
+- jastolze007 
+- MStern
+- TSinnohTrainer 
 
   
 The shinpokered repository was branched from pret/pokered at merge pull request #185 committed on Jul 2, 2018

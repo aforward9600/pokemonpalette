@@ -378,6 +378,12 @@ BoostExp:
 	ld a, [H_QUOTIENT + 2]
 	adc b
 	ld [H_QUOTIENT + 2], a
+	jr c, .overflow
+	ret
+.overflow	;joenote - add overflow protection
+	ld a, $FF
+	ld [H_QUOTIENT + 2], a
+	ld [H_QUOTIENT + 3], a
 	ret
 
 GainedText:

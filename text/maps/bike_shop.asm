@@ -1,4 +1,4 @@
-IF DEF(_GREEN)
+IF DEF(_JPTXT)
 _BikeShopText_1d810::
 	text "Hi! Welcome to"
 	line "MIRACLE CYCLE."

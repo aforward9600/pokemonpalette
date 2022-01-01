@@ -216,7 +216,7 @@ _CeruleanCityText13::
 	cont "process."
 	done
 
-IF DEF(_GREEN)
+IF DEF(_JPTXT)
 _CeruleanCityText16::
 	text "Grass and caves"
 	line "handled easily!"

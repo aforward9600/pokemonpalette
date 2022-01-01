@@ -4208,15 +4208,27 @@ PrintMoveFailureText:
 	jr z, .playersTurn
 	ld de, wEnemyMoveEffect
 .playersTurn
+
 	ld hl, DoesntAffectMonText
 	ld a, [wDamageMultipliers]
 	and $7f
-	jr z, .gotTextToPrint
-	ld hl, AttackMissedText
+	jr z, .gotTextToPrint	;0 for damage multipliers means defender is immune
+	
+	;joenote - Replace UnaffectedText with IsUnaffectedText
+	;It's the same thing in english, but it sounds better grammatically.
+	;UnaffectedText can then be commented out.
+	ld hl, IsUnaffectedText
 	ld a, [wCriticalHitOrOHKO]
 	cp $ff
-	jr nz, .gotTextToPrint
-	ld hl, UnaffectedText
+	jr z, .gotTextToPrint	;defender is unaffected if the attack was a failed OHKO move
+	
+	ld a, [wMoveMissed]
+	cp 2
+	jr z, .gotTextToPrint	;defender is unaffected if the attack damage was reduced to 0
+	
+.regularMiss
+	ld hl, AttackMissedText
+	
 .gotTextToPrint
 	push de
 	call PrintText
@@ -4275,9 +4287,10 @@ KeptGoingAndCrashedText:
 	TX_FAR _KeptGoingAndCrashedText
 	db "@"
 
-UnaffectedText:
-	TX_FAR _UnaffectedText
-	db "@"
+;joenote - Redundant, so it can be commented out
+;UnaffectedText:
+;	TX_FAR _UnaffectedText
+;	db "@"
 
 PrintDoesntAffectText:
 	ld hl, DoesntAffectMonText
@@ -5855,6 +5868,7 @@ AdjustDamageForMoveType:
 ; if damage is 0, make the move miss
 ; this only occurs if a move that would do 2 or 3 damage is 0.25x effective against the target
 	inc a
+	inc a ;joenote - set wMoveMissed to 2
 	ld [wMoveMissed], a
 .skipTypeImmunity
 	pop bc
@@ -7600,8 +7614,7 @@ InitWildBattle:
 	call DoBattleTransitionAndInitBattleVariables
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;joenote - use a bit to determine if this is a ghost marowak battle
-	ld a, [wUnusedD721]
-	bit 3, a
+	CheckEvent EVENT_10E
 	jr nz, .isGhost
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;	ld a, [wCurOpponent]

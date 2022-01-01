@@ -11,8 +11,18 @@ Route24Mons:
 		db 13,PIDGEY
 		db 8,ABRA
 		db 12,ABRA
-	ENDC
-	IF (DEF(_BLUE) || DEF(_GREEN))
+	ELIF DEF(_BLUEJP)
+		db  7, CATERPIE
+		db  8, METAPOD
+		db 12, PIDGEY
+		db 12, ODDISH
+		db 13, ODDISH
+		db 10, ABRA
+		db 14, ODDISH
+		db 13,PIDGEY
+		db 8,ABRA
+		db 12,ABRA
+	ELIF (DEF(_BLUE) || DEF(_GREEN))
 		db 7,CATERPIE
 		db 8,METAPOD
 		db 12,PIDGEY

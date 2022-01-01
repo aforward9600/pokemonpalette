@@ -310,8 +310,10 @@ hCoordsInFrontOfPlayerMatch EQU $FFEA
 
 hSpriteAnimFrameCounter EQU $FFEA
 
+H_WHOFIRST EQU $FFF2 ; joenote - 0 on player going first, 1 on enemy going first
 H_WHOSETURN EQU $FFF3 ; 0 on player’s turn, 1 on enemy’s turn
-H_WHOFIRST EQU $FFF4 ; joenote - 0 on player going first, 1 on enemy going first
+
+hClearLetterPrintingDelayFlags EQU $FFF4
 
 ; bit 0: draw HP fraction to the right of bar instead of below (for party menu)
 ; bit 1: menu is double spaced
@@ -323,5 +325,7 @@ hDisableJoypadPolling EQU $FFF9
 
 hJoyInput EQU $FFF8
 
+hFlagsFFFA EQU $FFFA	;joenote - added for various uses
+;bit 0 - PrepareOAMData and DMARoutine will not run in Vblank while this bit is set
 hRGB EQU $FFFB	;3 bytes ;joenote - used to store color RGB color values for color correction
 hGBC EQU $FFFE ;gbcnote - 0 if DMG, != 0 if GBC, =2 for gamma shader

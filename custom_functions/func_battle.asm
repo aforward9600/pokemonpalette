@@ -310,7 +310,7 @@ SetAttackAnimPal:
 	and a
 	ret z
 	cp STRUGGLE
-	ret nc	
+	jp nc, SetAttackAnimPal_otheranim	;reset battle pals for non-move battle animations
 	
 	ld a, $e4
 	ld [wAnimPalette], a
@@ -336,6 +336,13 @@ SetAttackAnimPal:
 	ld a, [hl]
 	ld b, a
 
+	ld a, [wUnusedC000]
+	bit 7, a	;check the bit that is set when hurting self from confusion or crash damage
+	jr z, .noselfdamage
+	;if hurting self, load default palette
+	ld b, PAL_BW
+.noselfdamage
+
 	;make sure to reset palette/shade data into OBP0
 	ld a, %11100100
 	ld [rOBP0], a
@@ -360,14 +367,74 @@ SetAttackAnimPal:
 	pop bc
 	pop hl
 	ret	
+;This function copies BGP colors 0-3 into OBP colors 0-3
+;It is meant to reset the object palettes on the fly
+SetAttackAnimPal_otheranim:
+	push hl
+	push bc
+	push de
+	
+	ld c, 4
+.loop
+	ld a, 4
+	sub c
+	;multiply index by 8 since each index represents 8 bytes worth of data
+	add a
+	add a
+	add a
+	ld [rBGPI], a
+	or $80 ; set auto-increment bit for writing
+	ld [rOBPI], a
+	ld hl, rBGPD
+	ld de, rOBPD
+	
+	ld b, 4
+.loop2
+	ld a, [rLCDC]
+	and rLCDC_ENABLE_MASK
+	jr z, .lcd_dis
+	;lcd in enabled otherwise
+.wait1
+	;wait for current blank period to end
+	ld a, [rSTAT]
+	and %10 ; mask for non-V-blank/non-H-blank STAT mode
+	jr z, .wait1
+	;out of blank period now
+.wait2
+	ld a, [rSTAT]
+	and %10 ; mask for non-V-blank/non-H-blank STAT mode
+	jr nz, .wait2
+	;back in blank period now
+.lcd_dis	
+	;LCD is disabled, so safe to read/write colors directly
+	ld a, [hl]
+	ld [de], a
+	ld a, [rBGPI]
+	inc a
+	ld [rBGPI], a
+	ld a, [hl]
+	ld [de], a
+	ld a, [rBGPI]
+	inc a
+	ld [rBGPI], a
+	dec b
+	jr nz, .loop2
+	
+	dec c
+	jr nz, .loop
+	
+	pop de
+	pop bc
+	pop hl
+	ret
 TypePalColorList:
-	db PAL_BW;normal
+	db PAL_YELLOWMON;normal
 	db PAL_GREYMON;fighting
 	db PAL_MEWMON;flying
 	db PAL_PURPLEMON;poison
 	db PAL_BROWNMON;ground
 	db PAL_GREYMON;rock
-	db PAL_BW;untyped
+	db PAL_BW;untyped/bird
 	db PAL_GREENMON;bug
 	db PAL_PURPLEMON;ghost
 	db PAL_BW;unused

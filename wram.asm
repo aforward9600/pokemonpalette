@@ -1235,6 +1235,7 @@ wRightGBMonSpecies:: ; cd5f
 wFlags_0xcd60:: ; cd60
 ; bit 0: is player engaged by trainer (to avoid being engaged by multiple trainers simultaneously)
 ; bit 1: boulder dust animation (from using Strength) pending
+; bit 2: used for unknown stuff
 ; bit 3: using generic PC
 ; bit 5: don't play sound when A or B is pressed in menu
 ; bit 6: tried pushing against boulder once (you need to push twice before it will move)
@@ -1725,6 +1726,9 @@ wCriticalHitOrOHKO:: ; d05e
 	ds 1
 
 wMoveMissed:: ; d05f
+;0 if didn't miss
+;1 if regular miss
+;2 if miss due to damage being reduced to 0 in calculations
 	ds 1
 
 wPlayerStatsToDouble:: ; d060
@@ -2430,7 +2434,14 @@ wOptions:: ; d355
 
 wObtainedBadges:: ; d356
 	flag_array 8
-
+;	BIT_BOULDERBADGE ; 0
+;	BIT_CASCADEBADGE ; 1
+;	BIT_THUNDERBADGE ; 2
+;	BIT_RAINBOWBADGE ; 3
+;	BIT_SOULBADGE    ; 4
+;	BIT_MARSHBADGE   ; 5
+;	BIT_VOLCANOBADGE ; 6
+;	BIT_EARTHBADGE   ; 7
 	ds 1
 
 wLetterPrintingDelayFlags:: ; d358
@@ -3080,7 +3091,6 @@ wUnusedD71F:: ; d71f	;joenote - used as a backup address for the wDamage value
 	ds 2
 wUnusedD721:: ; d721	;joenote - use to set various wram flags
 	ds 1
-	;bit 3 - ghost marowak battle if set
 	;bit 4 - 60fps option flag
 ;;;;;;;;;;;;;;joenote - use these unused locations for debugging and parsing DV scores
 wUnusedD722:: 

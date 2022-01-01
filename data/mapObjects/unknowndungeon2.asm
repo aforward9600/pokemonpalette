@@ -11,7 +11,7 @@ UnknownDungeon2Object:
 
 	db 0 ; signs
 
-IF DEF(_GREEN)
+IF DEF(_REDGREENJP)
 	db 3 ; objects
 	object SPRITE_BALL, 29, 9, STAY, NONE, 1, FULL_RESTORE
 	object SPRITE_BALL, 5, 15, STAY, NONE, 2, PP_UP

@@ -41,7 +41,7 @@ _ViridianCityText_19157::
 	para "Watch out for its"
 	line "POISON STING!"
 	done
-IF DEF(_GREEN)
+IF DEF(_JPTXT)
 _ViridianCityText_19175::
 	text "Oh Grandpa! Don't"
 	line "pass out here!"
@@ -67,7 +67,7 @@ _ViridianCityText_1917a::
 	cont "VIRIDIAN FOREST."
 	done
 
-IF DEF (_GREEN)
+IF DEF(_JPTXT)
 _ViridianCityText_19191::
 	text "Urgh! Hic..."
 	line "hold on there!"
@@ -119,7 +119,7 @@ _TM42NoRoomText::
 	text "You have too much"
 	line "stuff already."
 	done
-IF DEF(_GREEN)
+IF DEF(_JPTXT)
 _ViridianCityText_1920a::
 	text "Mmm......"
 	line "Seems like I was"
