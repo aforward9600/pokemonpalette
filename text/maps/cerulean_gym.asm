@@ -13,8 +13,7 @@ _CeruleanGymText_5c7be::
 
 	para "My policy is an"
 	line "all-out offensive"
-	cont "with water-type"
-	cont "#MON!"
+	cont "with blue #MON!"
 	done
 
 _CeruleanGymText_5c7c3::
@@ -26,7 +25,7 @@ _CeruleanGymText_5c7c3::
 	done
 
 _CeruleanGymText_5c7c8::
-	text "The CASCADEBADGE"
+	text "The BLUEBADGE"
 	line "makes all #MON"
 	cont "up to L30 obey!"
 
@@ -61,7 +60,7 @@ _CeruleanGymText_5c7d8::
 	para "All right!"
 
 	para "You can have the"
-	line "CASCADEBADGE to"
+	line "BLUEBADGE to"
 	cont "show you beat me!@@"
 
 _CeruleanGymBattleText1::
@@ -111,7 +110,7 @@ _CeruleanGymText_5c82a::
 
 	para "The LEADER, MISTY,"
 	line "is a pro who uses"
-	cont "water #MON!"
+	cont "blue #MON!"
 
 	para "You can drain all"
 	line "their water with"
@@ -119,6 +118,10 @@ _CeruleanGymText_5c82a::
 
 	para "Or, zap them with"
 	line "electricity!"
+
+	para "You may need a"
+	line "ground #MON for"
+	cont "one of them!"
 	done
 
 _CeruleanGymText_5c82f::

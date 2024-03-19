@@ -222,11 +222,12 @@ NidoranMEvosMoves:
 	db 0
 ; Learnset
 	db 8, HORN_ATTACK
-	db 14, POISON_STING
-	db 21, FOCUS_ENERGY
-	db 29, FURY_ATTACK
-	db 36, HORN_DRILL
-	db 43, DOUBLE_KICK
+	db 12, DOUBLE_KICK
+	db 17, POISON_STING
+	db 23, FOCUS_ENERGY
+	db 30, FURY_ATTACK
+	db 38, HORN_DRILL
+	db 43, SLUDGE
 	db 0
 
 ClefairyEvosMoves:
@@ -273,6 +274,7 @@ NidokingEvosMoves:
 	db 8, HORN_ATTACK
 	db 14, POISON_STING
 	db 23, THRASH
+	db 50, SLUDGE
 	db 0
 
 SlowbroEvosMoves:
@@ -360,11 +362,12 @@ NidoranFEvosMoves:
 	db 0
 ; Learnset
 	db 8, SCRATCH
-	db 14, POISON_STING
-	db 21, TAIL_WHIP
-	db 29, BITE
-	db 36, FURY_SWIPES
-	db 43, DOUBLE_KICK
+	db 12, DOUBLE_KICK
+	db 17, POISON_STING
+	db 23, TAIL_WHIP
+	db 30, BITE
+	db 38, FURY_SWIPES
+	db 43, SLUDGE
 	db 0
 
 NidoqueenEvosMoves:
@@ -374,6 +377,7 @@ NidoqueenEvosMoves:
 	db 8, SCRATCH
 	db 14, POISON_STING
 	db 23, BODY_SLAM
+	db 50, SLUDGE
 	db 0
 
 CuboneEvosMoves:
@@ -480,12 +484,14 @@ ScytherEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 17, LEER
-	db 20, FOCUS_ENERGY
-	db 24, DOUBLE_TEAM
-	db 29, SLASH
-	db 35, SWORDS_DANCE
-	db 42, AGILITY
+	db 15, LEER
+	db 18, FOCUS_ENERGY
+	db 21, DOUBLE_TEAM
+	db 25, PIN_MISSILE
+	db 29, WING_ATTACK
+	db 35, SLASH
+	db 42, SWORDS_DANCE
+	db 50, AGILITY
 	db 0
 
 StaryuEvosMoves:
@@ -530,7 +536,8 @@ TangelaEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 29, ABSORB
+	db 27, ABSORB
+	db 29, VINE_WHIP
 	db 32, POISONPOWDER
 	db 36, STUN_SPORE
 	db 39, SLEEP_POWDER
@@ -589,7 +596,8 @@ PidgeyEvosMoves:
 	db EV_LEVEL, 18, PIDGEOTTO
 	db 0
 ; Learnset
-	db 5, SAND_ATTACK
+	db 3, SAND_ATTACK
+	db 9, GUST
 	db 12, QUICK_ATTACK
 	db 19, WHIRLWIND
 	db 28, WING_ATTACK
@@ -1073,7 +1081,7 @@ PikachuEvosMoves:
 ; Learnset
 	db 9, THUNDER_WAVE
 	db 16, QUICK_ATTACK
-	db 26, SWIFT
+	db 26, THUNDERBOLT
 	db 33, AGILITY
 	db 43, THUNDER
 	db 0
@@ -1388,6 +1396,7 @@ BeedrillEvosMoves:
 	db 25, RAGE
 	db 30, PIN_MISSILE
 	db 35, AGILITY
+	db 40, SLUDGE
 	db 0
 
 MissingNo73EvosMoves:
@@ -1715,7 +1724,8 @@ PidgeottoEvosMoves:
 	db EV_LEVEL, 36, PIDGEOT
 	db 0
 ; Learnset
-	db 5, SAND_ATTACK
+	db 3, SAND_ATTACK
+	db 9, GUST
 	db 12, QUICK_ATTACK
 	db 21, WHIRLWIND
 	db 31, WING_ATTACK
@@ -1727,7 +1737,8 @@ PidgeotEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 5, SAND_ATTACK
+	db 3, SAND_ATTACK
+	db 9, GUST
 	db 12, QUICK_ATTACK
 	db 21, WHIRLWIND
 	db 31, WING_ATTACK
@@ -1889,11 +1900,12 @@ NidorinoEvosMoves:
 	db 0
 ; Learnset
 	db 8, HORN_ATTACK
-	db 14, POISON_STING
-	db 23, FOCUS_ENERGY
-	db 32, FURY_ATTACK
-	db 41, HORN_DRILL
-	db 50, DOUBLE_KICK
+	db 12, DOUBLE_KICK
+	db 19, POISON_STING
+	db 27, FOCUS_ENERGY
+	db 36, FURY_ATTACK
+	db 46, HORN_DRILL
+	db 50, SLUDGE
 	db 0
 
 NidorinaEvosMoves:
@@ -1902,11 +1914,12 @@ NidorinaEvosMoves:
 	db 0
 ; Learnset
 	db 8, SCRATCH
-	db 14, POISON_STING
-	db 23, TAIL_WHIP
-	db 32, BITE
-	db 41, FURY_SWIPES
-	db 50, DOUBLE_KICK
+	db 12, DOUBLE_KICK
+	db 19, POISON_STING
+	db 27, TAIL_WHIP
+	db 36, BITE
+	db 46, FURY_SWIPES
+	db 50, SLUDGE
 	db 0
 
 GeodudeEvosMoves:

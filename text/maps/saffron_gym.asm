@@ -27,7 +27,7 @@ _SaffronGymText_5d167::
 	cont "to win!"
 
 	para "You earned the"
-	line "MARSHBADGE!@@"
+	line "GOLDBADGE!@@"
 
 _SaffronGymText_5d16e::
 	text "Everyone has"
@@ -37,7 +37,7 @@ _SaffronGymText_5d16e::
 	done
 
 _SaffronGymText_5d173::
-	text "The MARSHBADGE"
+	text "The GOLDBADGE"
 	line "makes #MON up"
 	cont "to L70 obey you!"
 
@@ -76,16 +76,12 @@ _SaffronGymText_5d1e6::
 	line "making!"
 
 	para "SABRINA's #MON"
-	line "use psychic power"
-	cont "instead of force!"
+	line "are all gold"
+	cont "colored!"
 
-	para "Fighting #MON"
-	line "are weak against"
-	cont "psychic #MON!"
-
-	para "They get creamed"
-	line "before they can"
-	cont "even aim a punch!"
+	para "Gold is often"
+	line "correlated with"
+	cont "psychic power!"
 	done
 
 _SaffronGymText_5d1eb::

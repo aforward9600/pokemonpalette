@@ -11,7 +11,7 @@ _VermilionGymText_5cb72::
 	done
 
 _VermilionGymText_5cb77::
-	text "The THUNDERBADGE"
+	text "The YELLOWBADGE"
 	line "cranks up your"
 	cont "#MON's DEFENSE!"	;joenote - changed SPEED to DEFENSE in order to fix a typo
 
@@ -50,7 +50,7 @@ _ReceivedThunderbadgeText::
 	line "deal, kid!"
 
 	para "Fine then, take"
-	line "the THUNDERBADGE!"
+	line "the YELLOWBADGE!"
 	prompt
 
 _VermilionGymBattleText1::
@@ -122,7 +122,7 @@ _VermilionGymText_5cbf4::
 	cont "American!"
 
 	para "He's an expert on"
-	line "electric #MON!"
+	line "yellow #MON!"
 
 	para "Birds and water"
 	line "#MON are at"

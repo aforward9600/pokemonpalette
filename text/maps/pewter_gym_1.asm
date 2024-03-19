@@ -9,7 +9,7 @@ _PewterGymText_5c49e::
 
 	para "That's why my"
 	line "#MON are all"
-	cont "the rock-type!"
+	cont "gray!"
 
 	para "Do you still want"
 	line "to challenge me?"

@@ -1,7 +1,7 @@
 TitleMons:
 ; mons on the title screen are randomly chosen from here
 IF DEF(_RED)
-	db CHARMANDER
+	db DITTO
 	db SQUIRTLE
 	db BULBASAUR
 	db WEEDLE
@@ -12,7 +12,7 @@ IF DEF(_RED)
 	db RHYDON
 	db ABRA
 	db GASTLY
-	db DITTO
+	db CHARMANDER
 	db PIDGEOTTO
 	db ONIX
 	db PONYTA

@@ -8,9 +8,9 @@ IslandMonsB2:
 		db 28,HORSEA
 		db 30,STARYU
 		db 30,HORSEA
-		db 28,SHELLDER
-		db 30,GOLBAT
-		db 37,SLOWBRO
+		db 28,GOLBAT
+		db 30,SLOWBRO
+		db 37,JYNX
 	ELIF DEF(_BLUEJP)
 		db 30,SEEL
 		db 30, HORSEA

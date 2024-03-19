@@ -12,7 +12,7 @@ INCBIN PIDGEOT_FR,0,1 ; 77, sprite dimensions
 dw PidgeotPicFront
 dw PidgeotPicBack
 ; attacks known at lvl 0
-db GUST
+db TACKLE
 db SAND_ATTACK
 db QUICK_ATTACK
 db 0

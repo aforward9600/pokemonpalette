@@ -105,7 +105,7 @@ _SaffronCityText18::
 	cont "LEADER: SABRINA"
 
 	para "The Master of"
-	line "Psychic #MON!"
+	line "gold #MON!"
 	done
 
 _SaffronCityText20::

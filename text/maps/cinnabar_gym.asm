@@ -5,7 +5,7 @@ _BlaineBattleText::
 	line "am the LEADER of"
 	cont "CINNABAR GYM!"
 
-	para "My fiery #MON"
+	para "My crimson #MON"
 	line "will incinerate"
 	cont "all challengers!"
 
@@ -18,7 +18,7 @@ _BlaineEndBattleText::
 	line "burnt out!"
 
 	para "You have earned"
-	line "the VOLCANOBADGE!@@"
+	line "the CRIMSONBADGE!@@"
 
 _BlaineFireBlastText::
 	text "FIRE BLAST is the"
@@ -32,7 +32,7 @@ _BlaineFireBlastText::
 _BlaineBadgeText::
 	text "Hah!"
 
-	para "The VOLCANOBADGE"
+	para "The CRIMSONBADGE"
 	line "heightens the"
 	cont "SPECIAL abilities"
 	cont "of your #MON!"
@@ -193,7 +193,7 @@ _CinnabarGymText_75ac2::
 	line "making!"
 
 	para "The hot-headed"
-	line "BLAINE is a fire"
+	line "BLAINE is a red"
 	cont "#MON pro!"
 
 	para "Douse his spirits"
