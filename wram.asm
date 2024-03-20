@@ -3117,6 +3117,7 @@ wBeatGymFlags:: ; d72a
 ;joenote - now made into unused space
 	ds 1
 
+wPlayerGender::
 	ds 1
 
 wd72c:: ; d72c

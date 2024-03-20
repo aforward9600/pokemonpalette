@@ -159,6 +159,8 @@ ClipboardSprite:       INCBIN "gfx/sprites/clipboard.2bpp"
 SnorlaxSprite:         INCBIN "gfx/sprites/snorlax.2bpp"
 OldAmberSprite:        INCBIN "gfx/sprites/old_amber.2bpp"
 LyingOldManSprite:     INCBIN "gfx/sprites/lying_old_man.2bpp"
+LoreleiSprite:        INCBIN "gfx/sprites/lorelei.2bpp"
+BrunoSprite:          INCBIN "gfx/sprites/bruno.2bpp"
 
 
 SECTION "Graphics", ROMX, BANK[GFX]
@@ -205,9 +207,10 @@ INCLUDE "engine/overworld/is_player_just_outside_map.asm"
 INCLUDE "engine/menu/status_screen.asm"
 INCLUDE "engine/menu/party_menu.asm"
 
-RedPicFront:: INCBIN "pic/trainer/red.pic"
-ShrinkPic1::  INCBIN "pic/trainer/shrink1.pic"
-ShrinkPic2::  INCBIN "pic/trainer/shrink2.pic"
+RedPicFront::   INCBIN "pic/trainer/red.pic"
+GreenPicFront:: INCBIN "pic/trainer/green.pic"
+ShrinkPic1::    INCBIN "pic/trainer/shrink1.pic"
+ShrinkPic2::    INCBIN "pic/trainer/shrink2.pic"
 
 INCLUDE "engine/turn_sprite.asm"
 INCLUDE "engine/menu/start_sub_menus.asm"
@@ -225,6 +228,8 @@ SECTION "NPC Sprites 2", ROMX, BANK[NPC_SPRITES_2]
 
 RedCyclingSprite:     INCBIN "gfx/sprites/cycling.2bpp"
 RedSprite:            INCBIN "gfx/sprites/red.2bpp"
+GreenCyclingSprite:   INCBIN "gfx/sprites/green_cycling.2bpp"
+GreenSprite::         INCBIN "gfx/sprites/green.2bpp"
 BlueSprite:           INCBIN "gfx/sprites/blue.2bpp"
 OakSprite:            INCBIN "gfx/sprites/oak.2bpp"
 BugCatcherSprite:     INCBIN "gfx/sprites/bug_catcher.2bpp"
@@ -260,8 +265,6 @@ YoungBoySprite:       INCBIN "gfx/sprites/young_boy.2bpp"
 GameboyKidSprite:     INCBIN "gfx/sprites/gameboy_kid.2bpp"
 ClefairySprite:       INCBIN "gfx/sprites/clefairy.2bpp"
 AgathaSprite:         INCBIN "gfx/sprites/agatha.2bpp"
-BrunoSprite:          INCBIN "gfx/sprites/bruno.2bpp"
-LoreleiSprite:        INCBIN "gfx/sprites/lorelei.2bpp"
 SeelSprite:           INCBIN "gfx/sprites/seel.2bpp"
 
 
@@ -1220,6 +1223,7 @@ MewPicFront:: 		   INCBIN "pic/swmon/mew.pic"
 MewPicBack::  		   INCBIN "pic/monback/mewb.pic"
 ENDC
 RedPicBack::           INCBIN "pic/trainer/redb.pic"
+GreenPicBack::         INCBIN "pic/trainer/greenb.pic"
 OldManPic::            INCBIN "pic/trainer/oldman.pic"
 MissingnoPic::         INCBIN "pic/other/missingno.pic"
 
@@ -2319,6 +2323,7 @@ INCLUDE "engine/mon_party_sprites.asm"
 INCLUDE "engine/in_game_trades.asm"
 INCLUDE "engine/palettes.asm"
 INCLUDE "engine/save.asm"
+INCLUDE "engine/items/tm_prices.asm"
 
 
 SECTION "bank1D",ROMX,BANK[$1D]
@@ -2499,12 +2504,13 @@ INCLUDE "engine/battle/read_trainer_party.asm"
 INCLUDE "data/trainer_moves.asm"
 INCLUDE "data/trainer_parties.asm"
 
-RedFishingTilesFront: INCBIN "gfx/red_fishing_tile_front.2bpp"
-RedFishingTilesBack:  INCBIN "gfx/red_fishing_tile_back.2bpp"
-RedFishingTilesSide:  INCBIN "gfx/red_fishing_tile_side.2bpp"
-RedFishingRodTiles:   INCBIN "gfx/red_fishingrod_tiles.2bpp"
-
-INCLUDE "engine/items/tm_prices.asm"
+RedFishingTilesFront:   INCBIN "gfx/red_fishing_tile_front.2bpp"
+RedFishingTilesBack:    INCBIN "gfx/red_fishing_tile_back.2bpp"
+RedFishingTilesSide:    INCBIN "gfx/red_fishing_tile_side.2bpp"
+RedFishingRodTiles:     INCBIN "gfx/red_fishingrod_tiles.2bpp"
+GreenFishingTilesFront: INCBIN "gfx/green_fishing_front.2bpp"
+GreenFishingTilesBack:  INCBIN "gfx/green_fishing_back.2bpp"
+GreenFishingTilesSide:  INCBIN "gfx/green_fishing_side.2bpp"
 
 
 SECTION "bank2E",ROMX,BANK[$2E]	

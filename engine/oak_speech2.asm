@@ -1,11 +1,25 @@
 ChoosePlayerName:
 	call OakSpeechSlidePicRight
+	ld a, [wPlayerGender]
+	and a
+	jr nz, .AreGirl
 	ld de, DefaultNamesPlayer
 	call DisplayIntroNameTextBox
 	ld a, [wCurrentMenuItem]
 	and a
 	jr z, .customName
 	ld hl, DefaultNamesPlayerList
+	call GetDefaultName
+	ld de, wPlayerName
+	call OakSpeechSlidePicLeft
+	jr .done
+.AreGirl
+	ld de, DefaultNamesGirl
+	call DisplayIntroNameTextBox
+	ld a, [wCurrentMenuItem]
+	and a
+	jr z, .customName
+	ld hl, DefaultNamesGirlList
 	call GetDefaultName
 	ld de, wPlayerName
 	call OakSpeechSlidePicLeft
@@ -22,6 +36,12 @@ ChoosePlayerName:
 	call Delay3
 	ld de, RedPicFront
 	ld b, BANK(RedPicFront)
+	ld a, [wPlayerGender]
+	and a
+	jr z, .AreBoy3
+	ld de, GreenPicFront
+	ld b, BANK(GreenPicFront)
+.AreBoy3
 	call IntroDisplayPicCenteredOrUpperRight
 .done
 	ld hl, YourNameIsText
@@ -196,6 +216,12 @@ DefaultNamesPlayer:
 	next "SATOSHI"
 	next "JACK"
 	db   "@"
+DefaultNamesGirl:
+	db   "NEW NAME"
+	next "BLUE"
+	next "YOKO"
+	next "JENNY"
+	db   "@"
 DefaultNamesRival:
 	db   "NEW NAME"
 	next "GREEN"
@@ -208,6 +234,12 @@ DefaultNamesPlayer:
 	next "RED"
 	next "ASH"
 	next "JACK"
+	db   "@"
+DefaultNamesGirl:
+	db   "NEW NAME"
+	next "GREEN"
+	next "DAWN"
+	next "JENNY"
 	db   "@"
 DefaultNamesRival:
 	db   "NEW NAME"
@@ -225,6 +257,12 @@ DefaultNamesPlayer:
 	next "TSUNEKAZ"
 	next "JEAN"
 	db   "@"
+DefaultNamesGirl:
+	db   "NEW NAME"
+	next "GREEN"
+	next "YOKO"
+	next "JENNY"
+	db   "@"
 DefaultNamesRival:
 	db   "NEW NAME"
 	next "RED"
@@ -237,6 +275,12 @@ DefaultNamesPlayer:
 	next "BLUE"
 	next "GARY"
 	next "JOHN"
+	db   "@"
+DefaultNamesGirl:
+	db   "NEW NAME"
+	next "GREEN"
+	next "DAWN"
+	next "JENNY"
 	db   "@"
 DefaultNamesRival:
 	db   "NEW NAME"
@@ -253,6 +297,12 @@ DefaultNamesPlayer:
 	next "GREEN"
 	next "SHIGERU"
 	next "JOHN"
+	db   "@"
+DefaultNamesGirl:
+	db   "NEW NAME"
+	next "BLUE"
+	next "YOKO"
+	next "JENNY"
 	db   "@"
 DefaultNamesRival:
 	db   "NEW NAME"
@@ -299,6 +349,11 @@ DefaultNamesPlayerList:
 	db "RED@"
 	db "SATOSHI@"
 	db "JACK@"
+DefaultNamesGirlList:
+	db   "NEW NAME@"
+	db "BLUE@"
+	db "YOKO@"
+	db "JENNY@"
 DefaultNamesRivalList:
 	db "NEW NAME@"
 	db "GREEN@"
@@ -310,6 +365,11 @@ DefaultNamesPlayerList:
 	db "RED@"
 	db "ASH@"
 	db "JACK@"
+DefaultNamesGirlList:
+	db   "NEW NAME@"
+	db "GREEN@"
+	db "DAWN@"
+	db "JENNY@"
 DefaultNamesRivalList:
 	db "NEW NAME@"
 	db "BLUE@"
@@ -324,6 +384,11 @@ DefaultNamesPlayerList:
 	db "BLUE@"
 	db "TSUNEKAZ@"
 	db "JEAN@"
+DefaultNamesGirlList:
+	db   "NEW NAME@"
+	db "BLUE@"
+	db "YOKO@"
+	db "JENNY@"
 DefaultNamesRivalList:
 	db "NEW NAME@"
 	db "RED@"
@@ -335,6 +400,11 @@ DefaultNamesPlayerList:
 	db "BLUE@"
 	db "GARY@"
 	db "JOHN@"
+DefaultNamesGirlList:
+	db   "NEW NAME@"
+	db "GREEN@"
+	db "DAWN@"
+	db "JENNY@"
 DefaultNamesRivalList:
 	db "NEW NAME@"
 	db "RED@"
@@ -349,6 +419,11 @@ DefaultNamesPlayerList:
 	db "GREEN@"
 	db "SHIGERU@"
 	db "JOHN@"
+DefaultNamesGirlList:
+	db   "NEW NAME@"
+	db "BLUE@"
+	db "YOKO@"
+	db "JENNY@"
 DefaultNamesRivalList:
 	db "NEW NAME@"
 	db "RED@"
