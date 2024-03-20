@@ -12,3 +12,5 @@ Celadon City Rainbow SGB colors: kafujo
 Elite 4 music tutorial: YakiNeen
 
 Running Shoes tutorial: pgattic, Rangi42, dannye, freyta
+
+Player facing trainers tutorial: Luna & Rangi42
