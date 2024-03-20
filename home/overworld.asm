@@ -258,24 +258,26 @@ OverworldLoopLessDelay::
 .moveAhead2		;joenote - rewriting this to implement an optional running or speedup functionality
 	ld hl, wFlags_0xcd60
 	res 2, [hl]
-	;ld a, [wWalkBikeSurfState]
-	;dec a ; riding a bike?
-	;jr nz, .normalPlayerSpriteAdvancement
+	ld a, [wWalkBikeSurfState]
+	dec a ; riding a bike?
+	jr nz, .normalPlayerSpriteAdvancement
 	ld a, [wd736]
 	bit 6, a ; jumping a ledge?
 	jr nz, .normalPlayerSpriteAdvancement
-	;call DoBikeSpeedup
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	callba TrackRunBikeSpeed
-.speedloop
-	ld a, [wUnusedD119]
-	dec a
-	ld [wUnusedD119], a
-	jr z, .normalPlayerSpriteAdvancement
 	call DoBikeSpeedup
-	jr .speedloop
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	call DoBikeSpeedup
+	call DoBikeSpeedup
+	jr .notRunning
 .normalPlayerSpriteAdvancement
+	ld a, [wWalkBikeSurfState]
+	cp $02
+	jr z, .surfFaster
+	ld a, [hJoyHeld]
+	and B_BUTTON
+	jr z, .notRunning
+.surfFaster
+	call DoBikeSpeedup
+.notRunning
 	call AdvancePlayerSprite
 	ld a, [wWalkCounter]
 	and a
