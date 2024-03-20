@@ -148,6 +148,9 @@ SetPal_GameFreakIntro:
 
 ; uses PalPacket_Empty to build a packet based on the current map
 SetPal_Overworld:
+	ld a, [wLastMap]
+	cp CELADON_CITY
+	jr z, .celadon
 	ld hl, PalPacket_Empty
 	ld de, wPalPacket
 	ld bc, $10
@@ -185,6 +188,16 @@ SetPal_Overworld:
 .PokemonTowerOrAgatha
 	ld a, PAL_GREYMON - 1
 	jr .town
+.celadon
+	ld hl, PalPacket_Celadon
+	ld de, wPalPacket
+	ld bc, $10
+	call CopyData
+	ld hl, PalPacket_Celadon
+	ld de, BlkPacket_Celadon
+	ld a, SET_PAL_OVERWORLD
+	ld [wDefaultPaletteCommand], a
+	ret
 .caveOrBruno
 	ld a, PAL_CAVE - 1
 	jr .town

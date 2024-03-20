@@ -48,7 +48,7 @@ OakSpeech:
 	ld a, MUSIC_ROUTES2
 	call PlayMusic
 	ld hl, wNumBoxItems
-	ld a, OLD_ROD
+	ld a, POTION
 	ld [wcf91], a
 	ld a, 1
 	ld [wItemQuantity], a
