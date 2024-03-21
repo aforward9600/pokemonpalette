@@ -75,9 +75,18 @@ OakSpeech:
 	call PrintText
 	call GBFadeOutToWhite
 	call ClearScreen
+	ld a, [wPlayerGender]
+	and a
+	jr z, .AreBoyNidorino
+	ld a, NIDORINA
+	ld [wd0b5], a
+	ld [wcf91], a
+	jr .ReconveneNido
+.AreBoyNidorino
 	ld a, NIDORINO
 	ld [wd0b5], a
 	ld [wcf91], a
+.ReconveneNido
 	call GetMonHeader
 	coord hl, 6, 4
 	call LoadFlippedFrontSpriteByMonIndex
@@ -102,7 +111,14 @@ OakSpeech:
 	
 	call MovePicLeft_NoPalUpdate
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	ld a, [wPlayerGender]
+	and a
+	jr z, .AreBoyNidorinoText
+	ld hl, OakSpeechText4
+	jr .ReconveneNidoText
+.AreBoyNidorinoText
 	ld hl, OakSpeechText2
+.ReconveneNidoText
 	call PrintText
 	call GBFadeOutToWhite
 	call ClearScreen
@@ -207,7 +223,7 @@ OakSpeechText1:
 	db "@"
 OakSpeechText2:
 	TX_FAR _OakSpeechText2A
-	TX_CRY_NIDORINA
+	TX_CRY_NIDORINO
 	TX_FAR _OakSpeechText2B
 	db "@"
 IntroducePlayerText:
@@ -221,6 +237,11 @@ OakSpeechText3:
 	db "@"
 BoyGirlText:
 	TX_FAR _BoyGirlText
+	db "@"
+OakSpeechText4:
+	TX_FAR _OakSpeechText2A
+	TX_CRY_NIDORINA
+	TX_FAR _OakSpeechText2B
 	db "@"
 
 FadeInIntroPic:

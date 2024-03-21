@@ -3,8 +3,8 @@ _ViridianGymText_74ace::
 	line "my hideout!"
 
 	para "I planned to"
-	line "resurrect TEAM"
-	cont "ROCKET here!"
+	line "resurrect Team"
+	cont "Rocket here!"
 
 	para "But, you have"
 	line "caught me again!"
@@ -14,7 +14,7 @@ _ViridianGymText_74ace::
 
 	para "Once more, you"
 	line "shall face"
-	cont "GIOVANNI, the"
+	cont "Giovanni, the"
 	cont "greatest trainer!"
 	done
 
@@ -24,40 +24,49 @@ _ViridianGymText_74ad3::
 	cont "intense fight!"
 	cont "You have won!"
 	cont "As proof, here is"
-	cont "the GREENBADGE!@@"
+	cont "the GreenBadge!@@"
 
 _ViridianGymText_74ad9::
-	text "Having lost to"
+	text "Maybe she was"
+	line "right..."
+
+	para "Maybe I don't have"
+	line "what it takes to"
+	cont "lead..."
+
+	para "Regardless..."
+
+	para "Having lost to"
 	line "you yet again, I"
 	cont "cannot face my"
 	cont "underlings!"
-	cont "TEAM ROCKET is"
+	cont "Team Rocket is"
 	cont "finished forever!"
 
 	para "I will dedicate my"
 	line "life to the study"
-	cont "of #MON!"
+	cont "of #mon!"
 
 	para "Let us meet again"
 	line "some day!"
 	cont "Farewell!@@"
 
 _ViridianGymText12::
-	text "The GREENBADGE"
-	line "makes #MON of"
+	text "The GreenBadge"
+	line "makes #mon of"
 	cont "any level obey!"
 
 	para "It is evidence of"
 	line "your mastery as a"
-	cont "#MON trainer!"
+	cont "#mon trainer!"
 
 	para "With it, you can"
-	line "enter the #MON"
-	cont "LEAGUE!"
+	line "enter the #mon"
+	cont "League!"
 
 	para "It is my gift for"
-	line "your #MON"
-	cont "LEAGUE challenge!"
+	line "your #mon"
+	cont "League challenge!"
 	done
 
 _ReceivedTM27Text::
@@ -66,13 +75,13 @@ _ReceivedTM27Text::
 
 _TM27ExplanationText::
 	db $0
-	para "TM27 is FISSURE!"
+	para "TM27 is Fissure!"
 	line "It will take out"
-	cont "#MON with just"
+	cont "#mon with just"
 	cont "one hit!"
 
 	para "I made it when I"
-	line "ran the GYM here,"
+	line "ran the Gym here,"
 	cont "too long ago..."
 	done
 
@@ -95,7 +104,7 @@ _ViridianGymEndBattleText1::
 _ViridianGymAfterBattleText1::
 	text "You need power to"
 	line "keep up with our"
-	cont "GYM LEADER!"
+	cont "Gym Leader!"
 	done
 
 _ViridianGymBattleText2::
@@ -114,7 +123,7 @@ _ViridianGymAfterBattleText2::
 	done
 
 _ViridianGymBattleText3::
-	text "#MON and I, we"
+	text "#mon and I, we"
 	line "make wonderful"
 	cont "music together!"
 	done
@@ -127,7 +136,7 @@ _ViridianGymEndBattleText3::
 _ViridianGymAfterBattleText3::
 	text "Do you know the"
 	line "identity of our"
-	cont "GYM LEADER?"
+	cont "Gym Leader?"
 	done
 
 _ViridianGymBattleText4::
@@ -141,7 +150,7 @@ _ViridianGymEndBattleText4::
 	prompt
 
 _ViridianGymAfterBattleText4::
-	text "If my #MON"
+	text "If my #mon"
 	line "were as good at"
 	cont "Karate as I..."
 	done
@@ -157,13 +166,13 @@ _ViridianGymEndBattleText5::
 	prompt
 
 _ViridianGymAfterBattleText5::
-	text "The LEADER will"
+	text "The Leader will"
 	line "scold me!"
 	done
 
 _ViridianGymBattleText6::
-	text "I'm the KARATE"
-	line "KING! Your fate"
+	text "I'm the Karate"
+	line "King! Your fate"
 	cont "rests with me!"
 	done
 
@@ -172,13 +181,13 @@ _ViridianGymEndBattleText6::
 	prompt
 
 _ViridianGymAfterBattleText6::
-	text "#MON LEAGUE?"
+	text "#mon League?"
 	line "You? Don't get"
 	cont "cocky!"
 	done
 
 _ViridianGymBattleText7::
-	text "Your #MON will"
+	text "Your #mon will"
 	line "cower at the"
 	cont "crack of my whip!"
 	done
@@ -194,10 +203,10 @@ _ViridianGymAfterBattleText7::
 	done
 
 _ViridianGymBattleText8::
-	text "VIRIDIAN GYM was"
+	text "Viridian Gym was"
 	line "closed for a long"
 	cont "time, but now our"
-	cont "LEADER is back!"
+	cont "Leader is back!"
 	done
 
 _ViridianGymEndBattleText8::
@@ -207,9 +216,9 @@ _ViridianGymEndBattleText8::
 
 _ViridianGymAfterBattleText8::
 	text "You can go onto"
-	line "#MON LEAGUE"
+	line "#mon League"
 	cont "only by defeating"
-	cont "our GYM LEADER!"
+	cont "our Gym Leader!"
 	done
 
 _ViridianGymText_74bd4::
@@ -217,21 +226,21 @@ _ViridianGymText_74bd4::
 	line "making!"
 
 	para "Even I don't know"
-	line "VIRIDIAN LEADER's"
+	line "Viridian Leader's"
 	cont "identity!"
 
 	para "This will be the"
 	line "toughest of all"
-	cont "the GYM LEADERs!"
+	cont "the Gym Leaders!"
 
 	para "I heard that the"
 	line "trainers here"
 	cont "like ground-type"
-	cont "#MON!"
+	cont "#mon!"
 	done
 
 _ViridianGymText_74bd9::
 	text "Blow me away!"
-	line "GIOVANNI was the"
-	cont "GYM LEADER here?"
+	line "Giovanni was the"
+	cont "Gym Leader here?"
 	done

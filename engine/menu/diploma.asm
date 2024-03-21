@@ -108,7 +108,7 @@ DiplomaCongrats:
 	next "diploma certifies"
 	next "that you have"
 	next "completed your"
-	next "#DEX.@"
+	next "#dex.@"
 
 DiplomaGameFreak:
-	db "GAME FREAK@"
+	db "Game Freak@"

@@ -44,7 +44,7 @@ TechnicalMachines:
 	db SKY_ATTACK
 	db REST
 	db THUNDER_WAVE
-	db PSYWAVE
+	db HYPNOSIS
 	db EXPLOSION
 	db ROCK_SLIDE
 	db TRI_ATTACK

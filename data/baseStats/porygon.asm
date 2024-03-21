@@ -23,6 +23,6 @@ db 0 ; growth rate
 	tmlearn 20,24
 	tmlearn 25,29,30,31,32
 	tmlearn 33,34,39,40
-	tmlearn 44,45,46
+	tmlearn 44,45
 	tmlearn 49,50,55
 db 0 ; padding

@@ -221,13 +221,13 @@ FinishDTE::
 Char5CText::
 	db "TM@"
 Char5DText::
-	db "TRAINER@"
+	db "Trainer@"
 Char5BText::
 	db "PC@"
 Char5EText::
-	db "ROCKET@"
+	db "Rocket@"
 Char54Text::
-	db "POKé@"
+	db "Poké@"
 Char56Text::
 	db "……@"
 Char5AText::
@@ -650,9 +650,9 @@ TextCommandSounds::
 	db $10, SFX_GET_ITEM_2
 	db $11, SFX_GET_KEY_ITEM
 	db $13, SFX_DEX_PAGE_ADDED
-	db $14, NIDORINO ; used in OakSpeech	(joenote - corrected from Nidorina)
+	db $14, NIDORINA ; used in OakSpeech	(joenote - corrected from Nidorina)
 	db $15, PIDGEOT  ; used in SaffronCityText12
-	db $16, DEWGONG  ; unused?
+	db $16, NIDORINO  ; unused?
 
 ; draw ellipses
 ; 0CAA

@@ -382,16 +382,16 @@ SpecialEnterMap:
 	jp EnterMap
 
 ContinueText:
-	db "CONTINUE", $4e
+	db "Continue", $4e
 
 NewGameText:
-	db   "NEW GAME"
-	next "OPTION@"
+	db   "New Game"
+	next "Option@"
 
 CableClubOptionsText:
-	db   "TRADE CENTER"
-	next "COLOSSEUM"
-	next "CANCEL@"
+	db   "Trade Center"
+	next "Colosseum"
+	next "Cancel@"
 
 DisplayContinueGameInfo:
 	xor a
@@ -474,10 +474,10 @@ PrintPlayTime:
 	jp PrintNumber
 
 SaveScreenInfoText:
-	db   "PLAYER"
-	next "BADGES    "
-	next "#DEX    "
-	next "TIME@"
+	db   "Player"
+	next "Badges    "
+	next "#dex    "
+	next "Time@"
 
 DisplayOptionMenu:
 	coord hl, 0, 0
@@ -659,19 +659,19 @@ DisplayOptionMenu:
 	jp .getJoypadStateLoop
 
 TextSpeedOptionText:
-	db   "TEXT SPEED"
-	next " FAST  MEDIUM SLOW@"
+	db   "Text Speed"
+	next " Fast  Medium Slow@"
 
 BattleAnimationOptionText:
-	db   "BATTLE ANIMATION"
-	next " ON       OFF@"
+	db   "Battle Animation"
+	next " On       Off@"
 
 BattleStyleOptionText:
-	db   "BATTLE STYLE"
-	next " SHIFT    SET@"
+	db   "Battle Style"
+	next " Shift    Set@"
 
 OptionMenuCancelText:
-	db "CANCEL@"
+	db "Cancel@"
 
 ;joenote - show the sound setting on the menu
 OptionMenuSoundText:
@@ -680,13 +680,13 @@ OptionMenuSoundText:
 	dw OptionMenuEar2
 	dw OptionMenuEar3
 OptionMenuMono:
-	db "MONO     @"
+	db "Mono     @"
 OptionMenuEar1:
-	db "EARPHONE1@"
+	db "Earphone1@"
 OptionMenuEar2:
-	db "EARPHONE2@"
+	db "Earphone2@"
 OptionMenuEar3:
-	db "EARPHONE3@"
+	db "Earphone3@"
 PlaceSoundSetting:
 	ld hl, OptionMenuSoundText
 	ld a, [wOptions]

@@ -205,110 +205,110 @@ DisplayIntroNameTextBox:
 	jp HandleMenuInput
 
 .namestring
-	db "NAME@"
+	db "Name@"
 
 
 
 IF DEF(_REDJP)
 DefaultNamesPlayer:
-	db   "NEW NAME"
-	next "RED"
-	next "SATOSHI"
-	next "JACK"
+	db   "New Name"
+	next "Red"
+	next "Satoshi"
+	next "Jack"
 	db   "@"
 DefaultNamesGirl:
-	db   "NEW NAME"
-	next "BLUE"
-	next "YOKO"
-	next "JENNY"
+	db   "New Name"
+	next "Blue"
+	next "Yoko"
+	next "Jenny"
 	db   "@"
 DefaultNamesRival:
-	db   "NEW NAME"
-	next "GREEN"
-	next "SHIGERU"
-	next "JOHN"
+	db   "New Name"
+	next "Green"
+	next "Shigeru"
+	next "John"
 	db   "@"
 ELIF DEF(_RED)
 DefaultNamesPlayer:
-	db   "NEW NAME"
-	next "RED"
-	next "ASH"
-	next "JACK"
+	db   "New Name"
+	next "Red"
+	next "Ash"
+	next "Jack"
 	db   "@"
 DefaultNamesGirl:
-	db   "NEW NAME"
-	next "GREEN"
-	next "DAWN"
-	next "JENNY"
+	db   "New Name"
+	next "Green"
+	next "Dawn"
+	next "Jenny"
 	db   "@"
 DefaultNamesRival:
-	db   "NEW NAME"
-	next "BLUE"
-	next "GARY"
-	next "JOHN"
+	db   "New Name"
+	next "Blue"
+	next "Gary"
+	next "John"
 	db   "@"
 ENDC
 
 
 IF DEF(_BLUEJP)
 DefaultNamesPlayer:
-	db   "NEW NAME"
-	next "BLUE"
+	db   "New Name"
+	next "Blue"
 	next "TSUNEKAZ"
 	next "JEAN"
 	db   "@"
 DefaultNamesGirl:
-	db   "NEW NAME"
-	next "GREEN"
-	next "YOKO"
-	next "JENNY"
+	db   "New Name"
+	next "Green"
+	next "Yoko"
+	next "Jenny"
 	db   "@"
 DefaultNamesRival:
-	db   "NEW NAME"
-	next "RED"
-	next "GREEN"
+	db   "New Name"
+	next "Red"
+	next "Green"
 	next "HIROSHI"
 	db   "@"
 ELIF DEF(_BLUE)
 DefaultNamesPlayer:
-	db   "NEW NAME"
-	next "BLUE"
-	next "GARY"
-	next "JOHN"
+	db   "New Name"
+	next "Blue"
+	next "Gary"
+	next "John"
 	db   "@"
 DefaultNamesGirl:
-	db   "NEW NAME"
-	next "GREEN"
-	next "DAWN"
-	next "JENNY"
+	db   "New Name"
+	next "Green"
+	next "Dawn"
+	next "Jenny"
 	db   "@"
 DefaultNamesRival:
-	db   "NEW NAME"
-	next "RED"
-	next "ASH"
-	next "JACK"
+	db   "New Name"
+	next "Red"
+	next "Ash"
+	next "Jack"
 	db   "@"
 ENDC
 
 
 IF DEF(_GREEN)
 DefaultNamesPlayer:
-	db   "NEW NAME"
-	next "GREEN"
-	next "SHIGERU"
-	next "JOHN"
+	db   "New Name"
+	next "Green"
+	next "Shigeru"
+	next "John"
 	db   "@"
 DefaultNamesGirl:
-	db   "NEW NAME"
-	next "BLUE"
-	next "YOKO"
-	next "JENNY"
+	db   "New Name"
+	next "Blue"
+	next "Yoko"
+	next "Jenny"
 	db   "@"
 DefaultNamesRival:
-	db   "NEW NAME"
-	next "RED"
-	next "SATOSHI"
-	next "JACK"
+	db   "New Name"
+	next "Red"
+	next "Satoshi"
+	next "Jack"
 	db   "@"
 ENDC
 
@@ -338,97 +338,97 @@ GetDefaultName:
 	jp CopyData
 
 DefaultNamesPlayerListF:
-	db "NEW NAME@"
+	db "New Name@"
 	db "YELLOW@"
 	db "CLAIRE@"
 	db "JILL@"
 
 IF DEF(_REDJP)
 DefaultNamesPlayerList:
-	db "NEW NAME@"
-	db "RED@"
-	db "SATOSHI@"
-	db "JACK@"
+	db "New Name@"
+	db "Red@"
+	db "Satoshi@"
+	db "Jack@"
 DefaultNamesGirlList:
-	db   "NEW NAME@"
-	db "BLUE@"
-	db "YOKO@"
-	db "JENNY@"
+	db "New Name@"
+	db "Blue@"
+	db "Yoko@"
+	db "Jenny@"
 DefaultNamesRivalList:
-	db "NEW NAME@"
-	db "GREEN@"
-	db "SHIGERU@"
-	db "JOHN@"
+	db "New Name@"
+	db "Green@"
+	db "Shigeru@"
+	db "John@"
 ELIF DEF(_RED)
 DefaultNamesPlayerList:
-	db "NEW NAME@"
-	db "RED@"
-	db "ASH@"
-	db "JACK@"
+	db "New Name@"
+	db "Red@"
+	db "Ash@"
+	db "Jack@"
 DefaultNamesGirlList:
-	db   "NEW NAME@"
-	db "GREEN@"
-	db "DAWN@"
-	db "JENNY@"
+	db "New Name@"
+	db "Green@"
+	db "Dawn@"
+	db "Jenny@"
 DefaultNamesRivalList:
-	db "NEW NAME@"
-	db "BLUE@"
-	db "GARY@"
-	db "JOHN@"
+	db "New Name@"
+	db "Blue@"
+	db "Gary@"
+	db "John@"
 ENDC
 
 
 IF DEF(_BLUEJP)
 DefaultNamesPlayerList:
-	db "NEW NAME@"
-	db "BLUE@"
+	db "New Name@"
+	db "Blue@"
 	db "TSUNEKAZ@"
 	db "JEAN@"
 DefaultNamesGirlList:
-	db   "NEW NAME@"
-	db "BLUE@"
-	db "YOKO@"
-	db "JENNY@"
+	db "New Name@"
+	db "Blue@"
+	db "Yoko@"
+	db "Jenny@"
 DefaultNamesRivalList:
-	db "NEW NAME@"
-	db "RED@"
-	db "GREEN@"
+	db "New Name@"
+	db "Red@"
+	db "Green@"
 	db "HIROSHI@"
 ELIF DEF(_BLUE)
 DefaultNamesPlayerList:
-	db "NEW NAME@"
-	db "BLUE@"
-	db "GARY@"
-	db "JOHN@"
+	db "New Name@"
+	db "Blue@"
+	db "Gary@"
+	db "John@"
 DefaultNamesGirlList:
-	db   "NEW NAME@"
-	db "GREEN@"
-	db "DAWN@"
-	db "JENNY@"
+	db "New Name@"
+	db "Green@"
+	db "Dawn@"
+	db "Jenny@"
 DefaultNamesRivalList:
-	db "NEW NAME@"
-	db "RED@"
-	db "ASH@"
-	db "JACK@"
+	db "New Name@"
+	db "Red@"
+	db "Ash@"
+	db "Jack@"
 ENDC
 
 
 IF DEF(_GREEN)
 DefaultNamesPlayerList:
-	db "NEW NAME@"
-	db "GREEN@"
-	db "SHIGERU@"
-	db "JOHN@"
+	db "New Name@"
+	db "Green@"
+	db "Shigeru@"
+	db "John@"
 DefaultNamesGirlList:
-	db   "NEW NAME@"
-	db "BLUE@"
-	db "YOKO@"
-	db "JENNY@"
+	db "New Name@"
+	db "Blue@"
+	db "Yoko@"
+	db "Jenny@"
 DefaultNamesRivalList:
-	db "NEW NAME@"
-	db "RED@"
-	db "SATOSHI@"
-	db "JACK@"
+	db "New Name@"
+	db "Red@"
+	db "Satoshi@"
+	db "Jack@"
 ENDC
 
 TextTerminator_6b20:

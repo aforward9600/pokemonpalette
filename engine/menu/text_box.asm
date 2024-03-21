@@ -218,13 +218,13 @@ TextBoxTextAndCoordTable:
 ; note that there is no terminator
 
 BuySellQuitText:
-	db   "BUY"
-	next "SELL"
-	next "QUIT@@"
+	db   "Buy"
+	next "Sell"
+	next "Quit@@"
 
 UseTossText:
-	db   "USE"
-	next "TOSS@"
+	db   "Use"
+	next "Toss@"
 
 JapaneseSaveMessageText:
 	db   "きろく"
@@ -235,7 +235,7 @@ JapaneseSpeedOptionsText:
 	next "おそい@"
 
 MoneyText:
-	db "MONEY@"
+	db "Money@"
 
 JapaneseMochimonoText:
 	db "もちもの@"
@@ -245,17 +245,17 @@ JapaneseMainMenuText:
 	next "さいしょから@"
 
 BattleMenuText:
-	db   "FIGHT ",$E1,$E2
-	next "ITEM  RUN@"
+	db   "Fight ",$E1,$E2
+	next "Item  Run@"
 
 SafariZoneBattleMenuText:
-	db   "BALL×       BAIT"
-	next "THROW ROCK  RUN@"
+	db   "Ball×       Bait"
+	next "Throw Rock  Run@"
 
 SwitchStatsCancelText:
-	db   "SWITCH"
-	next "STATS"
-	next "CANCEL@"
+	db   "Switch"
+	next "Stats"
+	next "Cancel@"
 
 JapaneseAhText:
 	db "アッ!@"
@@ -540,14 +540,14 @@ TwoOptionMenuStrings:
 	dw .NoYesMenu
 
 .NoYesMenu
-	db   "NO"
-	next "YES@"
+	db   "No"
+	next "Yes@"
 .YesNoMenu
-	db   "YES"
-	next "NO@"
+	db   "Yes"
+	next "No@"
 .BoyGirlMenu
-	db   "BOY"
-	next "GIRL@"
+	db   "Boy"
+	next "Girl@"
 .SouthEastMenu
 	db   "SOUTH"
 	next "EAST@"
@@ -555,11 +555,11 @@ TwoOptionMenuStrings:
 	db   "NORTH"
 	next "EAST@"
 .TradeCancelMenu
-	db   "TRADE"
-	next "CANCEL@"
+	db   "Trade"
+	next "Cancel@"
 .HealCancelMenu
-	db   "HEAL"
-	next "CANCEL@"
+	db   "Heal"
+	next "Cancel@"
 
 DisplayFieldMoveMonMenu:
 	xor a
@@ -682,20 +682,20 @@ DisplayFieldMoveMonMenu:
 	jp PlaceString
 
 FieldMoveNames:
-	db "CUT@"
-	db "FLY@"
+	db "Cut@"
+	db "Fly@"
 	db "@"
-	db "SURF@"
-	db "STRENGTH@"
-	db "FLASH@"
-	db "DIG@"
-	db "TELEPORT@"
-	db "SOFTBOILED@"
+	db "Surf@"
+	db "Strength@"
+	db "Flash@"
+	db "Dig@"
+	db "Teleport@"
+	db "Softboiled@"
 
 PokemonMenuEntries:
-	db   "STATS"
-	next "SWITCH"
-	next "CANCEL@"
+	db   "Stats"
+	next "Switch"
+	next "Cancel@"
 
 GetMonFieldMoves:
 	ld a, [wWhichPokemon]
