@@ -1,10 +1,10 @@
 const_value = 0
 
 	const EVENT_FOLLOWED_OAK_INTO_LAB                ; 000, (D747, bit 0)
-	const EVENT_001                                  ; 001, (D747, bit 1)
-	const EVENT_002                                  ; 002, (D747, bit 2)
+	const EVENT_DEFEATED_OAK                         ; 001, (D747, bit 1)
+	const EVENT_GOT_STARTER_FROM_DAISY               ; 002, (D747, bit 2)
 	const EVENT_HALL_OF_FAME_DEX_RATING              ; 003, (D747, bit 3)
-	const EVENT_004                                  ; 004, (D747, bit 4)
+	const EVENT_BEAT_MEW                             ; 004, (D747, bit 4)
 	const EVENT_005                                  ; 005, (D747, bit 5)
 	const EVENT_PALLET_AFTER_GETTING_POKEBALLS       ; 006, (D747, bit 6)
 	const EVENT_007                                  ; 007, (D747, bit 7)
@@ -2312,7 +2312,7 @@ const_value = 0
 	const EVENT_905                                  ; 905, (D867, bit 5)
 	const EVENT_906                                  ; 906, (D867, bit 6)
 	const ELITE4_CHAMPION_EVENTS_END                 ; 907, (D867, bit 7)
-	const EVENT_908    ;Elite 4 have been beaten     ; 908, (D868, bit 0)	;joenote - some custom events that are useful
+	const EVENT_BEAT_POKEMON_LEAGUE ;Elite 4 have been beaten     ; 908, (D868, bit 0)	;joenote - some custom events that are useful
 	const EVENT_909    						         ; 909, (D868, bit 1)
 	const EVENT_90A    				                 ; 90A, (D868, bit 2)
 	const EVENT_90B    ;got dex diploma              ; 90B, (D868, bit 3)	;joenote - some custom events that are useful

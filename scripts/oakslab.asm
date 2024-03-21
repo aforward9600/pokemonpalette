@@ -593,6 +593,11 @@ OaksLabScript16:
 	ld a, $1a
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
+	lb bc, POKE_BALL, 5
+	call GiveItem
+	ld a, $1c
+	ld [hSpriteIndexOrTextID], a
+	call DisplayTextID
 	ld a, $1
 	ld [H_SPRITEINDEX], a
 	ld a, SPRITE_FACING_RIGHT
@@ -604,6 +609,7 @@ OaksLabScript16:
 	call DisplayTextID
 	SetEvent EVENT_GOT_POKEDEX
 	SetEvent EVENT_OAK_GOT_PARCEL
+	SetEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS
 	ld a, HS_LYING_OLD_MAN
 	ld [wMissableObjectIndex], a
 	predef HideObject
@@ -756,6 +762,7 @@ OaksLabTextPointers:
 	dw OaksLabText25
 	dw OaksLabText26
 	dw OaksLabText27
+	dw OaksLabGivePokeballsScript
 
 OaksLabTextPointers2:
 	dw OaksLabText1
@@ -975,6 +982,9 @@ OaksLabLastMonText:
 OaksLabText32:
 OaksLabText5:
 	TX_ASM
+	CheckEvent EVENT_BEAT_POKEMON_LEAGUE
+	jp z, .BattleOak
+.ReconveneOak
 	CheckEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS
 	jr nz, .asm_1d266
 	ld hl, wPokedexOwned
@@ -1044,6 +1054,42 @@ OaksLabText5:
 .asm_1d2ed
 	jp TextScriptEnd
 
+.BattleOak
+	CheckEvent EVENT_DEFEATED_OAK
+	jp z, .ReconveneOak
+	ld a, OPP_PROF_OAK
+	ld [wCurOpponent], a
+	ld a, [wRivalStarter]
+	cp STARTER2
+	jr nz, .NotSquirtle
+	ld a, $1
+	jr .done
+.NotSquirtle
+	cp STARTER3
+	jr nz, .Charmander
+	ld a, $2
+	jr .done
+.Charmander
+	ld a, $3
+.done
+	ld [wTrainerNo], a
+	ld a, $1
+	ld [wSpriteIndex], a
+	call GetSpritePosition1
+	ld hl, OaksLabText_OakWin
+	ld de, OaksLabText_OakLost
+	call SaveEndBattleTextPointers
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	xor a
+	ld [wJoyIgnore], a
+	ld a, PLAYER_DIR_UP
+	ld [wPlayerMovingDirection], a
+	ld a, $c
+	ld [wOaksLabCurScript], a
+	ret
+
 OaksLabText_1d2f0:
 	TX_FAR _OaksLabText_1d2f0
 	db "@"
@@ -1065,6 +1111,12 @@ OaksLabDeliverParcelText:
 OaksLabAroundWorldText:
 	TX_FAR _OaksLabAroundWorldText
 	db "@"
+
+OaksLabGivePokeballsScript:
+	TX_ASM
+	ld hl, OaksLabGivePokeballsText
+	call PrintText
+	jp TextScriptEnd
 
 OaksLabGivePokeballsText:
 	TX_FAR _OaksLabGivePokeballsText1
@@ -1192,6 +1244,14 @@ OaksLabText_1d3be:
 
 OaksLabText_1d3c3:
 	TX_FAR _OaksLabText_1d3c3
+	db "@"
+
+OaksLabText_OakWin:
+	TX_FAR _OaksLabText_OakWin
+	db "@"
+
+OaksLabText_OakLost:
+	TX_FAR _OaksLabText_OakLost
 	db "@"
 
 OaksLabText16:

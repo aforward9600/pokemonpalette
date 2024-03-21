@@ -156,6 +156,8 @@ VermilionCityText_198ac:
 
 VermilionCityText3:
 	TX_ASM
+	CheckEvent EVENT_BEAT_POKEMON_LEAGUE
+	jr z, .EnterPort
 	CheckEvent EVENT_SS_ANNE_LEFT
 	jr nz, .asm_198f6
 	ld a, [wSpriteStateData1 + 9]
@@ -191,6 +193,17 @@ VermilionCityText3:
 .asm_198fc
 	jp TextScriptEnd
 
+.EnterPort
+	ld hl, WelcomeToThePortText
+	call PrintText
+	ld a, $4
+	ld [wVermilionCityCurScript], a
+	jr .asm_198fd
+	ld hl, SSAnneNotHereText
+	call PrintText
+.asm_198fd
+	jp TextScriptEnd
+
 VermilionCityCoords1:
 	db $1d,$13
 	db $1f,$13
@@ -214,6 +227,10 @@ SSAnneNoTicketText:
 
 SSAnneNotHereText:
 	TX_FAR _SSAnneNotHereText
+	db "@"
+
+WelcomeToThePortText:
+	TX_FAR _WelcomeToThePortText
 	db "@"
 
 VermilionCityText4:

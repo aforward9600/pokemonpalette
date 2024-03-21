@@ -15,36 +15,36 @@ _OaksLabText40::
 
 _OaksLabText41::
 	text "<RIVAL>: My"
-	line "#MON looks a"
+	line "#mon looks a"
 	cont "lot stronger."
 	done
 
 _OaksLabText39::
 	text "Those are #"
-	line "BALLs. They"
-	cont "contain #MON!"
+	line "Balls. They"
+	cont "contain #mon!"
 	done
 
 _OaksLabCharmanderText::
 	text "So! You want the"
-	line "fire #MON,"
-	cont "CHARMANDER?"
+	line "fire #mon,"
+	cont "Charmander?"
 	done
 
 _OaksLabSquirtleText::
 	text "So! You want the"
-	line "water #MON,"
-	cont "SQUIRTLE?"
+	line "water #mon,"
+	cont "Squirtle?"
 	done
 
 _OaksLabBulbasaurText::
 	text "So! You want the"
-	line "plant #MON,"
-	cont "BULBASAUR?"
+	line "plant #mon,"
+	cont "Bulbasaur?"
 	done
 
 _OaksLabMonEnergeticText::
-	text "This #MON is"
+	text "This #mon is"
 	line "really energetic!"
 	prompt
 
@@ -55,59 +55,59 @@ _OaksLabReceivedMonText::
 	text "!@@"
 
 _OaksLabLastMonText::
-	text "That's PROF.OAK's"
-	line "last #MON!"
+	text "That's Prof.Oak's"
+	line "last #mon!"
 	done
 
 _OaksLabText_1d2f0::
-	text "OAK: Now, <PLAYER>,"
-	line "which #MON do"
+	text "Oak: Now, <PLAYER>,"
+	line "which #mon do"
 	cont "you want?"
 	done
 
 _OaksLabText_1d2f5::
-	text "OAK: If a wild"
-	line "#MON appears,"
-	cont "your #MON can"
+	text "Oak: If a wild"
+	line "#mon appears,"
+	cont "your #mon can"
 	cont "fight against it!"
 	done
 
 _OaksLabText_1d2fa::
-	text "OAK: <PLAYER>,"
+	text "Oak: <PLAYER>,"
 	line "raise your young"
-	cont "#MON by making"
+	cont "#mon by making"
 	cont "it fight!"
 	done
 
 _OaksLabDeliverParcelText1::
-	text "OAK: Oh, <PLAYER>!"
+	text "Oak: Oh, <PLAYER>!"
 
 	para "How is my old"
-	line "#MON?"
+	line "#mon?"
 
 	para "Well, it seems to"
 	line "like you a lot."
 
 	para "You must be"
 	line "talented as a"
-	cont "#MON trainer!"
+	cont "#mon trainer!"
 
 	para "What? You have"
 	line "something for me?"
 
 	para "<PLAYER> delivered"
-	line "OAK's PARCEL.@@"
+	line "Oak's Parcel.@@"
 
 _OaksLabDeliverParcelText2::
 	text ""
 	para "Ah! This is the"
-	line "custom # BALL"
+	line "custom # Ball"
 	cont "I ordered!"
 	cont "Thank you!"
 	done
 
 _OaksLabAroundWorldText::
-	text "#MON around the"
+	text "#mon around the"
 	line "world wait for"
 	cont "you, <PLAYER>!"
 	done
@@ -115,16 +115,16 @@ _OaksLabAroundWorldText::
 _OaksLabGivePokeballsText1::
 	text "OAK: You can't get"
 	line "detailed data on"
-	cont "#MON by just"
+	cont "#mon by just"
 	cont "seeing them."
 
 	para "You must catch"
 	line "them! Use these"
 	cont "to capture wild"
-	cont "#MON."
+	cont "#mon."
 
 	para "<PLAYER> got 5"
-	line "# BALLs!@@"
+	line "# Balls!@@"
 
 _OaksLabGivePokeballsText2::
 	text ""
@@ -222,13 +222,13 @@ _OaksLabRivalInterjectionText::
 	done
 
 _OaksLabBePatientText::
-	text "OAK: Be patient!"
+	text "Oak: Be patient!"
 	line "<RIVAL>, you can"
 	cont "have one too!"
 	done
 
 _OaksLabLeavingText::
-	text "OAK: Hey! Don't go"
+	text "Oak: Hey! Don't go"
 	line "away yet!"
 	done
 
@@ -247,7 +247,7 @@ _OaksLabRivalChallengeText::
 	text "<RIVAL>: Wait"
 	line "<PLAYER>!"
 	cont "Let's check out"
-	cont "our #MON!"
+	cont "our #mon!"
 
 	para "Come on, I'll take"
 	line "you on!"
@@ -257,7 +257,7 @@ _OaksLabText_1d3be::
 	text "WHAT?"
 	line "Unbelievable!"
 	cont "I picked the"
-	cont "wrong #MON!"
+	cont "wrong #mon!"
 	prompt
 
 _OaksLabText_1d3c3::
@@ -265,6 +265,19 @@ _OaksLabText_1d3c3::
 	line "Am I great or"
 	cont "what?"
 	prompt
+
+_OaksLabText_OakWin::
+	text "Oak: To surpass"
+	line "even me!"
+
+	para "Congratulations,"
+	line "<PLAYER>!"
+	done
+
+_OaksLabText_OakLost::
+	text "Oak: I still got"
+	line "it!"
+	done
 
 _OaksLabRivalToughenUpText::
 	text "<RIVAL>: Okay!"
@@ -472,8 +485,7 @@ _OaksLabText_44247::
 	done
 
 _OaksLabText_4424c::
-	text "Your #DEX is"
+	text "Your #dex is"
 	line "entirely complete!"
 	cont "Congratulations!"
 	done
-
