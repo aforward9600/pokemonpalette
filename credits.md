@@ -14,3 +14,5 @@ Elite 4 music tutorial: YakiNeen
 Running Shoes tutorial: pgattic, Rangi42, dannye, freyta
 
 Player facing trainers tutorial: Luna & Rangi42
+
+Exp.All improvements: PlagueVonKarma, jojobear13 and AhadsStudios
