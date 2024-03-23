@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 0
 	tmlearn 0
 	tmlearn 0
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(CaterpiePicFront)
+	assert BANK(CaterpiePicFront) == BANK(CaterpiePicBack)

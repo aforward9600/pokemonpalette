@@ -735,35 +735,45 @@ UncompressMonSprite::
 ;joenote - expanding this to use 7 rom banks to fit the spaceworld back sprites if desired
 ; define (by index number) the bank that a pokemon's image is in
 	ld a, [wcf91] ; XXX name for this ram location
-	ld b, a
-	cp MEW
-	ld a, BANK(MewPicFront)
-	jr z, .GotBank
-	ld a, b
-	cp SHELLDER + 1
-	ld a, BANK(ShellderPicFront)
-	jr c, .GotBank
-	ld a, b
-	cp DROWZEE + 1
-	ld a, BANK(DrowzeePicFront)
-	jr c, .GotBank
-	ld a, b
-	cp NINETALES + 1
-	ld a, BANK(NinetalesPicFront)
-	jr c, .GotBank
-	ld a, b
-	cp KAKUNA + 1
-	ld a, BANK(KakunaPicFront)
-	jr c, .GotBank
-	ld a, b
-	cp CLEFABLE + 1
-	ld a, BANK(ClefablePicFront)
-	jr c, .GotBank
-	ld a, b
-	cp PORYGON + 1
-	ld a, BANK(PorygonPicFront)
-	jr c, .GotBank
-	ld a, BANK(VictreebelPicFront)
+;	ld b, a
+;	cp MEW
+;	ld a, BANK(MewPicFront)
+;	jr z, .GotBank
+;	ld a, b
+;	cp NIDORINA + 1
+;	ld a, BANK(NidorinaPicFront)
+;	jr c, .GotBank
+;	ld a, b
+;	cp PARASECT + 1
+;	ld a, BANK(ParasectPicFront)
+;	jr c, .GotBank
+;	ld a, b
+;	cp ARBOK + 1
+;	ld a, BANK(ArbokPicFront)
+;	jr c, .GotBank
+;	ld a, b
+;	cp HITMONCHAN + 1
+;	ld a, BANK(HitmonchanPicFront)
+;	jr c, .GotBank
+;	ld a, b
+;	cp CLEFABLE + 1
+;	ld a, BANK(ClefablePicFront)
+;	jr c, .GotBank
+;	ld a, b
+;	cp HITMONLEE + 1
+;	ld a, BANK(HitmonleePicFront)
+;	jr c, .GotBank
+;	ld a, BANK(VictreebelPicFront)
+	cp FOSSIL_KABUTOPS
+	jr z, .bankFossilOrGhost
+	cp FOSSIL_AERODACTYL
+	jr z, .bankFossilOrGhost
+	cp MON_GHOST
+	jr z, .bankFossilOrGhost
+	ld a, [wMonHPicBank]
+	jr .GotBank
+.bankFossilOrGhost
+	ld a, BANK(FossilKabutopsPic)
 .GotBank
 	jp UncompressSpriteData
 
@@ -774,6 +784,7 @@ LoadMonFrontSprite::
 	call UncompressMonSprite
 	ld hl, wMonHSpriteDim
 	ld a, [hli]
+LoadUncompressedBackSprite::
 	ld c, a
 	pop de
 	; fall through

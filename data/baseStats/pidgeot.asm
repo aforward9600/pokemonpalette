@@ -25,4 +25,6 @@ db 3 ; growth rate
 	tmlearn 33,34,39
 	tmlearn 43,44
 	tmlearn 50,52
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(PidgeotPicFront)
+	assert BANK(PidgeotPicFront) == BANK(PidgeotPicBack)

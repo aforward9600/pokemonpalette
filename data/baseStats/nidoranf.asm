@@ -25,4 +25,6 @@ db 3 ; growth rate
 	tmlearn 33,34,40
 	tmlearn 44
 	tmlearn 50
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(NidoranFPicFront)
+	assert BANK(NidoranFPicFront) == BANK(NidoranFPicBack)

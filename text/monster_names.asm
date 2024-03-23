@@ -62,7 +62,7 @@ MonsterNames:
 	db "Missingno."
 	db "Missingno."
 	db "Missingno."
-	db "Farfetch'd"
+	db "Farfetch'd@"
 	db "Venonat@@@"
 	db "Dragonite@"
 	db "Missingno."

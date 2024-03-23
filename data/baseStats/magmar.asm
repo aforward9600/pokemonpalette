@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34,35,38,40
 	tmlearn 44
 	tmlearn 50,54
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(MagmarPicFront)
+	assert BANK(MagmarPicFront) == BANK(MagmarPicBack)

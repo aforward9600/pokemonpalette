@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 33,34,40
 	tmlearn 44,48
 	tmlearn 50,53
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(OmastarPicFront)
+	assert BANK(OmastarPicFront) == BANK(OmastarPicBack)

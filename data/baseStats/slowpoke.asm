@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 33,34,38,39,40
 	tmlearn 44,45,46
 	tmlearn 49,50,53,54,55
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(SlowpokePicFront)
+	assert BANK(SlowpokePicFront) == BANK(SlowpokePicBack)

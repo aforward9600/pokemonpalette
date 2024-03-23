@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 0
 	tmlearn 0
 	tmlearn 0
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(KakunaPicFront)
+	assert BANK(KakunaPicFront) == BANK(KakunaPicBack)

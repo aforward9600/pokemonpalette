@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34
 	tmlearn 44,48
 	tmlearn 50
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(DugtrioPicFront)
+	assert BANK(DugtrioPicFront) == BANK(DugtrioPicBack)

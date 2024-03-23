@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34,39,40
 	tmlearn 44,46
 	tmlearn 50,53,54
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(PsyduckPicFront)
+	assert BANK(PsyduckPicFront) == BANK(PsyduckPicBack)

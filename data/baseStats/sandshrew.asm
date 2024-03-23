@@ -13,7 +13,7 @@ dw SandshrewPicFront
 dw SandshrewPicBack
 ; attacks known at lvl 0
 db SCRATCH
-db 0
+db POISON_STING
 db 0
 db 0
 db 0 ; growth rate
@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34,39,40
 	tmlearn 44,48
 	tmlearn 50,51,54
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(SandshrewPicFront)
+	assert BANK(SandshrewPicFront) == BANK(SandshrewPicBack)

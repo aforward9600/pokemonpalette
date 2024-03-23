@@ -25,4 +25,6 @@ db 5 ; growth rate
 	tmlearn 0
 	tmlearn 0
 	tmlearn 0
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(MagikarpPicFront)
+	assert BANK(MagikarpPicFront) == BANK(MagikarpPicBack)

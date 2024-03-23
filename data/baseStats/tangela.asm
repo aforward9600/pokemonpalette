@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34,40
 	tmlearn 44
 	tmlearn 50,51
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(TangelaPicFront)
+	assert BANK(TangelaPicFront) == BANK(TangelaPicBack)

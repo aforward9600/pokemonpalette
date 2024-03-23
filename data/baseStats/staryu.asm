@@ -25,4 +25,6 @@ db 5 ; growth rate
 	tmlearn 33,34,39,40
 	tmlearn 44,45
 	tmlearn 49,50,53,55
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(StaryuPicFront)
+	assert BANK(StaryuPicFront) == BANK(StaryuPicBack)

@@ -25,4 +25,6 @@ db 5 ; growth rate
 	tmlearn 33,34,40
 	tmlearn 44
 	tmlearn 50,51,53
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(TentacoolPicFront)
+	assert BANK(TentacoolPicFront) == BANK(TentacoolPicBack)

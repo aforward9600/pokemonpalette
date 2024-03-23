@@ -23,6 +23,8 @@ db 0 ; growth rate
 	tmlearn 20
 	tmlearn 28,31,32
 	tmlearn 33,34,38,39,40
-	tmlearn 44,46
+	tmlearn 42,44,46
 	tmlearn 50
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(VulpixPicFront)
+	assert BANK(VulpixPicFront) == BANK(VulpixPicBack)

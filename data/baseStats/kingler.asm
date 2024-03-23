@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34
 	tmlearn 44
 	tmlearn 50,51,53,54
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(KinglerPicFront)
+	assert BANK(KinglerPicFront) == BANK(KinglerPicBack)

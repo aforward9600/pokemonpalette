@@ -201,8 +201,8 @@ RhydonEvosMoves:
 	db 35, TAIL_WHIP
 	db 40, FURY_ATTACK
 	db 48, HORN_DRILL
-	db 55, LEER
-	db 64, TAKE_DOWN
+	db 55, TAKE_DOWN
+	db 64, EARTHQUAKE
 	db 0
 
 KangaskhanEvosMoves:
@@ -263,7 +263,9 @@ VoltorbEvosMoves:
 	db 17, SONICBOOM
 	db 22, SELFDESTRUCT
 	db 29, LIGHT_SCREEN
+	db 33, THUNDERBOLT
 	db 36, SWIFT
+	db 40, THUNDER
 	db 43, EXPLOSION
 	db 0
 
@@ -401,8 +403,8 @@ RhyhornEvosMoves:
 	db 35, TAIL_WHIP
 	db 40, FURY_ATTACK
 	db 45, HORN_DRILL
-	db 50, LEER
-	db 55, TAKE_DOWN
+	db 50, TAKE_DOWN
+	db 55, EARTHQUAKE
 	db 0
 
 LaprasEvosMoves:
@@ -524,10 +526,10 @@ PinsirEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 25, SEISMIC_TOSS
-	db 30, GUILLOTINE
+	db 25, PIN_MISSILE
+	db 30, SEISMIC_TOSS
 	db 36, FOCUS_ENERGY
-	db 43, HARDEN
+	db 43, GUILLOTINE
 	db 49, SLASH
 	db 54, SWORDS_DANCE
 	db 0
@@ -993,7 +995,7 @@ JynxEvosMoves:
 	db 23, DOUBLESLAP
 	db 31, ICE_PUNCH
 	db 39, BODY_SLAM
-	db 47, THRASH
+	db 47, PSYCHIC_M
 	db 58, BLIZZARD
 	db 0
 
@@ -1206,9 +1208,10 @@ SandshrewEvosMoves:
 	db 0
 ; Learnset
 	db 10, SAND_ATTACK
-	db 17, SLASH
-	db 24, POISON_STING
-	db 31, SWIFT
+	db 15, DIG
+	db 20, SLASH
+	db 24, SWIFT
+	db 31, EARTHQUAKE
 	db 38, FURY_SWIPES
 	db 0
 
@@ -1217,9 +1220,10 @@ SandslashEvosMoves:
 	db 0
 ; Learnset
 	db 10, SAND_ATTACK
-	db 17, SLASH
-	db 27, POISON_STING
-	db 36, SWIFT
+	db 15, DIG
+	db 20, SLASH
+	db 27, SWIFT
+	db 36, EARTHQUAKE
 	db 47, FURY_SWIPES
 	db 0
 
@@ -1281,8 +1285,8 @@ FlareonEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 27, QUICK_ATTACK
-	db 31, EMBER
+	db 26, EMBER
+	db 31, QUICK_ATTACK
 	db 37, TAIL_WHIP
 	db 40, BITE
 	db 42, LEER
@@ -1295,8 +1299,8 @@ JolteonEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 27, QUICK_ATTACK
-	db 31, THUNDERSHOCK
+	db 26, THUNDERSHOCK
+	db 31, QUICK_ATTACK
 	db 37, TAIL_WHIP
 	db 40, THUNDER_WAVE
 	db 42, DOUBLE_KICK
@@ -1309,8 +1313,8 @@ VaporeonEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 27, QUICK_ATTACK
-	db 31, WATER_GUN
+	db 26, WATER_GUN
+	db 31, QUICK_ATTACK
 	db 37, TAIL_WHIP
 	db 40, BITE
 	db 42, ACID_ARMOR
@@ -1668,7 +1672,9 @@ ElectrodeEvosMoves:
 	db 17, SONICBOOM
 	db 22, SELFDESTRUCT
 	db 29, LIGHT_SCREEN
+	db 35, THUNDERBOLT
 	db 40, SWIFT
+	db 45, THUNDER
 	db 50, EXPLOSION
 	db 0
 

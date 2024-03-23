@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 33,34,40
 	tmlearn 44
 	tmlearn 50,51
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(ParasPicFront)
+	assert BANK(ParasPicFront) == BANK(ParasPicBack)

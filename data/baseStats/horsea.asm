@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34,39,40
 	tmlearn 44
 	tmlearn 50,53
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(HorseaPicFront)
+	assert BANK(HorseaPicFront) == BANK(HorseaPicBack)

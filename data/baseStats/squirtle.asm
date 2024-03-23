@@ -25,4 +25,6 @@ db 3 ; growth rate
 	tmlearn 33,34,40
 	tmlearn 44
 	tmlearn 50,53,54
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(SquirtlePicFront)
+	assert BANK(SquirtlePicFront) == BANK(SquirtlePicBack)

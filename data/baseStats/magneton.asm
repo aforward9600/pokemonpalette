@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 33,34,39
 	tmlearn 44,45
 	tmlearn 50,55
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(MagnetonPicFront)
+	assert BANK(MagnetonPicFront) == BANK(MagnetonPicBack)

@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 33,34,39
 	tmlearn 44
 	tmlearn 50
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(VenomothPicFront)
+	assert BANK(VenomothPicFront) == BANK(VenomothPicBack)

@@ -2141,6 +2141,8 @@ wMonHGrowthRate:: ; d0cb
 wMonHLearnset:: ; d0cc
 ; bit field
 	flag_array 50 + 5
+
+wMonHPicBank::
 	ds 1
 
 wSavedTilesetType:: ; d0d4

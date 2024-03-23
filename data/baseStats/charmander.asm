@@ -25,4 +25,6 @@ db 3 ; growth rate
 	tmlearn 33,34,38,39,40
 	tmlearn 44
 	tmlearn 50,51,54
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(CharmanderPicFront)
+	assert BANK(CharmanderPicFront) == BANK(CharmanderPicBack)

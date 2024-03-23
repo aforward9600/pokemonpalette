@@ -25,4 +25,6 @@ db 5 ; growth rate
 	tmlearn 33,34,39
 	tmlearn 43,44,45
 	tmlearn 50,52,55
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(ZapdosPicFront)
+	assert BANK(ZapdosPicFront) == BANK(ZapdosPicBack)

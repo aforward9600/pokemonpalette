@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34,39
 	tmlearn 44,46
 	tmlearn 50,52
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(ZubatPicFront)
+	assert BANK(ZubatPicFront) == BANK(ZubatPicBack)

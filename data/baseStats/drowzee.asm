@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 33,34,35,40
 	tmlearn 42,44,45,46
 	tmlearn 49,50,55
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(DrowzeePicFront)
+	assert BANK(DrowzeePicFront) == BANK(DrowzeePicBack)

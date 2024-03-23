@@ -25,4 +25,6 @@ db 4 ; growth rate
 	tmlearn 33,34,35,37,38,40
 	tmlearn 41,44,45
 	tmlearn 49,50,54,55
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(ChanseyPicFront)
+	assert BANK(ChanseyPicFront) == BANK(ChanseyPicBack)

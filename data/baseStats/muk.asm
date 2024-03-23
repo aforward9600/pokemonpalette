@@ -25,4 +25,6 @@ db 0 ; growth rate
 	tmlearn 34,36,38
 	tmlearn 44,47
 	tmlearn 50
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(MukPicFront)
+	assert BANK(MukPicFront) == BANK(MukPicBack)

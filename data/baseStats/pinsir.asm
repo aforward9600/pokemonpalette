@@ -25,4 +25,6 @@ db 5 ; growth rate
 	tmlearn 34
 	tmlearn 44,48
 	tmlearn 50,51,54
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(PinsirPicFront)
+	assert BANK(PinsirPicFront) == BANK(PinsirPicBack)

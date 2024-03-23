@@ -25,4 +25,6 @@ db 3 ; growth rate
 	tmlearn 34,40
 	tmlearn 44,46
 	tmlearn 50,53
-db 0 ; padding
+;	db 0 ; padding
+	db BANK(PoliwagPicFront)
+	assert BANK(PoliwagPicFront) == BANK(PoliwagPicBack)
