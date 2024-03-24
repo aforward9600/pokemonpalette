@@ -12,6 +12,7 @@ PICS_4 EQU $C
 PICS_5 EQU $D
 PICS_6 EQU $30
 PICS_7 EQU $31
+PICS_8 EQU $32
 
 INCLUDE "home.asm"
 
@@ -575,12 +576,6 @@ RhyhornPicFront::     INCBIN "pic/rgmon/rhyhorn.pic"
 RhyhornPicBack::      INCBIN "pic/monback/rhyhornb.pic"
 LaprasPicFront::      INCBIN "pic/rgmon/lapras.pic"
 LaprasPicBack::       INCBIN "pic/monback/laprasb.pic"
-ArcaninePicFront::    INCBIN "pic/rgmon/arcanine.pic"
-ArcaninePicBack::     INCBIN "pic/monback/arcanineb.pic"
-GyaradosPicFront::    INCBIN "pic/rgmon/gyarados.pic"
-GyaradosPicBack::     INCBIN "pic/monback/gyaradosb.pic"
-ShellderPicFront::    INCBIN "pic/rgmon/shellder.pic"
-ShellderPicBack::     INCBIN "pic/monback/shellderb.pic"
 ELSE
 RhydonPicFront::      INCBIN "pic/rgmon/rhydon.pic"
 RhydonPicBack::       INCBIN "pic/monback/rhydonb.pic"
@@ -620,8 +615,6 @@ RhyhornPicFront::     INCBIN "pic/bmon/rhyhorn.pic"
 RhyhornPicBack::      INCBIN "pic/monback/rhyhornb.pic"
 LaprasPicFront::      INCBIN "pic/bmon/lapras.pic"
 LaprasPicBack::       INCBIN "pic/monback/laprasb.pic"
-ParasectPicFront::    INCBIN "pic/rgmon/parasect.pic"
-ParasectPicBack::     INCBIN "pic/monback/parasectb.pic"
 ENDC
 
 SECTION "Battle (bank 9)", ROMX, BANK[$9]
@@ -660,10 +653,6 @@ INCLUDE "engine/game_corner_slots.asm"
 
 SECTION "Pics 2", ROMX, BANK[PICS_2]
 IF DEF(_REDGREENJP)
-TentacoolPicFront::   INCBIN "pic/rgmon/tentacool.pic"
-TentacoolPicBack::    INCBIN "pic/monback/tentacoolb.pic"
-GastlyPicFront::      INCBIN "pic/rgmon/gastly.pic"
-GastlyPicBack::       INCBIN "pic/monback/gastlyb.pic"
 ScytherPicFront::     INCBIN "pic/rgmon/scyther.pic"
 ScytherPicBack::      INCBIN "pic/monback/scytherb.pic"
 StaryuPicFront::      INCBIN "pic/rgmon/staryu.pic"
@@ -847,10 +836,6 @@ KrabbyPicFront::      INCBIN "pic/bmon/krabby.pic"
 KrabbyPicBack::       INCBIN "pic/monback/krabbyb.pic"
 VulpixPicFront::      INCBIN "pic/swmon/vulpix.pic"
 VulpixPicBack::       INCBIN "pic/monback/vulpixb.pic"
-NinetalesPicFront::   INCBIN "pic/ymon/ninetales.pic"
-NinetalesPicBack::    INCBIN "pic/monback/ninetalesb.pic"
-NidorinaPicFront::     INCBIN "pic/rgmon/nidorina.pic"
-NidorinaPicBack::      INCBIN "pic/monback/nidorinab.pic"
 ENDC
 
 SECTION "Battle (bank B)", ROMX, BANK[$B]
@@ -959,12 +944,6 @@ PoliwhirlPicFront::   INCBIN "pic/ymon/poliwhirl.pic"
 PoliwhirlPicBack::    INCBIN "pic/monback/poliwhirlb.pic"
 PoliwrathPicFront::   INCBIN "pic/ymon/poliwrath.pic"
 PoliwrathPicBack::    INCBIN "pic/monback/poliwrathb.pic"
-WeedlePicFront::      INCBIN "pic/bmon/weedle.pic"
-WeedlePicBack::       INCBIN "pic/monback/weedleb.pic"
-KakunaPicFront::      INCBIN "pic/rgmon/kakuna.pic"
-KakunaPicBack::       INCBIN "pic/monback/kakunab.pic"
-HitmonchanPicFront::  INCBIN "pic/bmon/hitmonchan.pic"
-HitmonchanPicBack::   INCBIN "pic/monback/hitmonchanb.pic"
 ENDC
 
 SECTION "Battle (bank C)", ROMX, BANK[$C]
@@ -1055,18 +1034,10 @@ CloysterPicFront::     INCBIN "pic/rgmon/cloyster.pic"
 CloysterPicBack::      INCBIN "pic/monback/cloysterb.pic"
 ElectrodePicFront::    INCBIN "pic/ymon/electrode.pic"
 ElectrodePicBack::     INCBIN "pic/monback/electrodeb.pic"
-ClefablePicFront::     INCBIN "pic/ymon/clefable.pic"
-ClefablePicBack::      INCBIN "pic/monback/clefableb.pic"
 ENDC
 
 SECTION "Pics 6", ROMX, BANK[PICS_6]
 IF DEF(_REDGREENJP)
-WeezingPicFront::      INCBIN "pic/rgmon/weezing.pic"
-WeezingPicBack::       INCBIN "pic/monback/weezingb.pic"
-PersianPicFront::      INCBIN "pic/rgmon/persian.pic"
-PersianPicBack::       INCBIN "pic/monback/persianb.pic"
-MarowakPicFront::      INCBIN "pic/rgmon/marowak.pic"
-MarowakPicBack::       INCBIN "pic/monback/marowakb.pic"
 HaunterPicFront::      INCBIN "pic/rgmon/haunter.pic"
 HaunterPicBack::       INCBIN "pic/monback/haunterb.pic"
 AbraPicFront::         INCBIN "pic/rgmon/abra.pic"
@@ -1099,8 +1070,6 @@ RaticatePicFront::     INCBIN "pic/rgmon/raticate.pic"
 RaticatePicBack::      INCBIN "pic/monback/raticateb.pic"
 NidorinoPicFront::     INCBIN "pic/rgmon/nidorino.pic"
 NidorinoPicBack::      INCBIN "pic/monback/nidorinob.pic"
-NidorinaPicFront::     INCBIN "pic/rgmon/nidorina.pic"
-NidorinaPicBack::      INCBIN "pic/monback/nidorinab.pic"
 GeodudePicFront::      INCBIN "pic/rgmon/geodude.pic"
 GeodudePicBack::       INCBIN "pic/monback/geodudeb.pic"
 PorygonPicFront::      INCBIN "pic/rgmon/porygon.pic"
@@ -1219,6 +1188,8 @@ PsyduckPicFront::     INCBIN "pic/bmon/psyduck.pic"
 PsyduckPicBack::      INCBIN "pic/monback/psyduckb.pic"
 DrowzeePicFront::     INCBIN "pic/bmon/drowzee.pic"
 DrowzeePicBack::      INCBIN "pic/monback/drowzeeb.pic"
+HitmonchanPicFront::  INCBIN "pic/bmon/hitmonchan.pic"
+HitmonchanPicBack::   INCBIN "pic/monback/hitmonchanb.pic"
 MewPicFront:: 		   INCBIN "pic/swmon/mew.pic"
 MewPicBack::  		   INCBIN "pic/monback/mewb.pic"
 ENDC
@@ -1226,6 +1197,41 @@ RedPicBack::           INCBIN "pic/trainer/redb.pic"
 GreenPicBack::         INCBIN "pic/trainer/greenb.pic"
 OldManPic::            INCBIN "pic/trainer/oldman.pic"
 MissingnoPic::         INCBIN "pic/other/missingno.pic"
+
+SECTION "Pics 8", ROMX, BANK[PICS_8]
+IF DEF(_REDGREENJP)
+WeezingPicFront::      INCBIN "pic/rgmon/weezing.pic"
+WeezingPicBack::       INCBIN "pic/monback/weezingb.pic"
+PersianPicFront::      INCBIN "pic/rgmon/persian.pic"
+PersianPicBack::       INCBIN "pic/monback/persianb.pic"
+MarowakPicFront::      INCBIN "pic/rgmon/marowak.pic"
+MarowakPicBack::       INCBIN "pic/monback/marowakb.pic"
+TentacoolPicFront::   INCBIN "pic/rgmon/tentacool.pic"
+TentacoolPicBack::    INCBIN "pic/monback/tentacoolb.pic"
+GastlyPicFront::      INCBIN "pic/rgmon/gastly.pic"
+GastlyPicBack::       INCBIN "pic/monback/gastlyb.pic"
+ArcaninePicFront::    INCBIN "pic/rgmon/arcanine.pic"
+ArcaninePicBack::     INCBIN "pic/monback/arcanineb.pic"
+GyaradosPicFront::    INCBIN "pic/rgmon/gyarados.pic"
+GyaradosPicBack::     INCBIN "pic/monback/gyaradosb.pic"
+NidorinaPicFront::     INCBIN "pic/rgmon/nidorina.pic"
+NidorinaPicBack::      INCBIN "pic/monback/nidorinab.pic"
+ShellderPicFront::    INCBIN "pic/rgmon/shellder.pic"
+ShellderPicBack::     INCBIN "pic/monback/shellderb.pic"
+ELSE
+NidorinaPicFront::     INCBIN "pic/rgmon/nidorina.pic"
+NidorinaPicBack::      INCBIN "pic/monback/nidorinab.pic"
+ParasectPicFront::    INCBIN "pic/rgmon/parasect.pic"
+ParasectPicBack::     INCBIN "pic/monback/parasectb.pic"
+NinetalesPicFront::   INCBIN "pic/ymon/ninetales.pic"
+NinetalesPicBack::    INCBIN "pic/monback/ninetalesb.pic"
+WeedlePicFront::      INCBIN "pic/bmon/weedle.pic"
+WeedlePicBack::       INCBIN "pic/monback/weedleb.pic"
+KakunaPicFront::      INCBIN "pic/rgmon/kakuna.pic"
+KakunaPicBack::       INCBIN "pic/monback/kakunab.pic"
+ClefablePicFront::     INCBIN "pic/ymon/clefable.pic"
+ClefablePicBack::      INCBIN "pic/monback/clefableb.pic"
+ENDC
 
 SECTION "Battle (bank D)", ROMX, BANK[$D]
 ;migrated content to bank 9
