@@ -770,6 +770,7 @@ UncompressMonSprite::
 	jr z, .bankFossilOrGhost
 	cp MON_GHOST
 	jr z, .bankFossilOrGhost
+	ld b, b
 	ld a, [wMonHPicBank]
 	jr .GotBank
 .bankFossilOrGhost

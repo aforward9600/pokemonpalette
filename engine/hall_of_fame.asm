@@ -208,8 +208,8 @@ HoFLoadPlayerPics:
 	ld a, BANK(RedPicBack)
 	jr .routine2
 .GirlStuff2
-	ld de, GreenPicFront
-	ld a, BANK(GreenPicFront)
+	ld de, GreenPicBack
+	ld a, BANK(GreenPicBack)
 .routine2
 	call UncompressSpriteFromDE
 	ld a, $77

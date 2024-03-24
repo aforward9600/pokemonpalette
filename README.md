@@ -1,3 +1,9 @@
+# Pokémon Palette Version
+
+A small QOL hack that replaces the Gym Leaders' teams with teams based on colors.
+Based on jojobear13's Shin Pokémon Red and Blue. Below is the original README file from Shin Pokémon Red and Blue.
+It will give you all the engine changes, such as changes to the battle system.
+
 # Shin Pokémon Red and Blue: Lite Patch
 
 Version 1.23
