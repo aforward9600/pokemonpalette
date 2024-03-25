@@ -197,7 +197,7 @@ WorldMapTileGraphicsEnd:
 IF DEF(_REDGREENJP)
 PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title_green.2bpp"
 ELSE
-PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title.2bpp"
+PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title_green.2bpp"
 ENDC
 PlayerCharacterTitleGraphicsEnd:
 
@@ -267,6 +267,7 @@ GameboyKidSprite:     INCBIN "gfx/sprites/gameboy_kid.2bpp"
 ClefairySprite:       INCBIN "gfx/sprites/clefairy.2bpp"
 AgathaSprite:         INCBIN "gfx/sprites/agatha.2bpp"
 SeelSprite:           INCBIN "gfx/sprites/seel.2bpp"
+PokedexSprite:        INCBIN "gfx/sprites/pokedex.2bpp"
 
 
 SECTION "Battle (bank 5)", ROMX, BANK[$5]
@@ -1231,6 +1232,8 @@ KakunaPicFront::      INCBIN "pic/rgmon/kakuna.pic"
 KakunaPicBack::       INCBIN "pic/monback/kakunab.pic"
 ClefablePicFront::     INCBIN "pic/ymon/clefable.pic"
 ClefablePicBack::      INCBIN "pic/monback/clefableb.pic"
+PlayerCharacterTitleFGraphics:  INCBIN "gfx/player_title_female.2bpp"
+PlayerCharacterTitleFGraphicsEnd:
 ENDC
 
 SECTION "Battle (bank D)", ROMX, BANK[$D]

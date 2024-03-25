@@ -12,9 +12,9 @@ INCBIN BEEDRILL_FR,0,1 ; 77, sprite dimensions
 dw BeedrillPicFront
 dw BeedrillPicBack
 ; attacks known at lvl 0
-db FURY_ATTACK
-db 0
-db 0
+db POISON_STING
+db HARDEN
+db STRING_SHOT
 db 0
 db 0 ; growth rate
 ; learnset
@@ -22,7 +22,7 @@ db 0 ; growth rate
 	tmlearn 9,10,15
 	tmlearn 20,21
 	tmlearn 31,32
-	tmlearn 33,34,39,40
+	tmlearn 33,39,40
 	tmlearn 44
 	tmlearn 50,51
 ;	db 0 ; padding

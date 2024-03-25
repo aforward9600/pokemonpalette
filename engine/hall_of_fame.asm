@@ -179,9 +179,9 @@ HoFDisplayMonInfo:
 	jp PlayCry
 
 HoFMonInfoText:
-	db   "LEVEL/"
-	next "TYPE1/"
-	next "TYPE2/@"
+	db   "Level/"
+	next "Type1/"
+	next "Type2/@"
 
 HoFLoadPlayerPics:
 	ld a, [wPlayerGender]

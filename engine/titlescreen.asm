@@ -93,13 +93,13 @@ DisplayTitleScreen:
 	call DrawPlayerCharacter
 
 ; put a pokeball in the player's hand
-	ld hl, wOAMBuffer + $28
+;	ld hl, wOAMBuffer + $28
 IF DEF(_REDGREENJP)
 	ld a, $70
 ELSE
-	ld a, $74
+;	ld a, $74
 ENDC
-	ld [hl], a
+;	ld [hl], a
 
 ; place tiles for title screen copyright
 IF DEF(_REDGREENJP)
@@ -254,14 +254,14 @@ ENDC
 	
 ; Keep scrolling in new mons indefinitely until the user performs input.
 .awaitUserInterruptionLoop
-	ld c, 200
+	ld c, 255
 	call CheckForUserInterruption
 	jr c, .finishedWaiting
 	call TitleScreenScrollInMon
-	ld c, 1
-	call CheckForUserInterruption
-	jr c, .finishedWaiting
-	callba TitleScreenAnimateBallIfStarterOut
+;	ld c, 1
+;	call CheckForUserInterruption
+;	jr c, .finishedWaiting
+;	callba TitleScreenAnimateBallIfStarterOut
 	call TitleScreenPickNewMon
 	jr .awaitUserInterruptionLoop
 
@@ -351,10 +351,20 @@ ScrollTitleScreenGameVersion:
 	ret
 
 DrawPlayerCharacter:
+	call Random
+	cp 128
+	jr nc, .GirlStuff1
 	ld hl, PlayerCharacterTitleGraphics
 	ld de, vSprites
 	ld bc, PlayerCharacterTitleGraphicsEnd - PlayerCharacterTitleGraphics
 	ld a, BANK(PlayerCharacterTitleGraphics)
+	jr .Routine
+.GirlStuff1
+	ld hl, PlayerCharacterTitleFGraphics
+	ld de, vSprites
+	ld bc, PlayerCharacterTitleFGraphicsEnd - PlayerCharacterTitleFGraphics
+	ld a, BANK(PlayerCharacterTitleFGraphics)
+.Routine
 	call FarCopyData2
 	call ClearSprites
 	xor a

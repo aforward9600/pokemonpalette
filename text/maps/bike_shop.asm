@@ -1,23 +1,23 @@
 IF DEF(_JPTXT)
 _BikeShopText_1d810::
 	text "Hi! Welcome to"
-	line "MIRACLE CYCLE."
+	line "Miracle Cycle."
 
 	para "Have we got just"
-	line "the BIKE for you!"
+	line "the Bike for you!"
 	prompt
 ELSE
 _BikeShopText_1d810::
 	text "Hi! Welcome to"
-	line "our BIKE SHOP."
+	line "our Bike Shop."
 
 	para "Have we got just"
-	line "the BIKE for you!"
+	line "the Bike for you!"
 	prompt
 ENDC
 
 _BikeShopText_1d815::
-	text "It's a cool BIKE!"
+	text "It's a cool Bike!"
 	line "Do you want it?"
 	done
 
@@ -29,15 +29,15 @@ _BikeShopCantAffordText::
 _BikeShopText_1d81f::
 	text "Oh, that's..."
 
-	para "A BIKE VOUCHER!"
+	para "A Bike Voucher!"
 
 	para "OK! Here you go!"
 	prompt
 
 _BikeShopText_1d824::
 	text "<PLAYER> exchanged"
-	line "the BIKE VOUCHER"
-	cont "for a BICYCLE.@@"
+	line "the Bike Voucher"
+	cont "for a Bicycle.@@"
 
 _BikeShopComeAgainText::
 	text "Come back again"
@@ -46,10 +46,10 @@ _BikeShopComeAgainText::
 
 _BikeShopText_1d82f::
 	text "How do you like"
-	line "your new BICYCLE?"
+	line "your new Bicycle?"
 
 	para "You can take it"
-	line "on CYCLING ROAD"
+	line "on Cycling Road"
 	cont "and in caves!"
 	done
 
@@ -59,7 +59,7 @@ _BikeShopText_1d834::
 	done
 
 _BikeShopText_1d843::
-	text "A plain city BIKE"
+	text "A plain city Bike"
 	line "is good enough"
 	cont "for me!"
 
@@ -69,12 +69,12 @@ _BikeShopText_1d843::
 	done
 
 _BikeShopText_1d85c::
-	text "These BIKEs are"
+	text "These Bikes are"
 	line "cool, but they're"
 	cont "way expensive!"
 	done
 
 _BikeShopText_1d861::
-	text "Wow. Your BIKE is"
+	text "Wow. Your Bike is"
 	line "really cool!"
 	done

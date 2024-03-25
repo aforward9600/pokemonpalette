@@ -248,6 +248,7 @@ charmap "'m", $E5
 charmap "?", $E6
 charmap "!", $E7
 charmap ".", $E8
+charmap "œ", $E9
 
 charmap "▷", $EC
 charmap "▶", $ED

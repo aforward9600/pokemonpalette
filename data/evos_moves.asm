@@ -538,7 +538,7 @@ TangelaEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 27, ABSORB
+	db 22, ABSORB
 	db 29, VINE_WHIP
 	db 32, POISONPOWDER
 	db 36, STUN_SPORE
@@ -629,7 +629,8 @@ KadabraEvosMoves:
 	db 0
 ; Learnset
 	db 16, CONFUSION
-	db 20, DISABLE
+	db 19, DISABLE
+	db 23, KINESIS
 	db 27, PSYBEAM
 	db 31, RECOVER
 	db 38, PSYCHIC_M
@@ -1518,13 +1519,13 @@ ButterfreeEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 12, CONFUSION
-	db 15, POISONPOWDER
-	db 16, STUN_SPORE
-	db 17, SLEEP_POWDER
-	db 21, SUPERSONIC
-	db 26, WHIRLWIND
-	db 32, PSYBEAM
+	db 10, CONFUSION
+	db 13, POISONPOWDER
+	db 14, STUN_SPORE
+	db 15, SLEEP_POWDER
+	db 18, GUST
+	db 23, PSYBEAM
+	db 32, PSYCHIC_M
 	db 0
 
 MachampEvosMoves:
@@ -1632,7 +1633,7 @@ MukEvosMoves:
 	db 37, SLUDGE
 	db 45, HARDEN
 	db 53, SCREECH
-	db 60, ACID_ARMOR
+	db 68, ACID_ARMOR
 	db 0
 
 MissingNo8AEvosMoves:
@@ -1745,7 +1746,8 @@ AlakazamEvosMoves:
 	db 0
 ; Learnset
 	db 16, CONFUSION
-	db 20, DISABLE
+	db 19, DISABLE
+	db 23, KINESIS
 	db 27, PSYBEAM
 	db 31, RECOVER
 	db 38, PSYCHIC_M

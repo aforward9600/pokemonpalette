@@ -32,7 +32,7 @@ TechnicalMachines:
 	db MIMIC
 	db DOUBLE_TEAM
 	db REFLECT
-	db BIDE
+	db ROCK_THROW
 	db METRONOME
 	db SELFDESTRUCT
 	db EGG_BOMB

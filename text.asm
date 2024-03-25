@@ -666,6 +666,11 @@ _OakLabEmailText::
 
 	para "PS: Prof.Oak,"
 	line "please visit us!"
+
+	para "We thank you for"
+	line "your service to"
+	cont "League all those"
+	cont "years ago!"
 	cont "..."
 	done
 
