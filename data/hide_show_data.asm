@@ -418,6 +418,7 @@ MapHS3B:
 	db MT_MOON_1,$0C,Show
 	db MT_MOON_1,$0D,Show
 MapHS3D:
+	db MT_MOON_3,$01,Show
 	db MT_MOON_3,$06,Show
 	db MT_MOON_3,$07,Show
 	db MT_MOON_3,$08,Show

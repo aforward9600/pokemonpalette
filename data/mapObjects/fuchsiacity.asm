@@ -13,7 +13,6 @@ FuchsiaCityObject:
 	warp 31, 24, 0, FUCHSIA_HOUSE_3
 
 	db 14 ; signs
-	sign 15, 23, 11 ; FuchsiaCityText11
 	sign 25, 15, 12 ; FuchsiaCityText12
 	sign 17, 5, 13 ; FuchsiaCityText13
 	sign 6, 13, 14 ; MartSignText
@@ -27,8 +26,9 @@ FuchsiaCityObject:
 	sign 31, 13, 22 ; FuchsiaCityText22
 	sign 13, 15, 23 ; FuchsiaCityText23
 	sign 7, 7, 24 ; FuchsiaCityText24
+	sign 15, 23, 25 ; FuchsiaCityText11
 
-	db 10 ; objects
+	db 11 ; objects
 	object SPRITE_BUG_CATCHER, 10, 12, WALK, 2, 1 ; person
 	object SPRITE_GAMBLER, 28, 17, WALK, 2, 2 ; person
 	object SPRITE_FISHER2, 30, 14, STAY, DOWN, 3 ; person
@@ -39,6 +39,7 @@ FuchsiaCityObject:
 	object SPRITE_SLOWBRO, 30, 12, WALK, 2, 8 ; person
 	object SPRITE_SEEL, 8, 17, WALK, 0, 9 ; person
 	object SPRITE_OMANYTE, 6, 5, STAY, NONE, 10 ; person
+	object SPRITE_BLACK_HAIR_BOY_2, 5, 8, STAY, UP, 11 ; person
 
 	; warp-to
 	warp_to 5, 13, FUCHSIA_CITY_WIDTH ; FUCHSIA_MART

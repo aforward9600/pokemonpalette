@@ -36,12 +36,12 @@ _TM34ExplanationText::
 	cont "carefully!"
 
 	para "TM34 contains"
-	line "Bide!"
+	line "Rock Throw!"
 
 	para "Your #mon will"
-	line "absorb damage in"
-	cont "battle then pay"
-	cont "it back double!"
+	line "toss rocks to"
+	cont "cause some major"
+	cont "damage!"
 	done
 
 _TM34NoRoomText::

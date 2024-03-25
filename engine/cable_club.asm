@@ -614,7 +614,7 @@ TradeCenter_DrawCancelBox:
 	jp PlaceString
 
 CancelTextString:
-	db "CANCEL@"
+	db "Cancel@"
 
 TradeCenter_PlaceSelectedEnemyMonMenuCursor:
 	ld a, [wSerialSyncAndExchangeNybbleReceiveData]

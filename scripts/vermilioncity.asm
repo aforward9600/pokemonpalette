@@ -158,7 +158,7 @@ VermilionCityText3:
 	TX_ASM
 	CheckEvent EVENT_BEAT_POKEMON_LEAGUE
 	jr z, .EnterPort
-	CheckEvent EVENT_SS_ANNE_LEFT
+	CheckEventReuseA EVENT_SS_ANNE_LEFT
 	jr nz, .asm_198f6
 	ld a, [wSpriteStateData1 + 9]
 	cp SPRITE_FACING_RIGHT

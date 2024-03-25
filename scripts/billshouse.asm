@@ -51,6 +51,9 @@ BillsHouseScript2:
 	ld a, HS_BILL_POKEMON
 	ld [wMissableObjectIndex], a
 	predef HideObject
+	ld a, HS_MT_MOON_SUPER_NERD
+	ld [wMissableObjectIndex], a
+	predef HideObject
 	SetEvent EVENT_BILL_SAID_USE_CELL_SEPARATOR
 	xor a
 	ld [wJoyIgnore], a
