@@ -1,6 +1,5 @@
 Route2Mons:
 	db $19
-	IF DEF(_RED)
 		db 3,RATTATA
 		db 3,PIDGEY
 		db 4,PIDGEY
@@ -11,27 +10,4 @@ Route2Mons:
 		db 5,RATTATA
 		db 4,WEEDLE
 		db 5,WEEDLE
-	ELIF DEF(_BLUEJP)
-		db 3,RATTATA
-		db 3,PIDGEY
-		db 4,PIDGEY
-		db 4,RATTATA
-		db 5,PIDGEY
-		db  3, CATERPIE
-		db  2, RATTATA
-		db  5, RATTATA
-		db  4, CATERPIE
-		db  5, CATERPIE
-	ELIF (DEF(_BLUE) || DEF(_GREEN))
-		db 3,RATTATA
-		db 3,PIDGEY
-		db 4,PIDGEY
-		db 4,RATTATA
-		db 5,PIDGEY
-		db 3,CATERPIE
-		db 2,RATTATA
-		db 5,RATTATA
-		db 4,CATERPIE
-		db 5,CATERPIE
-	ENDC
 	db $00

@@ -36,16 +36,6 @@ PlayIntroScene:
 	call UpdateGBCPal_OBP0
 	call UpdateGBCPal_OBP1
 	
-IF DEF(_BLUE)
-	push de
-	ld d, CONVERT_OBP0
-	ld e, 0
-	ld a, JIGGLYPUFF
-	ld [wcf91], a
-	callba TransferMonPal ;gbcnote - jigglypuff object needs its pal in blue version
-	pop de
-ENDC
-	
 	xor a
 	ld [hSCX], a
 	ld b, GENGAR_INTRO_TILES1
@@ -413,7 +403,6 @@ PlayShootingStar:
 	callba AnimateShootingStar
 	push af
 
-IF (DEF(_REDGREENJP) || DEF(_BLUEJP))
 ;joenote - restore "Presents" for the japanese builds
 	coord hl, 7, 11
 	ld de, .presentsTiles
@@ -428,7 +417,6 @@ IF (DEF(_REDGREENJP) || DEF(_BLUEJP))
 .presentsTiles
 	db $67,$68,$69,$6A,$6B,$6C ; "Presents"
 .presentEnd
-ENDC
 
 	pop af
 	jr c, .next ; skip the delay if the user interrupted the animation
@@ -549,21 +537,12 @@ FightIntroBackMonEnd:
 
 FightIntroFrontMon:
 
-IF (DEF(_RED) || DEF(_GREEN))
 	INCBIN "gfx/red/intro_nido_1.2bpp"
 FightIntroFrontMon2:
 	INCBIN "gfx/red/intro_nido_2.2bpp"
 FightIntroFrontMon3:
 	INCBIN "gfx/red/intro_nido_3.2bpp"
-ENDC
 
-IF DEF(_BLUE)
-	INCBIN "gfx/blue/intro_purin_1.2bpp"
-FightIntroFrontMon2:
-	INCBIN "gfx/blue/intro_purin_2.2bpp"
-FightIntroFrontMon3:
-	INCBIN "gfx/blue/intro_purin_3.2bpp"
-ENDC
 
 FightIntroFrontMonEnd:
 

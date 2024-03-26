@@ -89,7 +89,7 @@ SpecialTrainerMoves:
 
 	db BROCK,$1
 	db 1,2,THUNDER_WAVE
-	db 2,3,BIDE
+	db 2,3,ROCK_THROW
 	db 0
 	
 	db MISTY,$1
@@ -174,6 +174,7 @@ SpecialTrainerMoves:
 
 	db BRUNO,$1
 	db 1,1,SWORDS_DANCE
+	db 1,2,LEECH_LIFE
 	db 1,3,ROCK_SLIDE
 	db 2,2,HYPER_BEAM
 	db 3,1,EARTHQUAKE

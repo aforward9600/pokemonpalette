@@ -19,9 +19,9 @@ FuchsiaGymScript_75453:
 	ret
 
 Gym5CityName:
-	db "FUCHSIA CITY@"
+	db "Fuschsia City@"
 Gym5LeaderName:
-	db "KOGA@"
+	db "Koga@"
 
 FuchsiaGymScript_75477:
 	xor a

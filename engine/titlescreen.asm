@@ -121,27 +121,13 @@ ENDC
 	jr .next
 
 .tileScreenCopyrightTiles
-IF DEF(_REDGREENJP)
-	db $41,$43,$44,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E ; ©1995 GAME FREAK inc.
-ELIF DEF(_BLUEJP)
-	db $41,$42,$43,$44,$42,$43,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E ; ©'95.'96.'98 GAME FREAK inc.
-ELSE
 	db $41,$42,$43,$42,$44,$42,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E ; ©'95.'96.'98 GAME FREAK inc.
-ENDC
 
 .next
 	call SaveScreenTilesToBuffer2
 	call LoadScreenTilesFromBuffer2
 	call EnableLCD
-IF DEF(_RED)
 	ld a, DITTO ; which Pokemon to show first on the title screen
-ENDC
-IF DEF(_BLUE)
-	ld a, SQUIRTLE ; which Pokemon to show first on the title screen
-ENDC
-IF DEF(_GREEN)
-	ld a, BULBASAUR ; which Pokemon to show first on the title screen
-ENDC
 	ld [wTitleMonSpecies], a
 	call LoadTitleMonSprite
 	ld a, (vBGMap0 + $300) / $100
@@ -452,19 +438,9 @@ ENDC
 	jp PlaceString
 
 CopyrightTextString:
-IF DEF(_REDGREENJP)
-	db   $60,$62,$63,$64,$65,$66,$67,$68,$69,$6A             ; ©1995 Nintendo
-	next $60,$62,$63,$64,$6B,$6C,$6D,$6E,$6F,$70,$71,$72     ; ©1995 Creatures inc.
-	next $60,$62,$63,$64,$73,$74,$75,$76,$77,$78,$79,$7A,$7B ; ©1995 GAME FREAK inc.
-ELIF DEF(_BLUEJP)
-	db   $60,$61,$62,$63,$61,$62,$64,$65,$66,$67,$68,$69,$6A             ; ©1995.1996 Nintendo
-	next $60,$61,$62,$63,$61,$62,$64,$6B,$6C,$6D,$6E,$6F,$70,$71,$72     ; ©1995.1996 Creatures inc.
-	next $60,$61,$62,$63,$61,$62,$64,$73,$74,$75,$76,$77,$78,$79,$7A,$7B ; ©1995.1996 GAME FREAK inc.
-ELSE
 	db   $60,$61,$62,$61,$63,$61,$64,$7F,$65,$66,$67,$68,$69,$6A             ; ©'95.'96.'98 Nintendo
 	next $60,$61,$62,$61,$63,$61,$64,$7F,$6B,$6C,$6D,$6E,$6F,$70,$71,$72     ; ©'95.'96.'98 Creatures inc.
 	next $60,$61,$62,$61,$63,$61,$64,$7F,$73,$74,$75,$76,$77,$78,$79,$7A,$7B ; ©'95.'96.'98 GAME FREAK inc.
-ENDC
 	db   "@"
 
 INCLUDE "data/title_mons.asm"
@@ -477,14 +453,6 @@ PrintGameVersionOnTitleScreen:
 
 ; these point to special tiles specifically loaded for that purpose and are not usual text
 VersionOnTitleScreenText:
-IF DEF(_RED)
 	db $60,$61,$62,$63,$64,$65,$66,$67,$68,$69,"@" ; "Red Version"
-ENDC
-IF DEF(_BLUE)
-	db $61,$62,$63,$64,$65,$66,$67,$68,"@" ; "Blue Version"
-ENDC
-IF DEF(_GREEN)
-	db $62,$63,$64,$7F,$65,$66,$67,$68,$69,"@" ; "Green Version"
-ENDC
 NintenText: db "NINTEN@"
 SonyText:   db "SONY@"

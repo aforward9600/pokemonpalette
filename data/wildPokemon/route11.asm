@@ -1,6 +1,5 @@
 Route11Mons:
 	db $0F
-	IF DEF(_RED)
 		db 14,EKANS
 		db 15,SPEAROW
 		db 12,EKANS
@@ -11,27 +10,4 @@ Route11Mons:
 		db 17,SPEAROW
 		db 11,DROWZEE
 		db 15,DROWZEE
-	ELIF DEF(_BLUEJP)
-		db 14, SANDSHREW
-		db 15, SPEAROW
-		db 12, SANDSHREW
-		db  9, DROWZEE
-		db 13, SPEAROW
-		db 13, DROWZEE
-		db 15, SANDSHREW
-		db 17, SPEAROW
-		db 11, DROWZEE
-		db 15, DROWZEE
-	ELIF (DEF(_BLUE) || DEF(_GREEN))
-		db 14,SANDSHREW
-		db 15,SPEAROW
-		db 12,SANDSHREW
-		db 9,DROWZEE
-		db 13,SPEAROW
-		db 13,DROWZEE
-		db 15,SANDSHREW
-		db 17,SPEAROW
-		db 11,DROWZEE
-		db 15,DROWZEE
-	ENDC
 	db $00

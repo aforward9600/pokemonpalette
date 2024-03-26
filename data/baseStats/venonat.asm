@@ -23,7 +23,7 @@ db 0 ; growth rate
 	tmlearn 20,21,22
 	tmlearn 29,31,32
 	tmlearn 33
-	tmlearn 44
+	tmlearn 41,44
 	tmlearn 50
 ;	db 0 ; padding
 	db BANK(VenonatPicFront)

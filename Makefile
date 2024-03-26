@@ -1,7 +1,7 @@
 MD5 := md5sum -c
 
 pokered_obj := audio_red.o main_red.o text_red.o wram_red.o
-pokeblue_obj := audio_blue.o main_blue.o text_blue.o wram_blue.o
+palettefaithful_obj := audio_palettefaithful.o main_palettefaithful.o text_palettefaithful.o wram_palettefaithful.o
 pokegreen_obj := audio_green.o main_green.o text_green.o wram_green.o
 pokebluejp_obj := audio_bluejp.o main_bluejp.o text_bluejp.o wram_bluejp.o
 pokeredjp_obj := audio_redjp.o main_redjp.o text_redjp.o wram_redjp.o
@@ -12,11 +12,11 @@ pokeredjp_obj := audio_redjp.o main_redjp.o text_redjp.o wram_redjp.o
 .SECONDARY:
 .PHONY: all clean red blue green bluejp redjp compare tools
 
-roms := pokered.gbc pokeblue.gbc pokegreen.gbc pokebluejp.gbc pokeredjp.gbc
+roms := pokered.gbc palettefaithful.gbc pokegreen.gbc pokebluejp.gbc pokeredjp.gbc
 
 all: $(roms)
 red: pokered.gbc
-blue: pokeblue.gbc
+faithful: palettefaithful.gbc
 green: pokegreen.gbc
 bluejp: pokebluejp.gbc
 redjp: pokeredjp.gbc
@@ -26,7 +26,7 @@ compare: red blue green bluejp redjp
 	@$(MD5) roms.md5
 
 clean:
-	rm -f $(roms) $(pokered_obj) $(pokeblue_obj) $(pokegreen_obj) $(pokebluejp_obj) $(pokeredjp_obj) $(roms:.gbc=.sym)
+	rm -f $(roms) $(pokered_obj) $(palettefaithful_obj) $(pokegreen_obj) $(pokebluejp_obj) $(pokeredjp_obj) $(roms:.gbc=.sym)
 	find . \( -iname '*.1bpp' -o -iname '*.2bpp' -o -iname '*.pic' \) -exec rm {} +
 	$(MAKE) clean -C tools/
 
@@ -54,9 +54,9 @@ endif
 $(pokered_obj): %_red.o: %.asm $$(dep)
 	rgbasm -D _RED -h -o $@ $*.asm
 
-%_blue.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
-$(pokeblue_obj): %_blue.o: %.asm $$(dep)
-	rgbasm -D _BLUE -h -o $@ $*.asm
+%_palettefaithful.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
+$(palettefaithful_obj): %_palettefaithful.o: %.asm $$(dep)
+	rgbasm -D _FAITHFUL -h -o $@ $*.asm
 
 %_green.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokegreen_obj): %_green.o: %.asm $$(dep)
@@ -72,7 +72,7 @@ $(pokeredjp_obj): %_redjp.o: %.asm $$(dep)
 
 #gbcnote - use cjsv to compile as GBC+DMG rom
 pokered_opt  = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"
-pokeblue_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON BLUE"
+palettefaithful_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON BLUE"
 pokegreen_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON GREEN"
 pokebluejp_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON BLUE"
 pokeredjp_opt = -cjsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"

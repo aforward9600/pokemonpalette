@@ -1,6 +1,5 @@
 Route23Mons:
 	db $0A
-	IF DEF(_RED)
 		db 26,EKANS
 		db 33,DITTO
 		db 26,SPEAROW
@@ -11,27 +10,4 @@ Route23Mons:
 		db 43,DITTO
 		db 41,FEAROW
 		db 43,FEAROW
-	ELIF DEF(_BLUEJP)
-		db 26, SANDSHREW
-		db 33,DITTO
-		db 26,SPEAROW
-		db 38,FEAROW
-		db 38,DITTO
-		db 38,FEAROW
-		db 41, SANDSLASH
-		db 43,DITTO
-		db 41,FEAROW
-		db 43,FEAROW
-	ELIF (DEF(_BLUE) || DEF(_GREEN))
-		db 26,SANDSHREW
-		db 33,DITTO
-		db 26,SPEAROW
-		db 38,FEAROW
-		db 38,DITTO
-		db 38,FEAROW
-		db 41,SANDSLASH
-		db 43,DITTO
-		db 41,FEAROW
-		db 43,FEAROW		
-	ENDC
 	db $00

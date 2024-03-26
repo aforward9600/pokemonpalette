@@ -727,12 +727,13 @@ ParasectEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 9, LEECH_LIFE
+	db 9, ABSORB
 	db 13, STUN_SPORE
 	db 20, PIN_MISSILE
 	db 30, SPORE
 	db 39, SLASH
 	db 48, GROWTH
+	db 53, LEECH_LIFE
 	db 0
 
 PsyduckEvosMoves:
@@ -741,11 +742,11 @@ PsyduckEvosMoves:
 	db 0
 ; Learnset
 	db 12, WATER_GUN
-	db 20, CONFUSION
-	db 28, TAIL_WHIP
-	db 31, DISABLE
-	db 36, PSYBEAM
-	db 43, FURY_SWIPES
+	db 19, CONFUSION
+	db 25, DISABLE
+	db 31, PSYBEAM
+	db 36, FURY_SWIPES
+	db 43, PSYCHIC_M
 	db 52, HYDRO_PUMP
 	db 0
 
@@ -922,14 +923,15 @@ VenonatEvosMoves:
 	db EV_LEVEL, 31, VENOMOTH
 	db 0
 ; Learnset
-	db 9, LEECH_LIFE
-	db 16, CONFUSION
-	db 24, SLUDGE
-	db 27, PIN_MISSILE
+	db 9, CONFUSION
+	db 16, SUPERSONIC
+	db 24, PIN_MISSILE
+	db 27, SLUDGE
 	db 30, STUN_SPORE
 	db 35, PSYBEAM
 	db 38, SLEEP_POWDER
 	db 43, PSYCHIC_M
+	db 50, LEECH_LIFE
 	db 0
 
 DragoniteEvosMoves:
@@ -1347,6 +1349,7 @@ ZubatEvosMoves:
 	db 28, WING_ATTACK
 	db 36, HAZE
 	db 40, SLUDGE
+	db 44, LEECH_LIFE
 	db 0
 
 EkansEvosMoves:
@@ -1366,12 +1369,13 @@ ParasEvosMoves:
 	db EV_LEVEL, 24, PARASECT
 	db 0
 ; Learnset
-	db 9, LEECH_LIFE
+	db 9, ABSORB
 	db 13, STUN_SPORE
 	db 20, PIN_MISSILE
 	db 27, SPORE
 	db 34, SLASH
 	db 41, GROWTH
+	db 48, LEECH_LIFE
 	db 0
 
 PoliwhirlEvosMoves:
@@ -1468,14 +1472,15 @@ VenomothEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 9, LEECH_LIFE
-	db 16, CONFUSION
-	db 24, SLUDGE
-	db 27, PIN_MISSILE
+	db 9, CONFUSION
+	db 16, SUPERSONIC
+	db 24, PIN_MISSILE
+	db 27, SLUDGE
 	db 30, STUN_SPORE
 	db 38, PSYBEAM
 	db 43, SLEEP_POWDER
 	db 50, PSYCHIC_M
+	db 56, LEECH_LIFE
 	db 0
 
 DewgongEvosMoves:
@@ -1550,11 +1555,11 @@ GolduckEvosMoves:
 	db 0
 ; Learnset
 	db 12, WATER_GUN
-	db 20, CONFUSION
-	db 28, TAIL_WHIP
-	db 31, DISABLE
-	db 39, PSYBEAM
-	db 48, FURY_SWIPES
+	db 19, CONFUSION
+	db 25, DISABLE
+	db 31, PSYBEAM
+	db 39, FURY_SWIPES
+	db 48, PSYCHIC_M
 	db 59, HYDRO_PUMP
 	db 0
 
@@ -1581,6 +1586,7 @@ GolbatEvosMoves:
 	db 32, WING_ATTACK
 	db 43, HAZE
 	db 47, SLUDGE
+	db 51, LEECH_LIFE
 	db 0
 
 MewtwoEvosMoves:

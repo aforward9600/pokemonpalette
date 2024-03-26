@@ -22,7 +22,7 @@ MansionMonsB1:
 		db 35, KOFFING
 		db 42, MUK
 		db 42, WEEZING
-	ELIF (DEF(_BLUE) || DEF(_GREEN))
+	ELIF (DEF(_FAITHFUL) || DEF(_GREEN))
 		db 33,GRIMER
 		db 31,GRIMER
 		db 35,VULPIX

@@ -178,13 +178,7 @@ BattleHudTiles2:                INCBIN "gfx/battle_hud2.1bpp"
 BattleHudTiles3:                INCBIN "gfx/battle_hud3.1bpp"
 BattleHudTiles3End:
 
-IF DEF(_REDGREENJP)
-NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright_green.2bpp"
-ELIF DEF(_BLUEJP)
-NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright_bluejp.2bpp"
-ELSE
 NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright.2bpp"
-ENDC
 
 GamefreakLogoGraphics:          INCBIN "gfx/gamefreak.2bpp"
 GamefreakLogoGraphicsEnd:
@@ -194,11 +188,7 @@ PokedexTileGraphics:            INCBIN "gfx/pokedex.2bpp"
 PokedexTileGraphicsEnd:
 WorldMapTileGraphics:           INCBIN "gfx/town_map.2bpp"
 WorldMapTileGraphicsEnd:
-IF DEF(_REDGREENJP)
 PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title_green.2bpp"
-ELSE
-PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title_green.2bpp"
-ENDC
 PlayerCharacterTitleGraphicsEnd:
 
 
@@ -1388,20 +1378,14 @@ INCLUDE "data/mapObjects/safarizoneresthouse4.asm"
 INCLUDE "data/mapHeaders/unknowndungeon2.asm"
 INCLUDE "scripts/unknowndungeon2.asm"
 INCLUDE "data/mapObjects/unknowndungeon2.asm"
-IF DEF(_REDGREENJP)
-UnknownDungeon2Blocks: INCBIN "maps/green/unknowndungeon2.blk"
-ELSE
+
 UnknownDungeon2Blocks: INCBIN "maps/unknowndungeon2.blk"
-ENDC
 
 INCLUDE "data/mapHeaders/unknowndungeon3.asm"
 INCLUDE "scripts/unknowndungeon3.asm"
 INCLUDE "data/mapObjects/unknowndungeon3.asm"
-IF DEF(_REDGREENJP)
-UnknownDungeon3Blocks: INCBIN "maps/green/unknowndungeon3.blk"
-ELSE
+
 UnknownDungeon3Blocks: INCBIN "maps/unknowndungeon3.blk"
-ENDC
 
 INCLUDE "data/mapHeaders/rocktunnel2.asm"
 INCLUDE "scripts/rocktunnel2.asm"
@@ -2226,11 +2210,7 @@ INCLUDE "engine/hidden_object_functions18.asm"
 
 
 SECTION "bank19",ROMX,BANK[$19]
-IF DEF(_REDGREENJP)
-Overworld_GFX:     INCBIN "gfx/tilesets/green/overworld.2bpp"
-ELSE
 Overworld_GFX:     INCBIN "gfx/tilesets/overworld.2bpp"
-ENDC
 Overworld_Block:   INCBIN "gfx/blocksets/overworld.bst"
 
 RedsHouse1_GFX:
@@ -2256,15 +2236,7 @@ SECTION "bank1A",ROMX,BANK[$1A]
 INCLUDE "engine/battle/decrement_pp.asm"
 
 Version_GFX:
-IF DEF(_REDJP)
-	INCBIN "gfx/red/redgreenversionjp.1bpp" ; 10 tiles
-ELIF (DEF(_RED) || DEF(_GREEN))
 	INCBIN "gfx/red/redgreenversion.1bpp" ; 10 tiles
-ELIF DEF(_BLUEJP)
-	INCBIN "gfx/blue/blueversionjp.1bpp" ; 8 tiles
-ELIF DEF(_BLUE)
-	INCBIN "gfx/blue/blueversion.1bpp" ; 8 tiles
-ENDC
 Version_GFXEnd:
 
 Dojo_GFX:
@@ -2284,11 +2256,7 @@ ForestGate_Block:
 Museum_Block:
 Gate_Block:        INCBIN "gfx/blocksets/gate.bst"
 
-IF DEF(_REDGREENJP)
-Forest_GFX:        INCBIN "gfx/tilesets/green/forest.2bpp"
-ELSE
 Forest_GFX:        INCBIN "gfx/tilesets/forest.2bpp"
-ENDC
 Forest_Block:      INCBIN "gfx/blocksets/forest.bst"
 Facility_GFX:      INCBIN "gfx/tilesets/facility.2bpp"
 Facility_Block:    INCBIN "gfx/blocksets/facility.bst"
@@ -2369,11 +2337,8 @@ INCLUDE "data/mapObjects/pewtermart.asm"
 INCLUDE "data/mapHeaders/unknowndungeon1.asm"
 INCLUDE "scripts/unknowndungeon1.asm"
 INCLUDE "data/mapObjects/unknowndungeon1.asm"
-IF DEF(_REDGREENJP)
-UnknownDungeon1Blocks: INCBIN "maps/green/unknowndungeon1.blk"
-ELSE
+
 UnknownDungeon1Blocks: INCBIN "maps/unknowndungeon1.blk"
-ENDC
 
 INCLUDE "data/mapHeaders/ceruleanhouse2.asm"
 INCLUDE "scripts/ceruleanhouse2.asm"
