@@ -2,6 +2,7 @@ INCLUDE "constants.asm"
 
 NPC_SPRITES_1 EQU $4
 NPC_SPRITES_2 EQU $5
+NPC_SPRITES_3 EQU $33
 
 GFX EQU $4
 
@@ -258,6 +259,19 @@ ClefairySprite:       INCBIN "gfx/sprites/clefairy.2bpp"
 AgathaSprite:         INCBIN "gfx/sprites/agatha.2bpp"
 SeelSprite:           INCBIN "gfx/sprites/seel.2bpp"
 PokedexSprite:        INCBIN "gfx/sprites/pokedex.2bpp"
+
+
+SECTION "NPC Sprites 3", ROMX, BANK[NPC_SPRITES_3]
+
+LaprasSprite:         INCBIN "gfx/sprites/lapras.2bpp"
+PoliwrathSprite:      INCBIN "gfx/sprites/poliwrath.2bpp"
+SpearowSprite:        INCBIN "gfx/sprites/spearow.2bpp"
+KangaskhanSprite:     INCBIN "gfx/sprites/kangaskhan.2bpp"
+SlowpokeSprite:       INCBIN "gfx/sprites/slowpoke.2bpp"
+ChanseySprite:        INCBIN "gfx/sprites/chansey.2bpp"
+VoltorbSprite:        INCBIN "gfx/sprites/voltorb.2bpp"
+KabutoSprite:         INCBIN "gfx/sprites/kabuto.2bpp"
+KabutoSpriteEnd:
 
 
 SECTION "Battle (bank 5)", ROMX, BANK[$5]
@@ -602,7 +616,7 @@ NidoqueenPicFront::   INCBIN "pic/bmon/nidoqueen.pic"
 NidoqueenPicBack::    INCBIN "pic/monback/nidoqueenb.pic"
 CubonePicFront::      INCBIN "pic/bmon/cubone.pic"
 CubonePicBack::       INCBIN "pic/monback/cuboneb.pic"
-RhyhornPicFront::     INCBIN "pic/bmon/rhyhorn.pic"
+RhyhornPicFront::     INCBIN "pic/ymon/rhyhorn.pic"
 RhyhornPicBack::      INCBIN "pic/monback/rhyhornb.pic"
 LaprasPicFront::      INCBIN "pic/bmon/lapras.pic"
 LaprasPicBack::       INCBIN "pic/monback/laprasb.pic"
@@ -2430,6 +2444,11 @@ INCLUDE "data/mapHeaders/agatha.asm"
 INCLUDE "scripts/agatha.asm"
 INCLUDE "data/mapObjects/agatha.asm"
 AgathaBlocks: INCBIN "maps/agatha.blk"
+
+INCLUDE "data/mapHeaders/route19gate.asm"
+INCLUDE "scripts/route19gate.asm"
+INCLUDE "data/mapObjects/route19gate.asm"
+Route19GateBlocks: INCBIN "maps/route19gate.blk"
 
 INCLUDE "engine/menu/league_pc.asm"
 

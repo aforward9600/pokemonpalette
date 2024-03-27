@@ -249,7 +249,7 @@ MapHSPointers:
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
-	dw MapHSF4
+	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX

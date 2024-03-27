@@ -75,6 +75,12 @@ const_value = 1
 	const SPRITE_BRUNO                     ; $3a
 	const SPRITE_LORELEI                   ; $3b
 	const SPRITE_SEEL                      ; $3c
+	const SPRITE_LAPRAS
+	const SPRITE_POLIWRATH
+	const SPRITE_KANGASKHAN
+	const SPRITE_SLOWPOKE
+	const SPRITE_SPEAROW
+	const SPRITE_CHANSEY
 	const SPRITE_BALL                      ; $3d
 	const SPRITE_OMANYTE                   ; $3e
 	const SPRITE_BOULDER                   ; $3f
@@ -88,6 +94,8 @@ const_value = 1
 	const SPRITE_LYING_OLD_MAN_UNUSED_2    ; $47
 	const SPRITE_LYING_OLD_MAN             ; $48
 	const SPRITE_POKEDEX
+	const SPRITE_KABUTO
+	const SPRITE_VOLTORB
 
 ; different kinds of people events
 ITEM    EQU $80

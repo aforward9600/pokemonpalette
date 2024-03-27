@@ -22,11 +22,23 @@ _UpdateSprites:
 	add $10             ; move to next sprite
 	cp $e               ; test for overflow (back at $0e)
 	jr nz, .spriteLoop
+	ld a, [wCurMap]
+	cp FUCHSIA_CITY
+	jr z, ReloadKabuto
 	ret
 .updateCurrentSprite
 	cp $1
 	jp nz, UpdateNonPlayerSprite
 	jp UpdatePlayerSprite
+
+ReloadKabuto:
+	CheckEvent EVENT_RELOADED_KABUTO_SPRITE
+	ret nz
+	CheckEvent EVENT_GOT_HELIX_FOSSIL
+	ret z
+	farcall ReplaceOmanyteWithKabutoSprite
+	SetEvent EVENT_RELOADED_KABUTO_SPRITE
+	ret
 
 UpdateNonPlayerSprite:
 	dec a

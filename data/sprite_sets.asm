@@ -29,7 +29,7 @@ MapSpriteSets:
 	db $f6 ; ROUTE_16
 	db $09 ; ROUTE_17
 	db $f7 ; ROUTE_18
-	db $0a ; ROUTE_19
+	db $fd ; ROUTE_19
 	db $f8 ; ROUTE_20
 	db $01 ; ROUTE_21
 	db $01 ; ROUTE_22
@@ -49,14 +49,15 @@ SplitMapSpriteSets:
 	db $02,$32,$02,$03 ; $f2
 	db $01,$39,$04,$08 ; $f3
 	db $02,$15,$03,$08 ; $f4
-	db $01,$08,$0A,$08 ; $f5
+	db $01,$08,$0B,$08 ; $f5
 	db $01,$18,$09,$05 ; $f6
 	db $01,$22,$09,$0A ; $f7
-	db $01,$35,$01,$0A ; $f8
+	db $01,$35,$01,$0B ; $f8
 	db $02,$21,$02,$07 ; $f9
 	db $02,$02,$07,$04 ; $fa
 	db $01,$11,$05,$07 ; $fb
 	db $01,$03,$07,$03 ; $fc
+	db $02,$03,$0A,$0B ; $fd
 
 SpriteSets:
 ; sprite set $01
@@ -118,7 +119,7 @@ SpriteSets:
 	db SPRITE_FISHER2
 	db SPRITE_FAT_BALD_GUY
 	db SPRITE_OLD_PERSON
-	db SPRITE_SLOWBRO
+	db SPRITE_POLIWRATH
 	db SPRITE_GUARD
 	db SPRITE_ROCKET
 	db SPRITE_BALL
@@ -177,6 +178,19 @@ SpriteSets:
 	db SPRITE_SNORLAX
 
 ; sprite set $0a
+	db SPRITE_BLACK_HAIR_BOY_1
+	db SPRITE_KANGASKHAN
+	db SPRITE_CHANSEY
+	db SPRITE_FISHER2
+	db SPRITE_GAMBLER
+	db SPRITE_SLOWPOKE
+	db SPRITE_LAPRAS
+	db SPRITE_SWIMMER
+	db SPRITE_BUG_CATCHER
+	db SPRITE_VOLTORB
+	db SPRITE_OMANYTE
+
+; sprite set $0b
 	db SPRITE_BLACK_HAIR_BOY_2
 	db SPRITE_BLACK_HAIR_BOY_1
 	db SPRITE_CLEFAIRY
@@ -490,6 +504,36 @@ SpriteSheetPointerTable:
 	db $c0 ; byte count
 	db BANK(SeelSprite)
 
+	; SPRITE_LAPRAS
+	dw LaprasSprite
+	db $c0
+	db BANK(LaprasSprite)
+
+	; SPRITE_POLIWRATH
+	dw PoliwrathSprite
+	db $c0
+	db BANK(PoliwrathSprite)
+
+	; SPRITE_KANGASKHAN
+	dw KangaskhanSprite
+	db $c0
+	db BANK(KangaskhanSprite)
+
+	; SPRITE_SLOWPOKE
+	dw SlowpokeSprite
+	db $c0
+	db BANK(SlowpokeSprite)
+
+	; SPRITE_SPEAROW
+	dw SpearowSprite
+	db $c0
+	db BANK(SpearowSprite)
+
+	; SPRITE_CHANSEY
+	dw ChanseySprite
+	db $c0
+	db BANK(ChanseySprite)
+
 	; SPRITE_BALL
 	dw BallSprite
 	db $40 ; byte count
@@ -554,3 +598,13 @@ SpriteSheetPointerTable:
 	dw PokedexSprite
 	db $40
 	db BANK(PokedexSprite)
+
+	; SPRITE_KABUTO
+	dw KabutoSprite
+	db $40
+	db BANK(KabutoSprite)
+
+	; SPRITE_VOLTORB
+	dw VoltorbSprite
+	db $40
+	db BANK(VoltorbSprite)

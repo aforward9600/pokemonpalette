@@ -20,3 +20,7 @@ Exp.All improvements: PlagueVonKarma, jojobear13 and AhadsStudios
 New back sprites: mauvesea
 
 Caught Pokeball icon tutorial: hydhyro, JamesRoyV and RainbowMetalPigeon
+
+Omanyte to Kabuto sprite in Fuchsia: Vortyne
+
+Poliwrath, Kangaskhan, Spearow and Slowpoke overworld sprites: ShockSlayer

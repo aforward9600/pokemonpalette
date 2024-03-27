@@ -2792,6 +2792,7 @@ INCLUDE "text/maps/celadon_city.asm"
 INCLUDE "text/maps/fuchsia_city.asm"
 INCLUDE "text/maps/cinnabar_island.asm"
 INCLUDE "text/maps/saffron_city.asm"
+INCLUDE "text/maps/route_19_gate.asm"
 
 _ItemUseBallText00::
 	text "It dodged the"

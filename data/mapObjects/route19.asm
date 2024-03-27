@@ -1,7 +1,10 @@
 Route19Object:
 	db $43 ; border block
 
-	db 0 ; warps
+	db 3 ; warps
+	warp 9, 1, 2, ROUTE_19_GATE
+	warp 10, 1, 3, ROUTE_19_GATE
+	warp 10, 5, 0, ROUTE_19_GATE
 
 	db 1 ; signs
 	sign 11, 9, 11 ; Route19Text11
@@ -19,3 +22,6 @@ Route19Object:
 	object SPRITE_SWIMMER, 10, 44, STAY, DOWN, 10, OPP_BEAUTY, 13
 
 	; warp-to
+	warp_to 9, 1, ROUTE_19_WIDTH
+	warp_to 10, 1, ROUTE_19_WIDTH
+	warp_to 10, 5, ROUTE_19_WIDTH

@@ -244,7 +244,7 @@ MapHeaderBanks:
 	db $11
 	db $11
 	db $11
-	db $11
+	db BANK(Route19Gate_h)
 	db BANK(Lorelei_h)
 	db BANK(Bruno_h)
 	db BANK(Agatha_h)

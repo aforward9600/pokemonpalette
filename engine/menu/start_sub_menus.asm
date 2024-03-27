@@ -25,6 +25,7 @@ StartMenu_Pokemon:
 .checkIfPokemonChosen
 	jr nc, .chosePokemon
 .exitMenu
+	ResetEvent EVENT_RELOADED_KABUTO_SPRITE
 	call GBPalWhiteOutWithDelay3
 	call RestoreScreenTilesAndReloadTilePatterns
 	;call LoadGBPal
