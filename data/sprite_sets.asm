@@ -104,7 +104,7 @@ SpriteSets:
 	db SPRITE_BLACK_HAIR_BOY_2
 	db SPRITE_BUG_CATCHER
 	db SPRITE_GAMBLER
-	db SPRITE_SLOWBRO
+	db SPRITE_MACHOP
 	db SPRITE_GUARD
 	db SPRITE_SAILOR
 	db SPRITE_LASS
@@ -144,7 +144,7 @@ SpriteSets:
 	db SPRITE_LAPRAS_GIVER
 	db SPRITE_ERIKA
 	db SPRITE_GENTLEMAN
-	db SPRITE_BIRD
+	db SPRITE_PIDGEOT
 	db SPRITE_ROCKER
 	db SPRITE_BLACK_HAIR_BOY_1
 	db SPRITE_SLOWBRO
@@ -178,7 +178,7 @@ SpriteSets:
 	db SPRITE_SNORLAX
 
 ; sprite set $0a
-	db SPRITE_BLACK_HAIR_BOY_1
+	db SPRITE_ROCKER
 	db SPRITE_KANGASKHAN
 	db SPRITE_CHANSEY
 	db SPRITE_FISHER2
@@ -533,6 +533,101 @@ SpriteSheetPointerTable:
 	dw ChanseySprite
 	db $c0
 	db BANK(ChanseySprite)
+
+	; SPRITE_JIGGLYPUFF
+	dw JigglypuffSprite
+	db $c0
+	db BANK(JigglypuffSprite)
+
+	; SPRITE_MEOWTH
+	dw MeowthSprite
+	db $c0
+	db BANK(MeowthSprite)
+
+	; SPRITE_NIDORAN_F
+	dw NidoranFSprite
+	db $c0
+	db BANK(NidoranFSprite)
+
+	; SPRITE_NIDORINO
+	dw NidorinoSprite
+	db $c0
+	db BANK(NidorinoSprite)
+
+	; SPRITE_MACHOP
+	dw MachopSprite
+	db $c0
+	db BANK(MachopSprite)
+
+	; SPRITE_MACHOKE
+	dw MachokeSprite
+	db $c0
+	db BANK(MachokeSprite)
+
+	; SPRITE_ARTICUNO
+	dw ArticunoSprite
+	db $c0
+	db BANK(ArticunoSprite)
+
+	; SPRITE_ZAPDOS
+	dw ZapdosSprite
+	db $c0
+	db BANK(ZapdosSprite)
+
+	; SPRITE_MOLTRES
+	dw MoltresSprite
+	db $c0
+	db BANK(MoltresSprite)
+
+	; SPRITE_MEWTWO
+	dw MewtwoSprite
+	db $c0
+	db BANK(MewtwoSprite)
+
+	; SPRITE_CUBONE
+	dw CuboneSprite
+	db $c0
+	db BANK(CuboneSprite)
+
+	; SPRITE_PIKACHU
+	dw PikachuSprite
+	db $c0
+	db BANK(PikachuSprite)
+
+	; SPRITE_DODUO
+	dw DoduoSprite
+	db $c0
+	db BANK(DoduoSprite)
+
+	; SPRITE_WIGGLYTUFF
+	dw WigglytuffSprite
+	db $c0
+	db BANK(WigglytuffSprite)
+
+	; SPRITE_PSYDUCK
+	dw PsyduckSprite
+	db $c0
+	db BANK(PsyduckSprite)
+
+	; SPRITE_FEAROW
+	dw FearowSprite
+	db $c0
+	db BANK(FearowSprite)
+
+	; SPRITE_NIDORAN_M
+	dw NidoranMSprite
+	db $c0
+	db BANK(NidoranMSprite)
+
+	; SPRITE_PIDGEY
+	dw PidgeySprite
+	db $c0
+	db BANK(PidgeySprite)
+
+	; SPRITE_PIDGEOT
+	dw PidgeotSprite
+	db $c0
+	db BANK(PidgeotSprite)
 
 	; SPRITE_BALL
 	dw BallSprite

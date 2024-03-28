@@ -258,7 +258,6 @@ GameboyKidSprite:     INCBIN "gfx/sprites/gameboy_kid.2bpp"
 ClefairySprite:       INCBIN "gfx/sprites/clefairy.2bpp"
 AgathaSprite:         INCBIN "gfx/sprites/agatha.2bpp"
 SeelSprite:           INCBIN "gfx/sprites/seel.2bpp"
-PokedexSprite:        INCBIN "gfx/sprites/pokedex.2bpp"
 
 
 SECTION "NPC Sprites 3", ROMX, BANK[NPC_SPRITES_3]
@@ -272,6 +271,26 @@ ChanseySprite:        INCBIN "gfx/sprites/chansey.2bpp"
 VoltorbSprite:        INCBIN "gfx/sprites/voltorb.2bpp"
 KabutoSprite:         INCBIN "gfx/sprites/kabuto.2bpp"
 KabutoSpriteEnd:
+JigglypuffSprite:     INCBIN "gfx/sprites/jigglypuff.2bpp"
+MachopSprite:         INCBIN "gfx/sprites/machop.2bpp"
+MachokeSprite:        INCBIN "gfx/sprites/machoke.2bpp"
+MeowthSprite:         INCBIN "gfx/sprites/meowth.2bpp"
+NidoranFSprite:       INCBIN "gfx/sprites/nidoran_f.2bpp"
+NidorinoSprite:       INCBIN "gfx/sprites/nidorino.2bpp"
+CuboneSprite:         INCBIN "gfx/sprites/cubone.2bpp"
+ArticunoSprite:       INCBIN "gfx/sprites/articuno.2bpp"
+ZapdosSprite:         INCBIN "gfx/sprites/zapdos.2bpp"
+MoltresSprite:        INCBIN "gfx/sprites/moltres.2bpp"
+MewtwoSprite:         INCBIN "gfx/sprites/mewtwo.2bpp"
+PikachuSprite:        INCBIN "gfx/sprites/pikachu.2bpp"
+PokedexSprite:        INCBIN "gfx/sprites/pokedex.2bpp"
+DoduoSprite:          INCBIN "gfx/sprites/doduo.2bpp"
+WigglytuffSprite:     INCBIN "gfx/sprites/wigglytuff.2bpp"
+PsyduckSprite:        INCBIN "gfx/sprites/psyduck.2bpp"
+FearowSprite:         INCBIN "gfx/sprites/fearow.2bpp"
+NidoranMSprite:       INCBIN "gfx/sprites/nidoran_m.2bpp"
+PidgeySprite:         INCBIN "gfx/sprites/pidgey.2bpp"
+PidgeotSprite:        INCBIN "gfx/sprites/pidgeot.2bpp"
 
 
 SECTION "Battle (bank 5)", ROMX, BANK[$5]

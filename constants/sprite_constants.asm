@@ -81,6 +81,25 @@ const_value = 1
 	const SPRITE_SLOWPOKE
 	const SPRITE_SPEAROW
 	const SPRITE_CHANSEY
+	const SPRITE_JIGGLYPUFF
+	const SPRITE_MEOWTH
+	const SPRITE_NIDORAN_F
+	const SPRITE_NIDORINO
+	const SPRITE_MACHOP
+	const SPRITE_MACHOKE
+	const SPRITE_ARTICUNO
+	const SPRITE_ZAPDOS
+	const SPRITE_MOLTRES
+	const SPRITE_MEWTWO
+	const SPRITE_CUBONE
+	const SPRITE_PIKACHU
+	const SPRITE_DODUO
+	const SPRITE_WIGGLYTUFF
+	const SPRITE_PSYDUCK
+	const SPRITE_FEAROW
+	const SPRITE_NIDORAN_M
+	const SPRITE_PIDGEY
+	const SPRITE_PIDGEOT
 	const SPRITE_BALL                      ; $3d
 	const SPRITE_OMANYTE                   ; $3e
 	const SPRITE_BOULDER                   ; $3f
