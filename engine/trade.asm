@@ -610,21 +610,29 @@ Trade_AnimCircledMon:
 	call UpdateGBCPal_BGP
 	ld hl, wOAMBuffer + $02
 	ld de, $4
-	ld c, $14
-.loop
+	ld c, $4
+.mon_loop
+	ld a, [hl]
+	xor 2
+	ld [hl], a
+	add hl, de
+	dec c
+	jr nz, .mon_loop
+	ld c, $10
+.circle_loop
 	ld a, [hl]
 	xor $40
 	ld [hl], a
 	add hl, de
 	dec c
-	jr nz, .loop
+	jr nz, .circle_loop
 	pop hl
 	pop bc
 	pop de
 	ret
 
 Trade_WriteCircledMonOAM:
-	callba WriteMonPartySpriteOAMBySpecies
+	callba LoadSinglePartyMonSprite
 	call Trade_WriteCircleOAM
 
 Trade_AddOffsetsToOAMCoords:

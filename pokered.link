@@ -169,7 +169,16 @@ ROMX $30
   
 ROMX $31
   "Pics 7" ; PICS_7
-  
+
+ROMX $35
+  ORG $4000
+  "Party Mon Sprites Gfx 1"
+
+ROMX $36
+  ORG $4000
+  "Party Mon Sprites Gfx 2"
+  "Party Mon Sprites Routines"
+
 WRAM0
   "WRAM Bank 0"
 

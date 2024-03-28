@@ -92,7 +92,6 @@ DisplayNamingScreen:
 	call RunPaletteCommand
 	call LoadHpBarAndStatusTilePatterns
 	call LoadEDTile
-	callba LoadMonPartySpriteGfx
 	coord hl, 0, 4
 	ld b, 9
 	ld c, 18
@@ -117,7 +116,11 @@ DisplayNamingScreen:
 	ld [wAnimCounter], a
 .selectReturnPoint
 	call PrintAlphabet
-	call GBPalNormal
+	ld a, %11100100
+	ld [rBGP], a
+	call UpdateGBCPal_BGP
+	ld [rOBP0], a
+	call UpdateGBCPal_OBP0
 .ABStartReturnPoint
 	ld a, [wNamingScreenSubmitName]
 	and a
@@ -479,7 +482,7 @@ PrintNamingText:
 	ld a, [wcf91]
 	ld [wMonPartySpriteSpecies], a
 	push af
-	callba WriteMonPartySpriteOAMBySpecies
+	callba LoadSinglePartyMonSprite
 	pop af
 	ld [wd11e], a
 	call GetMonName

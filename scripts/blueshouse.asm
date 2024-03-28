@@ -32,7 +32,7 @@ BluesHouseText1:
 	jr nz, .GiveMap
 	ld hl, DaisyInitialText
 	call PrintText
-	jr .done
+	jp .done
 
 .GiveMap
 	ld hl, DaisyOfferMapText
@@ -81,9 +81,64 @@ DaisyUseMapText:
 	db "@"
 
 BluesHouseText2: ; Daisy, walking around
+	TX_ASM
+	CheckEvent EVENT_BEAT_POKEMON_LEAGUE
+	jr z, .DontGetStarter
+	CheckEventReuseA EVENT_GOT_STARTER_FROM_DAISY
+	jr z, .GetStarter
+	ld hl, TakeGoodCareOfItText
+	call PrintText
+	jr .done
+
+.DontGetStarter
+	ld hl, BluesHouseText2Text
+	call PrintText
+	jr .done
+
+.GetStarter
+	ld hl, GiveStarterText
+	call PrintText
+	ld a, [wRivalStarter]
+	cp STARTER2
+	jr nz, .NotSquirtle
+	lb bc, SQUIRTLE, 5
+	call GivePokemon
+	jr nc, .done
+	jr .finishstarter
+.NotSquirtle
+	cp STARTER3
+	jr nz, .Charmander
+	lb bc, BULBASAUR, 5
+	call GivePokemon
+	jr nc, .done
+	jr .finishstarter
+.Charmander
+	lb bc, CHARMANDER, 5
+	call GivePokemon
+	jr nc, .done
+.finishstarter
+	ld a, [wSimulatedJoypadStatesEnd]
+	and a
+	call z, WaitForTextScrollButtonPress
+	call EnableAutoTextBoxDrawing
+	ld hl, TakeGoodCareOfItText
+	call PrintText
+	SetEvent EVENT_GOT_STARTER_FROM_DAISY
+.done
+	jp TextScriptEnd
+
+BluesHouseText2Text:
 	TX_FAR _BluesHouseText2
 	db "@"
 
 BluesHouseText3: ; map on table
 	TX_FAR _BluesHouseText3
+	db "@"
+
+GiveStarterText:
+	TX_FAR _DaisyGiveStarterText
+	db "@"
+
+TakeGoodCareOfItText:
+	TX_FAR _TakeGoodCareOfItText
 	db "@"

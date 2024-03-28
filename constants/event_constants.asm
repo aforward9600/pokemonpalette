@@ -8,7 +8,7 @@ const_value = 0
 	const EVENT_005                                  ; 005, (D747, bit 5)
 	const EVENT_PALLET_AFTER_GETTING_POKEBALLS       ; 006, (D747, bit 6)
 	const EVENT_RELOADED_KABUTO_SPRITE               ; 007, (D747, bit 7)
-	const EVENT_008                                  ; 008, (D748, bit 0)
+	const EVENT_TALKED_WITH_MASTER                   ; 008, (D748, bit 0)
 	const EVENT_009                                  ; 009, (D748, bit 1)
 	const EVENT_00A                                  ; 00A, (D748, bit 2)
 	const EVENT_00B                                  ; 00B, (D748, bit 3)

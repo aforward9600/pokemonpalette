@@ -151,7 +151,16 @@ FightingDojoText1:
 	ld [wCurMapScript], a
 	jr .asm_9dba4
 .continue1
+	CheckEventReuseA EVENT_TALKED_WITH_MASTER
+	jr nz, .continue4
+	CheckEventReuseA EVENT_BEAT_POKEMON_LEAGUE
+	jr nz, .continue3
+.continue4
 	ld hl, FightingDojoText_5ce9d
+	call PrintText
+	jr .asm_9dba4
+.continue3
+	ld hl, FightingDojoMasterText
 	call PrintText
 	jr .asm_9dba4
 .continue2
@@ -174,6 +183,10 @@ FightingDojoText8:
 
 FightingDojoText_5ce9d:
 	TX_FAR _FightingDojoText_5ce9d
+	db "@"
+
+FightingDojoMasterText:
+	TX_FAR _FightingDojoMasterText
 	db "@"
 
 FightingDojoText2:
@@ -253,6 +266,8 @@ FightingDojoText6:
 	TX_ASM
 	CheckEitherEventSet EVENT_GOT_HITMONLEE, EVENT_GOT_HITMONCHAN
 	jr z, .GetMon
+	CheckEventReuseA EVENT_BEAT_POKEMON_LEAGUE
+	jr nz, .GetMon
 	ld hl, OtherHitmonText
 	call PrintText
 	jr .done
@@ -288,6 +303,8 @@ FightingDojoText7:
 	TX_ASM
 	CheckEitherEventSet EVENT_GOT_HITMONLEE, EVENT_GOT_HITMONCHAN
 	jr z, .GetMon
+	CheckEventReuseA EVENT_BEAT_POKEMON_LEAGUE
+	jr nz, .GetMon
 	ld hl, OtherHitmonText
 	call PrintText
 	jr .done

@@ -23,4 +23,6 @@ Caught Pokeball icon tutorial: hydhyro, JamesRoyV and RainbowMetalPigeon
 
 Omanyte to Kabuto sprite in Fuchsia: Vortyne
 
-Poliwrath, Kangaskhan, Spearow and Slowpoke overworld sprites: ShockSlayer
+New overworld sprites for Pokemon: Crystal Clear team
+
+Party Menu sprites: Blue Emerald, Chamber, Soloo993, et al

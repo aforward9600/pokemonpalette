@@ -39,3 +39,19 @@ _BluesHouseText3::
 	text "It's a big map!"
 	line "This is useful!"
 	done
+
+_DaisyGiveStarterText::
+	text "Hey <PLAYER>!"
+
+	para "<RIVAL> wanted me"
+	line "to give you this!"
+
+	para "He was too pride-"
+	line "ful to give it"
+	cont "you himself!"
+	done
+
+_TakeGoodCareOfItText::
+	text "Take good care"
+	line "of it!"
+	done

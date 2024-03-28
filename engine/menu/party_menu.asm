@@ -22,7 +22,8 @@ DrawPartyMenu_:
 	ld [H_AUTOBGTRANSFERENABLED], a
 	call ClearScreen
 	call UpdateSprites
-	callba LoadMonPartySpriteGfxWithLCDDisabled ; load pokemon icon graphics
+RedrawPartyMenu_ReloadSprites:
+	callba LoadPartyMonSprites ; load pokemon icon graphics
 
 RedrawPartyMenu_:
 	ld a, [wPartyMenuTypeOrMessageID]
@@ -49,7 +50,7 @@ RedrawPartyMenu_:
 	call GetPartyMonName
 	pop hl
 	call PlaceString ; print the pokemon's name
-	callba WriteMonPartySpriteOAMByPartyIndex ; place the appropriate pokemon icon
+	callba PlacePartyMonSprite ; place the appropriate pokemon icon
 	ld a, [hPartyMonIndex]
 	ld [wWhichPokemon], a
 	inc a
@@ -215,7 +216,12 @@ RedrawPartyMenu_:
 	ld a, 1
 	ld [H_AUTOBGTRANSFERENABLED], a
 	call Delay3
-	jp GBPalNormal
+	ld a, %11100100
+	ld [rBGP], a
+	call UpdateGBCPal_BGP
+	ld [rOBP0], a
+	call UpdateGBCPal_OBP0
+	ret
 .printItemUseMessage
 	and $0F
 	ld hl, PartyMenuItemUseMessagePointers
