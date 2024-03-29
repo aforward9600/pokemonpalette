@@ -4,6 +4,12 @@ A small QOL hack that replaces the Gym Leaders' teams with teams based on colors
 Based on jojobear13's Shin Pokémon Red and Blue. Below is the original README file from Shin Pokémon Red and Blue.
 It will give you all the engine changes, such as changes to the battle system.
 
+- Pokémon now have unique sprites in the menu.
+- Sky Attack is now 150 power and recharges after hitting.
+- Leech Life is now 80 power.
+- Absorb is now 40 power.
+- Mega Drain is now 75 power.
+
 # Shin Pokémon Red and Blue: Lite Patch
 
 Version 1.23
@@ -177,7 +183,6 @@ To fix this, you must use the Softlock Warp detailed below to teleport back to P
   - Trapping move PP can no longer underflow due to an opponent switching pkmn
   - Raging and Thrashing no longer suffers from accuracy degradation
   - Breaking a substitute does not nullify explosion/self-destruct, hyper beam recharge, or recoil damage
-  - Hyper beam must recharge if it knocks out the opposing pkmn
   - Bugfixes involving Counter:
     - works against BIRD type, which is now typeless and assigned only to STRUGGLE
     - To prevent desync, pressing B to get out of the move selection menu zeros-out the ram location for selected move & move power

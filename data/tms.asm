@@ -38,7 +38,7 @@ TechnicalMachines:
 	db EGG_BOMB ; TM37
 	db FIRE_BLAST ; TM38
 	db SWIFT ; TM39
-	db SKULL_BASH ; TM40
+	db DRILL_PECK ; TM40
 	db LEECH_LIFE ; TM41
 	db DREAM_EATER ; TM42
 	db SKY_ATTACK ; TM43

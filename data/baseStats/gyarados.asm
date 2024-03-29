@@ -22,9 +22,9 @@ db 5 ; growth rate
 	tmlearn 9,10,11,12,13,14,15
 	tmlearn 20,23,24
 	tmlearn 25,26,31,32
-	tmlearn 33,35,38,40
+	tmlearn 33,35,38
 	tmlearn 44
-	tmlearn 50,53,54
+	tmlearn 50,52,53,54
 ;	db 0 ; padding
 	db BANK(GyaradosPicFront)
 	assert BANK(GyaradosPicFront) == BANK(GyaradosPicBack)

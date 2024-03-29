@@ -231,7 +231,7 @@ MapHeaderPointers::
 	dw UnknownDungeon1_h
 	dw NameRater_h
 	dw CeruleanHouse2_h
-	dw Route16Gate_h ; unused
+	dw MoveDeletersHouse_h
 	dw RockTunnel2_h
 	dw SilphCo9_h
 	dw SilphCo10_h

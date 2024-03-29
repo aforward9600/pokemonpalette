@@ -70,7 +70,6 @@ AlwaysHappenSideEffects:
 	db RECOIL_EFFECT
 	db TWINEEDLE_EFFECT
 	db RAGE_EFFECT
-	db HYPER_BEAM_EFFECT	;joenote - adding this here makes hyperbeam recharge if enemy is knocked out
 	db -1
 SpecialEffects:
 ; Effects from arrays 2, 4, and 5B, minus Twineedle and Rage.

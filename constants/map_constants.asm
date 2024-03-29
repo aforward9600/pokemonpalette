@@ -236,7 +236,7 @@ ENDM
 	mapconst UNKNOWN_DUNGEON_1,           9, 15 ; $E4
 	mapconst NAME_RATERS_HOUSE,           4,  4 ; $E5
 	mapconst CERULEAN_HOUSE_2,            4,  4 ; $E6
-	mapconst UNUSED_MAP_E7,               0,  0 ; $E7
+	mapconst MOVE_DELETERS_HOUSE,         4,  4 ; $E7
 	mapconst ROCK_TUNNEL_2,              18, 20 ; $E8
 	mapconst SILPH_CO_9F,                 9, 13 ; $E9
 	mapconst SILPH_CO_10F,                9,  8 ; $EA

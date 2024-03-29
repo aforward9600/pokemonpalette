@@ -231,7 +231,7 @@ MapHeaderBanks:
 	db BANK(UnknownDungeon1_h)
 	db BANK(NameRater_h)
 	db BANK(CeruleanHouse2_h)
-	db $01
+	db BANK(MoveDeletersHouse_h)
 	db BANK(RockTunnel2_h)
 	db BANK(SilphCo9_h)
 	db BANK(SilphCo10_h)

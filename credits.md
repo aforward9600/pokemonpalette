@@ -19,6 +19,8 @@ Exp.All improvements: PlagueVonKarma, jojobear13 and AhadsStudios
 
 New back sprites: mauvesea
 
+New back sprites tutorial: YakiNeen
+
 Caught Pokeball icon tutorial: hydhyro, JamesRoyV and RainbowMetalPigeon
 
 Omanyte to Kabuto sprite in Fuchsia: Vortyne
@@ -26,3 +28,7 @@ Omanyte to Kabuto sprite in Fuchsia: Vortyne
 New overworld sprites for Pokemon: Crystal Clear team
 
 Party Menu sprites: Blue Emerald, Chamber, Soloo993, et al
+
+Party Menu sprites tutorial: dannye, FrenchOrange
+
+

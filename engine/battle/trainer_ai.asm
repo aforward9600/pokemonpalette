@@ -1356,21 +1356,21 @@ TrainerAIPointers:
 	dbw 1,GiovanniAI ; giovanni
 	dbw 3,GenericAI
 	dbw 2,CooltrainerMAI ; cooltrainerm
-	dbw 1,CooltrainerFAI ; cooltrainerf
-	dbw 2,BrunoAI ; bruno
-	dbw 5,BrockAI ; brock
+	dbw 2,CooltrainerFAI ; cooltrainerf
+	dbw 1,BrunoAI ; bruno
+	dbw 1,BrockAI ; brock
 	dbw 1,MistyAI ; misty
 	dbw 1,LtSurgeAI ; surge
 	dbw 1,ErikaAI ; erika
-	dbw 2,KogaAI ; koga
-	dbw 2,BlaineAI ; blaine
+	dbw 1,KogaAI ; koga
+	dbw 1,BlaineAI ; blaine
 	dbw 1,SabrinaAI ; sabrina
 	dbw 3,GenericAI
 	dbw 1,Sony2AI ; sony2
 	dbw 1,Sony3AI ; sony3
-	dbw 2,LoreleiAI ; lorelei
-	dbw 3,GenericAI
-	dbw 2,AgathaAI ; agatha
+	dbw 1,LoreleiAI ; lorelei
+	dbw 1,GenericAI
+	dbw 1,AgathaAI ; agatha
 	dbw 1,LanceAI ; lance
 
 ;joenote - reorganizing these AI routines to jump on carry instead of returning on not-carry
@@ -1407,19 +1407,30 @@ CooltrainerFAI:
 	
 BrockAI:
 ; if his active monster has a status condition, use a full heal
-	ld a, [wEnemyMonStatus]
-	and a
-	jp nz, AIUseFullHeal
-	ret 
+	cp $80
+	jr nc, .brockreturn
+	ld a, $A
+	call AICheckIfHPBelowFraction
+	jp c, AIUsePotion
+.brockreturn
+	ret
 
 MistyAI:
-	cp $40
-	jp c, AIUseXDefend
+	cp $80
+	jr nc, .mistyreturn
+	ld a, $A
+	call AICheckIfHPBelowFraction
+	jp c, AIUsePotion
+.mistyreturn
 	ret
 	
 LtSurgeAI:
-	cp $40
-	jp c, AIUseXSpeed
+	cp $80
+	jr nc, .ltsurgereturn
+	ld a, $A
+	call AICheckIfHPBelowFraction
+	jp c, AIUseSuperPotion
+.ltsurgereturn
 	ret
 	
 ErikaAI:
@@ -1432,21 +1443,25 @@ ErikaAI:
 	ret
 
 KogaAI:
-	cp $40
-	jp c, AIUseXAttack
+	cp $80
+	jr nc, .kogareturn
+	ld a, $A
+	call AICheckIfHPBelowFraction
+	jp c, AIUseHyperPotion
+.kogareturn
 	ret
 	
 BlaineAI:	;blaine needs to check HP. this was an oversight	
-	cp $40
+	cp $80
 	jr nc, .blainereturn
-	ld a, $2
+	ld a, $A
 	call AICheckIfHPBelowFraction	
-	jp c, AIUseSuperPotion
+	jp c, AIUseHyperPotion
 .blainereturn
 	ret
 
 SabrinaAI:
-	cp $40
+	cp $80
 	jr nc, .sabrinareturn
 	ld a, $A
 	call AICheckIfHPBelowFraction
@@ -1455,7 +1470,7 @@ SabrinaAI:
 	ret
 
 Sony2AI:
-	cp $20
+	cp $80
 	jr nc, .rival2return
 	ld a, 5
 	call AICheckIfHPBelowFraction
@@ -1464,7 +1479,7 @@ Sony2AI:
 	ret
 
 Sony3AI:
-	cp $20
+	cp $80
 	jr nc, .rival3return
 	ld a, 5
 	call AICheckIfHPBelowFraction
@@ -1477,14 +1492,18 @@ LoreleiAI:
 	jr nc, .loreleireturn
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	jp c, AIUseSuperPotion	
+	jp c, AIUseHyperPotion
 .loreleireturn
 	ret
 
 
 BrunoAI:
-	cp $40
-	jp c, AIUseXDefend
+	cp $80
+	jr nc, .brunoreturn
+	ld a, 5
+	call AICheckIfHPBelowFraction
+	jp c, AIUseHyperPotion
+.brunoreturn
 	ret
 
 AgathaAI:
@@ -1494,7 +1513,7 @@ AgathaAI:
 	jr nc, .agathareturn
 	ld a, $4
 	call AICheckIfHPBelowFraction
-	jp c, AIUseSuperPotion
+	jp c, AIUseHyperPotion
 .agathareturn
 	ret
 

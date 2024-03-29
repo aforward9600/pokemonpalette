@@ -153,7 +153,7 @@ MoveEnd:
 	move BARRAGE,      TWO_TO_FIVE_ATTACKS_EFFECT,  15, NORMAL,    85, 20
 	move LEECH_LIFE,   DRAIN_HP_EFFECT,             80, BUG,      100, 10
 	move LOVELY_KISS,  SLEEP_EFFECT,                 0, NORMAL,    75, 10
-	move SKY_ATTACK,   CHARGE_EFFECT,              140, FLYING,    90,  5
+	move SKY_ATTACK,   HYPER_BEAM_EFFECT,          150, FLYING,    90,  5
 	move TRANSFORM,    TRANSFORM_EFFECT,             0, NORMAL,   100, 10
 	move BUBBLE,       SPEED_DOWN_SIDE_EFFECT,      20, WATER,    100, 30
 	move DIZZY_PUNCH,  NO_ADDITIONAL_EFFECT,        70, NORMAL,   100, 10

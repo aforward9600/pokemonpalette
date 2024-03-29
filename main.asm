@@ -343,6 +343,12 @@ INCLUDE "scripts/vermilioncity.asm"
 INCLUDE "scripts/celadoncity.asm"
 INCLUDE "scripts/fuchsiacity.asm"
 
+INCLUDE "data/mapHeaders/movedeletershouse.asm"
+INCLUDE "scripts/movedeletershouse.asm"
+INCLUDE "data/mapObjects/movedeletershouse.asm"
+MoveDeletersHouseBlocks: INCBIN "maps/movedeletershouse.blk"
+INCLUDE "scripts/movedeleter.asm"
+
 INCLUDE "data/mapHeaders/blueshouse.asm"
 INCLUDE "scripts/blueshouse.asm"
 INCLUDE "data/mapObjects/blueshouse.asm"
