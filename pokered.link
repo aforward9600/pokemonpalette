@@ -74,7 +74,7 @@ ROMX $12
   "bank12"
 
 ROMX $13
-  "bank13"
+  "Trainer Pics 1"
 
 ROMX $14
   "bank14"
@@ -178,6 +178,9 @@ ROMX $36
   ORG $4000
   "Party Mon Sprites Gfx 2"
   "Party Mon Sprites Routines"
+
+ROMX $37
+  "Trainer Pics 2"
 
 WRAM0
   "WRAM Bank 0"

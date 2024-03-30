@@ -291,6 +291,10 @@ FearowSprite:         INCBIN "gfx/sprites/fearow.2bpp"
 NidoranMSprite:       INCBIN "gfx/sprites/nidoran_m.2bpp"
 PidgeySprite:         INCBIN "gfx/sprites/pidgey.2bpp"
 PidgeotSprite:        INCBIN "gfx/sprites/pidgeot.2bpp"
+ShellSprite:          INCBIN "gfx/sprites/shell.2bpp"
+RocketFSprite:        INCBIN "gfx/sprites/rocketf.2bpp"
+BlaineSprite:         INCBIN "gfx/sprites/blaine.2bpp"
+SurgeSprite:          INCBIN "gfx/sprites/surge.2bpp"
 
 
 SECTION "Battle (bank 5)", ROMX, BANK[$5]
@@ -1633,9 +1637,8 @@ INCLUDE "data/mapObjects/safarizonesecrethouse.asm"
 SafariZoneSecretHouseBlocks: INCBIN "maps/safarizonesecrethouse.blk"
 
 
-SECTION "bank13",ROMX,BANK[$13]
+SECTION "Trainer Pics 1",ROMX,BANK[$13]
 
-TrainerPics::
 YoungsterPic::     INCBIN "pic/trainer/youngster.pic"
 BugCatcherPic::    INCBIN "pic/trainer/bugcatcher.pic"
 LassPic::          INCBIN "pic/trainer/lass.pic"
@@ -1660,8 +1663,11 @@ TamerPic::         INCBIN "pic/trainer/tamer.pic"
 BirdKeeperPic::    INCBIN "pic/trainer/birdkeeper.pic"
 BlackbeltPic::     INCBIN "pic/trainer/blackbelt.pic"
 Rival1Pic::        INCBIN "pic/trainer/rival1.pic"
+RocketFPic::       INCBIN "pic/trainer/rocketf.pic"
+
+SECTION "Trainer Pics 2",ROMX,BANK[$37]
+
 ProfOakPic::       INCBIN "pic/trainer/prof.oak.pic"
-ChiefPic::		   ;INCBIN "pic/trainer/chief.pic"	;joenote - not enough rom space
 ScientistPic::     INCBIN "pic/trainer/scientist.pic"
 GiovanniPic::      INCBIN "pic/trainer/giovanni.pic"
 RocketPic::        INCBIN "pic/trainer/rocket.pic"

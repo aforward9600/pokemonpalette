@@ -1,7 +1,7 @@
 FuchsiaCityObject:
 	db $f ; border block
 
-	db 9 ; warps
+	db 10 ; warps
 	warp 5, 13, 0, FUCHSIA_MART
 	warp 11, 27, 0, FUCHSIA_HOUSE_1
 	warp 19, 27, 0, FUCHSIA_POKECENTER
@@ -11,6 +11,7 @@ FuchsiaCityObject:
 	warp 22, 13, 0, FUCHSIA_MEETING_ROOM
 	warp 31, 27, 1, FUCHSIA_HOUSE_3
 	warp 31, 24, 0, FUCHSIA_HOUSE_3
+	warp 15, 27, 0, MOVE_DELETERS_HOUSE
 
 	db 14 ; signs
 	sign 15, 23, 11 ; FuchsiaCityText11
@@ -51,3 +52,4 @@ FuchsiaCityObject:
 	warp_to 22, 13, FUCHSIA_CITY_WIDTH ; FUCHSIA_MEETING_ROOM
 	warp_to 31, 27, FUCHSIA_CITY_WIDTH ; FUCHSIA_HOUSE_3
 	warp_to 31, 24, FUCHSIA_CITY_WIDTH ; FUCHSIA_HOUSE_3
+	warp_to 15, 27, FUCHSIA_CITY_WIDTH ; MOVE_DELETERS_HOUSE

@@ -13,7 +13,7 @@ dw PinsirPicFront
 dw PinsirPicBack
 ; attacks known at lvl 0
 db VICEGRIP
-db 0
+db PIN_MISSILE
 db 0
 db 0
 db 5 ; growth rate
@@ -23,7 +23,7 @@ db 5 ; growth rate
 	tmlearn 17,19,20
 	tmlearn 26,31,32
 	tmlearn 34
-	tmlearn 44,48
+	tmlearn 41,44,48
 	tmlearn 50,51,54
 ;	db 0 ; padding
 	db BANK(PinsirPicFront)

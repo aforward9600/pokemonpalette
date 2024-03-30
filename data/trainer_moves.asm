@@ -105,6 +105,7 @@ SpecialTrainerMoves:
 	db ERIKA,$1
 	db 1,4,THUNDERBOLT
 	db 2,1,BODY_SLAM
+	db 3,1,SLUDGE
 	db 3,3,MEGA_DRAIN
 	db 0
 	
@@ -143,6 +144,7 @@ SpecialTrainerMoves:
 	db 0
 	
 	db GIOVANNI,$3
+	db 1,1,LEECH_LIFE
 	db 2,4,EARTHQUAKE
 	db 3,1,BODY_SLAM
 	db 3,2,LEECH_SEED
@@ -259,6 +261,44 @@ SpecialTrainerMoves:
 	db 6,3,FIRE_BLAST
 	db 0
 
+	db SUPER_NERD,$6
+	db 2,1,DRILL_PECK
+	db 2,2,SURF
+	db 2,3,ICE_BEAM
+	db 3,1,FLAMETHROWER
+	db 3,2,PSYCHIC_M
+	db 3,4,CONFUSE_RAY
+	db 0
 
-	
+	db SUPER_NERD,$7
+	db 4,1,SLUDGE
+	db 4,3,MEGA_DRAIN
+	db 0
+
+	db SUPER_NERD,$9
+	db 1,1,BITE
+	db 0
+
+	db BURGLAR,$1
+	db 1,1,BITE
+	db 3,1,FLAMETHROWER
+	db 3,2,PSYCHIC_M
+	db 3,4,CONFUSE_RAY
+	db 0
+
+	db BURGLAR,$2
+	db 1,3,FLAMETHROWER
+	db 0
+
+	db BURGLAR,$3
+	db 2,1,FLAMETHROWER
+	db 2,2,DIG
+	db 2,4,DOUBLE_EDGE
+	db 0
+
+	db BIKER,$7
+	db 4,2,MEGA_PUNCH
+	db 4,4,PSYCHIC_M
+	db 0
+
 	db $ff

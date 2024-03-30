@@ -75,7 +75,7 @@ SpriteSets:
 
 ; sprite set $02
 	db SPRITE_BUG_CATCHER
-	db SPRITE_ROCKET
+	db SPRITE_ROCKET_F
 	db SPRITE_BLACK_HAIR_BOY_2
 	db SPRITE_HIKER
 	db SPRITE_SLOWBRO
@@ -117,7 +117,7 @@ SpriteSets:
 	db SPRITE_YOUNG_BOY
 	db SPRITE_GIRL
 	db SPRITE_FISHER2
-	db SPRITE_FAT_BALD_GUY
+	db SPRITE_ROCKET_F
 	db SPRITE_OLD_PERSON
 	db SPRITE_POLIWRATH
 	db SPRITE_GUARD
@@ -147,7 +147,7 @@ SpriteSets:
 	db SPRITE_PIDGEOT
 	db SPRITE_ROCKER
 	db SPRITE_BLACK_HAIR_BOY_1
-	db SPRITE_SLOWBRO
+	db SPRITE_ROCKET_F
 	db SPRITE_BALL
 	db SPRITE_LYING_OLD_MAN_UNUSED_2
 
@@ -193,7 +193,7 @@ SpriteSets:
 ; sprite set $0b
 	db SPRITE_BLACK_HAIR_BOY_2
 	db SPRITE_BLACK_HAIR_BOY_1
-	db SPRITE_CLEFAIRY
+	db SPRITE_ROCKER
 	db SPRITE_FISHER2
 	db SPRITE_GAMBLER
 	db SPRITE_SLOWBRO
@@ -629,6 +629,21 @@ SpriteSheetPointerTable:
 	db $c0
 	db BANK(PidgeotSprite)
 
+	; SPRITE_ROCKET_F
+	dw RocketFSprite
+	db $c0
+	db BANK(RocketFSprite)
+
+	; SPRITE_BLAINE
+	dw BlaineSprite
+	db $c0
+	db BANK(BlaineSprite)
+
+	; SPRITE_SURGE
+	dw SurgeSprite
+	db $c0
+	db BANK(SurgeSprite)
+
 	; SPRITE_BALL
 	dw BallSprite
 	db $40 ; byte count
@@ -703,3 +718,8 @@ SpriteSheetPointerTable:
 	dw VoltorbSprite
 	db $40
 	db BANK(VoltorbSprite)
+
+	; SPRITE_SHELL
+	dw ShellSprite
+	db $40
+	db BANK(ShellSprite)

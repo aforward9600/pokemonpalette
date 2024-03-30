@@ -23,7 +23,7 @@ db 0 ; growth rate
 	tmlearn 20
 	tmlearn 31,32
 	tmlearn 39
-	tmlearn 44
+	tmlearn 41,44
 	tmlearn 50,51,52
 ;	db 0 ; padding
 	db BANK(ScytherPicFront)

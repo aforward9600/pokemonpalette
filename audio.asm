@@ -58,7 +58,7 @@ INCLUDE "audio/sfx/cut_1.asm"
 INCLUDE "audio/sfx/go_inside_1.asm"
 INCLUDE "audio/sfx/swap_1.asm"
 INCLUDE "audio/sfx/tink_1.asm"
-INCLUDE "audio/sfx/59_1.asm"
+;INCLUDE "audio/sfx/59_1.asm"
 INCLUDE "audio/sfx/purchase_1.asm"
 INCLUDE "audio/sfx/collision_1.asm"
 INCLUDE "audio/sfx/go_outside_1.asm"
@@ -178,7 +178,7 @@ INCLUDE "audio/sfx/battle_12.asm"
 INCLUDE "audio/sfx/battle_13.asm"
 INCLUDE "audio/sfx/battle_14.asm"
 INCLUDE "audio/sfx/vine_whip.asm"
-INCLUDE "audio/sfx/battle_16.asm"
+;INCLUDE "audio/sfx/battle_16.asm"
 INCLUDE "audio/sfx/battle_17.asm"
 INCLUDE "audio/sfx/battle_18.asm"
 INCLUDE "audio/sfx/battle_19.asm"
@@ -382,7 +382,13 @@ PlayBattleMusic::
 	cp 200
 	jr c, .wildBattle
 	cp OPP_GIOVANNI
-	jr z, .Elite4Battle
+	jr z, .RocketBattle
+	cp OPP_ROCKET
+	jr z, .RocketBattle
+	cp OPP_ROCKET_F
+	jr z, .RocketBattle
+	cp OPP_SCIENTIST
+	jr z, .RocketBattle
 	cp OPP_LORELEI
 	jr z, .Elite4Battle
 	cp OPP_BRUNO
@@ -393,6 +399,8 @@ PlayBattleMusic::
 	jr z, .Elite4Battle
 	cp OPP_SONY3
 	jr nz, .normalTrainerBattle
+	cp OPP_PROF_OAK
+	jr nz, .normalTrainerBattle
 .finalBattle
 	ld a, MUSIC_FINAL_BATTLE
 	jr .playSong
@@ -401,6 +409,9 @@ PlayBattleMusic::
 	jr .playSong
 .normalTrainerBattle
 	ld a, MUSIC_TRAINER_BATTLE
+	jr .playSong
+.RocketBattle
+	ld a, MUSIC_ROCKET_BATTLE
 	jr .playSong
 .wildBattle
 	ld a, MUSIC_WILD_BATTLE
@@ -633,6 +644,7 @@ INCLUDE "audio/sfx/caught_mon.asm"
 INCLUDE "audio/music/defeatedtrainer.asm"
 INCLUDE "audio/music/defeatedwildmon.asm"
 INCLUDE "audio/music/defeatedgymleader.asm"
+INCLUDE "audio/music/rocketbattle.asm"
 
 
 SECTION "Music 3", ROMX, BANK[AUDIO_3]

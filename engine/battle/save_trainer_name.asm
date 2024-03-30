@@ -32,7 +32,7 @@ TrainerNamePointers:
 	dw wTrainerName
 	dw BurglarName
 	dw EngineerName
-	dw JugglerXName
+	dw wTrainerName
 	dw wTrainerName
 	dw SwimmerName
 	dw wTrainerName
@@ -46,7 +46,7 @@ TrainerNamePointers:
 	dw BlackbeltName
 	dw wTrainerName
 	dw ProfOakName
-	dw ChiefName
+	dw wTrainerName
 	dw ScientistName
 	dw wTrainerName
 	dw RocketName
@@ -86,8 +86,6 @@ BurglarName:
 	db "Burglar@"
 EngineerName:
 	db "Engineer@"
-JugglerXName:
-	db "Juggler@"
 SwimmerName:
 	db "Swimmer@"
 BeautyName:
@@ -100,8 +98,6 @@ BlackbeltName:
 	db "Blackbelt@"
 ProfOakName:
 	db "Prof.Oak@"
-ChiefName:
-	db "Chief@"
 ScientistName:
 	db "Scientist@"
 RocketName:

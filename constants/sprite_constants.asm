@@ -100,6 +100,9 @@ const_value = 1
 	const SPRITE_NIDORAN_M
 	const SPRITE_PIDGEY
 	const SPRITE_PIDGEOT
+	const SPRITE_ROCKET_F
+	const SPRITE_BLAINE
+	const SPRITE_SURGE
 	const SPRITE_BALL                      ; $3d
 	const SPRITE_OMANYTE                   ; $3e
 	const SPRITE_BOULDER                   ; $3f
@@ -115,6 +118,7 @@ const_value = 1
 	const SPRITE_POKEDEX
 	const SPRITE_KABUTO
 	const SPRITE_VOLTORB
+	const SPRITE_SHELL
 
 ; different kinds of people events
 ITEM    EQU $80

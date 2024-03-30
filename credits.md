@@ -31,4 +31,4 @@ Party Menu sprites: Blue Emerald, Chamber, Soloo993, et al
 
 Party Menu sprites tutorial: dannye, FrenchOrange
 
-
+Female Rocket sprite: Gold Spaceworld 1999 demo

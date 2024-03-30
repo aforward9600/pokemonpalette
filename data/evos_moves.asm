@@ -526,9 +526,9 @@ PinsirEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 25, PIN_MISSILE
+	db 25, FOCUS_ENERGY
 	db 30, SEISMIC_TOSS
-	db 36, FOCUS_ENERGY
+	db 36, SUBMISSION
 	db 43, GUILLOTINE
 	db 49, SLASH
 	db 54, SWORDS_DANCE
@@ -538,11 +538,11 @@ TangelaEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 22, ABSORB
-	db 29, VINE_WHIP
-	db 32, POISONPOWDER
+	db 22, VINE_WHIP
+	db 29, SLEEP_POWDER
+	db 32, MEGA_DRAIN
 	db 36, STUN_SPORE
-	db 39, SLEEP_POWDER
+	db 39, POISONPOWDER
 	db 45, SLAM
 	db 49, GROWTH
 	db 0
@@ -2122,10 +2122,11 @@ OddishEvosMoves:
 	db EV_LEVEL, 21, GLOOM
 	db 0
 ; Learnset
-	db 15, POISONPOWDER
+	db 12, POISONPOWDER
+	db 15, ACID
 	db 17, STUN_SPORE
-	db 19, SLEEP_POWDER
-	db 24, ACID
+	db 20, SLEEP_POWDER
+	db 24, SLUDGE
 	db 33, PETAL_DANCE
 	db 46, SOLARBEAM
 	db 0
@@ -2135,10 +2136,11 @@ GloomEvosMoves:
 	db EV_ITEM, LEAF_STONE, 1, VILEPLUME
 	db 0
 ; Learnset
-	db 15, POISONPOWDER
+	db 12, POISONPOWDER
+	db 15, ACID
 	db 17, STUN_SPORE
-	db 19, SLEEP_POWDER
-	db 28, ACID
+	db 20, SLEEP_POWDER
+	db 28, SLUDGE
 	db 38, PETAL_DANCE
 	db 52, SOLARBEAM
 	db 0
