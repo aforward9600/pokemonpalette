@@ -110,6 +110,9 @@ PewterGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_5c49b
 .asm_5c462
+	CheckEventReuseA EVENT_BEAT_POKEMON_LEAGUE
+	jr nz, .PossibleRematchBrock
+.AfterRematch
 	ld hl, PewterGymText_5c4a3
 	call PrintText
 	jr .asm_5c49b
@@ -133,6 +136,34 @@ PewterGymText1:
 	ld a, $3
 	ld [wPewterGymCurScript], a
 	ld [wCurMapScript], a
+	jr .asm_5c49b
+.PossibleRematchBrock
+	CheckEventReuseA EVENT_BEAT_BROCK_POST
+	jr nz, .AfterRematch
+	ld hl, PewterGymText_RematchText
+	call PrintText
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, PewterGymText_RematchDefeat
+	ld de, PewterGymText_RematchDefeat
+	call SaveEndBattleTextPointers
+;	ld a, [H_SPRITEINDEX]
+;	ld [wSpriteIndex], a
+;	call EngageMapTrainer
+;	call InitBattleEnemyParameters
+	ld a, OPP_BROCK
+	ld [wCurOpponent], a
+	ld a, $2
+	ld [wTrainerNo], a
+	xor a
+	ld [hJoyHeld], a
+	ld a, $1
+	ld [wGymLeaderNo], a
+	ld a, $3
+	ld [wPewterGymCurScript], a
+	ld [wCurMapScript], a
+	SetEvent EVENT_BEAT_BROCK_POST
 .asm_5c49b
 	jp TextScriptEnd
 
@@ -181,6 +212,14 @@ PewterGymEndBattleText1:
 
 PewterGymAfterBattleText1:
 	TX_FAR _PewterGymAfterBattleText1
+	db "@"
+
+PewterGymText_RematchText:
+	TX_FAR _PewterGymText_RematchText
+	db "@"
+
+PewterGymText_RematchDefeat:
+	TX_FAR _PewterGymText_RematchDefeat
 	db "@"
 
 PewterGymText3:

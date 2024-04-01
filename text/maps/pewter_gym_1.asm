@@ -16,3 +16,12 @@ _PewterGymText_5c49e::
 	cont "Fine then! Show"
 	cont "me your best!"
 	done
+
+_PewterGymText_RematchText::
+	text "You're back!"
+
+	para "Are you ready to"
+	line "show me the"
+	cont "strength of a"
+	cont "Champion?"
+	done

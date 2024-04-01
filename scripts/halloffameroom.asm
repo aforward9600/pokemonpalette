@@ -41,6 +41,7 @@ HallofFameRoomScript2:
 	ld [wHallOfFameRoomCurScript], a
 	; Elite 4 events
 	ResetEventRange ELITE4_EVENTS_START, ELITE4_CHAMPION_EVENTS_END, 1
+	ResetEventRange GYMLEADERS_EVENTS_START, GYMLEADERS_EVENTS_END, 1
 	SetEvent EVENT_BEAT_POKEMON_LEAGUE	;joenote - unused event. set it for signaling the e4's defeat
 	xor a
 	ld [wHallOfFameRoomCurScript], a

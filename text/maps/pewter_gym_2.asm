@@ -140,3 +140,9 @@ _PewterGymText_5c529::
 	line "You're #mon"
 	cont "champ material!"
 	done
+
+_PewterGymText_RematchDefeat::
+	text "Your strength was"
+	line "too much, even"
+	cont "for me!"
+	done

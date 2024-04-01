@@ -158,6 +158,9 @@ CeladonGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_48a5b
 .asm_48a25
+	CheckEventReuseA EVENT_BEAT_POKEMON_LEAGUE
+	jr nz, .PossibleRematchErika
+.AfterRematch
 	ld hl, CeladonGymText_48a68
 	call PrintText
 	jr .asm_48a5b
@@ -179,6 +182,34 @@ CeladonGymText1:
 	ld a, $3
 	ld [wCeladonGymCurScript], a
 	ld [wCurMapScript], a
+	jr .asm_48a5b
+.PossibleRematchErika
+	CheckEventReuseA EVENT_BEAT_ERIKA_POST
+	jr nz, .AfterRematch
+	ld hl, CeladonGymText_RematchText
+	call PrintText
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, CeladonGymText_48a63
+	ld de, CeladonGymText_48a63
+	call SaveEndBattleTextPointers
+;	ld a, [H_SPRITEINDEX]
+;	ld [wSpriteIndex], a
+;	call EngageMapTrainer
+;	call InitBattleEnemyParameters
+	ld a, OPP_ERIKA
+	ld [wCurOpponent], a
+	ld a, $2
+	ld [wTrainerNo], a
+	xor a
+	ld [hJoyHeld], a
+	ld a, $4
+	ld [wGymLeaderNo], a
+	ld a, $3
+	ld [wCeladonGymCurScript], a
+	ld [wCurMapScript], a
+	SetEvent EVENT_BEAT_ERIKA_POST
 .asm_48a5b
 	jp TextScriptEnd
 
@@ -333,4 +364,8 @@ CeladonGymEndBattleText8:
 
 CeladonGymAfterBattleText8:
 	TX_FAR _CeladonGymAfterBattleText8
+	db "@"
+
+CeladonGymText_RematchText:
+	TX_FAR _CeladonGymText_RematchText
 	db "@"

@@ -213,3 +213,14 @@ _CeladonGymAfterBattleText8::
 	para "Wait 'til next"
 	line "time!"
 	done
+
+_CeladonGymText_RematchText::
+	text "...Oh, sorry."
+
+	para "I didn't notice"
+	line "you were here..."
+
+	para "I suppose you'd"
+	line "like to battle"
+	cont "again?"
+	done

@@ -160,7 +160,8 @@ SuperPalettes:
 	
 	; PAL_GREYMON
 	SGB_WHITE 
-	RGB 26,21,22
+;	RGB 26,21,22
+	RGB 20,20,15
 	RGB 15,15,18
 	RGB 3,2,2
 	
