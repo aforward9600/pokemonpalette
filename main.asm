@@ -2492,8 +2492,6 @@ INCLUDE "engine/battle/animations.asm"
 
 INCLUDE "engine/overworld/cut2.asm"
 
-INCLUDE "engine/overworld/ssanne.asm"
-
 INCLUDE "data/animations.asm"
 
 INCLUDE "engine/evolution.asm"
@@ -2512,6 +2510,8 @@ INCLUDE "custom_functions/func_misc.asm"
 INCLUDE "custom_functions/func_overworld.asm"
 INCLUDE "engine/battle/stats_functions.asm"	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+INCLUDE "engine/overworld/ssanne.asm"
 
 TradingAnimationGraphics:
 INCBIN "gfx/game_boy.2bpp"

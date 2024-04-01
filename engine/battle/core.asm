@@ -3186,7 +3186,7 @@ DisabledText:
 	db "disabled!@"
 
 TypeText:
-	db "TYPE@"
+	db "Type@"
 
 SelectEnemyMove:
 	ld a, [wLinkState]
@@ -5204,6 +5204,18 @@ HandleCounterMove:
 	jr z, .counterableType
 	cp BIRD
 	jr z, .counterableType
+	cp ROCK
+	jr z, .counterableType
+	cp GROUND
+	jr z, .counterableType
+	cp BUG
+	jr z, .counterableType
+	cp POISON
+	jr z, .counterableType
+	cp FLYING
+	jr z, .counterableType
+	cp GHOST
+	jr z, .counterableType
 ;;;;;;;;;
 ; if the move wasn't a valid counterable type, miss
 	xor a
@@ -6057,14 +6069,15 @@ MoveHitTest:
 .skipEnemyMistCheck
 	ld a, [wPlayerBattleStatus2]
 	bit USING_X_ACCURACY, a ; is the player using X Accuracy?
-	jr nz, .player_ohko_xacc ; if so, always hit regardless of accuracy/evasion
+	ret nz
+;	jr nz, .player_ohko_xacc ; if so, always hit regardless of accuracy/evasion
 	jr .calcHitChance
-.player_ohko_xacc	;joenote - player ohko moves now ignore x accuracy 
+;.player_ohko_xacc	;joenote - player ohko moves now ignore x accuracy 
 	;this section is entered if the player is using x accuracy
-	ld a, [wPlayerMoveEffect]	;load the move effect 
-	cp OHKO_EFFECT	;check if it's an ohko move
-	jr z, .calcHitChance	;if so, do normal accuracy checks
-	ret	;else the x accuracy skips hit chance
+;	ld a, [wPlayerMoveEffect]	;load the move effect 
+;	cp OHKO_EFFECT	;check if it's an ohko move
+;	jr z, .calcHitChance	;if so, do normal accuracy checks
+;	ret	;else the x accuracy skips hit chance
 .enemyTurn
 	ld a, [wEnemyMoveEffect]
 	cp ATTACK_DOWN1_EFFECT

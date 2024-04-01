@@ -163,6 +163,8 @@ AttackAnimationPointers:
 	dw SuperFangAnim
 	dw SlashAnim
 	dw SubstituteAnim
+	dw ShadowBallAnim
+	dw SludgeBombAnim
 	dw StruggleAnim
 	dw ShowPicAnim
 	dw EnemyFlashAnim
@@ -903,6 +905,7 @@ SmogAnim:
 	db SE_RESET_SCREEN_PALETTE, $FF
 	db $FF
 
+SludgeBombAnim:
 SludgeAnim:
 	db $46,$7B,$13
 	db $46,$7B,$14
@@ -991,6 +994,7 @@ PoisonGasAnim:
 	db $46,$8A,$19
 	db $FF
 
+ShadowBallAnim:
 BarrageAnim:
 	db $43,$8B,$41
 	db $05,$FF,$55
