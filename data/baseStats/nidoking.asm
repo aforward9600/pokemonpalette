@@ -19,8 +19,8 @@ db THRASH
 db 3 ; growth rate
 ; learnset
 	tmlearn 1,5,6,7,8
-	tmlearn 9,10,11,12,13,14,15,16
-	tmlearn 17,18,19,20,24
+	tmlearn 9,10,11,12,13,14,15
+	tmlearn 17,18,19,24
 	tmlearn 25,26,27,31,32
 	tmlearn 33,34,35,38,40
 	tmlearn 44,48

@@ -19,8 +19,8 @@ db THUNDERSHOCK
 db 0 ; growth rate
 ; learnset
 	tmlearn 6,8
-	tmlearn 9,10,15
-	tmlearn 20,24
+	tmlearn 9,10,15,16
+	tmlearn 23,24
 	tmlearn 25,28,31,32
 	tmlearn 33,39
 	tmlearn 44,45

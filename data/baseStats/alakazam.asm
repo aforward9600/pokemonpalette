@@ -19,8 +19,8 @@ db DISABLE
 db 3 ; growth rate
 ; learnset
 	tmlearn 1,5,6,8
-	tmlearn 9,10,15
-	tmlearn 17,18,19,20
+	tmlearn 9,10,15,16
+	tmlearn 17,18,19
 	tmlearn 28,29,30,31,32
 	tmlearn 33
 	tmlearn 44,45,46
