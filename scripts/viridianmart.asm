@@ -70,6 +70,7 @@ ViridianMartTextPointers:
 	dw ViridianCashierText
 	dw ViridianMartText2
 	dw ViridianMartText3
+	dw ViridianTMCashierText
 
 ViridianMartText1:
 	TX_FAR _ViridianMartText1

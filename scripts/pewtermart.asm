@@ -8,6 +8,7 @@ PewterMartTextPointers:
 	dw PewterCashierText
 	dw PewterMartText2
 	dw PewterMartText3
+	dw PewterTMCashierText
 
 PewterMartText2:
 	TX_ASM

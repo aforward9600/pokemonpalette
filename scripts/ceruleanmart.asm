@@ -5,6 +5,7 @@ CeruleanMartTextPointers:
 	dw CeruleanCashierText
 	dw CeruleanMartText2
 	dw CeruleanMartText3
+	dw CeruleanTMCashierText
 
 CeruleanMartText2:
 	TX_FAR _CeruleanMartText2

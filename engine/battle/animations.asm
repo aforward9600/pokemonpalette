@@ -2634,6 +2634,7 @@ MoveSoundTable:
 	db SFX_BATTLE_2C,         $d8,$04 ; SUBSTITUTE
 	db SFX_BATTLE_32,         $08,$e0 ; SHADOW_BALL
 	db SFX_BATTLE_2A,         $20,$20 ; SLUDGE_BOMB
+	db SFX_BATTLE_29,         $f0,$80 ; DRAGONBREATH
 	db SFX_BATTLE_0B,         $00,$80 ; STRUGGLE
 	db SFX_BATTLE_0B,         $00,$80
 

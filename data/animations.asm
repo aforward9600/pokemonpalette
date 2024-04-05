@@ -165,6 +165,7 @@ AttackAnimationPointers:
 	dw SubstituteAnim
 	dw ShadowBallAnim
 	dw SludgeBombAnim
+	dw DragonbreathAnim
 	dw StruggleAnim
 	dw ShowPicAnim
 	dw EnemyFlashAnim
@@ -649,6 +650,7 @@ StringShotAnim:
 	db $08,$50,$37
 	db $FF
 
+DragonbreathAnim:
 DragonRageAnim:
 	db $46,$51,$1F
 	db $46,$FF,$0C

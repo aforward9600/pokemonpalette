@@ -13,7 +13,7 @@ TrainerNames:
 	db "Engineer@"
 	db "Rocket@"
 	db "Fisherman@"
-	db "Swimmer@"
+	db "Swimmer♂@"
 	db "Cue Ball@"
 	db "Gambler@"
 	db "Beauty@"
@@ -46,3 +46,4 @@ TrainerNames:
 	db "Channeler@"
 	db "Agatha@"
 	db "Lance@"
+	db "Swimmer♀@"

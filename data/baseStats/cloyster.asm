@@ -19,7 +19,7 @@ db AURORA_BEAM
 db 5 ; growth rate
 ; learnset
 	tmlearn 6
-	tmlearn 9,10,11,12,13,14,15,16
+	tmlearn 9,10,11,13,14,15,16
 	tmlearn 0
 	tmlearn 31,32
 	tmlearn 33,39

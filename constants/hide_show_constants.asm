@@ -235,3 +235,11 @@ const_value = 0
 	const HS_SEAFOAM_ISLANDS_5_BOULDER_2  ; E2
 	const HS_ARTICUNO                     ; E3 X
 	const HS_MT_MOON_SUPER_NERD           ; E4
+	const HS_VIRIDIAN_MART_CLERK          ; E5
+	const HS_PEWTER_MART_CLERK            ; E6
+	const HS_CERULEAN_MART_CLERK          ; E7
+	const HS_VERMILION_MART_CLERK         ; E8
+	const HS_LAVENDER_MART_CLERK          ; E9
+	const HS_SAFFRON_MART_CLERK           ; EA
+	const HS_FUCHSIA_MART_CLERK           ; EB
+	const HS_CINNABAR_MART_CLERK          ; EC

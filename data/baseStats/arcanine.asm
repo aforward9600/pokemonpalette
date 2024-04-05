@@ -19,7 +19,7 @@ db TAKE_DOWN
 db 5 ; growth rate
 ; learnset
 	tmlearn 6,8
-	tmlearn 9,10,15
+	tmlearn 9,10,12,15
 	tmlearn 23
 	tmlearn 28,31,32
 	tmlearn 33,35,38,39

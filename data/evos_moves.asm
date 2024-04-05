@@ -342,10 +342,11 @@ GrimerEvosMoves:
 	db EV_LEVEL, 38, MUK
 	db 0
 ; Learnset
-	db 30, POISON_GAS
-	db 33, MINIMIZE
-	db 37, SLUDGE
-	db 42, HARDEN
+	db 25, POISON_GAS
+	db 30, MINIMIZE
+	db 35, SLUDGE
+	db 40, HARDEN
+	db 43, SLUDGE_BOMB
 	db 48, SCREECH
 	db 55, ACID_ARMOR
 	db 0
@@ -355,7 +356,9 @@ GengarEvosMoves:
 	db 0
 ; Learnset
 	db 29, HYPNOSIS
+	db 33, SHADOW_BALL
 	db 38, DREAM_EATER
+	db 43, SLUDGE_BOMB
 	db 0
 
 NidoranFEvosMoves:
@@ -479,7 +482,9 @@ GastlyEvosMoves:
 	db 0
 ; Learnset
 	db 27, HYPNOSIS
+	db 31, SHADOW_BALL
 	db 35, DREAM_EATER
+	db 41, SLUDGE_BOMB
 	db 0
 
 ScytherEvosMoves:
@@ -718,9 +723,10 @@ ArbokEvosMoves:
 ; Learnset
 	db 10, ACID
 	db 17, BITE
+	db 23, SLUDGE
 	db 27, GLARE
 	db 36, SCREECH
-	db 47, SLUDGE
+	db 47, SLUDGE_BOMB
 	db 0
 
 ParasectEvosMoves:
@@ -829,8 +835,9 @@ KoffingEvosMoves:
 	db EV_LEVEL, 35, WEEZING
 	db 0
 ; Learnset
-	db 32, SLUDGE
-	db 37, SMOKESCREEN
+	db 25, SLUDGE
+	db 30, SMOKESCREEN
+	db 35, SLUDGE_BOMB
 	db 40, SELFDESTRUCT
 	db 45, HAZE
 	db 48, EXPLOSION
@@ -983,7 +990,7 @@ PoliwagEvosMoves:
 	db 0
 ; Learnset
 	db 16, HYPNOSIS
-	db 19, WATER_GUN
+	db 19, BUBBLEBEAM
 	db 25, DOUBLESLAP
 	db 31, BODY_SLAM
 	db 38, AMNESIA
@@ -1176,10 +1183,11 @@ HorseaEvosMoves:
 	db 0
 ; Learnset
 	db 19, SMOKESCREEN
-	db 24, LEER
-	db 30, WATER_GUN
+	db 24, DRAGON_RAGE
+	db 30, BUBBLEBEAM
 	db 37, AGILITY
-	db 45, HYDRO_PUMP
+	db 42, DRAGONBREATH
+	db 57, HYDRO_PUMP
 	db 0
 
 SeadraEvosMoves:
@@ -1187,9 +1195,10 @@ SeadraEvosMoves:
 	db 0
 ; Learnset
 	db 19, SMOKESCREEN
-	db 24, LEER
-	db 30, WATER_GUN
+	db 24, DRAGON_RAGE
+	db 30, BUBBLEBEAM
 	db 41, AGILITY
+	db 46, DRAGONBREATH
 	db 52, HYDRO_PUMP
 	db 0
 
@@ -1359,9 +1368,10 @@ EkansEvosMoves:
 ; Learnset
 	db 10, ACID
 	db 17, BITE
+	db 21, SLUDGE
 	db 24, GLARE
 	db 31, SCREECH
-	db 38, SLUDGE
+	db 38, SLUDGE_BOMB
 	db 0
 
 ParasEvosMoves:
@@ -1384,7 +1394,7 @@ PoliwhirlEvosMoves:
 	db 0
 ; Learnset
 	db 16, HYPNOSIS
-	db 19, WATER_GUN
+	db 19, BUBBLEBEAM
 	db 26, DOUBLESLAP
 	db 33, BODY_SLAM
 	db 41, AMNESIA
@@ -1396,7 +1406,7 @@ PoliwrathEvosMoves:
 	db 0
 ; Learnset
 	db 16, HYPNOSIS
-	db 19, WATER_GUN
+	db 19, BUBBLEBEAM
 	db 33, KARATE_CHOP
 	db 41, SUBMISSION
 	db 0
@@ -1634,10 +1644,11 @@ MukEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 30, POISON_GAS
-	db 33, MINIMIZE
-	db 37, SLUDGE
-	db 45, HARDEN
+	db 25, POISON_GAS
+	db 30, MINIMIZE
+	db 35, SLUDGE
+	db 42, HARDEN
+	db 47, SLUDGE_BOMB
 	db 53, SCREECH
 	db 68, ACID_ARMOR
 	db 0
@@ -1695,8 +1706,9 @@ WeezingEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 32, SLUDGE
-	db 39, SMOKESCREEN
+	db 25, SLUDGE
+	db 30, SMOKESCREEN
+	db 37, SLUDGE_BOMB
 	db 43, SELFDESTRUCT
 	db 49, HAZE
 	db 53, EXPLOSION
@@ -1737,7 +1749,9 @@ HaunterEvosMoves:
 	db 0
 ; Learnset
 	db 29, HYPNOSIS
+	db 33, SHADOW_BALL
 	db 38, DREAM_EATER
+	db 43, SLUDGE_BOMB
 	db 0
 
 AbraEvosMoves:
@@ -2122,6 +2136,7 @@ OddishEvosMoves:
 	db EV_LEVEL, 21, GLOOM
 	db 0
 ; Learnset
+	db 9, ABSORB
 	db 12, POISONPOWDER
 	db 15, ACID
 	db 17, STUN_SPORE
@@ -2136,6 +2151,7 @@ GloomEvosMoves:
 	db EV_ITEM, LEAF_STONE, 1, VILEPLUME
 	db 0
 ; Learnset
+	db 9, ABSORB
 	db 12, POISONPOWDER
 	db 15, ACID
 	db 17, STUN_SPORE

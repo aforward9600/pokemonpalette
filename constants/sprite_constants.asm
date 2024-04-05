@@ -103,6 +103,11 @@ const_value = 1
 	const SPRITE_ROCKET_F
 	const SPRITE_BLAINE
 	const SPRITE_SURGE
+	const SPRITE_CUEBALL
+	const SPRITE_BROCK
+	const SPRITE_SABRINA
+	const SPRITE_KOGA
+	const SPRITE_MISTY
 	const SPRITE_BALL                      ; $3d
 	const SPRITE_OMANYTE                   ; $3e
 	const SPRITE_BOULDER                   ; $3f

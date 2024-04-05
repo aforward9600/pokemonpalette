@@ -10,7 +10,7 @@ It will give you all the engine changes, such as changes to the battle system.
 - Absorb is now 40 power.
 - Mega Drain is now 75 power.
 - Counter now works on all physical moves.
-- Added Shadow Ball and Sludge Bomb.
+- Added Shadow Ball, Sludge Bomb and Dragonbreath.
 
 # Shin Pokémon Red and Blue: Lite Patch
 

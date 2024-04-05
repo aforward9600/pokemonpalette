@@ -19,7 +19,7 @@ db SCREECH
 db 0 ; growth rate
 ; learnset
 	tmlearn 6,8
-	tmlearn 9,10,11,12,15
+	tmlearn 9,10,11,15
 	tmlearn 23,24
 	tmlearn 25,30,31,32
 	tmlearn 39

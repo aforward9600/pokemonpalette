@@ -3,6 +3,7 @@ INCLUDE "constants.asm"
 NPC_SPRITES_1 EQU $4
 NPC_SPRITES_2 EQU $5
 NPC_SPRITES_3 EQU $33
+NPC_SPRITES_4 EQU $38
 
 GFX EQU $4
 
@@ -244,8 +245,6 @@ CookSprite:           INCBIN "gfx/sprites/cook.2bpp"
 BikeShopGuySprite:    INCBIN "gfx/sprites/bike_shop_guy.2bpp"
 MrFujiSprite:         INCBIN "gfx/sprites/mr_fuji.2bpp"
 GiovanniSprite:       INCBIN "gfx/sprites/giovanni.2bpp"
-RocketSprite:         INCBIN "gfx/sprites/rocket.2bpp"
-MediumSprite:         INCBIN "gfx/sprites/medium.2bpp"
 WaiterSprite:         INCBIN "gfx/sprites/waiter.2bpp"
 ErikaSprite:          INCBIN "gfx/sprites/erika.2bpp"
 MomGeishaSprite:      INCBIN "gfx/sprites/mom_geisha.2bpp"
@@ -295,6 +294,16 @@ ShellSprite:          INCBIN "gfx/sprites/shell.2bpp"
 RocketFSprite:        INCBIN "gfx/sprites/rocketf.2bpp"
 BlaineSprite:         INCBIN "gfx/sprites/blaine.2bpp"
 SurgeSprite:          INCBIN "gfx/sprites/surge.2bpp"
+CueBallSprite:        INCBIN "gfx/sprites/cueball.2bpp"
+
+SECTION "NPC Sprites 4", ROMX, BANK[NPC_SPRITES_4]
+
+BrockSprite:          INCBIN "gfx/sprites/brock.2bpp"
+SabrinaSprite:        INCBIN "gfx/sprites/sabrina.2bpp"
+KogaSprite:           INCBIN "gfx/sprites/koga.2bpp"
+RocketSprite:         INCBIN "gfx/sprites/rocket.2bpp"
+MediumSprite:         INCBIN "gfx/sprites/medium.2bpp"
+MistySprite:          INCBIN "gfx/sprites/misty.2bpp"
 
 
 SECTION "Battle (bank 5)", ROMX, BANK[$5]
@@ -1674,8 +1683,8 @@ RocketPic::        INCBIN "pic/trainer/rocket.pic"
 CooltrainerMPic::  INCBIN "pic/trainer/cooltrainerm.pic"
 CooltrainerFPic::  INCBIN "pic/trainer/cooltrainerf.pic"
 BrunoPic::         INCBIN "pic/trainer/bruno.pic"
-BrockPic::         INCBIN "pic/trainer/brock.pic"
-MistyPic::         INCBIN "pic/trainer/misty.pic"
+BrockPic::         INCBIN "pic/ytrainer/brock.pic"
+MistyPic::         INCBIN "pic/ytrainer/misty.pic"
 LtSurgePic::       INCBIN "pic/trainer/lt.surge.pic"
 ErikaPic::         INCBIN "pic/ytrainer/erika.pic"	;joenote - use her yellow sprite to ditch the funerary clothes
 KogaPic::          INCBIN "pic/trainer/koga.pic"
@@ -1688,6 +1697,7 @@ LoreleiPic::       INCBIN "pic/trainer/lorelei.pic"
 ChannelerPic::     INCBIN "pic/trainer/channeler.pic"
 AgathaPic::        INCBIN "pic/trainer/agatha.pic"
 LancePic::         INCBIN "pic/trainer/lance.pic"
+SwimmerFPic::      INCBIN "pic/trainer/swimmer_f.pic"
 
 ;joenote - moved to a different bank
 ;INCLUDE "data/mapHeaders/tradecenter.asm"

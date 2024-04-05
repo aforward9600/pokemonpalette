@@ -14,7 +14,7 @@ _SilphCo9Text_5d8ef::
 	done
 
 _SilphCo9BattleText1::
-	text "Your #MON seem"
+	text "Your #mon seem"
 	line "to adore you, kid!"
 	done
 
@@ -29,7 +29,7 @@ _SilphCo9AfterBattleText1::
 	done
 
 _SilphCo9BattleText2::
-	text "Your #MON have"
+	text "Your #mon have"
 	line "weak points! I"
 	cont "can nail them!"
 	done
@@ -48,15 +48,18 @@ _SilphCo9AfterBattleText2::
 
 _SilphCo9BattleText3::
 	text "I am one of the 4"
-	line "ROCKET BROTHERS!"
+	line "Rocket Sisters!"
 	done
 
 _SilphCo9EndBattleText3::
-	text "Warg!"
-	line "Brothers, I lost!"
+	text "I'm the oldest,"
+	line "yet you beat me!"
 	prompt
 
 _SilphCo9AfterBattleText3::
-	text "My brothers will"
+	text "Argh...You"
+	line "embarrassed me..."
+
+	para "My sisters will"
 	line "avenge me!"
 	done

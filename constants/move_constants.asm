@@ -166,6 +166,7 @@ const_value = 1
 	const SUBSTITUTE   ; a4
 	const SHADOW_BALL  ; a5
 	const SLUDGE_BOMB  ; a6
+	const DRAGONBREATH ; a7
 
 NUM_ATTACKS EQU const_value + -1
 

@@ -1260,6 +1260,7 @@ TrainerClassMoveChoiceModifications:
 	db 1,4,0    ; CHANNELER
 	db 1,3,4,0    ; AGATHA
 	db 1,3,4,0  ; LANCE
+	db 1,3,0    ; SWIMMER_F
 
 INCLUDE "engine/battle/trainer_pic_money_pointers.asm"
 
@@ -1372,6 +1373,7 @@ TrainerAIPointers:
 	dbw 1,GenericAI
 	dbw 1,AgathaAI ; agatha
 	dbw 1,LanceAI ; lance
+	dbw 1,GenericAI ; swimmerf
 
 ;joenote - reorganizing these AI routines to jump on carry instead of returning on not-carry
 ;also adding recognition of a switch-pkmn bit

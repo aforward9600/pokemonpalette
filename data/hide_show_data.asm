@@ -47,7 +47,7 @@ MapHSPointers:
 	dw MapHS27
 	dw MapHS28
 	dw MapHSXX
-	dw MapHSXX
+	dw MapViridianMart
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHS2D
@@ -61,7 +61,7 @@ MapHSPointers:
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
-	dw MapHSXX
+	dw MapPewterMart
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHS3B
@@ -72,7 +72,7 @@ MapHSPointers:
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
-	dw MapHSXX
+	dw MapCeruleanMart
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
@@ -337,11 +337,15 @@ MapHS28:
 	db OAKS_LAB,$06,Show
 	db OAKS_LAB,$07,Show
 	db OAKS_LAB,$08,Hide
+MapViridianMart:
+	db VIRIDIAN_MART,$04,Hide
 MapHS2D:
 	db VIRIDIAN_GYM,$01,Show
 	db VIRIDIAN_GYM,$0B,Show
 MapHS34:
 	db MUSEUM_1F,$05,Show
+MapPewterMart:
+	db PEWTER_MART,$04,Hide
 MapHSE4:
 	db UNKNOWN_DUNGEON_1,$01,Show
 	db UNKNOWN_DUNGEON_1,$02,Show
@@ -423,6 +427,8 @@ MapHS3D:
 	db MT_MOON_3,$07,Show
 	db MT_MOON_3,$08,Show
 	db MT_MOON_3,$09,Show
+MapCeruleanMart:
+	db CERULEAN_MART,$04,Hide
 MapHS60:
 	db SS_ANNE_2,$02,Hide
 MapHS66:

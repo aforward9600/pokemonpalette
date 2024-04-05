@@ -47,6 +47,12 @@ FuchsiaGymScript3_75497:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_KOGA
+	ld a, HS_SAFFRON_CITY_E
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_SAFFRON_CITY_F
+	ld [wMissableObjectIndex], a
+	predef ShowObject
 	lb bc, TM_06, 1
 	call GiveItem
 	jr nc, .BagFull

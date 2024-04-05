@@ -165,4 +165,5 @@ MoveNames::
 	db "Substitute@"
 	db "Shadow Ball@"
 	db "Sludge Bomb@"
+	db "Dragonbreath@"
 	db "Struggle@"

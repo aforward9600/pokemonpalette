@@ -145,7 +145,7 @@ SpecialTrainerMoves:
 	
 	db GIOVANNI,$3
 	db 1,1,LEECH_LIFE
-	db 2,4,EARTHQUAKE
+	db 2,3,EARTHQUAKE
 	db 3,1,BODY_SLAM
 	db 3,2,LEECH_SEED
 	db 4,1,LEECH_SEED
@@ -296,9 +296,71 @@ SpecialTrainerMoves:
 	db 2,4,DOUBLE_EDGE
 	db 0
 
+	db BIKER,$3
+	db 1,2,MEGA_DRAIN
+	db 0
+
 	db BIKER,$7
 	db 4,2,MEGA_PUNCH
 	db 4,4,PSYCHIC_M
+	db 0
+
+	db ROCKET_F,$16
+	db 3,3,SURF
+	db 3,4,ICE_BEAM
+	db 0
+
+	db ROCKET,$27
+	db 1,1,DIG
+	db 0
+
+	db PSYCHIC_TR,$3
+	db 1,1,SURF
+	db 1,2,PSYCHIC_M
+	db 1,3,ICE_BEAM
+	db 1,4,RECOVER
+	db 3,1,SURF
+	db 3,3,PSYCHIC_M
+	db 3,4,ICE_BEAM
+	db 0
+
+	db PSYCHIC_TR,$4
+	db 1,1,SURF
+	db 1,3,PSYCHIC_M
+	db 1,4,ICE_BEAM
+	db 0
+
+	db SWIMMER_F,$3
+	db 1,2,SURF
+	db 1,3,SUBMISSION
+	db 0
+
+	db SWIMMER_F,$8
+	db 1,1,SURF
+	db 1,2,RECOVER
+	db 1,3,THUNDERBOLT
+	db 1,4,SWIFT
+	db 0
+
+	db BOSS_GIOVANNI,$2
+	db 1,2,SLUDGE_BOMB
+	db 1,3,BODY_SLAM
+	db 3,3,ROCK_SLIDE
+	db 4,1,EARTHQUAKE
+	db 4,2,SLUDGE_BOMB
+	db 4,3,BLIZZARD
+	db 0
+
+	db SONY1,$7
+	db 3,1,WRAP
+	db 0
+
+	db SONY1,$8
+	db 3,1,WRAP
+	db 0
+
+	db SONY1,$9
+	db 3,1,WRAP
 	db 0
 
 	db $ff

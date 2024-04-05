@@ -167,7 +167,7 @@ SpriteSets:
 ; sprite set $09
 	db SPRITE_BIKER
 	db SPRITE_BLACK_HAIR_BOY_1
-	db SPRITE_LAPRAS_GIVER
+	db SPRITE_CUEBALL
 	db SPRITE_FISHER2
 	db SPRITE_ROCKER
 	db SPRITE_HIKER
@@ -643,6 +643,31 @@ SpriteSheetPointerTable:
 	dw SurgeSprite
 	db $c0
 	db BANK(SurgeSprite)
+
+	; SPRITE_CUEBALL
+	dw CueBallSprite
+	db $c0
+	db BANK(CueBallSprite)
+
+	; SPRITE_BROCK
+	dw BrockSprite
+	db $c0
+	db BANK(BrockSprite)
+
+	; SPRITE_SABRINA
+	dw SabrinaSprite
+	db $c0
+	db BANK(SabrinaSprite)
+
+	; SPRITE_KOGA
+	dw KogaSprite
+	db $c0
+	db BANK(KogaSprite)
+
+	; SPRITE_MISTY
+	dw MistySprite
+	db $c0
+	db BANK(MistySprite)
 
 	; SPRITE_BALL
 	dw BallSprite

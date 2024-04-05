@@ -62,3 +62,12 @@ SaffronCashierText::
 ; Indigo
 IndigoCashierText::
 	TX_MART ULTRA_BALL, GREAT_BALL, FULL_RESTORE, MAX_POTION, FULL_HEAL, REVIVE, MAX_REPEL
+
+PewterTMCashierText::
+	TX_MART TM_24, TM_39, TM_45
+
+ViridianTMCashierText::
+	TX_MART TM_38, TM_41, TM_42
+
+CeruleanTMCashierText::
+	TX_MART TM_11, TM_34

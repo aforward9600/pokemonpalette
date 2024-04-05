@@ -10,7 +10,7 @@ TechnicalMachines:
 	db TAKE_DOWN ; TM09
 	db DOUBLE_EDGE ; TM10
 	db BUBBLEBEAM ; TM11
-	db WATER_GUN ; TM12 No current location
+	db DRAGONBREATH ; TM12 No current location
 	db ICE_BEAM ; TM13
 	db BLIZZARD ; TM14
 	db HYPER_BEAM ; TM15
