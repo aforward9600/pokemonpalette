@@ -6097,14 +6097,14 @@ MoveHitTest:
 .skipPlayerMistCheck
 	ld a, [wEnemyBattleStatus2]
 	bit USING_X_ACCURACY, a ; is the enemy using X Accuracy?
-	jr nz, .enemy_ohko_xacc ; if so, always hit regardless of accuracy/evasion
+;	jr nz, .enemy_ohko_xacc ; if so, always hit regardless of accuracy/evasion
 	jr .calcHitChance	;joenote - added this to skip over
-.enemy_ohko_xacc	;joenote - enemy ohko moves now ignore x accuracy 
+;.enemy_ohko_xacc	;joenote - enemy ohko moves now ignore x accuracy 
 	;this section is entered if the enemy is using x accuracy
-	ld a, [wEnemyMoveEffect]	;load the move effect 
-	cp OHKO_EFFECT	;check if it's an ohko move
-	jr z, .calcHitChance	;if so, do normal accuracy checks
-	ret	;else the x accuracy skips hit chance
+;	ld a, [wEnemyMoveEffect]	;load the move effect 
+;	cp OHKO_EFFECT	;check if it's an ohko move
+;	jr z, .calcHitChance	;if so, do normal accuracy checks
+;	ret	;else the x accuracy skips hit chance
 .calcHitChance
 	call CalcHitChance ; scale the move accuracy according to attacker's accuracy and target's evasion
 	ld a, [wPlayerMoveAccuracy]
@@ -7357,6 +7357,7 @@ HalveAttackDueToBurn:
 	ret
 
 ApplyBadgeStatBoosts:
+	ret
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr z, .return ; return if link battle

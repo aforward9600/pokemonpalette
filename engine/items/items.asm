@@ -691,7 +691,8 @@ ItemUseBicycle:
 	inc a
 	ld [wWalkBikeSurfState], a ; change player state to bicycling
 	ld hl, GotOnBicycleText
-	call PlayDefaultMusic ; play bike riding music
+	call PlayDefaultMusic
+;	call PlayBicycleMusic ; play bike riding music
 .printText
 	jp PrintText
 

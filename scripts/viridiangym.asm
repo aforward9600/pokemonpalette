@@ -164,6 +164,10 @@ ViridianGymScript3_74995:
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
 
+	ld a, HS_VIRIDIAN_MART_CLERK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; wispnote - Move this routine to be executed upon encounter.
 	; ld a, HS_ROUTE_22_RIVAL_2

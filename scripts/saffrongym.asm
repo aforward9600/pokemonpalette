@@ -68,6 +68,10 @@ SaffronGymText_5d068:
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_SAFFRON_GYM_TRAINER_0, EVENT_BEAT_SAFFRON_GYM_TRAINER_6
 
+	ld a, HS_SAFFRON_MART_CLERK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+
 	jp SaffronGymText_5d048
 
 SaffronGymTextPointers:

@@ -96,7 +96,7 @@ MapHSPointers:
 	dw MapHS58
 	dw MapHSXX
 	dw MapHSXX
-	dw MapHSXX
+	dw MapVermilionMart
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
@@ -155,9 +155,9 @@ MapHSPointers:
 	dw MapHS93
 	dw MapHS94
 	dw MapHS95
+	dw MapLavenderMart
 	dw MapHSXX
-	dw MapHSXX
-	dw MapHSXX
+	dw MapFuchsiaMart
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHS9B
@@ -177,7 +177,7 @@ MapHSPointers:
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
-	dw MapHSXX
+	dw MapCinnabarMart
 	dw MapHSXX
 	dw MapHSXX
 	dw MapHSXX
@@ -185,7 +185,7 @@ MapHSPointers:
 	dw MapHSB1
 	dw MapHSXX
 	dw MapHSXX
-	dw MapHSXX
+	dw MapSaffronMart
 	dw MapHSB5
 	dw MapHSXX
 	dw MapHSXX
@@ -370,6 +370,10 @@ MapHS94:
 	db POKEMONTOWER_7,$04,Show
 MapHS95:
 	db LAVENDER_HOUSE_1,$05,Hide
+MapLavenderMart:
+	db LAVENDER_MART,$04,Hide
+MapFuchsiaMart:
+	db FUCHSIA_MART,$04,Hide
 MapHS84:
 	db CELADON_MANSION_5,$02,Show
 MapHS87:
@@ -379,9 +383,13 @@ MapHS9B:
 MapHSA5:
 	db MANSION_1,$02,Show
 	db MANSION_1,$03,Show
+MapCinnabarMart:
+	db CINNABAR_MART,$04,Hide
 MapHSB1:
 	db FIGHTING_DOJO,$06,Show
 	db FIGHTING_DOJO,$07,Show
+MapSaffronMart:
+	db SAFFRON_MART,$04,Hide
 MapHSB5:
 	db SILPH_CO_1F,$01,Hide
 MapHS53:
@@ -410,6 +418,8 @@ MapHS58:
 	db BILLS_HOUSE,$01,Show
 	db BILLS_HOUSE,$02,Hide
 	db BILLS_HOUSE,$03,Hide
+MapVermilionMart:
+	db VERMILION_MART,$04,Hide
 MapHS33:
 	db VIRIDIAN_FOREST,$05,Show
 	db VIRIDIAN_FOREST,$06,Show

@@ -5,6 +5,7 @@ FuchsiaMartTextPointers:
 	dw FuchsiaCashierText
 	dw FuchsiaMartText2
 	dw FuchsiaMartText3
+	dw FuchsiaTMCashierText
 
 FuchsiaMartText2:
 	TX_FAR _FuchsiaMartText2

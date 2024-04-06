@@ -7,10 +7,11 @@ FuchsiaMartObject:
 
 	db 0 ; signs
 
-	db 3 ; objects
+	db 4 ; objects
 	object SPRITE_MART_GUY, 0, 5, STAY, RIGHT, 1 ; person
 	object SPRITE_FAT_BALD_GUY, 4, 2, STAY, NONE, 2 ; person
 	object SPRITE_LASS, 6, 5, WALK, 1, 3 ; person
+	object SPRITE_MART_GUY, 0, 6, STAY, RIGHT, 4
 
 	; warp-to
 	warp_to 3, 7, FUCHSIA_MART_WIDTH

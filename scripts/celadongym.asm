@@ -68,6 +68,10 @@ CeladonGymText_48963:
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CELADON_GYM_TRAINER_0, EVENT_BEAT_CELADON_GYM_TRAINER_6
 
+	ld a, HS_LAVENDER_MART_CLERK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+
 	jp CeladonGymText_48943
 
 CeladonGymTextPointers:

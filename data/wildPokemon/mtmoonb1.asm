@@ -6,7 +6,7 @@ MoonMonsB1:
 	db 8,GEODUDE
 	db 9,ZUBAT
 	db 10,PARAS
-	db 10,ZUBAT
+	db 10,MACHOP
 	db 11,ZUBAT
 	db 9,CLEFAIRY
 	db 9,GEODUDE

@@ -5,6 +5,7 @@ VermilionMartTextPointers:
 	dw VermilionCashierText
 	dw VermilionMartText2
 	dw VermilionMartText3
+	dw VermilionTMCashierText
 
 VermilionMartText2:
 	TX_FAR _VermilionMartText2

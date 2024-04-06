@@ -26,6 +26,7 @@ PlayDefaultMusicCommon::
 	jr z, .surfing
 	ld a, MUSIC_BIKE_RIDING
 	jr .next
+;	jr .walking
 
 .surfing
 	ld a, MUSIC_SURFING
@@ -53,6 +54,37 @@ PlayDefaultMusicCommon::
 	call CompareMapMusicBankWithCurrentBank
 	jr c, .next4
 
+.next3
+	ld a, [wLastMusicSoundID]
+	cp b ; is the default music already playing?
+	ret z ; if so, do nothing
+
+.next4
+	ld a, c
+	ld [wAudioFadeOutControl], a
+	ld a, b
+	ld [wLastMusicSoundID], a
+	ld [wNewSoundID], a
+	jp PlaySound
+
+PlayBicycleMusic::
+	call WaitForSoundToFinish
+	xor a
+	ld c, a
+	ld d, a
+	ld [wLastMusicSoundID], a
+	ld a, MUSIC_BIKE_RIDING
+	ld b, a
+	ld a, d
+	and a ; should current music be faded out first?
+	ld a, BANK(Music_BikeRiding)
+	jr nz, .next2
+	ld [wAudioROMBank], a
+.next2
+; [wAudioSavedROMBank] will be copied to [wAudioROMBank] after fading out the
+; current music (if the current music is faded out).
+	ld [wAudioSavedROMBank], a
+	jr .next3
 .next3
 	ld a, [wLastMusicSoundID]
 	cp b ; is the default music already playing?

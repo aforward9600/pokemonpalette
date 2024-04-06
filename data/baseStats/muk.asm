@@ -18,11 +18,11 @@ db POISON_GAS
 db 0
 db 0 ; growth rate
 ; learnset
-	tmlearn 6,8
-	tmlearn 15
+	tmlearn 4,6,8
+	tmlearn 9,15
 	tmlearn 21,24
 	tmlearn 25,28,30,31,32
-	tmlearn 34,35,36,38
+	tmlearn 34,35,36,37,38
 	tmlearn 44,47
 	tmlearn 50
 ;	db 0 ; padding

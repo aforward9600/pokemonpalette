@@ -66,10 +66,6 @@ _PewterGymText_5c4c1::
 	line "#mon League"
 	cont "Badge!"
 
-	para "Its bearer's"
-	line "#mon become"
-	cont "more powerful!"
-
 	para "The technique"
 	line "Flash can now be"
 	cont "used any time!"

@@ -87,6 +87,13 @@ VermilionGymScript_5caaa:
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VERMILION_GYM_TRAINER_0, EVENT_BEAT_VERMILION_GYM_TRAINER_2
 
+	ld a, HS_PEWTER_MART_CLERK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	ld a, HS_VERMILION_MART_CLERK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+
 	jp VermilionGymScript_5ca8a
 
 VermilionGymTextPointers:

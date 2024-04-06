@@ -74,6 +74,10 @@ FuchsiaGymScript3_75497:
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, EVENT_BEAT_FUCHSIA_GYM_TRAINER_5
 
+	ld a, HS_FUCHSIA_MART_CLERK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+
 	jp FuchsiaGymScript_75477
 
 FuchsiaGymTextPointers:

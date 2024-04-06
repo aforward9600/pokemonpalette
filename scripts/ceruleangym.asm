@@ -68,9 +68,6 @@ CeruleanGymScript_5c70d:
 	; deactivate gym trainers
 	SetEvents EVENT_BEAT_CERULEAN_GYM_TRAINER_0, EVENT_BEAT_CERULEAN_GYM_TRAINER_1
 
-	ld a, HS_PEWTER_MART_CLERK
-	ld [wMissableObjectIndex], a
-	predef ShowObject
 	ld a, HS_CERULEAN_MART_CLERK
 	ld [wMissableObjectIndex], a
 	predef ShowObject

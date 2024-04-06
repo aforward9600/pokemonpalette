@@ -5,6 +5,7 @@ CinnabarMartTextPointers:
 	dw CinnabarCashierText
 	dw CinnabarMartText2
 	dw CinnabarMartText3
+	dw CinnabarTMCashierText
 
 CinnabarMartText2:
 	TX_FAR _CinnabarMartText2

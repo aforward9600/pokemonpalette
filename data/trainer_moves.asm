@@ -346,9 +346,9 @@ SpecialTrainerMoves:
 	db 1,2,SLUDGE_BOMB
 	db 1,3,BODY_SLAM
 	db 3,3,ROCK_SLIDE
-	db 4,1,EARTHQUAKE
-	db 4,2,SLUDGE_BOMB
+	db 4,2,SURF
 	db 4,3,BLIZZARD
+	db 4,4,ROCK_SLIDE
 	db 0
 
 	db SONY1,$7
@@ -361,6 +361,18 @@ SpecialTrainerMoves:
 
 	db SONY1,$9
 	db 3,1,WRAP
+	db 0
+
+	db POKEMANIAC,$1
+	db 1,1,EARTHQUAKE
+	db 1,4,ROCK_SLIDE
+	db 2,1,EARTHQUAKE
+	db 0
+
+	db SCIENTIST,$2
+	db 3,1,THUNDERBOLT
+	db 3,2,BODY_SLAM
+	db 3,4,SUBMISSION
 	db 0
 
 	db $ff

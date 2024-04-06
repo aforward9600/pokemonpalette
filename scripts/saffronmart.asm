@@ -5,6 +5,7 @@ SaffronMartTextPointers:
 	dw SaffronCashierText
 	dw SaffronMartText2
 	dw SaffronMartText3
+	dw SaffronTMCashierText
 
 SaffronMartText2:
 	TX_FAR _SaffronMartText2

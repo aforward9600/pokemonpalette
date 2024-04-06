@@ -34,3 +34,5 @@ Party Menu sprites tutorial: dannye, FrenchOrange
 Female Rocket sprite: Gold Spaceworld 1999 demo
 
 Lance overworld sprite: Polished Crystal
+
+Removing save delay tutorial: pgattic, Rangi42, mylogon341, dannye

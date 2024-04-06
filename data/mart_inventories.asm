@@ -30,7 +30,7 @@ CeladonMart2Clerk1Text::
 
 ; Celadon Dept. Store 2F (2)
 CeladonMart2Clerk2Text::
-	TX_MART TM_32, TM_33, TM_02, TM_07, TM_37, TM_01, TM_05, TM_09, TM_17
+	TX_MART TM_32, TM_33, TM_02, TM_07, TM_37, TM_01, TM_04, TM_09, TM_17
 
 ; Celadon Dept. Store 4F
 CeladonMart4ClerkText::
@@ -67,7 +67,25 @@ PewterTMCashierText::
 	TX_MART TM_24, TM_39, TM_45
 
 ViridianTMCashierText::
-	TX_MART TM_38, TM_41, TM_42
+	TX_MART TM_31, TM_38, TM_41, TM_42, TM_05, TM_22
 
 CeruleanTMCashierText::
 	TX_MART TM_11, TM_34
+
+VermilionTMCashierText::
+	TX_MART TM_08, TM_44, TM_28
+
+SaffronTMCashierText::
+	TX_MART TM_29, TM_30, TM_46, TM_49
+
+LavenderTMCashierText::
+	TX_MART TM_12, TM_16, TM_19, TM_40
+
+FuchsiaTMCashierText::
+	TX_MART TM_06, TM_13, TM_20, TM_21, TM_36
+
+IndigoTMCashierText::
+	TX_MART TM_14, TM_25, TM_26, TM_27, TM_43, TM_47
+
+CinnabarTMCashierText::
+	TX_MART TM_03, TM_10, TM_13, TM_18, TM_48

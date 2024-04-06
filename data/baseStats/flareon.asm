@@ -19,7 +19,7 @@ db EMBER
 db 0 ; growth rate
 ; learnset
 	tmlearn 6,8
-	tmlearn 9,10,15
+	tmlearn 10,15
 	tmlearn 0
 	tmlearn 28,30,31,32
 	tmlearn 33,35,38,39

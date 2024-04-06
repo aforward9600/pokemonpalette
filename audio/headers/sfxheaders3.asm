@@ -265,8 +265,8 @@ SFX_Go_Inside_3::
 SFX_Swap_3::
 	audio SFX_Swap_3, Ch4, Ch5
 
-SFX_59_3::
-	audio SFX_59_3, Ch4, Ch5
+;SFX_59_3::
+;	audio SFX_59_3, Ch4, Ch5
 
 SFX_Purchase_3::
 	audio SFX_Purchase_3, Ch4, Ch5

@@ -7,10 +7,11 @@ CinnabarMartObject:
 
 	db 0 ; signs
 
-	db 3 ; objects
+	db 4 ; objects
 	object SPRITE_MART_GUY, 0, 5, STAY, RIGHT, 1 ; person
 	object SPRITE_ERIKA, 6, 2, STAY, NONE, 2 ; person
 	object SPRITE_OAK_AIDE, 3, 4, STAY, NONE, 3 ; person
+	object SPRITE_MART_GUY, 0, 6, STAY, RIGHT, 4
 
 	; warp-to
 	warp_to 3, 7, CINNABAR_MART_WIDTH

@@ -5,6 +5,7 @@ LavenderMartTextPointers:
 	dw LavenderCashierText
 	dw LavenderMartText2
 	dw LavenderMartText3
+	dw LavenderTMCashierText
 
 LavenderMartText2:
 	TX_FAR _LavenderMartText2

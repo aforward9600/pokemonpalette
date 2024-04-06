@@ -165,6 +165,10 @@ CinnabarGymScript3_75857:
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CINNABAR_GYM_TRAINER_0, EVENT_BEAT_CINNABAR_GYM_TRAINER_6
 
+	ld a, HS_CINNABAR_MART_CLERK
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+
 	ld hl, wCurrentMapScriptFlags
 	set 5, [hl]
 

@@ -19,7 +19,7 @@ db ROAR
 db 0 ; growth rate
 ; learnset
 	tmlearn 6,8
-	tmlearn 9,10,15
+	tmlearn 10,15
 	tmlearn 23
 	tmlearn 28,29,30,31,32
 	tmlearn 33,35,38,39

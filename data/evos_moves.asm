@@ -311,6 +311,7 @@ ExeggutorEvosMoves:
 	db 0
 ; Learnset
 	db 28, STOMP
+	db 35, EGG_BOMB
 	db 0
 
 LickitungEvosMoves:
@@ -663,6 +664,7 @@ ChanseyEvosMoves:
 ; Learnset
 	db 24, SING
 	db 30, GROWL
+	db 35, EGG_BOMB
 	db 38, MINIMIZE
 	db 44, DEFENSE_CURL
 	db 48, LIGHT_SCREEN
@@ -675,11 +677,12 @@ MachokeEvosMoves:
 	db EV_ITEM, LINK_CABLE, 1, MACHAMP
 	db 0
 ; Learnset
-	db 20, LOW_KICK
-	db 25, LEER
-	db 36, FOCUS_ENERGY
-	db 44, SEISMIC_TOSS
-	db 52, SUBMISSION
+	db 15, KARATE_CHOP
+	db 20, FOCUS_ENERGY
+	db 25, HEADBUTT
+	db 36, SEISMIC_TOSS
+	db 44, SUBMISSION
+	db 52, COUNTER
 	db 0
 
 MrMimeEvosMoves:
@@ -1340,11 +1343,12 @@ MachopEvosMoves:
 	db EV_LEVEL, 28, MACHOKE
 	db 0
 ; Learnset
-	db 20, LOW_KICK
-	db 25, LEER
-	db 32, FOCUS_ENERGY
-	db 39, SEISMIC_TOSS
-	db 46, SUBMISSION
+	db 15, KARATE_CHOP
+	db 20, FOCUS_ENERGY
+	db 25, HEADBUTT
+	db 32, SEISMIC_TOSS
+	db 39, SUBMISSION
+	db 46, COUNTER
 	db 0
 
 ZubatEvosMoves:
@@ -1547,11 +1551,12 @@ MachampEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 20, LOW_KICK
-	db 25, LEER
-	db 36, FOCUS_ENERGY
-	db 44, SEISMIC_TOSS
-	db 52, SUBMISSION
+	db 15, KARATE_CHOP
+	db 20, FOCUS_ENERGY
+	db 25, HEADBUTT
+	db 36, SEISMIC_TOSS
+	db 44, SUBMISSION
+	db 52, COUNTER
 	db 0
 
 MissingNo7FEvosMoves:

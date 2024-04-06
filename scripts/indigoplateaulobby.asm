@@ -21,6 +21,7 @@ IndigoPlateauLobbyTextPointers:
 	dw IndigoPlateauLobbyText3
 	dw IndigoCashierText
 	dw IndigoTradeNurseText
+	dw IndigoTMCashierText
 
 IndigoHealNurseText:
 	TX_POKECENTER_NURSE

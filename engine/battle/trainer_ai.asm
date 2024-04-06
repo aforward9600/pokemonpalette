@@ -1389,8 +1389,38 @@ BlackbeltAI:
 	ret
 	
 GiovanniAI:
-	cp $40
-	jp c, AIUseGuardSpec
+	ld a, [wUnusedC000]
+	bit 2, a
+	ret nz
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	ld hl, wBuffer - 1 ; temp move selection array (-1 byte offset)
+	ld de, wEnemyMonMoves ; enemy moves
+	ld b, NUM_MOVES + 1
+.nextMove
+	dec b
+	ret z ; processed all 4 moves
+	inc hl
+	ld a, [de]
+	and a
+	ret z ; no more moves in move set
+	inc de
+	call ReadMove
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
+;use X-Accuracy if the enemy has a OHKO move
+	ld a, [wEnemyMoveEffect]
+	cp OHKO_EFFECT
+	jr z, .x_accuracy
+	cp $80
+	jr nc, .giovannireturn
+	ld a, $A
+	call AICheckIfHPBelowFraction
+	jp c, AIUseHyperPotion
+.giovannireturn
+	ret
+
+.x_accuracy
+	jp AIUseXAccuracy
 	ret
 
 CooltrainerMAI:	
@@ -1408,7 +1438,6 @@ CooltrainerFAI:
 	ret
 	
 BrockAI:
-; if his active monster has a status condition, use a full heal
 	cp $80
 	jr nc, .brockreturn
 	ld a, $A
