@@ -54,3 +54,5 @@ const_value = 1
 	trainer_const AGATHA        ; $2E
 	trainer_const LANCE         ; $2F
 	trainer_const SWIMMER_F     ; $30
+	trainer_const ARIANA
+	trainer_const ARCHER

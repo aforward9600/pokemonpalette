@@ -47,3 +47,5 @@ TrainerNames:
 	db "Agatha@"
 	db "Lance@"
 	db "Swimmer♀@"
+	db "Ariana@"
+	db "Archer@"

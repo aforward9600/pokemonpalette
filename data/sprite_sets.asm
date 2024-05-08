@@ -669,6 +669,16 @@ SpriteSheetPointerTable:
 	db $c0
 	db BANK(MistySprite)
 
+	; SPRITE_ARIANA
+	dw ArianaSprite
+	db $c0
+	db BANK(ArianaSprite)
+
+	; SPRITE_ARCHER
+	dw ArcherSprite
+	db $c0
+	db BANK(ArcherSprite)
+
 	; SPRITE_BALL
 	dw BallSprite
 	db $40 ; byte count

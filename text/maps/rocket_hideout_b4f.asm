@@ -56,32 +56,61 @@ _RocketHideout4BattleText2::
 	text "I know you! You"
 	line "ruined our plans"
 	cont "at Mt.Moon!"
+
+	para "As an Executive"
+	line "of Team Rocket,"
+
+	para "I will take care"
+	line "of you once and"
+	cont "for all!"
 	done
 
 _RocketHideout4EndBattleText2::
-	text "Burned"
-	line "again!"
+	text "This feels"
+	line "nostalgic for all"
+	cont "the wrong"
+	cont "reasons."
 	prompt
 
 _RocketHide4AfterBattleText2::
-	text "Do you have"
-	line "something against"
-	cont "Team Rocket?"
+	text "Argh! Why?"
+
+	para "After all those"
+	line "setbacks years"
+	cont "ago, how are we"
+	cont "making the same"
+	cont "mistakes?"
+
+	para "Looks like I'll"
+	line "have to let the"
+	cont "Boss take care"
+	cont "of you now!"
 	done
 
 _RocketHideout4BattleText3::
-	text "How can you not"
-	line "see the beauty of"
-	cont "our evil?"
+	text "I can't let you"
+	line "see the Boss!"
+
+	para "I'm afraid I'll"
+	line "be the one to"
+	cont "take you down!"
 	done
 
 _RocketHideout4EndBattleText3::
-	text "Ayaya!"
+	text "You obnoxious"
+	line "brat!"
 	prompt
 
 _RocketHide4AfterBattleText3::
-	text "Boss! I'm sorry I"
-	line "failed you!"
+	text "Dang it! I wasn't"
+	line "supposed to lose!"
+
+	para "The Boss will put"
+	line "you in your place"
+	cont "now!"
+
+	para "Prepare to face"
+	line "true terror!"
 	done
 
 _RocketHideout4BattleText4::

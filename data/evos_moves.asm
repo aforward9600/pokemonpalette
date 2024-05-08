@@ -283,13 +283,14 @@ SlowbroEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 18, DISABLE
-	db 22, HEADBUTT
-	db 27, GROWL
-	db 33, WATER_GUN
+	db 12, WATER_GUN
+	db 18, HEADBUTT
+	db 22, DISABLE
+	db 27, BUBBLEBEAM
+	db 33, REST
 	db 37, WITHDRAW
-	db 44, AMNESIA
-	db 55, PSYCHIC_M
+	db 44, PSYCHIC_M
+	db 50, AMNESIA
 	db 0
 
 IvysaurEvosMoves:
@@ -620,12 +621,13 @@ SlowpokeEvosMoves:
 	db EV_LEVEL, 37, SLOWBRO
 	db 0
 ; Learnset
-	db 18, DISABLE
-	db 22, HEADBUTT
-	db 27, GROWL
-	db 33, WATER_GUN
-	db 40, AMNESIA
-	db 48, PSYCHIC_M
+	db 12, WATER_GUN
+	db 18, HEADBUTT
+	db 22, DISABLE
+	db 27, BUBBLEBEAM
+	db 33, REST
+	db 40, PSYCHIC_M
+	db 48, AMNESIA
 	db 0
 
 KadabraEvosMoves:
@@ -982,6 +984,7 @@ DoduoEvosMoves:
 	db 20, GROWL
 	db 24, FURY_ATTACK
 	db 30, DRILL_PECK
+	db 33, JUMP_KICK
 	db 36, RAGE
 	db 40, TRI_ATTACK
 	db 44, AGILITY
@@ -1455,6 +1458,7 @@ DodrioEvosMoves:
 	db 20, GROWL
 	db 24, FURY_ATTACK
 	db 30, DRILL_PECK
+	db 35, JUMP_KICK
 	db 39, RAGE
 	db 45, TRI_ATTACK
 	db 51, AGILITY

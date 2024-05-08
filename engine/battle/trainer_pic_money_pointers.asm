@@ -144,3 +144,9 @@ TrainerPicAndMoneyPointers:
 
 	dw SwimmerFPic
 	money 500
+
+	dw ArianaPic
+	money 3000
+
+	dw ArcherPic
+	money 3000

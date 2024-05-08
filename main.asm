@@ -304,6 +304,8 @@ KogaSprite:           INCBIN "gfx/sprites/koga.2bpp"
 RocketSprite:         INCBIN "gfx/sprites/rocket.2bpp"
 MediumSprite:         INCBIN "gfx/sprites/medium.2bpp"
 MistySprite:          INCBIN "gfx/sprites/misty.2bpp"
+ArianaSprite:         INCBIN "gfx/sprites/ariana.2bpp"
+ArcherSprite:         INCBIN "gfx/sprites/archer.2bpp"
 
 
 SECTION "Battle (bank 5)", ROMX, BANK[$5]
@@ -1698,6 +1700,8 @@ ChannelerPic::     INCBIN "pic/trainer/channeler.pic"
 AgathaPic::        INCBIN "pic/trainer/agatha.pic"
 LancePic::         INCBIN "pic/trainer/lance.pic"
 SwimmerFPic::      INCBIN "pic/trainer/swimmer_f.pic"
+ArianaPic::        INCBIN "pic/trainer/ariana.pic"
+ArcherPic::        INCBIN "pic/trainer/archer.pic"
 
 ;joenote - moved to a different bank
 ;INCLUDE "data/mapHeaders/tradecenter.asm"

@@ -153,7 +153,7 @@ GBCBasePalettes:
 
 	; PAL_GREYMON
 	RGB 31, 31, 31
-	RGB 20, 23, 10
+	RGB 20, 20, 15
 	RGB 11, 11,  5
 	RGB  3,  3,  3
 

@@ -1,7 +1,7 @@
 _SilphCoPresidentText::
-	text "PRESIDENT: Thank"
+	text "President: Thank"
 	line "you for saving"
-	cont "SILPH!"
+	cont "Silph!"
 
 	para "I will never"
 	line "forget you saved"
@@ -26,16 +26,16 @@ _ReceivedSilphCoMasterBallText::
 	text "!@@"
 
 _SilphCo10Text_6231c::
-	text "PRESIDENT: You"
+	text "President: You"
 	line "can't buy that"
 	cont "anywhere!"
 
 	para "It's our secret"
-	line "prototype MASTER"
-	cont "BALL!"
+	line "prototype Master"
+	cont "Ball!"
 
 	para "It will catch any"
-	line "#MON without"
+	line "#mon without"
 	cont "fail!"
 
 	para "You should be"
@@ -49,19 +49,35 @@ _SilphCoMasterBallNoRoomText::
 	done
 
 _SilphCo11Text2::
-	text "SECRETARY: Thank"
+	text "Secretary: Thank"
 	line "you for rescuing"
 	cont "all of us!"
 
 	para "We admire your"
 	line "courage."
+
+	para "That was quite"
+	line "the scare!"
+
+	para "It reminded me of"
+	line "an incident from"
+	cont "years ago,"
+
+	para "where the city"
+	line "was under the"
+	cont "control of thugs!"
+
+	para "Sabrina and the"
+	line "Dojo Master were"
+	cont "some of the ones"
+	cont "who freed us!"
 	done
 
 _SilphCo11Text3::
 	text "Ah <PLAYER>!"
 	line "So we meet again!"
 
-	para "The PRESIDENT and"
+	para "The President and"
 	line "I are discussing"
 	cont "a vital business"
 	cont "proposition."
@@ -82,15 +98,35 @@ _SilphCo10Text_62330::
 _SilphCo10Text_62335::
 	text "Blast it all!"
 	line "You ruined our"
-	cont "plans for SILPH!"
+	cont "plans for Silph!"
 
-	para "But, TEAM ROCKET"
-	line "will never fall!"
+	para "Now I remember..."
+
+	para "You remind me of"
+	line "the two I teamed"
+	cont "up with all those"
+	cont "years ago..."
+
+	para "They were head-"
+	line "strong, yet they"
+	cont "always believed"
+	cont "in their"
+	cont "convictions..."
+
+	para "...Heh..."
+
+	para "...It's almost"
+	line "nostalgic..."
+
+	para "Regardless..."
+
+	para "Team Rocket will"
+	line "never fall!"
 
 	para "<PLAYER>! Never"
 	line "forget that all"
-	cont "#MON exist"
-	cont "for TEAM ROCKET!"
+	cont "#mon exist"
+	cont "for Team Rocket!"
 
 	para "I must go, but I"
 	line "shall return!"
@@ -108,13 +144,13 @@ _SilphCo11EndBattleText1::
 
 _SilphCo11AfterBattleText1::
 	text "So, you want to"
-	line "see my BOSS?"
+	line "see my Boss?"
 	done
 
 _SilphCo11BattleText2::
 	text "Halt! Do you have"
 	line "an appointment"
-	cont "with my BOSS?"
+	cont "with my Boss?"
 	done
 
 _SilphCo11EndBattleText2::
@@ -124,12 +160,12 @@ _SilphCo11EndBattleText2::
 
 _SilphCo11AfterBattleText2::
 	text "Watch your step,"
-	line "my BOSS likes his"
-	cont "#MON tough!"
+	line "my Boss likes his"
+	cont "#mon tough!"
 	done
 
 _SilphCo10Text_6237b::
 	text "The monitor has"
-	line "#MON on it!"
+	line "#mon on it!"
 	done
 

@@ -97,8 +97,7 @@ SpecialTrainerMoves:
 	db 0
 	
 	db LT_SURGE,$1
-	db 1,4,POISON_STING
-	db 2,2,WATER_GUN
+	db 2,4,POISON_STING
 	db 3,4,THUNDERBOLT
 	db 0
 	
@@ -106,7 +105,7 @@ SpecialTrainerMoves:
 	db 1,4,THUNDERBOLT
 	db 2,1,BODY_SLAM
 	db 3,1,SLUDGE
-	db 3,3,MEGA_DRAIN
+	db 3,3,RAZOR_LEAF
 	db 0
 	
 	db KOGA,$1
@@ -152,9 +151,9 @@ SpecialTrainerMoves:
 	db 4,2,PSYCHIC_M
 	db 4,3,SOLARBEAM
 	db 4,4,STUN_SPORE
-	db 5,1,BLIZZARD
+	db 5,1,FISSURE
 	db 5,2,EARTHQUAKE
-	db 5,3,FISSURE
+	db 5,3,BLIZZARD
 	db 0
 	
 	db LORELEI,$1
@@ -335,6 +334,22 @@ SpecialTrainerMoves:
 	db 1,3,SUBMISSION
 	db 0
 
+	db SWIMMER_F,$4
+	db 3,1,SURF
+	db 3,2,ICE_BEAM
+	db 4,1,SUBMISSION
+	db 4,2,SURF
+	db 4,3,HYPNOSIS
+	db 4,4,ICE_BEAM
+	db 0
+
+	db SWIMMER_F,$7
+	db 2,1,SURF
+	db 2,2,ICE_BEAM
+	db 3,1,PSYCHIC_M
+	db 3,4,ICE_BEAM
+	db 0
+
 	db SWIMMER_F,$8
 	db 1,1,SURF
 	db 1,2,RECOVER
@@ -343,6 +358,7 @@ SpecialTrainerMoves:
 	db 0
 
 	db BOSS_GIOVANNI,$2
+	db 1,1,DIG
 	db 1,2,SLUDGE_BOMB
 	db 1,3,BODY_SLAM
 	db 3,3,ROCK_SLIDE
@@ -374,5 +390,56 @@ SpecialTrainerMoves:
 	db 3,2,BODY_SLAM
 	db 3,4,SUBMISSION
 	db 0
+
+	db ARIANA,$2
+	db 1,1,MEGA_DRAIN
+	db 1,3,SLUDGE_BOMB
+	db 2,1,THUNDERPUNCH
+	db 2,2,REFLECT
+	db 3,4,TRI_ATTACK
+	db 4,1,EARTHQUAKE
+	db 4,2,BLIZZARD
+	db 4,3,SLUDGE_BOMB
+	db 0
+
+	db ARIANA,$3
+	db 2,1,MEGA_DRAIN
+	db 1,3,SLUDGE
+	db 3,1,REFLECT
+	db 3,2,THUNDERPUNCH
+	db 0
+
+	db ARCHER,$1
+	db 2,1,CONFUSION
+	db 0
+
+	db ARCHER,$2
+	db 1,1,ICE_BEAM
+	db 1,2,SURF
+	db 1,3,PSYCHIC_M
+	db 1,4,SHADOW_BALL
+	db 2,2,EARTHQUAKE
+	db 2,3,ROCK_SLIDE
+	db 3,1,FLAMETHROWER
+	db 3,2,DIG
+	db 3,3,DOUBLE_EDGE
+	db 3,4,FIRE_BLAST
+	db 4,1,EARTHQUAKE
+	db 4,2,SLUDGE_BOMB
+	db 4,3,THUNDERBOLT
+	db 0
+
+	db ARCHER,$3
+	db 2,1,CONFUSION
+	db 0
+
+	db LASS,$4
+	db 1,2,BODY_SLAM
+	db 1,3,THUNDERBOLT
+	db 1,4,REST
+	db 2,1,THUNDERBOLT
+	db 2,2,MEGA_PUNCH
+	db 2,4,DOUBLE_TEAM
+	db 3,1,MEGA_DRAIN
 
 	db $ff

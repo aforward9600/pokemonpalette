@@ -5,38 +5,38 @@ _CeruleanGymText_5c7be::
 	para "Trainers who want"
 	line "to turn pro have"
 	cont "to have a policy"
-	cont "about #MON!"
+	cont "about #mon!"
 
 	para "What is your"
 	line "approach when you"
-	cont "catch #MON?"
+	cont "catch #mon?"
 
 	para "My policy is an"
 	line "all-out offensive"
-	cont "with blue #MON!"
+	cont "with blue #mon!"
 	done
 
 _CeruleanGymText_5c7c3::
 	text "TM11 teaches"
-	line "BUBBLEBEAM!"
+	line "Bubblebeam!"
 
 	para "Use it on an"
-	line "aquatic #MON!"
+	line "aquatic #mon!"
 	done
 
 _CeruleanGymText_5c7c8::
-	text "The BLUEBADGE"
-	line "makes all #MON"
+	text "The BlueBadge"
+	line "makes all #mon"
 	cont "up to L30 obey!"
 
 	para "That includes"
 	line "even outsiders!"
 
 	para "There's more, you"
-	line "can now use CUT"
+	line "can now use Cut"
 	cont "any time!"
 
-	para "You can CUT down"
+	para "You can Cut down"
 	line "small bushes to"
 	cont "open new paths!"
 
@@ -60,14 +60,14 @@ _CeruleanGymText_5c7d8::
 	para "All right!"
 
 	para "You can have the"
-	line "BLUEBADGE to"
+	line "BlueBadge to"
 	cont "show you beat me!@@"
 
 _CeruleanGymBattleText1::
 	text "I'm more than good"
 	line "enough for you!"
 
-	para "MISTY can wait!"
+	para "Misty can wait!"
 	done
 
 _CeruleanGymEndBattleText1::
@@ -95,7 +95,7 @@ _CeruleanGymEndBattleText2::
 	prompt
 
 _CeruleanGymAfterBattleText2::
-	text "MISTY is going to"
+	text "Misty is going to"
 	line "keep improving!"
 
 	para "She won't lose to"
@@ -108,24 +108,24 @@ _CeruleanGymText_5c82a::
 
 	para "Here's my advice!"
 
-	para "The LEADER, MISTY,"
+	para "The Leader, Misty,"
 	line "is a pro who uses"
-	cont "blue #MON!"
+	cont "blue #mon!"
 
 	para "You can drain all"
 	line "their water with"
-	cont "plant #MON!"
+	cont "plant #mon!"
 
 	para "Or, zap them with"
 	line "electricity!"
 
 	para "You may need a"
-	line "ground #MON for"
+	line "ground #mon for"
 	cont "one of them!"
 	done
 
 _CeruleanGymText_5c82f::
-	text "You beat MISTY!"
+	text "You beat Misty!"
 	line "What'd I tell ya?"
 
 	para "You and me kid,"

@@ -6071,7 +6071,7 @@ MoveHitTest:
 	bit USING_X_ACCURACY, a ; is the player using X Accuracy?
 	ret nz
 ;	jr nz, .player_ohko_xacc ; if so, always hit regardless of accuracy/evasion
-	jr .calcHitChance
+;	jr .calcHitChance
 ;.player_ohko_xacc	;joenote - player ohko moves now ignore x accuracy 
 	;this section is entered if the player is using x accuracy
 ;	ld a, [wPlayerMoveEffect]	;load the move effect 
@@ -6097,8 +6097,9 @@ MoveHitTest:
 .skipPlayerMistCheck
 	ld a, [wEnemyBattleStatus2]
 	bit USING_X_ACCURACY, a ; is the enemy using X Accuracy?
+	ret nz
 ;	jr nz, .enemy_ohko_xacc ; if so, always hit regardless of accuracy/evasion
-	jr .calcHitChance	;joenote - added this to skip over
+;	jr .calcHitChance	;joenote - added this to skip over
 ;.enemy_ohko_xacc	;joenote - enemy ohko moves now ignore x accuracy 
 	;this section is entered if the enemy is using x accuracy
 ;	ld a, [wEnemyMoveEffect]	;load the move effect 

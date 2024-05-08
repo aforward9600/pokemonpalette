@@ -381,13 +381,17 @@ PlayBattleMusic::
 	ld a, [wCurOpponent]
 	cp 200
 	jr c, .wildBattle
-	cp OPP_GIOVANNI
+	cp OPP_BOSS_GIOVANNI
 	jr z, .RocketBattle
 	cp OPP_ROCKET
 	jr z, .RocketBattle
 	cp OPP_ROCKET_F
 	jr z, .RocketBattle
 	cp OPP_SCIENTIST
+	jr z, .RocketBattle
+	cp OPP_ARIANA
+	jr z, .RocketBattle
+	cp OPP_ARCHER
 	jr z, .RocketBattle
 	cp OPP_LORELEI
 	jr z, .Elite4Battle

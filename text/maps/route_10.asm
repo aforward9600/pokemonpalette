@@ -1,6 +1,6 @@
 _Route10BattleText1::
 	text "Wow, are you a"
-	line "#MANIAC too?"
+	line "#maniac too?"
 	cont "Want to see my"
 	cont "collection?"
 	done
@@ -12,7 +12,7 @@ _Route10EndBattleText1::
 
 _Route10AfterBattleText1::
 	text "I have more rare"
-	line "#MON at home!"
+	line "#mon at home!"
 	done
 
 _Route10BattleText2::
@@ -36,26 +36,27 @@ _Route10AfterBattleText2::
 ELSE
 _Route10EndBattleText2::
 	text "Ha-haha!"
-	line "Not laughing!"
-	cont "Ha-hay fever!"
-	cont "Haha-ha-choo!"
+	line "Hahhhhh ...!"
+	cont "Oh man..."
+	cont "I ate some funny-"
+	cont "tasting shrooms."
 	prompt
 
 _Route10AfterBattleText2::
-	text "Haha-ha-choo!"
-	line "Ha-choo!"
-	cont "Snort! Snivel!"
+	text "Haha-ha-haha!"
+	line "Hahahahaha!"
+	cont "...... ......"
 	done
 ENDC
 
 _Route10BattleText3::
 	text "Hi kid, want to"
-	line "see my #MON?"
+	line "see my #mon?"
 	done
 
 _Route10EndBattleText3::
 	text "Oh no!"
-	line "My #MON!"
+	line "My #mon!"
 	prompt
 
 _Route10AfterBattleText3::
@@ -65,7 +66,7 @@ _Route10AfterBattleText3::
 
 _Route10BattleText4::
 	text "I've been to a"
-	line "#MON GYM a few"
+	line "#mon Gym a few"
 	cont "times. But, I"
 	cont "lost each time."
 	done
@@ -77,7 +78,7 @@ _Route10EndBattleText4::
 
 _Route10AfterBattleText4::
 	text "I noticed some"
-	line "#MANIACs"
+	line "#maniacs"
 	cont "prowling around."
 	done
 
@@ -108,7 +109,7 @@ _Route10EndBattleText6::
 	prompt
 
 _Route10AfterBattleText6::
-	text "The #MON here"
+	text "The #mon here"
 	line "are so chunky!"
 	cont "There should be a"
 	cont "pink one with a"
@@ -117,9 +118,9 @@ _Route10AfterBattleText6::
 
 _Route10Text9::
 _Route10Text7::
-	text "ROCK TUNNEL"
+	text "Rock Tunnel"
 	done
 
 _Route10Text10::
-	text "POWER PLANT"
+	text "Power Plant"
 	done

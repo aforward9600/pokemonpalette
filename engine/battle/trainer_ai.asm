@@ -1261,6 +1261,8 @@ TrainerClassMoveChoiceModifications:
 	db 1,3,4,0    ; AGATHA
 	db 1,3,4,0  ; LANCE
 	db 1,3,0    ; SWIMMER_F
+	db 1,3,4,0  ; ARIANA
+	db 1,3,4,0  ; ARCHER
 
 INCLUDE "engine/battle/trainer_pic_money_pointers.asm"
 
@@ -1374,6 +1376,8 @@ TrainerAIPointers:
 	dbw 1,AgathaAI ; agatha
 	dbw 1,LanceAI ; lance
 	dbw 1,GenericAI ; swimmerf
+	dbw 1,GiovanniAI
+	dbw 1,GiovanniAI
 
 ;joenote - reorganizing these AI routines to jump on carry instead of returning on not-carry
 ;also adding recognition of a switch-pkmn bit
@@ -1505,7 +1509,7 @@ Sony2AI:
 	jr nc, .rival2return
 	ld a, 5
 	call AICheckIfHPBelowFraction
-	jp c, AIUsePotion
+	jp c, AIUseHyperPotion
 .rival2return
 	ret
 
