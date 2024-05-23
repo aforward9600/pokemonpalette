@@ -18,7 +18,6 @@ ROMX $3
   "bank3"
 
 ROMX $4
-  "NPC Sprites 1" ; NPC_SPRITES_1
   "Graphics" ; GFX
   "Battle (bank 4)"
 
@@ -184,6 +183,9 @@ ROMX $37
 
 ROMX $39
 	"bank39"
+
+ROMX $40
+  "NPC Sprites 1" ; NPC_SPRITES_1
 
 WRAM0
   "WRAM Bank 0"
