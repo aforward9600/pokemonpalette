@@ -8,8 +8,8 @@ _CeladonGameCornerText1::
 	done
 
 _CeladonGameCornerText_48d22::
-	text "Welcome to ROCKET"
-	line "GAME CORNER!"
+	text "Welcome to Rocket"
+	line "Game Corner!"
 
 	para "Do you need some"
 	line "game coins?"
@@ -35,13 +35,13 @@ _CeladonGameCornerText_48d31::
 	done
 
 _CeladonGameCornerText_48d36::
-	text "Oops! Your COIN"
-	line "CASE is full."
+	text "Oops! Your Coin"
+	line "Case is full."
 	done
 
 _CeladonGameCornerText_48d3b::
 	text "You don't have a"
-	line "COIN CASE!"
+	line "Coin Case!"
 	done
 
 _CeladonGameCornerText3::
@@ -49,7 +49,7 @@ _CeladonGameCornerText3::
 
 	para "It's rumored that"
 	line "this place is run"
-	cont "by TEAM ROCKET."
+	cont "by Team Rocket."
 	done
 
 _CeladonGameCornerText4::
@@ -89,11 +89,11 @@ _CeladonGameCornerText_48dca::
 	line "things to do,"
 	cont "champ in making!"
 
-	para "CELADON GYM's"
-	line "LEADER is ERIKA!"
+	para "Celadon Gym's"
+	line "Leader is Erika!"
 	cont "She uses a"
 	cont "colorful assort-"
-	cont "ment of #MON!"
+	cont "ment of #mon!"
 
 	para "She might appear"
 	line "docile, but don't"
@@ -102,7 +102,7 @@ _CeladonGameCornerText_48dca::
 
 _CeladonGameCornerText_48dcf::
 	text "They offer rare"
-	line "#MON that can"
+	line "#mon that can"
 	cont "be exchanged for"
 	cont "your coins."
 
@@ -133,7 +133,7 @@ _CeladonGameCornerText_48e31::
 _CeladonGameCornerText_48e36::
 	text "Darn! I need more"
 	line "coins for the"
-	cont "#MON I want!"
+	cont "#mon I want!"
 	done
 
 _CeladonGameCornerText_48e88::
@@ -171,7 +171,7 @@ _CeladonGameCornerText_48ed3::
 _CeladonGameCornerText_48ed8::
 	text "Our hideout might"
 	line "be discovered! I"
-	cont "better tell BOSS!"
+	cont "better tell Boss!"
 	done
 
 _CeladonGameCornerText_48f09::
@@ -183,5 +183,5 @@ _CeladonGameCornerText_48f09::
 
 _CeladonGameCornerText_48f19::
 	text "Oops! Forgot the"
-	line "COIN CASE!"
+	line "Coin Case!"
 	done

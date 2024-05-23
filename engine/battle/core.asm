@@ -6858,7 +6858,10 @@ LoadEnemyMonData:
 ;	ld b, $88
 ;	jr z, .storeDVs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;joenote - going to randomly determine trainer DVs (values of 8 to 15)
-	jr nz, .nottrainer	;if not a trainer then skip this part
+	jr nz, .nottrainer ;if not a trainer then skip this part
+	ld a, $dd
+	ld b, $dd
+	jr z, .storeDVs
 ;load whatever default DVs are already there for the pkmn
 	ld hl, wEnemyMon1DVs
 	ld a, [wWhichPokemon]

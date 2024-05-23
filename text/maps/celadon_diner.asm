@@ -3,19 +3,34 @@ _CeladonDinerText1::
 
 	para "We're taking a"
 	line "break now."
+
+	para "Those Team Rocket"
+	line "members around"
+	cont "town have been"
+	cont "giving me the"
+	cont "creeps."
+
+	para "It reminds me of"
+	line "what happened to"
+	cont "the city so many"
+	cont "years ago now."
+
+	para "Let's hope it"
+	line "doesn't get that"
+	cont "bad again."
 	done
 
 _CeladonDinerText2::
-	text "My #MON are"
+	text "My #mon are"
 	line "weak, so I often"
 	cont "have to go to the"
-	cont "DRUG STORE."
+	cont "Drug Store."
 	done
 
 _CeladonDinerText3::
 	text "Psst! There's a"
 	line "basement under"
-	cont "the GAME CORNER."
+	cont "the Game Corner."
 	done
 
 _CeladonDinerText4::

@@ -2286,8 +2286,6 @@ ShipPort_GFX:      INCBIN "gfx/tilesets/ship_port.2bpp"
 ShipPort_Block:    INCBIN "gfx/blocksets/ship_port.bst"
 Interior_GFX:      INCBIN "gfx/tilesets/interior.2bpp"
 Interior_Block:    INCBIN "gfx/blocksets/interior.bst"
-Plateau_GFX:       INCBIN "gfx/tilesets/plateau.2bpp"
-Plateau_Block:     INCBIN "gfx/blocksets/plateau.bst"
 
 
 SECTION "bank1A",ROMX,BANK[$1A]
@@ -2315,18 +2313,19 @@ ForestGate_Block:
 Museum_Block:
 Gate_Block:        INCBIN "gfx/blocksets/gate.bst"
 
-Forest_GFX:        INCBIN "gfx/tilesets/forest.2bpp"
-Forest_Block:      INCBIN "gfx/blocksets/forest.bst"
 Facility_GFX:      INCBIN "gfx/tilesets/facility.2bpp"
 Facility_Block:    INCBIN "gfx/blocksets/facility.bst"
+
+SECTION "bank33",ROMX,BANK[$33]
+
+Plateau_GFX:       INCBIN "gfx/tilesets/plateau.2bpp"
+Plateau_Block:     INCBIN "gfx/blocksets/plateau.bst"
 
 
 SECTION "bank1B",ROMX,BANK[$1B]
 
 Cemetery_GFX:      INCBIN "gfx/tilesets/cemetery.2bpp"
 Cemetery_Block:    INCBIN "gfx/blocksets/cemetery.bst"
-Cavern_GFX:        INCBIN "gfx/tilesets/cavern.2bpp"
-Cavern_Block:      INCBIN "gfx/blocksets/cavern.bst"
 Lobby_GFX:         INCBIN "gfx/tilesets/lobby.2bpp"
 Lobby_Block:       INCBIN "gfx/blocksets/lobby.bst"
 Ship_GFX:          INCBIN "gfx/tilesets/ship.2bpp"
@@ -2337,6 +2336,14 @@ Club_GFX:          INCBIN "gfx/tilesets/club.2bpp"
 Club_Block:        INCBIN "gfx/blocksets/club.bst"
 Underground_GFX:   INCBIN "gfx/tilesets/underground.2bpp"
 Underground_Block: INCBIN "gfx/blocksets/underground.bst"
+
+
+SECTION "bank39",ROMX,BANK[$39]
+
+Cavern_GFX:        INCBIN "gfx/tilesets/cavern.2bpp"
+Cavern_Block:      INCBIN "gfx/blocksets/cavern.bst"
+Forest_GFX:        INCBIN "gfx/tilesets/forest.2bpp"
+Forest_Block:      INCBIN "gfx/blocksets/forest.bst"
 
 
 SECTION "bank1C",ROMX,BANK[$1C]

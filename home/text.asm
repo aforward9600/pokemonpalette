@@ -229,7 +229,7 @@ Char5EText::
 Char54Text::
 	db "Poké@"
 Char56Text::
-	db "……@"
+	db ". .@"
 Char5AText::
 	db "Enemy @"
 Char4AText::
@@ -665,7 +665,7 @@ TextCommand0C::
 	ld h, b
 	ld l, c
 .loop
-	ld a, "…"
+	ld a, "."
 	ld [hli], a
 	push de
 	call Joypad

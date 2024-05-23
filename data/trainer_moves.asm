@@ -368,14 +368,17 @@ SpecialTrainerMoves:
 	db 0
 
 	db SONY1,$7
+	db 2,4,ROCK_THROW
 	db 3,1,WRAP
 	db 0
 
 	db SONY1,$8
+	db 2,4,ROCK_THROW
 	db 3,1,WRAP
 	db 0
 
 	db SONY1,$9
+	db 2,4,ROCK_THROW
 	db 3,1,WRAP
 	db 0
 
@@ -441,5 +444,56 @@ SpecialTrainerMoves:
 	db 2,2,MEGA_PUNCH
 	db 2,4,DOUBLE_TEAM
 	db 3,1,MEGA_DRAIN
+	db 0
+
+	db COOLTRAINER_F,$2
+	db 1,2,DRILL_PECK
+	db 2,1,THUNDERBOLT
+	db 2,2,PSYCHIC_M
+	db 2,3,REFLECT
+	db 3,3,SLUDGE_BOMB
+	db 0
+
+	db COOLTRAINER_F,$4
+	db 1,1,THUNDERBOLT
+	db 2,1,FLAMETHROWER
+	db 2,2,CONFUSE_RAY
+	db 2,3,FIRE_BLAST
+	db 2,4,PSYCHIC_M
+	db 0
+
+	db COOLTRAINER_M,$3
+	db 1,2,ROCK_SLIDE
+	db 1,3,EARTHQUAKE
+	db 1,4,REST
+	db 2,1,LEECH_LIFE
+	db 2,2,SLUDGE_BOMB
+	db 3,3,BLIZZARD
+	db 0
+
+	db COOLTRAINER_M,$2
+	db 1,1,SLEEP_POWDER
+	db 1,2,MEGA_DRAIN
+	db 1,3,PSYCHIC_M
+	db 1,4,EXPLOSION
+	db 2,1,SURF
+	db 2,2,ICE_BEAM
+	db 2,3,EXPLOSION
+	db 2,4,CLAMP
+	db 3,1,DIG
+	db 3,2,FLAMETHROWER
+	db 3,3,FIRE_BLAST
+	db 3,4,DOUBLE_EDGE
+	db 0
+
+	db COOLTRAINER_M,$4
+	db 1,1,MEGA_DRAIN
+	db 1,2,SLEEP_POWDER
+	db 2,1,THUNDERBOLT
+	db 3,1,THUNDERBOLT
+	db 3,2,ICE_PUNCH
+	db 3,3,PSYCHIC_M
+	db 4,2,EARTHQUAKE
+	db 0
 
 	db $ff

@@ -13,8 +13,9 @@ _CeladonGymText_48a5e::
 
 	para "I teach the art of"
 	line "flower arranging."
-	cont "My #mon are of"
-	cont "the green color."
+	cont "My #mon are an"
+	cont "assortment of"
+	cont "colors."
 
 	para "Oh, I'm sorry, I"
 	line "had no idea that"
