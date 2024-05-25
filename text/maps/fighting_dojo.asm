@@ -142,3 +142,10 @@ _FightingDojoMasterText::
 	line "remaining"
 	cont "#mon!"
 	done
+
+_NuzlockeDojoText::
+	text "Hey!"
+
+	para "Don't be so"
+	line "greedy!"
+	done

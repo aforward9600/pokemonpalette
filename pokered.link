@@ -187,6 +187,9 @@ ROMX $39
 ROMX $40
   "NPC Sprites 1" ; NPC_SPRITES_1
 
+ROMX $41
+  "Nuzlocke"
+
 WRAM0
   "WRAM Bank 0"
 

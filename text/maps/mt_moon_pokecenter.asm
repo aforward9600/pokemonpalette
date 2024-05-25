@@ -43,6 +43,15 @@ _MagikarpSalesmanText2::
 	line "give refunds!"
 	done
 
+_MagikarpSalesmanNoPokemonText::
+	text "What kinda fool"
+	line "do you take me"
+	cont "for?"
+
+	para "You can't have"
+	line "this!"
+	done
+
 _MtMoonPokecenterText5::
 	db $0
 	done

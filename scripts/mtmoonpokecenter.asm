@@ -25,6 +25,12 @@ MagikarpSalesmanText:
 	TX_ASM
 	CheckEvent EVENT_BOUGHT_MAGIKARP, 1
 	jp c, .alreadyBoughtMagikarp
+IF DEF(_NUZLOCKE)
+	ld hl, wNuzlockeRegions
+	inc hl
+	bit ROUTE_3_NUZ, [hl]
+	jr nz, .noPokemon
+ENDC
 	ld hl, .Text1
 	call PrintText
 	ld a, MONEY_BOX
@@ -44,6 +50,11 @@ MagikarpSalesmanText:
 	jr .printText
 .enoughMoney
 	lb bc, MAGIKARP, 5
+IF DEF(_NUZLOCKE)
+	ld hl, wNuzlockeRegions
+	inc hl
+	set ROUTE_3_NUZ, [hl]
+ENDC
 	call GivePokemon
 	jr nc, .done
 	xor a
@@ -62,6 +73,9 @@ MagikarpSalesmanText:
 	jr .done
 .choseNo
 	ld hl, .RefuseText
+	jr .printText
+.noPokemon
+	ld hl, .MagikarpSalesmanNoPokemonText
 	jr .printText
 .alreadyBoughtMagikarp
 	ld hl, .Text2
@@ -84,6 +98,10 @@ MagikarpSalesmanText:
 
 .Text2
 	TX_FAR _MagikarpSalesmanText2
+	db "@"
+
+.MagikarpSalesmanNoPokemonText
+	TX_FAR _MagikarpSalesmanNoPokemonText
 	db "@"
 
 MtMoonPokecenterText5:

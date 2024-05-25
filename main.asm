@@ -92,6 +92,10 @@ INCLUDE "engine/remove_pokemon.asm"
 
 INCLUDE "engine/display_pokedex.asm"
 
+SECTION "Nuzlocke",ROMX,BANK[$41]
+
+INCLUDE "engine/nuzlocke.asm"
+
 SECTION "bank3",ROMX,BANK[$3]
 
 INCLUDE "engine/joypad.asm"

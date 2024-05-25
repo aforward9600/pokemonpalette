@@ -332,12 +332,21 @@ SilphCo7Text1:
 	ld a, [wd72e]
 	bit 0, a ; got lapras?
 	jr z, .givelapras
+IF DEF(_NUZLOCKE)
+.noLapras
+ENDC
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	jr nz, .savedsilph
 	ld hl, .LaprasGuyText
 	call PrintText
 	jr .done
 .givelapras
+IF DEF(_NUZLOCKE)
+	ld hl, wNuzlockeRegions
+	inc hl
+	bit SAFFRON_CITY_NUZ, [hl]
+	jr nz, .noLapras
+ENDC
 	ld hl, .MeetLaprasGuyText
 	call PrintText
 	lb bc, LAPRAS, 35
@@ -347,6 +356,11 @@ SilphCo7Text1:
 	and a
 	call z, WaitForTextScrollButtonPress
 	call EnableAutoTextBoxDrawing
+IF DEF(_NUZLOCKE)
+	ld hl, wNuzlockeRegions
+	inc hl
+	set SAFFRON_CITY_NUZ, [hl]
+ENDC
 	ld hl, .HeresYourLaprasText
 	call PrintText
 	ld hl, wd72e

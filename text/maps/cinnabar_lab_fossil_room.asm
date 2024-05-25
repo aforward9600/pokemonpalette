@@ -76,3 +76,10 @@ _Lab4Text_610bd::
 	text "Aiyah! You come"
 	line "again!"
 	done
+
+_NuzlockeCinnabarLabText::
+	text "So sorry!"
+
+	para "Machine is not"
+	line "working no more!"
+	done

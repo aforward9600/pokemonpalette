@@ -675,6 +675,13 @@ _OakLabEmailText::
 	cont "..."
 	done
 
+_NuzlockeNoPrizeText::
+	text "I'm sorry, but"
+	line "you cannot have"
+	cont "another #mon"
+	cont "here."
+	done
+
 _GameCornerCoinCaseText::
 	text "A Coin Case is"
 	line "required!"
@@ -1471,6 +1478,13 @@ _WildMonAppearedText::
 	TX_RAM wEnemyMonNick
 	text ""
 	line "appeared!"
+	prompt
+
+_WildMonCatchableText::
+	text "@"
+	TX_RAM wEnemyMonNick
+	text ""
+	line "is catchable!"
 	prompt
 
 _HookedMonAttackedText::
@@ -3006,6 +3020,12 @@ _ThrowBallAtTrainerMonText2::
 	text "Don't be a thief!"
 	prompt
 
+_CantCatchPokemonText::
+	text "You can't catch"
+	line "another #mon"
+	cont "here!"
+	prompt
+
 _NoCyclingAllowedHereText::
 	text "No cycling"
 	next "allowed here."
@@ -3228,6 +3248,30 @@ _UsedCutText::
 	line "away with Cut!"
 	prompt
 
+_DeadMon1Text::
+	text "Really?"
+
+	para "Trying to trade"
+	line "me a #mon that"
+	cont "can't fight?"
+	done
+
+_DeadMon2Text::
+	text "You really don't"
+	line "have any shame,"
+	cont "do you?"
+
+	para "That #mon is"
+	line "not able to"
+	cont "fight!"
+	done
+
+_DeadMon3Text::
+	text "I just can't"
+	line "believe you would"
+	cont "trade a #mon"
+	cont "that can't fight!"
+	done
 
 SECTION "Pokedex Text", ROMX, BANK[POKEdex_TEXT]
 

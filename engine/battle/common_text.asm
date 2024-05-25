@@ -27,6 +27,15 @@ PrintBeginningBattleText:
 	callab DrawAllPokeballs
 	pop hl
 	call PrintText
+IF DEF(_NUZLOCKE)
+	ld a, [wIsInBattle]
+	dec a
+	jr nz, .done
+	callab checkNuzlockeStatus
+	jr nz, .done
+	ld hl, WildMonCatchableText
+	call PrintText
+ENDC
 	jr .done
 .pokemonTower
 	ld b, SILPH_SCOPE
@@ -83,6 +92,10 @@ PrintBeginningBattleText:
 
 WildMonAppearedText:
 	TX_FAR _WildMonAppearedText
+	db "@"
+
+WildMonCatchableText:
+	TX_FAR _WildMonCatchableText
 	db "@"
 
 HookedMonAttackedText:

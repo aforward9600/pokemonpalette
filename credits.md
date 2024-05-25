@@ -40,3 +40,5 @@ Removing save delay tutorial: pgattic, Rangi42, mylogon341, dannye
 Ariana and Archer overworld sprites: SirWhibbles
 
 Expanding Tilesets Tutorial: sabra55, dannye, Rangi42
+
+Nuzlocke Mode Tutorial: Xillicis

@@ -111,6 +111,11 @@ ItemUseBall:
 	dec a
 	jp nz, ThrowBallAtTrainerMon
 
+IF DEF(_NUZLOCKE)
+	callab checkNuzlockeStatus
+	jp nz, CantCatch
+ENDC
+
 ; If this is for the old man battle, skip checking if the party & box are full.
 	ld a, [wBattleType]
 	dec a
@@ -886,7 +891,11 @@ ItemUseMedicine:
 .checkItemType
 	ld a, [wcf91]
 	cp REVIVE
+IF DEF(_NUZLOCKE)
+	jp nc, .healingItemNoEffect
+ELSE
 	jr nc, .healHP ; if it's a Revive or Max Revive
+ENDC
 	cp FULL_HEAL
 	jr z, .cureStatusAilment ; if it's a Full Heal
 	cp HP_UP
@@ -962,9 +971,17 @@ ItemUseMedicine:
 .fainted
 	ld a, [wcf91]
 	cp REVIVE
+IF DEF(_NUZLOCKE)
+	jp .healingItemNoEffect
+ELSE
 	jr z, .updateInBattleFaintedData
+ENDC
 	cp MAX_REVIVE
+IF DEF(_NUZLOCKE)
+	jp .healingItemNoEffect
+ELSE
 	jr z, .updateInBattleFaintedData
+ENDC
 	jp .healingItemNoEffect
 .updateInBattleFaintedData
 	ld a, [wIsInBattle]
@@ -1148,7 +1165,11 @@ ItemUseMedicine:
 	add hl, de ; hl now points to max HP
 	ld a, [wcf91]
 	cp REVIVE
+IF DEF(_NUZLOCKE)
+	jp z, .healingItemNoEffect
+ELSE
 	jr z, .setCurrentHPToHalfMaxHP
+ENDC
 	ld a, [hld]
 	ld b, a
 	ld a, [de]
@@ -1162,7 +1183,11 @@ ItemUseMedicine:
 	cp HYPER_POTION
 	jr c, .setCurrentHPToMaxHp ; if using a Full Restore or Max Potion
 	cp MAX_REVIVE
+IF DEF(_NUZLOCKE)
+	jp z, .healingItemNoEffect
+ELSE
 	jr z, .setCurrentHPToMaxHp ; if using a Max Revive
+ENDC
 	jr .updateInBattleData
 .setCurrentHPToHalfMaxHP
 	dec hl
@@ -1271,9 +1296,17 @@ ItemUseMedicine:
 	ld [wPartyMenuTypeOrMessageID], a
 	ld a, [wcf91]
 	cp REVIVE
+IF DEF(_NUZLOCKE)
+	jr z, .healingItemNoEffect
+ELSE
 	jr z, .showHealingItemMessage
+ENDC
 	cp MAX_REVIVE
+IF DEF(_NUZLOCKE)
+	jr z, .healingItemNoEffect
+ELSE
 	jr z, .showHealingItemMessage
+ENDC
 	ld a, POTION_MSG
 	ld [wPartyMenuTypeOrMessageID], a
 	jr .showHealingItemMessage
@@ -2454,6 +2487,10 @@ ThrowBallAtTrainerMon:
 	call PrintText
 	jr RemoveUsedItem
 
+CantCatch:
+	ld hl, CantCatchPokemonText
+	jr ItemUseFailed
+
 NoCyclingAllowedHere:
 	ld hl, NoCyclingAllowedHereText
 	jr ItemUseFailed
@@ -2488,6 +2525,10 @@ ThrowBallAtTrainerMonText1:
 
 ThrowBallAtTrainerMonText2:
 	TX_FAR _ThrowBallAtTrainerMonText2
+	db "@"
+
+CantCatchPokemonText:
+	TX_FAR _CantCatchPokemonText
 	db "@"
 
 NoCyclingAllowedHereText:

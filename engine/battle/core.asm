@@ -350,6 +350,9 @@ StartBattle:	;joedebug - start of the battle
 ; wild mon or link battle enemy ran from battle
 EnemyRan:
 	call LoadScreenTilesFromBuffer1
+IF DEF(_NUZLOCKE)
+	callab setNuzlockeFlag
+ENDC
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ld hl, WildRanText
@@ -959,6 +962,9 @@ FaintEnemyPokemon:
 	jr .sfxplayed
 .wild_win
 	call EndLowHealthAlarm
+IF DEF(_NUZLOCKE)
+	callab setNuzlockeFlag
+ENDC
 	ld a, MUSIC_DEFEATED_WILD_MON
 	call PlayBattleVictoryMusic
 .sfxplayed
@@ -1791,6 +1797,9 @@ TryRunningFromBattle:
 	and a ; reset carry
 	ret
 .canEscape
+IF DEF(_NUZLOCKE)
+	callab setNuzlockeFlag
+ENDC
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ld a, $2
@@ -2525,6 +2534,9 @@ UseBagItem:
 	ret
 
 .returnAfterCapturingMon
+IF DEF(_NUZLOCKE)
+	callab setNuzlockeFlag
+ENDC
 	call GBPalNormal
 	xor a
 	ld [wCapturedMonSpecies], a
@@ -4383,6 +4395,38 @@ CheckForDisobedience:
 	call AddNTimes
 	ld a, [wPlayerID]
 	cp [hl]
+IF DEF(_NUZLOCKE)
+.monIsTraded
+	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
+	ld a, 255
+	jr nz, .next
+	ld hl, wObtainedBadges
+	bit 7, [hl]
+	ld a, 65	; Champion's Ace
+	jr nz, .next
+	bit 6, [hl]
+	ld a, 50 ; Giovanni's Ace
+	jr nz, .next
+	bit 5, [hl]
+	ld a, 47 ; Blaine's Ace
+	jr nz, .next
+	bit 4, [hl]
+	ld a, 45 ; Sabrina's Ace
+	jr nz, .next
+	bit 3, [hl]
+	ld a, 43 ; Koga's Ace
+	jr nz, .next
+	bit 2, [hl]
+	ld a, 29 ; Erika's Ace
+	jr nz, .next
+	bit 1, [hl]
+	ld a, 24 ; Surge's Ace
+	jr nz, .next
+	bit 0, [hl]
+	ld a, 21 ; Misty's Ace
+	jr nz, .next
+	ld a, 14 ; Brock's Ace
+ELSE
 	jr nz, .monIsTraded
 	inc hl
 	ld a, [wPlayerID + 1]
@@ -4405,6 +4449,7 @@ CheckForDisobedience:
 	ld a, 30
 	jr nz, .next
 	ld a, 10
+ENDC
 .next
 	ld b, a
 	ld c, a
@@ -8960,6 +9005,11 @@ SwitchAndTeleportEffect:
 	jr z, .printText
 	ld hl, WasBlownAwayText
 .printText
+IF DEF(_NUZLOCKE)
+	push hl
+	callab setNuzlockeFlag
+	pop hl
+ENDC
 	jp PrintText
 
 RanFromBattleText:

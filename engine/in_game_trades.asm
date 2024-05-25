@@ -102,7 +102,21 @@ InGameTrade_DoTrade:
 	ld a, [wcf91]
 	cp b
 	ld a, $2
+IF DEF(_NUZLOCKE)
+	jp nz, .tradeFailed
+ELSE
 	jr nz, .tradeFailed ; jump if the selected mon's species is not the required one
+ENDC
+IF DEF(_NUZLOCKE)
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1HP
+	ld bc, wPartyMon2 - wPartyMon1
+	call AddNTimes
+	ld a, [hli]
+	or a, [hl]
+	ld a, $5
+	jr z, .tradeFailed
+ENDC
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMon1Level
 	ld bc, wPartyMon2 - wPartyMon1
@@ -244,6 +258,7 @@ TradeTextPointers1:
 	dw WrongMon1Text
 	dw Thanks1Text
 	dw AfterTrade1Text
+	dw DeadMon1Text
 
 TradeTextPointers2:
 	dw WannaTrade2Text
@@ -251,6 +266,7 @@ TradeTextPointers2:
 	dw WrongMon2Text
 	dw Thanks2Text
 	dw AfterTrade2Text
+	dw DeadMon2Text
 
 TradeTextPointers3:
 	dw WannaTrade3Text
@@ -258,6 +274,7 @@ TradeTextPointers3:
 	dw WrongMon3Text
 	dw Thanks3Text
 	dw AfterTrade3Text
+	dw DeadMon3Text
 
 ConnectCableText:
 	TX_FAR _ConnectCableText
@@ -287,6 +304,18 @@ Thanks1Text:
 
 AfterTrade1Text:
 	TX_FAR _AfterTrade1Text
+	db "@"
+
+DeadMon1Text:
+	TX_FAR _DeadMon1Text
+	db "@"
+
+DeadMon2Text:
+	TX_FAR _DeadMon2Text
+	db "@"
+
+DeadMon3Text:
+	TX_FAR _DeadMon3Text
 	db "@"
 
 WannaTrade2Text:

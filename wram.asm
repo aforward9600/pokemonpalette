@@ -3286,7 +3286,9 @@ wCurMapScript:: ; da39
 ; mostly copied from map-specific map script pointer and written back later
 	ds 1
 
-	ds 7
+	ds 1
+
+wNuzlockeRegions:: ds 6
 
 wPlayTimeHours:: ; da41
 	ds 1

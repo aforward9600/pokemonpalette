@@ -8,3 +8,8 @@ _CeladonMansion5Text1::
 	line "your friends and"
 	cont "trade #mon!"
 	done
+
+_CeladonMansion5Text3::
+	text "Sorry, you can't"
+	line "have this Eevee."
+	done

@@ -62,11 +62,22 @@ HealParty:
 
 	ld hl, wPartyMon1MaxHP - wPartyMon1HP
 	add hl, de
+IF DEF(_NUZLOCKE)
+	push hl
+	ld h, d
+	ld l, e
+	ld a, [hli]
+	or a, [hl]
+	pop hl
+	jr z, .noHealIfFainted
+ENDC
 	ld a, [hli]
 	ld [de], a
 	inc de
 	ld a, [hl]
 	ld [de], a
+
+.noHealIfFainted
 
 	pop de
 	pop hl
