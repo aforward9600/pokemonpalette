@@ -43,6 +43,7 @@ UsedCut:
 	call GBPalWhiteOutWithDelay3
 	call ClearSprites
 	call RestoreScreenTilesAndReloadTilePatterns
+	call ReloadMapData
 	ld a, SCREEN_HEIGHT_PIXELS
 	ld [hWY], a
 	call Delay3
@@ -52,6 +53,7 @@ UsedCut:
 	call Delay3
 	xor a
 	ld [hWY], a
+Cut2::
 	ld hl, UsedCutText
 	call PrintText
 	call LoadScreenTilesFromBuffer2

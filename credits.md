@@ -41,4 +41,6 @@ Ariana and Archer overworld sprites: SirWhibbles
 
 Expanding Tilesets Tutorial: sabra55, dannye, Rangi42
 
-Nuzlocke Mode Tutorial: Xillicis
+Nuzlocke Mode and Shift Mode Removal Tutorial: Xillicis
+
+Talking to Cut trees, water and boulders: Rangi42

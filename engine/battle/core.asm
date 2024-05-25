@@ -1589,7 +1589,11 @@ EnemySendOutFirstMon:
 	jr z, .next4
 	ld a, [wOptions]
 	bit 6, a
+IF DEF(_NUZLOCKE)
+	jr .next4
+ELSE
 	jr nz, .next4
+ENDC
 	ld hl, TrainerAboutToUseText
 	call PrintText
 	coord hl, 0, 7

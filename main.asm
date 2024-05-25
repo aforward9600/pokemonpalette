@@ -2268,6 +2268,7 @@ ColosseumBlocks: INCBIN "maps/colosseum.blk"
 INCLUDE "engine/give_pokemon.asm"
 
 INCLUDE "engine/predefs.asm"
+INCLUDE "engine/overworld/field_moves.asm"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 INCLUDE "engine/hidden_object_functions18.asm"
 

@@ -286,7 +286,7 @@ LinkMenu:
 	inc a ; LINK_STATE_IN_CABLE_CLUB (makes a = 1)
 	ld [wLinkState], a
 	ld [wEnteringCableClub], a
-	jr SpecialEnterMap
+	jp SpecialEnterMap
 .choseCancel
 	xor a
 	ld [wMenuJoypadPollCount], a
@@ -343,7 +343,11 @@ HandshakeList:	;this serves as a version control passcode with FF as an end-of-l
 	db $b
 	db $ff
 VersionText:
-	db "v1.23L@"
+IF DEF(_NUZLOCKE)
+	db "v0.1 Nuzlocke@"
+ELSE
+	db "v0.1@"
+ENDC
 
 WhereWouldYouLikeText:
 	TX_FAR _WhereWouldYouLikeText
@@ -610,7 +614,9 @@ DisplayOptionMenu:
 	jp .eraseOldMenuCursor
 .cursorInBattleStyle
 	ld a, [wOptionsBattleStyleCursorX] ; battle style cursor X coordinate
+IF DEF(_RED)
 	xor $0b ; toggle between 1 and 10
+ENDC
 	ld [wOptionsBattleStyleCursorX], a
 	jp .eraseOldMenuCursor
 .pressedLeftInTextSpeed
@@ -668,7 +674,11 @@ BattleAnimationOptionText:
 
 BattleStyleOptionText:
 	db   "Battle Style"
+IF DEF(_NUZLOCKE)
+	next "          Set@"
+ELSE
 	next " Shift    Set@"
+ENDC
 
 OptionMenuCancelText:
 	db "Cancel@"
@@ -804,7 +814,11 @@ SetOptionsFromCursorPositions:
 	set 6, d
 	jr .storeOptions
 .battleStyleShift
+IF DEF(_NUZLOCKE)
+	set 6, d
+ELSE
 	res 6, d
+ENDC
 .storeOptions
 	ld a, [wOptions]	;joenote - preserve sound settings
 	and %00110000
@@ -846,7 +860,11 @@ SetCursorPositionsFromOptions:
 	coord hl, 0, 8
 	call .placeUnfilledRightArrow
 	sla c
+IF DEF(_NUZLOCKE)
+	ld a, 10
+ELSE
 	ld a, 1
+ENDC
 	jr nc, .storeBattleStyleCursorX
 	ld a, 10
 .storeBattleStyleCursorX

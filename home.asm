@@ -984,7 +984,24 @@ GroundRoseText::
 
 BoulderText::
 	TX_FAR _BoulderText
-	db "@"
+	TX_ASM
+	ld a, [wObtainedBadges]
+	bit 3, a
+	jr z, .done
+	ld d, STRENGTH
+	call HasPartyMove
+	ld a, [wWhichTrade]
+	and a
+	jr nz, .done
+	ld a, [wWhichPokemon]
+	push af
+	call ManualTextScroll
+	pop af
+	ld [wWhichPokemon], a
+	call GetPartyMonName2
+	predef PrintStrengthTxt
+.done
+	jp TextScriptEnd
 
 MartSignText::
 	TX_FAR _MartSignText
