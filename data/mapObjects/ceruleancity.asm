@@ -1,7 +1,7 @@
 CeruleanCityObject:
 	db $f ; border block
 
-	db 10 ; warps
+	db 11 ; warps
 	warp 27, 11, 0, TRASHED_HOUSE
 	warp 13, 15, 0, CERULEAN_HOUSE_1
 	warp 19, 17, 0, CERULEAN_POKECENTER
@@ -12,6 +12,7 @@ CeruleanCityObject:
 	warp 27, 9, 2, TRASHED_HOUSE
 	warp 9, 11, 1, CERULEAN_HOUSE_2
 	warp 9, 9, 0, CERULEAN_HOUSE_2
+	warp 9, 12, 0, CERULEAN_CITY_OLD_ROD_HOUSE
 
 	db 6 ; signs
 	sign 23, 19, 12 ; CeruleanCityText12
@@ -45,3 +46,4 @@ CeruleanCityObject:
 	warp_to 27, 9, CERULEAN_CITY_WIDTH ; TRASHED_HOUSE
 	warp_to 9, 11, CERULEAN_CITY_WIDTH ; CERULEAN_HOUSE_2
 	warp_to 9, 9, CERULEAN_CITY_WIDTH ; CERULEAN_HOUSE_2
+	warp_to 9, 12, CERULEAN_CITY_WIDTH ; CERULEAN_CITY_OLD_ROD_HOUSE

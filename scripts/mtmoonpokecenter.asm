@@ -9,6 +9,7 @@ MtMoonPokecenterTextPointers:
 	dw MagikarpSalesmanText
 	dw MtMoonPokecenterText5
 	dw MtMoonTradeNurseText
+	dw MtMoonPokecenterOakAideText
 
 MtMoonHealNurseText:
 	db $ff
@@ -110,3 +111,43 @@ MtMoonPokecenterText5:
 
 MtMoonTradeNurseText:
 	db $f6
+
+MtMoonPokecenterOakAideText:
+	TX_ASM
+	CheckEvent EVENT_GOT_EXP_ALL
+	jr nz, .AlreadyGotExpAll
+	ld hl, MtMoonPokecenterOakAideText1
+	call PrintText
+	lb bc, EXP_ALL, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld hl, PlayerReceivedExpAllMtMoonText
+	call PrintText
+	SetEvent EVENT_GOT_EXP_ALL
+	jr .MtMoonPokecenterOakAideEnd
+.BagFull
+	ld hl, NoRoomForExpAllMtMoon
+	call PrintText
+	jr .MtMoonPokecenterOakAideEnd
+.AlreadyGotExpAll
+	ld hl, MtMoonPokecenterOakAideText2
+	call PrintText
+.MtMoonPokecenterOakAideEnd
+	jp TextScriptEnd
+
+MtMoonPokecenterOakAideText1:
+	TX_FAR _MtMoonPokecenterOakAideText1
+	db "@"
+
+PlayerReceivedExpAllMtMoonText:
+	TX_FAR _PlayerReceivedExpAllMtMoonText
+	TX_SFX_KEY_ITEM
+	db "@"
+
+NoRoomForExpAllMtMoon:
+	TX_FAR _NoRoomForExpAllMtMoon
+	db "@"
+
+MtMoonPokecenterOakAideText2:
+	TX_FAR _MtMoonPokecenterOakAideText2
+	db "@"

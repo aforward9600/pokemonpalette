@@ -1845,6 +1845,7 @@ Route21Blocks: INCBIN "maps/route21.blk"
 
 VermilionHouse2Blocks:
 Route12HouseBlocks:
+CeruleanCityOldRodHouseBlocks:
 DayCareMBlocks: INCBIN "maps/daycarem.blk"
 
 FuchsiaHouse3Blocks: INCBIN "maps/fuchsiahouse3.blk"
@@ -1878,6 +1879,10 @@ INCLUDE "data/mapObjects/fuchsiahouse3.asm"
 INCLUDE "data/mapHeaders/daycarem.asm"
 INCLUDE "scripts/daycarem.asm"
 INCLUDE "data/mapObjects/daycarem.asm"
+
+INCLUDE "data/mapHeaders/ceruleancityoldrodhouse.asm"
+INCLUDE "scripts/ceruleancityoldrodhouse.asm"
+INCLUDE "data/mapObjects/ceruleancityoldrodhouse.asm"
 
 INCLUDE "data/mapHeaders/route12house.asm"
 INCLUDE "scripts/route12house.asm"

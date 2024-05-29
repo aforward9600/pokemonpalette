@@ -203,7 +203,7 @@ MapSongBanks:
 	db MUSIC_DUNGEON1, BANK(Music_Dungeon1) ; RocketHideout3
 	db MUSIC_DUNGEON1, BANK(Music_Dungeon1) ; RocketHideout4
 	db MUSIC_DUNGEON1, BANK(Music_Dungeon1) ; RocketHideoutElevator
-	db MUSIC_DUNGEON1, BANK(Music_Dungeon1)
+	db MUSIC_CITIES2, BANK(Music_Cities2)
 	db MUSIC_DUNGEON1, BANK(Music_Dungeon1)
 	db MUSIC_DUNGEON1, BANK(Music_Dungeon1)
 	db MUSIC_SILPH_CO, BANK(Music_SilphCo) ; SilphCo2

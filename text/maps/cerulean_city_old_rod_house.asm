@@ -1,6 +1,6 @@
-_VermilionHouse2Text_560b1::
+_CeruleanCityOldRodHouseText1::
 	text "I'm the Fishing"
-	line "Guru's brother!"
+	line "Guru!"
 
 	para "I simply Looove"
 	line "fishing!"
@@ -9,7 +9,7 @@ _VermilionHouse2Text_560b1::
 	line "fish?"
 	done
 
-_VermilionHouse2Text_560b6::
+_CeruleanCityOldRodHouseText2::
 	text "Grand! I like"
 	line "your style!"
 
@@ -21,7 +21,7 @@ _VermilionHouse2Text_560b6::
 	TX_RAM wcf4b
 	text "!@@"
 
-_VermilionHouse2Text_560bb::
+_CeruleanCityOldRodHouseText6::
 	db $0
 	para "Fishing is a way"
 	line "of life!"
@@ -32,12 +32,12 @@ _VermilionHouse2Text_560bb::
 	cont "one, young one!"
 	done
 
-_VermilionHouse2Text_560c0::
+_CeruleanCityOldRodHouseText4::
 	text "Oh... That's so"
 	line "disappointing..."
 	done
 
-_VermilionHouse2Text_560c5::
+_CeruleanCityOldRodHouseText5::
 	text "Hello there,"
 	line "<PLAYER>!"
 
@@ -45,7 +45,7 @@ _VermilionHouse2Text_560c5::
 	line "biting?"
 	done
 
-_VermilionHouse2Text_560ca::
+_CeruleanCityOldRodHouseText3::
 	text "Oh no!"
 
 	para "You have no room"

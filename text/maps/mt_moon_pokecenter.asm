@@ -52,6 +52,39 @@ _MagikarpSalesmanNoPokemonText::
 	line "this!"
 	done
 
+_MtMoonPokecenterOakAideText1::
+	text "Hi! Remember me?"
+	line "I'm Prof.Oak's"
+	cont "Aide!"
+
+	para "He wanted you to"
+	line "have this, but he"
+	cont "forgot!"
+	prompt
+
+_PlayerReceivedExpAllMtMoonText::
+	text "<PLAYER> received"
+	line "an @"
+	TX_RAM wcf4b
+	text "!@@"
+
+_MtMoonPokecenterOakAideText2::
+	text "That will help"
+	line "your weaker"
+	cont "#mon grow"
+
+	para "stronger without"
+	line "needing to"
+	cont "fight!"
+	done
+
+_NoRoomForExpAllMtMoon::
+	text "Hey!"
+
+	para "You've got no"
+	line "room for this!"
+	done
+
 _MtMoonPokecenterText5::
 	db $0
 	done
