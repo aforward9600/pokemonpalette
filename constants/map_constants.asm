@@ -110,7 +110,7 @@ ENDM
 	mapconst SS_ANNE_8,                   8, 12 ; $66
 	mapconst SS_ANNE_9,                   8, 12 ; $67
 	mapconst SS_ANNE_10,                  8, 12 ; $68
-	mapconst UNUSED_MAP_69,               0,  0 ; $69
+	mapconst SS_ANNE_11,                  3,  2 ; $69
 	mapconst UNUSED_MAP_6A,               0,  0 ; $6A
 	mapconst UNUSED_MAP_6B,               0,  0 ; $6B
 	mapconst VICTORY_ROAD_1,              9, 10 ; $6C

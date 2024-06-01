@@ -2240,6 +2240,11 @@ INCLUDE "data/mapHeaders/ssanne10.asm"
 INCLUDE "scripts/ssanne10.asm"
 INCLUDE "data/mapObjects/ssanne10.asm"
 
+INCLUDE "data/mapHeaders/ssanne11.asm"
+INCLUDE "scripts/ssanne11.asm"
+INCLUDE "data/mapObjects/ssanne11.asm"
+SSAnne11Blocks: INCBIN "maps/ssanne11.blk"
+
 INCLUDE "data/mapHeaders/undergroundpathns.asm"
 INCLUDE "scripts/undergroundpathns.asm"
 INCLUDE "data/mapObjects/undergroundpathns.asm"
@@ -2354,6 +2359,8 @@ Cavern_GFX:        INCBIN "gfx/tilesets/cavern.2bpp"
 Cavern_Block:      INCBIN "gfx/blocksets/cavern.bst"
 Forest_GFX:        INCBIN "gfx/tilesets/forest.2bpp"
 Forest_Block:      INCBIN "gfx/blocksets/forest.bst"
+Cinnabar_GFX:      INCBIN "gfx/tilesets/cinnabar.2bpp"
+Cinnabar_Block:    INCBIN "gfx/blocksets/cinnabar.bst"
 
 
 SECTION "bank1C",ROMX,BANK[$1C]

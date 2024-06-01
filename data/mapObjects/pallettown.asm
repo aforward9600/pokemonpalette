@@ -3,7 +3,7 @@ PalletTownObject:
 
 	db 3 ; warps
 	warp 5, 5, 0, REDS_HOUSE_1F
-	warp 13, 5, 0, BLUES_HOUSE
+	warp 13, 5, 0, SS_ANNE_11
 	warp 12, 11, 1, OAKS_LAB
 
 	db 4 ; signs

@@ -1,7 +1,7 @@
 SSAnne1Object:
 	db $c ; border block
 
-	db 11 ; warps
+	db 12 ; warps
 	warp 26, 0, 1, VERMILION_DOCK
 	warp 27, 0, 1, VERMILION_DOCK
 	warp 31, 8, 0, SS_ANNE_8
@@ -13,6 +13,7 @@ SSAnne1Object:
 	warp 2, 6, 6, SS_ANNE_2
 	warp 37, 15, 5, SS_ANNE_4
 	warp 3, 16, 0, SS_ANNE_6
+	warp 27, 8, 0, SS_ANNE_11
 
 	db 0 ; signs
 
@@ -32,3 +33,4 @@ SSAnne1Object:
 	warp_to 2, 6, SS_ANNE_1_WIDTH ; SS_ANNE_2
 	warp_to 37, 15, SS_ANNE_1_WIDTH ; SS_ANNE_4
 	warp_to 3, 16, SS_ANNE_1_WIDTH ; SS_ANNE_6
+	warp_to 27, 8, SS_ANNE_1_WIDTH ; SS_ANNE_11

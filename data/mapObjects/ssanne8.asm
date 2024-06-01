@@ -17,7 +17,7 @@ SSAnne8Object:
 	object SPRITE_BUG_CATCHER, 11, 14, STAY, UP, 3, OPP_YOUNGSTER, 8
 	object SPRITE_LASS, 13, 11, STAY, LEFT, 4, OPP_LASS, 11
 	object SPRITE_GIRL, 22, 3, WALK, 1, 5 ; person
-	object SPRITE_FAT_BALD_GUY, 0, 14, STAY, NONE, 6 ; person
+	object SPRITE_FAT_BALD_GUY, 1, 14, STAY, NONE, 6 ; person
 	object SPRITE_LITTLE_GIRL, 2, 11, STAY, DOWN, 7 ; person
 	object SPRITE_WIGGLYTUFF, 3, 11, STAY, DOWN, 8 ; person
 	object SPRITE_GIRL, 10, 13, STAY, RIGHT, 9 ; person

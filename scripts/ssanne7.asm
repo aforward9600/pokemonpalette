@@ -11,8 +11,8 @@ SSAnne7Script_6189b:
 
 SSAnne7TextPointers:
 	dw SSAnne7Text1
-	dw SSAnne7Text2
 	dw SSAnne7Text3
+	dw SSAnne7Text2
 
 SSAnne7Text1:
 	TX_ASM

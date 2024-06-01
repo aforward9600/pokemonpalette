@@ -20,5 +20,6 @@ Lobby_Coll::        INCBIN  "gfx/tilesets/lobby.tilecoll"
 Mansion_Coll::      INCBIN  "gfx/tilesets/mansion.tilecoll"
 Lab_Coll::          INCBIN  "gfx/tilesets/lab.tilecoll"
 Club_Coll::         INCBIN  "gfx/tilesets/club.tilecoll"
+Cinnabar_Coll::
 Facility_Coll::     INCBIN  "gfx/tilesets/facility.tilecoll"
 Plateau_Coll::      INCBIN  "gfx/tilesets/plateau.tilecoll"

@@ -230,6 +230,7 @@ INCLUDE "text/maps/rock_tunnel_b2f_2.asm"
 INCLUDE "text/maps/seafoam_islands_b4f.asm"
 INCLUDE "text/move_deleter.asm"
 INCLUDE "text/maps/cerulean_city_old_rod_house.asm"
+INCLUDE "text/maps/ss_anne_11.asm"
 
 
 _AIBattleWithdrawText::
