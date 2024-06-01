@@ -14,14 +14,14 @@ _CeladonGameCornerText_48d22::
 	para "Do you need some"
 	line "game coins?"
 
-	para "It's ¥1000 for 50"
-	line "coins. Would you"
-	cont "like some?"
+	para "It's ¥8000 for"
+	line "500 coins. Would"
+	cont "you like some?"
 	done
 
 _CeladonGameCornerText_48d27::
 	text "Thanks! Here are"
-	line "your 50 coins!"
+	line "your 500 coins!"
 	done
 
 _CeladonGameCornerText_48d2c::
@@ -42,6 +42,17 @@ _CeladonGameCornerText_48d36::
 _CeladonGameCornerText_48d3b::
 	text "You don't have a"
 	line "Coin Case!"
+	done
+
+_CeladonGameCornerText_MoreCoins::
+	text "Would you like"
+	line "another 500"
+	cont "coins?"
+	prompt
+
+_CeladonGameCornerText_ThankYou::
+	text "Thank you! Please"
+	line "come again soon!"
 	done
 
 _CeladonGameCornerText3::
