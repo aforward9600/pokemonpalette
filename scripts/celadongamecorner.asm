@@ -388,7 +388,7 @@ CeladonGameCornerText10:
 	xor a
 	ld [hUnusedCoinsByte], a
 	ld [hCoins], a
-	ld a, $20
+	ld a, $40
 	ld [hCoins + 1], a
 	ld de, wPlayerCoins + 1
 	ld hl, hCoins + 1

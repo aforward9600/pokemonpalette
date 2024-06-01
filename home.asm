@@ -1307,7 +1307,11 @@ PokemonFaintedText::
 	db "@"
 
 DisplayPlayerBlackedOutText::
+IF DEF(_NUZLOCKE)
+	ld hl, PlayerLostNuzlockeText2
+ELSE
 	ld hl, PlayerBlackedOutText
+ENDC
 	call PrintText
 	ld a, [wd732]
 	res 5, a ; reset forced to use bike bit
@@ -1316,6 +1320,10 @@ DisplayPlayerBlackedOutText::
 
 PlayerBlackedOutText::
 	TX_FAR _PlayerBlackedOutText
+	db "@"
+
+PlayerLostNuzlockeText2:
+	TX_FAR _PlayerLostNuzlockeText2
 	db "@"
 
 DisplayRepelWoreOffText::

@@ -1362,7 +1362,11 @@ HandlePlayerBlackOut:
 .notSony1Battle
 	ld b, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
+IF DEF(_NUZLOCKE)
+	ld hl, PlayerLostNuzlockeText
+ELSE
 	ld hl, PlayerBlackedOutText2
+ENDC
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr nz, .noLinkBattle
@@ -1395,6 +1399,10 @@ HandlePlayerBlackOut:
 
 PlayerBlackedOutText2:
 	TX_FAR _PlayerBlackedOutText2
+	db "@"
+
+PlayerLostNuzlockeText:
+	TX_FAR _PlayerLostNuzlockeText
 	db "@"
 
 LinkBattleLostText:

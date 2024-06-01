@@ -156,7 +156,7 @@ _CeladonGameCornerText_48e88::
 
 _CeladonGameCornerText_48e8d::
 	text "<PLAYER> received"
-	line "20 coins!@@"
+	line "40 coins!@@"
 
 _CeladonGameCornerText_48e93::
 	text "You've got your"

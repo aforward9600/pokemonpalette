@@ -23,7 +23,8 @@ New back sprites tutorial: YakiNeen
 
 Caught Pokeball icon tutorial: hydhyro, JamesRoyV and RainbowMetalPigeon
 
-Omanyte to Kabuto sprite in Fuchsia and player facing Lance: Vortyne
+Omanyte to Kabuto sprite in Fuchsia, new coin vendor amounts
+and player facing Lance: Vortyne
 
 New overworld sprites for Pokemon: Crystal Clear team
 

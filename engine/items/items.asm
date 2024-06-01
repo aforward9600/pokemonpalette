@@ -1410,6 +1410,10 @@ ENDC
 	ld hl, VitaminNoEffectText
 	call PrintText
 	jp GBPalWhiteOut
+.rareCandyNoEffect
+	ld hl, VitaminNoEffectText
+	call PrintText
+	jp GBPalWhiteOut
 .recalculateStats
 	ld bc, wPartyMon1Stats - wPartyMon1
 	add hl, bc
@@ -1420,6 +1424,19 @@ ENDC
 	ld b, 1
 	jp CalcStats ; recalculate stats
 .useRareCandy
+IF DEF(_NUZLOCKE)
+	push hl
+	inc hl ; hl = address of current HP
+	ld a, [hli]
+	ld b, a
+	ld [wHPBarOldHP+1], a
+	ld a, [hl]
+	ld c, a
+	ld [wHPBarOldHP], a ; current HP stored at wHPBarOldHP (2 bytes, big-endian)
+	or b
+	jr z, .vitaminNoEffect
+	pop hl
+ENDC
 	push hl
 	ld bc, wPartyMon1Level - wPartyMon1
 	add hl, bc ; hl now points to level

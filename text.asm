@@ -1146,6 +1146,14 @@ _PlayerBlackedOutText2::
 	line "out!"
 	prompt
 
+_PlayerLostNuzlockeText::
+	text "<PLAYER> is out of"
+	line "useable #mon!"
+
+	para "Your Nuzlocke run"
+	line "has finished!"
+	prompt
+
 _LinkBattleLostText::
 	text "<PLAYER> lost to"
 	line "@"
@@ -2482,6 +2490,14 @@ _PlayerBlackedOutText::
 
 	para "<PLAYER> blacked"
 	line "out!"
+	prompt
+
+_PlayerLostNuzlockeText2::
+	text "<PLAYER> is out of"
+	line "useable #mon!"
+
+	para "Your Nuzlocke run"
+	line "has finished!"
 	prompt
 
 _RepelWoreOffText::
