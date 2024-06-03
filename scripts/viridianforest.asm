@@ -75,8 +75,36 @@ ViridianForestText3:
 
 ViridianForestText4:
 	TX_ASM
+	CheckEvent EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_2
+	jr nz, .Rematch
 	ld hl, ViridianForestTrainerHeader2
 	call TalkToTrainer
+	jp TextScriptEnd
+
+.Rematch
+	ld hl, ViridianForestRematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ld hl, ViridianForestAfterBattleText3
+	jr nz, .PrintText
+	ld hl, ViridianForestBattleText4
+	call PrintText
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, ViridianForestEndBattleText3
+	ld de, ViridianForestEndBattleText3
+	call SaveEndBattleTextPointers
+	ld a, [H_SPRITEINDEX]
+	ld [wSpriteIndex], a
+	call EngageMapTrainer
+	call InitBattleEnemyParameters
+	jp TextScriptEnd
+
+.PrintText
+	call PrintText
 	jp TextScriptEnd
 
 ViridianForestBattleText1:
@@ -107,12 +135,20 @@ ViridianForestBattleText3:
 	TX_FAR _ViridianForestBattleText3
 	db "@"
 
+ViridianForestBattleText4:
+	TX_FAR _ViridianForestBattleText4
+	db "@"
+
 ViridianForestEndBattleText3:
 	TX_FAR _ViridianForestEndBattleText3
 	db "@"
 
 ViridianForestAfterBattleText3:
 	TX_FAR _ViridianFrstAfterBattleText3
+	db "@"
+
+ViridianForestRematchText:
+	TX_FAR _ViridianForestRematchText
 	db "@"
 
 ViridianForestText8:

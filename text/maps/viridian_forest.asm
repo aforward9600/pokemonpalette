@@ -62,6 +62,18 @@ _ViridianFrstAfterBattleText3::
 	cont "dropped!"
 	done
 
+_ViridianForestRematchText::
+	text "Wanna battle if"
+	line "you're not in a"
+	cont "hurry?"
+	done
+
+_ViridianForestBattleText4::
+	text "My Weedle will"
+	line "prevail this"
+	cont "time!"
+	done
+
 _ViridianForestText8::
 	text "I ran out of #"
 	line "Balls to catch"
@@ -108,12 +120,15 @@ _ViridianForestText12::
 _ViridianForestText13::
 	text "Trainer Tips"
 
-	para "Weaken #mon"
-	line "before attempting"
-	cont "capture!"
+	para "Some signs may"
+	line "say which trainer"
+	cont "in the area is"
+	cont "rebattleable!"
 
-	para "When healthy,"
-	line "they may escape!"
+	para "For example:"
+
+	para "Bug Catcher at"
+	line "the north end."
 	done
 
 _ViridianForestText14::

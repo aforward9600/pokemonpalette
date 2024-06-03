@@ -230,8 +230,36 @@ Route3AfterBattleText7:
 
 Route3Text9:
 	TX_ASM
+	CheckEvent EVENT_BEAT_ROUTE_3_TRAINER_7
+	jr nz, .Rematch
 	ld hl, Route3TrainerHeader7
 	call TalkToTrainer
+	jp TextScriptEnd
+
+.Rematch
+	ld hl, Route3RematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ld hl, Route3AfterBattleText8
+	jr nz, .PrintText
+	ld hl, Route3BattleText9
+	call PrintText
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, Route3EndBattleText8
+	ld de, Route3EndBattleText8
+	call SaveEndBattleTextPointers
+	ld a, [H_SPRITEINDEX]
+	ld [wSpriteIndex], a
+	call EngageMapTrainer
+	call InitBattleEnemyParameters
+	jp TextScriptEnd
+
+.PrintText
+	call PrintText
 	jp TextScriptEnd
 
 Route3BattleText8:
@@ -244,6 +272,14 @@ Route3EndBattleText8:
 
 Route3AfterBattleText8:
 	TX_FAR _Route3AfterBattleText8
+	db "@"
+
+Route3BattleText9:
+	TX_FAR _Route3BattleText9
+	db "@"
+
+Route3RematchText:
+	TX_FAR _Route3RematchText
 	db "@"
 
 Route3Text10:

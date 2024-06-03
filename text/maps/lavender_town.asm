@@ -1,6 +1,6 @@
 _LavenderTownText_4413c::
 	text "Do you believe in"
-	line "GHOSTs?"
+	line "Ghosts?"
 	done
 
 _LavenderTownText_44141::

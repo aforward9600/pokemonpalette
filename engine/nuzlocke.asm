@@ -11,8 +11,8 @@ setNuzlockeFlag::
 	jr z, .nuzCeruleanCityFlag
 	cp VERMILION_CITY
 	jr z, .nuzVermilionCityFlag
-        cp VERMILION_DOCK
-        jr z, .nuzVermilionCityFlag
+    cp VERMILION_DOCK
+    jr z, .nuzVermilionCityFlag
 	cp CELADON_CITY
 	jr z, .nuzCeladonCityFlag
 	cp FUCHSIA_CITY
@@ -256,6 +256,25 @@ setNuzlockeFlag::
 	ret
 .nuzSafariZoneFlag
 	set SAFARI_ZONE_NUZ, [hl]
+	ret
+
+DuplicateCheckNuzlocke::
+	ld a, [wEnemyMonSpecies2]
+	ld [wd11e], a
+	ld hl, IndexToPokedex
+	ld b, BANK(IndexToPokedex)
+	call Bankswitch
+	ld a, [wd11e]
+	dec a
+	ld c, a
+	ld b, FLAG_TEST
+	ld hl, wPokedexOwned
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jp nz, .Owned
+	jp setNuzlockeFlag
+.Owned
 	ret
 
 checkNuzlockeStatus::

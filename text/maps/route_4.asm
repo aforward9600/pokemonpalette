@@ -15,12 +15,25 @@ _Route4EndBattleText1::
 	prompt
 
 _Route4AfterBattleText1::
-	text "There might not"
+	text "Alright then."
+
+	para "There might not"
 	line "be any more"
 	cont "mushrooms here."
 
 	para "I think I got"
 	line "them all."
+	done
+
+_Route4RematchText::
+	text "Looking to battle"
+	line "my mushroom"
+	cont "#mon again?"
+	done
+
+_Route4BattleText2::
+	text "I love my cute"
+	line "mushroom #mon!"
 	done
 
 _Route4Text5::

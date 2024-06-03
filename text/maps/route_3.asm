@@ -139,7 +139,19 @@ _Route3AfterBattleText8::
 	line "foot of Mt.Moon."
 	done
 
+_Route3RematchText::
+	text "Want a rematch?"
+	done
+
+_Route3BattleText9::
+	text "Don't touch me"
+	line "this time!"
+	done
+
 _Route3Text10::
 	text "Route 3"
 	line "Mt.Moon Ahead"
+	
+	para "Lass walking in"
+	line "the tall grass."
 	done

@@ -37,8 +37,36 @@ Route4Text1:
 
 Route4Text2:
 	TX_ASM
+	CheckEvent EVENT_BEAT_ROUTE_4_TRAINER_0
+	jr nz, .Rematch
 	ld hl, Route4TrainerHeader0
 	call TalkToTrainer
+	jp TextScriptEnd
+
+.Rematch
+	ld hl, Route4RematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ld hl, Route4AfterBattleText1
+	jr nz, .PrintText
+	ld hl, Route4BattleText2
+	call PrintText
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, Route4EndBattleText1
+	ld de, Route4EndBattleText1
+	call SaveEndBattleTextPointers
+	ld a, [H_SPRITEINDEX]
+	ld [wSpriteIndex], a
+	call EngageMapTrainer
+	call InitBattleEnemyParameters
+	jp TextScriptEnd
+
+.PrintText
+	call PrintText
 	jp TextScriptEnd
 
 Route4BattleText1:
@@ -51,6 +79,14 @@ Route4EndBattleText1:
 
 Route4AfterBattleText1:
 	TX_FAR _Route4AfterBattleText1
+	db "@"
+
+Route4RematchText:
+	TX_FAR _Route4RematchText
+	db "@"
+
+Route4BattleText2:
+	TX_FAR _Route4BattleText2
 	db "@"
 
 Route4Text5:

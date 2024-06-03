@@ -351,7 +351,27 @@ StartBattle:	;joedebug - start of the battle
 EnemyRan:
 	call LoadScreenTilesFromBuffer1
 IF DEF(_NUZLOCKE)
-	callab setNuzlockeFlag
+;	push hl
+;	ld a, [wEnemyMonSpecies2]
+;	ld [wd11e], a
+;	ld hl, IndexToPokedex
+;	ld b, BANK(IndexToPokedex)
+;	call Bankswitch
+;	ld a, [wd11e]
+;	dec a
+;	ld c, a
+;	ld b, FLAG_TEST
+;	ld hl, wPokedexOwned
+;	predef FlagActionPredef
+;	ld a, c
+;	and a
+;	jr nz, .Owned
+;	pop hl
+	callab DuplicateCheckNuzlocke
+;	jr .AfterNuzlocke
+;.Owned
+;	pop hl
+;.AfterNuzlocke
 ENDC
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
@@ -963,7 +983,27 @@ FaintEnemyPokemon:
 .wild_win
 	call EndLowHealthAlarm
 IF DEF(_NUZLOCKE)
-	callab setNuzlockeFlag
+;	push hl
+;	ld a, [wEnemyMonSpecies2]
+;	ld [wd11e], a
+;	ld hl, IndexToPokedex
+;	ld b, BANK(IndexToPokedex)
+;	call Bankswitch
+;	ld a, [wd11e]
+;	dec a
+;	ld c, a
+;	ld b, FLAG_TEST
+;	ld hl, wPokedexOwned
+;	predef FlagActionPredef
+;	ld a, c
+;	and a
+;	jr nz, .Owned
+;	pop hl
+	callab DuplicateCheckNuzlocke
+;	jr .AfterNuzlocke
+;.Owned
+;	pop hl
+;.AfterNuzlocke
 ENDC
 	ld a, MUSIC_DEFEATED_WILD_MON
 	call PlayBattleVictoryMusic
@@ -1127,7 +1167,7 @@ TrainerBattleVictory:
 .gymleader
 	ld a, [wTrainerClass]
 	cp SONY3 ; final battle against rival
-	jr nz, .special1998
+	jr z, .special1998
 	cp GIOVANNI
 	jr z, .special1998
 	cp LORELEI
@@ -1810,7 +1850,27 @@ TryRunningFromBattle:
 	ret
 .canEscape
 IF DEF(_NUZLOCKE)
-	callab setNuzlockeFlag
+;	push hl
+;	ld a, [wEnemyMonSpecies2]
+;	ld [wd11e], a
+;	ld hl, IndexToPokedex
+;	ld b, BANK(IndexToPokedex)
+;	call Bankswitch
+;	ld a, [wd11e]
+;	dec a
+;	ld c, a
+;	ld b, FLAG_TEST
+;	ld hl, wPokedexOwned
+;	predef FlagActionPredef
+;	ld a, c
+;	and a
+;	jr nz, .Owned
+;	pop hl
+	callab DuplicateCheckNuzlocke
+;	jr .AfterNuzlocke
+;.Owned
+;	pop hl
+;.AfterNuzlocke
 ENDC
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
