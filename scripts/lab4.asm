@@ -48,7 +48,7 @@ FossilsList:
 
 Lab4Text1:
 	TX_ASM
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke
 	ld hl, wNuzlockeRegions
@@ -86,7 +86,7 @@ Lab4Text1:
 	ld c, 30
 	call GivePokemon
 	jr nc, .asm_75d93
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke2
 	ld hl, wNuzlockeRegions

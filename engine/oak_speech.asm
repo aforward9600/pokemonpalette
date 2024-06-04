@@ -62,16 +62,19 @@ OakSpeech:
 	bit 1, a ; possibly a debug mode bit
 	jp nz, .skipChoosingNames
 	ld hl, BoyGirlText  ; added to the same file as the other oak text
-  	call PrintText     ; show this text
-  	call BoyGirlChoice ; added routine at the end of this file
-   	ld a, [wCurrentMenuItem]
-   	ld [wPlayerGender], a ; store player's gender. 00 for boy, 01 for girl
-   	call ClearScreen ; clear the screen before resuming normal intro
+	call PrintText     ; show this text
+	call BoyGirlChoice ; added routine at the end of this file
+	ld a, [wCurrentMenuItem]
+	ld [wPlayerGender], a ; store player's gender. 00 for boy, 01 for girl
+	call ClearScreen ; clear the screen before resuming normal intro
+	ld a, $0
+	ld [wCurrentMenuItem], a
 	ld hl, NuzlockeChoiceText
 	call PrintText
 	call NuzlockeChoice
 	ld a, [wCurrentMenuItem]
-	ld [wUnusedCD3D], a
+	ld b,b
+	ld [wNuzlockeMode], a
 	call ClearScreen
 	ld de, ProfOakPic
 	lb bc, Bank(ProfOakPic), $00
@@ -342,7 +345,7 @@ NuzlockeChoice::
 	jr DisplayNuzlockeChoice
 
 InitNuzlockeTextBoxParameters::
-	ld a, $7
+	ld a, $2
 	ld [wTwoOptionMenuID], a
 	coord hl, 13, 7
 	ld bc, $80e

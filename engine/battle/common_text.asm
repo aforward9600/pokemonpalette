@@ -27,7 +27,7 @@ PrintBeginningBattleText:
 	callab DrawAllPokeballs
 	pop hl
 	call PrintText
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .done
 	ld a, [wIsInBattle]

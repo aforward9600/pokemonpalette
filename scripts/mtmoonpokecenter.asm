@@ -26,7 +26,7 @@ MagikarpSalesmanText:
 	TX_ASM
 	CheckEvent EVENT_BOUGHT_MAGIKARP, 1
 	jp c, .alreadyBoughtMagikarp
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke
 	ld hl, wNuzlockeRegions
@@ -53,7 +53,7 @@ MagikarpSalesmanText:
 	jr .printText
 .enoughMoney
 	lb bc, MAGIKARP, 5
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke2
 	ld hl, wNuzlockeRegions

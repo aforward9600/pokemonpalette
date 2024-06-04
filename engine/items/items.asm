@@ -111,7 +111,7 @@ ItemUseBall:
 	dec a
 	jp nz, ThrowBallAtTrainerMon
 
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .SkipNuzlocke
 	callab checkNuzlockeStatus
@@ -1276,7 +1276,7 @@ ENDC
 	call ItemUseNoEffect
 	jp .done
 .revivecheck
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jp z, .healHP
 	jr .healingItemNoEffect
@@ -1436,7 +1436,7 @@ ENDC
 	ld b, 1
 	jp CalcStats ; recalculate stats
 .useRareCandy
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .CanUseRareCandy	
 ;IF DEF(_NUZLOCKE)

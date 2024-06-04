@@ -264,7 +264,7 @@ FightingDojoAfterBattleText4:
 FightingDojoText6:
 ; Hitmonlee Poké Ball
 	TX_ASM
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .checkHitmonEvents
 	ld hl, wNuzlockeRegions
@@ -296,7 +296,7 @@ FightingDojoText6:
 	ld c, 30
 	call GivePokemon
 	jr nc, .done
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr .SetHitmonleeEvent
 	ld hl, wNuzlockeRegions
@@ -319,7 +319,7 @@ WantHitmonleeText:
 FightingDojoText7:
 ; Hitmonchan Poké Ball
 	TX_ASM
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .checkHitmonEvents
 	ld hl, wNuzlockeRegions
@@ -351,7 +351,7 @@ FightingDojoText7:
 	ld c, 30
 	call GivePokemon
 	jr nc, .done
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .SetHitmonchanEvent
 	ld hl, wNuzlockeRegions

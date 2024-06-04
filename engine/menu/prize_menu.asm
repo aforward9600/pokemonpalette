@@ -1,5 +1,5 @@
 CeladonPrizeMenu:
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .nuzGameCornerOkay
 	ld hl, wNuzlockeRegions
@@ -256,7 +256,7 @@ HandlePrizeChoice:
 ; If the mon couldn't be given to the player (because both the party and box
 ; were full), return without subtracting coins.
 	ret nc
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .subtractCoins
 	ld hl, wNuzlockeRegions

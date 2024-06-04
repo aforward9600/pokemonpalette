@@ -1398,7 +1398,7 @@ HandlePlayerBlackOut:
 .notSony1Battle
 	ld b, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .Blackout
 	ld hl, PlayerLostNuzlockeText
@@ -4431,7 +4431,7 @@ CheckForDisobedience:
 	ret
 ; compare the mon's original trainer ID with the player's ID to see if it was traded
 .checkIfMonIsTraded
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr nz, .NuzlockeCaps
 	ld hl, wPartyMon1OTID
@@ -9054,7 +9054,7 @@ SwitchAndTeleportEffect:
 	jr z, .printText
 	ld hl, WasBlownAwayText
 .printText
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .PrintText
 	push hl

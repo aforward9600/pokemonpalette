@@ -1307,7 +1307,7 @@ PokemonFaintedText::
 	db "@"
 
 DisplayPlayerBlackedOutText::
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .Blackout
 	ld hl, PlayerLostNuzlockeText2

@@ -339,7 +339,7 @@ SilphCo7Text1:
 	call PrintText
 	jr .done
 .givelapras
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke
 	ld hl, wNuzlockeRegions
@@ -356,7 +356,7 @@ SilphCo7Text1:
 	and a
 	call z, WaitForTextScrollButtonPress
 	call EnableAutoTextBoxDrawing
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke2
 	ld hl, wNuzlockeRegions

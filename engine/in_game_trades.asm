@@ -103,7 +103,7 @@ InGameTrade_DoTrade:
 	cp b
 	ld a, $2
 	jp nz, .tradeFailed
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke
 	ld a, [wWhichPokemon]

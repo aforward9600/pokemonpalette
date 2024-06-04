@@ -419,6 +419,8 @@ DisplayTwoOptionMenu:
 	ld hl, wd730
 	res 6, [hl] ; turn on the printing delay
 	ld a, [wTwoOptionMenuID]
+	cp SOUTH_EAST_MENU
+	jr z, .GenderMenu
 	cp NORTH_WEST_MENU
 	jr z, .GenderMenu
 	cp NO_YES_MENU
@@ -552,8 +554,8 @@ TwoOptionMenuStrings:
 	db   "Boy"
 	next "Girl@"
 .NuzlockeMenu
-	db   "Yes"
-	next "No@"
+	db   "No"
+	next "Yes@"
 .NorthEastMenu
 	db   "NORTH"
 	next "EAST@"

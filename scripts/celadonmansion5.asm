@@ -11,7 +11,7 @@ CeladonMansion5Text1:
 
 CeladonMansion5Text2:
 	TX_ASM
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke
 	ld hl, wNuzlockeRegions
@@ -21,7 +21,7 @@ CeladonMansion5Text2:
 	lb bc, EEVEE, 25
 	call GivePokemon
 	jr nc, .asm_24365
-	ld a, [wUnusedCD3D]
+	ld a, [wNuzlockeMode]
 	and a
 	jr z, .IgnoreNuzlocke2
 	ld hl, wNuzlockeRegions

@@ -3113,7 +3113,7 @@ wd728:: ; d728
 wLowHealthTonePairs::	;d729			;in battle, used as a counter for low hp alarm tone pairs
 	ds 1
 
-wBeatGymFlags:: ; d72a
+wNuzlockeMode:: ; d72a
 ; redundant because it matches wObtainedBadges
 ; used to determine whether to show name on statue and in two NPC text scripts
 ;joenote - now made into unused space

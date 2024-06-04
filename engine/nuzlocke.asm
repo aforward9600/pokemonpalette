@@ -1,5 +1,5 @@
 setNuzlockeFlag::
-;	ld a, [wUnusedCD3D]
+;	ld a, [wNuzlockeMode]
 ;	and a
 ;	jr z, .EndSet
 	ld hl, wNuzlockeRegions
@@ -263,7 +263,7 @@ setNuzlockeFlag::
 	ret
 
 DuplicateCheckNuzlocke::
-;	ld a, [wUnusedCD3D]
+;	ld a, [wNuzlockeMode]
 ;	and a
 ;	jr z, .EndDuplicate
 	ld a, [wEnemyMonSpecies2]
