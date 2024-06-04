@@ -1,12 +1,13 @@
 CeladonPrizeMenu:
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .nuzGameCornerOkay
 	ld hl, wNuzlockeRegions
 	bit CELADON_CITY_NUZ, [hl]
 	jr z, .nuzGameCornerOkay
 	ld hl, NuzlockeNoPrizeTextPtr
 	jp PrintText
 .nuzGameCornerOkay
-ENDC
 	ld b, COIN_CASE
 	call IsItemInBag
 	jr nz, .havingCoinCase
@@ -255,10 +256,11 @@ HandlePrizeChoice:
 ; If the mon couldn't be given to the player (because both the party and box
 ; were full), return without subtracting coins.
 	ret nc
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .subtractCoins
 	ld hl, wNuzlockeRegions
 	set CELADON_CITY_NUZ, [hl]
-ENDC
 
 .subtractCoins
 	call LoadCoinsToSubtract

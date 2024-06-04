@@ -26,12 +26,14 @@ MagikarpSalesmanText:
 	TX_ASM
 	CheckEvent EVENT_BOUGHT_MAGIKARP, 1
 	jp c, .alreadyBoughtMagikarp
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .IgnoreNuzlocke
 	ld hl, wNuzlockeRegions
 	inc hl
 	bit ROUTE_3_NUZ, [hl]
 	jr nz, .noPokemon
-ENDC
+.IgnoreNuzlocke
 	ld hl, .Text1
 	call PrintText
 	ld a, MONEY_BOX
@@ -51,11 +53,13 @@ ENDC
 	jr .printText
 .enoughMoney
 	lb bc, MAGIKARP, 5
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .IgnoreNuzlocke2
 	ld hl, wNuzlockeRegions
 	inc hl
 	set ROUTE_3_NUZ, [hl]
-ENDC
+.IgnoreNuzlocke2
 	call GivePokemon
 	jr nc, .done
 	xor a

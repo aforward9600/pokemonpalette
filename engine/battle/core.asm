@@ -350,7 +350,6 @@ StartBattle:	;joedebug - start of the battle
 ; wild mon or link battle enemy ran from battle
 EnemyRan:
 	call LoadScreenTilesFromBuffer1
-IF DEF(_NUZLOCKE)
 ;	push hl
 ;	ld a, [wEnemyMonSpecies2]
 ;	ld [wd11e], a
@@ -372,7 +371,6 @@ IF DEF(_NUZLOCKE)
 ;.Owned
 ;	pop hl
 ;.AfterNuzlocke
-ENDC
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ld hl, WildRanText
@@ -982,7 +980,6 @@ FaintEnemyPokemon:
 	jr .sfxplayed
 .wild_win
 	call EndLowHealthAlarm
-IF DEF(_NUZLOCKE)
 ;	push hl
 ;	ld a, [wEnemyMonSpecies2]
 ;	ld [wd11e], a
@@ -1004,7 +1001,6 @@ IF DEF(_NUZLOCKE)
 ;.Owned
 ;	pop hl
 ;.AfterNuzlocke
-ENDC
 	ld a, MUSIC_DEFEATED_WILD_MON
 	call PlayBattleVictoryMusic
 .sfxplayed
@@ -1402,11 +1398,13 @@ HandlePlayerBlackOut:
 .notSony1Battle
 	ld b, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .Blackout
 	ld hl, PlayerLostNuzlockeText
-ELSE
+	jr .noLinkBattle
+.Blackout
 	ld hl, PlayerBlackedOutText2
-ENDC
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr nz, .noLinkBattle
@@ -1637,11 +1635,7 @@ EnemySendOutFirstMon:
 	jr z, .next4
 	ld a, [wOptions]
 	bit 6, a
-IF DEF(_NUZLOCKE)
-	jr .next4
-ELSE
 	jr nz, .next4
-ENDC
 	ld hl, TrainerAboutToUseText
 	call PrintText
 	coord hl, 0, 7
@@ -1849,29 +1843,7 @@ TryRunningFromBattle:
 	and a ; reset carry
 	ret
 .canEscape
-IF DEF(_NUZLOCKE)
-;	push hl
-;	ld a, [wEnemyMonSpecies2]
-;	ld [wd11e], a
-;	ld hl, IndexToPokedex
-;	ld b, BANK(IndexToPokedex)
-;	call Bankswitch
-;	ld a, [wd11e]
-;	dec a
-;	ld c, a
-;	ld b, FLAG_TEST
-;	ld hl, wPokedexOwned
-;	predef FlagActionPredef
-;	ld a, c
-;	and a
-;	jr nz, .Owned
-;	pop hl
 	callab DuplicateCheckNuzlocke
-;	jr .AfterNuzlocke
-;.Owned
-;	pop hl
-;.AfterNuzlocke
-ENDC
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ld a, $2
@@ -2606,9 +2578,7 @@ UseBagItem:
 	ret
 
 .returnAfterCapturingMon
-IF DEF(_NUZLOCKE)
 	callab setNuzlockeFlag
-ENDC
 	call GBPalNormal
 	xor a
 	ld [wCapturedMonSpecies], a
@@ -4461,14 +4431,45 @@ CheckForDisobedience:
 	ret
 ; compare the mon's original trainer ID with the player's ID to see if it was traded
 .checkIfMonIsTraded
+	ld a, [wUnusedCD3D]
+	and a
+	jr nz, .NuzlockeCaps
 	ld hl, wPartyMon1OTID
 	ld bc, wPartyMon2 - wPartyMon1
 	ld a, [wPlayerMonNumber]
 	call AddNTimes
 	ld a, [wPlayerID]
 	cp [hl]
-IF DEF(_NUZLOCKE)
+	jr nz, .monIsTraded
+	inc hl
+	ld a, [wPlayerID + 1]
+	cp [hl]
+	jp z, .canUseMove
+; it was traded
 .monIsTraded
+; what level might disobey?
+	ld hl, wObtainedBadges
+	bit 7, [hl]
+	ld a, 255	;joenote - upped to 255
+	jr nz, .next
+	bit 5, [hl]
+	ld a, 70
+	jr nz, .next
+	bit 3, [hl]
+	ld a, 50
+	jr nz, .next
+	bit 1, [hl]
+	ld a, 30
+	jr nz, .next
+	ld a, 10
+	jr .next
+.NuzlockeCaps
+	ld hl, wPartyMon1OTID
+	ld bc, wPartyMon2 - wPartyMon1
+	ld a, [wPlayerMonNumber]
+	call AddNTimes
+	ld a, [wPlayerID]
+	cp [hl]
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	ld a, 255
 	jr nz, .next
@@ -4498,30 +4499,6 @@ IF DEF(_NUZLOCKE)
 	ld a, 21 ; Misty's Ace
 	jr nz, .next
 	ld a, 14 ; Brock's Ace
-ELSE
-	jr nz, .monIsTraded
-	inc hl
-	ld a, [wPlayerID + 1]
-	cp [hl]
-	jp z, .canUseMove
-; it was traded
-.monIsTraded
-; what level might disobey?
-	ld hl, wObtainedBadges
-	bit 7, [hl]
-	ld a, 255	;joenote - upped to 255
-	jr nz, .next
-	bit 5, [hl]
-	ld a, 70
-	jr nz, .next
-	bit 3, [hl]
-	ld a, 50
-	jr nz, .next
-	bit 1, [hl]
-	ld a, 30
-	jr nz, .next
-	ld a, 10
-ENDC
 .next
 	ld b, a
 	ld c, a
@@ -9077,11 +9054,13 @@ SwitchAndTeleportEffect:
 	jr z, .printText
 	ld hl, WasBlownAwayText
 .printText
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .PrintText
 	push hl
 	callab setNuzlockeFlag
 	pop hl
-ENDC
+.PrintText
 	jp PrintText
 
 RanFromBattleText:

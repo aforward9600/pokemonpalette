@@ -11,24 +11,28 @@ CeladonMansion5Text1:
 
 CeladonMansion5Text2:
 	TX_ASM
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .IgnoreNuzlocke
 	ld hl, wNuzlockeRegions
 	bit CELADON_CITY_NUZ, [hl]
 	jr nz, .nuzNoGift
-ENDC
+.IgnoreNuzlocke
 	lb bc, EEVEE, 25
 	call GivePokemon
 	jr nc, .asm_24365
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .IgnoreNuzlocke2
 	ld hl, wNuzlockeRegions
 	set CELADON_CITY_NUZ, [hl]
-ENDC
+.IgnoreNuzlocke2
 	ld a, HS_CELADON_MANSION_5_GIFT
 	ld [wMissableObjectIndex], a
 	predef HideObject
 .asm_24365
 	jp TextScriptEnd
-IF DEF(_NUZLOCKE)
+
 .nuzNoGift
 	ld hl, CeladonMansion5Text3
 	call PrintText
@@ -37,4 +41,4 @@ IF DEF(_NUZLOCKE)
 CeladonMansion5Text3:
 	TX_FAR _CeladonMansion5Text3
 	db "@"
-ENDC
+

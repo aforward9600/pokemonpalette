@@ -27,31 +27,16 @@ PrintBeginningBattleText:
 	callab DrawAllPokeballs
 	pop hl
 	call PrintText
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .done
 	ld a, [wIsInBattle]
 	dec a
 	jr nz, .done
 	callab checkNuzlockeStatus
 	jr nz, .done
-;	push hl
-;	ld a, [wEnemyMonSpecies2]
-;	ld [wd11e], a
-;	ld hl, IndexToPokedex
-;	ld b, BANK(IndexToPokedex)
-;	call Bankswitch
-;	ld a, [wd11e]
-;	dec a
-;	ld c, a
-;	ld b, FLAG_TEST
-;	ld hl, wPokedexOwned
-;	predef FlagActionPredef
-;	ld a, c
-;	and a
-;	jr nz, .doneNuzlocke
-;	pop hl
 	ld hl, WildMonCatchableText
 	call PrintText
-ENDC
 	jr .done
 .pokemonTower
 	ld b, SILPH_SCOPE
@@ -105,11 +90,6 @@ ENDC
 	jp WaitForSoundToFinish
 .done
 	ret
-;IF DEF(_NUZLOCKE)
-;.doneNuzlocke
-;	pop hl
-;	ret
-;ENDC
 
 WildMonAppearedText:
 	TX_FAR _WildMonAppearedText

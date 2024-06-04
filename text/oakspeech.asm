@@ -58,3 +58,8 @@ _BoyGirlText::
 	text "Play as a boy, or"
 	line "as a girl?"
 	done
+
+_NuzlockeChoiceText::
+	text "Play in Nuzlocke"
+	line "Mode?"
+	done

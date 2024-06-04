@@ -419,8 +419,11 @@ DisplayTwoOptionMenu:
 	ld hl, wd730
 	res 6, [hl] ; turn on the printing delay
 	ld a, [wTwoOptionMenuID]
+	cp NORTH_WEST_MENU
+	jr z, .GenderMenu
 	cp NO_YES_MENU
 	jr nz, .notNoYesMenu
+.GenderMenu
 ; No/Yes menu
 ; this menu type ignores the B button
 ; it only seems to be used when confirming the deletion of a save file
@@ -526,8 +529,8 @@ TwoOptionMenuStrings:
 	dw .YesNoMenu
 	db 5,3,0
 	dw .BoyGirlMenu
-	db 6,3,0
-	dw .SouthEastMenu
+	db 4,3,0
+	dw .NuzlockeMenu
 	db 6,3,0
 	dw .YesNoMenu
 	db 6,3,0
@@ -548,9 +551,9 @@ TwoOptionMenuStrings:
 .BoyGirlMenu
 	db   "Boy"
 	next "Girl@"
-.SouthEastMenu
-	db   "SOUTH"
-	next "EAST@"
+.NuzlockeMenu
+	db   "Yes"
+	next "No@"
 .NorthEastMenu
 	db   "NORTH"
 	next "EAST@"

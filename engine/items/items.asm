@@ -111,11 +111,13 @@ ItemUseBall:
 	dec a
 	jp nz, ThrowBallAtTrainerMon
 
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .SkipNuzlocke
 	callab checkNuzlockeStatus
 	jp nz, CantCatch
-ENDC
 
+.SkipNuzlocke
 ; If this is for the old man battle, skip checking if the party & box are full.
 	ld a, [wBattleType]
 	dec a
@@ -894,7 +896,8 @@ ItemUseMedicine:
 IF DEF(_NUZLOCKE)
 	jp nc, .healingItemNoEffect
 ELSE
-	jr nc, .healHP ; if it's a Revive or Max Revive
+;	jr nc, .healHP ; if it's a Revive or Max Revive
+	jp nc, .revivecheck
 ENDC
 	cp FULL_HEAL
 	jr z, .cureStatusAilment ; if it's a Full Heal
@@ -975,12 +978,14 @@ IF DEF(_NUZLOCKE)
 	jp .healingItemNoEffect
 ELSE
 	jr z, .updateInBattleFaintedData
+;	jr z, .revivecheck2
 ENDC
 	cp MAX_REVIVE
 IF DEF(_NUZLOCKE)
 	jp .healingItemNoEffect
 ELSE
 	jr z, .updateInBattleFaintedData
+;	jr z, .revivecheck2
 ENDC
 	jp .healingItemNoEffect
 .updateInBattleFaintedData
@@ -1169,6 +1174,7 @@ IF DEF(_NUZLOCKE)
 	jp z, .healingItemNoEffect
 ELSE
 	jr z, .setCurrentHPToHalfMaxHP
+;	jr z, .revivecheck3
 ENDC
 	ld a, [hld]
 	ld b, a
@@ -1187,6 +1193,7 @@ IF DEF(_NUZLOCKE)
 	jp z, .healingItemNoEffect
 ELSE
 	jr z, .setCurrentHPToMaxHp ; if using a Max Revive
+;	jr z, .revivecheck4
 ENDC
 	jr .updateInBattleData
 .setCurrentHPToHalfMaxHP
@@ -1268,6 +1275,11 @@ ENDC
 .healingItemNoEffect
 	call ItemUseNoEffect
 	jp .done
+.revivecheck
+	ld a, [wUnusedCD3D]
+	and a
+	jp z, .healHP
+	jr .healingItemNoEffect
 .doneHealing
 	ld a, [wPseudoItemID]
 	and a ; using Softboiled?
@@ -1424,7 +1436,10 @@ ENDC
 	ld b, 1
 	jp CalcStats ; recalculate stats
 .useRareCandy
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .CanUseRareCandy	
+;IF DEF(_NUZLOCKE)
 	push hl
 	inc hl ; hl = address of current HP
 	ld a, [hli]
@@ -1436,7 +1451,8 @@ IF DEF(_NUZLOCKE)
 	or b
 	jr z, .vitaminNoEffect
 	pop hl
-ENDC
+;ENDC
+.CanUseRareCandy
 	push hl
 	ld bc, wPartyMon1Level - wPartyMon1
 	add hl, bc ; hl now points to level

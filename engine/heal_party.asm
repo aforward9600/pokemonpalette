@@ -62,7 +62,10 @@ HealParty:
 
 	ld hl, wPartyMon1MaxHP - wPartyMon1HP
 	add hl, de
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .IgnoreNuzlocke
+;IF DEF(_NUZLOCKE)
 	push hl
 	ld h, d
 	ld l, e
@@ -70,7 +73,8 @@ IF DEF(_NUZLOCKE)
 	or a, [hl]
 	pop hl
 	jr z, .noHealIfFainted
-ENDC
+;ENDC
+.IgnoreNuzlocke
 	ld a, [hli]
 	ld [de], a
 	inc de

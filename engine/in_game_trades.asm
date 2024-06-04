@@ -102,12 +102,10 @@ InGameTrade_DoTrade:
 	ld a, [wcf91]
 	cp b
 	ld a, $2
-IF DEF(_NUZLOCKE)
 	jp nz, .tradeFailed
-ELSE
-	jr nz, .tradeFailed ; jump if the selected mon's species is not the required one
-ENDC
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .IgnoreNuzlocke
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMon1HP
 	ld bc, wPartyMon2 - wPartyMon1
@@ -116,7 +114,7 @@ IF DEF(_NUZLOCKE)
 	or a, [hl]
 	ld a, $5
 	jr z, .tradeFailed
-ENDC
+.IgnoreNuzlocke
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMon1Level
 	ld bc, wPartyMon2 - wPartyMon1

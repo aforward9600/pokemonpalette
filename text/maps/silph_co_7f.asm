@@ -28,17 +28,14 @@ _HeresYourLaprasText::
 	done
 
 _LaprasGuyText::
-IF DEF(_NUZLOCKE)
 	text "I'm sorry, but I"
 	line "don't have any"
 	cont "more Lapras to"
 	cont "give out."
-ELSE
-	text "Team Rocket's"
-	line "Boss went to the"
-	cont "boardroom! Is our"
-	cont "President OK?"
-ENDC
+;	text "Team Rocket's"
+;	line "Boss went to the"
+;	cont "boardroom! Is our"
+;	cont "President OK?"
 	done
 
 _LaprasGuySavedText::

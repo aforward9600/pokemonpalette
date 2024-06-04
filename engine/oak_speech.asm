@@ -67,6 +67,12 @@ OakSpeech:
    	ld a, [wCurrentMenuItem]
    	ld [wPlayerGender], a ; store player's gender. 00 for boy, 01 for girl
    	call ClearScreen ; clear the screen before resuming normal intro
+	ld hl, NuzlockeChoiceText
+	call PrintText
+	call NuzlockeChoice
+	ld a, [wCurrentMenuItem]
+	ld [wUnusedCD3D], a
+	call ClearScreen
 	ld de, ProfOakPic
 	lb bc, Bank(ProfOakPic), $00
 	call IntroDisplayPicCenteredOrUpperRight
@@ -243,6 +249,9 @@ OakSpeechText4:
 	TX_CRY_NIDORINA
 	TX_FAR _OakSpeechText2B
 	db "@"
+NuzlockeChoiceText:
+	TX_FAR _NuzlockeChoiceText
+	db "@"
 
 FadeInIntroPic:
 	ld hl, IntroFadePalettes
@@ -326,3 +335,21 @@ DisplayBoyGirlChoice::
    	ld [wTextBoxID], a
    	call DisplayTextBoxID
    	jp LoadScreenTilesFromBuffer1
+
+NuzlockeChoice::
+	call SaveScreenTilesToBuffer1
+	call InitNuzlockeTextBoxParameters
+	jr DisplayNuzlockeChoice
+
+InitNuzlockeTextBoxParameters::
+	ld a, $7
+	ld [wTwoOptionMenuID], a
+	coord hl, 13, 7
+	ld bc, $80e
+	ret
+
+DisplayNuzlockeChoice::
+	ld a, $14
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	jp LoadScreenTilesFromBuffer1

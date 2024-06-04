@@ -1307,11 +1307,14 @@ PokemonFaintedText::
 	db "@"
 
 DisplayPlayerBlackedOutText::
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .Blackout
 	ld hl, PlayerLostNuzlockeText2
-ELSE
+	jr .PrintText
+.Blackout
 	ld hl, PlayerBlackedOutText
-ENDC
+.PrintText
 	call PrintText
 	ld a, [wd732]
 	res 5, a ; reset forced to use bike bit

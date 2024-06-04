@@ -264,7 +264,9 @@ FightingDojoAfterBattleText4:
 FightingDojoText6:
 ; Hitmonlee Poké Ball
 	TX_ASM
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .checkHitmonEvents
 	ld hl, wNuzlockeRegions
 	inc hl
 	bit SAFFRON_CITY_NUZ, [hl]
@@ -273,7 +275,6 @@ IF DEF(_NUZLOCKE)
 	call PrintText
 	jr .done
 .checkHitmonEvents
-ENDC
 	CheckEitherEventSet EVENT_GOT_HITMONLEE, EVENT_GOT_HITMONCHAN
 	jr z, .GetMon
 	CheckEventReuseA EVENT_BEAT_POKEMON_LEAGUE
@@ -295,12 +296,14 @@ ENDC
 	ld c, 30
 	call GivePokemon
 	jr nc, .done
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr .SetHitmonleeEvent
 	ld hl, wNuzlockeRegions
 	inc hl
 	set SAFFRON_CITY_NUZ, [hl]
-ENDC
 
+.SetHitmonleeEvent
 	; once Poké Ball is taken, hide sprite
 	ld a, HS_FIGHTING_DOJO_GIFT_1
 	ld [wMissableObjectIndex], a
@@ -316,7 +319,9 @@ WantHitmonleeText:
 FightingDojoText7:
 ; Hitmonchan Poké Ball
 	TX_ASM
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .checkHitmonEvents
 	ld hl, wNuzlockeRegions
 	inc hl
 	bit SAFFRON_CITY_NUZ, [hl]
@@ -325,7 +330,6 @@ IF DEF(_NUZLOCKE)
 	call PrintText
 	jr .done
 .checkHitmonEvents
-ENDC
 	CheckEitherEventSet EVENT_GOT_HITMONLEE, EVENT_GOT_HITMONCHAN
 	jr z, .GetMon
 	CheckEventReuseA EVENT_BEAT_POKEMON_LEAGUE
@@ -347,11 +351,13 @@ ENDC
 	ld c, 30
 	call GivePokemon
 	jr nc, .done
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .SetHitmonchanEvent
 	ld hl, wNuzlockeRegions
 	inc hl
 	set SAFFRON_CITY_NUZ, [hl]
-ENDC
+.SetHitmonchanEvent
 	SetEvents EVENT_GOT_HITMONCHAN, EVENT_DEFEATED_FIGHTING_DOJO
 
 	; once Poké Ball is taken, hide sprite

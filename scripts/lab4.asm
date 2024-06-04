@@ -48,11 +48,13 @@ FossilsList:
 
 Lab4Text1:
 	TX_ASM
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .IgnoreNuzlocke
 	ld hl, wNuzlockeRegions
 	bit CINNABAR_ISLAND_NUZ, [hl]
 	jr nz, .nuzlockeCinnabarText
-ENDC
+.IgnoreNuzlocke
 	CheckEvent EVENT_GAVE_FOSSIL_TO_LAB
 	jr nz, .asm_75d96
 	ld hl, Lab4Text_75dc6
@@ -84,13 +86,14 @@ ENDC
 	ld c, 30
 	call GivePokemon
 	jr nc, .asm_75d93
-IF DEF(_NUZLOCKE)
+	ld a, [wUnusedCD3D]
+	and a
+	jr z, .IgnoreNuzlocke2
 	ld hl, wNuzlockeRegions
 	set CINNABAR_ISLAND_NUZ, [hl]
-ENDC
+.IgnoreNuzlocke2
 	ResetEvents EVENT_GAVE_FOSSIL_TO_LAB, EVENT_LAB_STILL_REVIVING_FOSSIL, EVENT_LAB_HANDING_OVER_FOSSIL_MON
 	jr .asm_75d93
-IF DEF(_NUZLOCKE)
 .nuzlockeCinnabarText
 	ld hl, NuzlockeCinnabarLabText
 	call PrintText
@@ -99,7 +102,6 @@ IF DEF(_NUZLOCKE)
 NuzlockeCinnabarLabText:
 	TX_FAR _NuzlockeCinnabarLabText
 	db "@"
-ENDC
 
 Lab4Text_75dc6:
 	TX_FAR _Lab4Text_75dc6

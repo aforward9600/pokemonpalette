@@ -434,7 +434,6 @@ OaksLabScript12:
 	xor a ; SPRITE_FACING_DOWN
 	ld [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
-IF DEF(_NUZLOCKE)
 	ld hl, wPartyMon1MaxHP
 	ld de, wPartyMon1HP
 	ld a, [hli]
@@ -443,9 +442,6 @@ IF DEF(_NUZLOCKE)
 	inc de
 	ld a, [hl]
 	ld [de], a
-ELSE
-	predef HealParty
-ENDC
 	SetEvent EVENT_BATTLED_RIVAL_IN_OAKS_LAB
 
 	ld a, $d
@@ -645,16 +641,16 @@ OaksLabScript16:
 
 	ld a, $11
 	ld [wOaksLabCurScript], a
-IF DEF(_NUZLOCKE)
 	ld hl, wNuzlockeRegions
 	bit RESET_ROUTES_NUZ, [hl]
 	jr nz, .noNuzlockeReset
 	set RESET_ROUTES_NUZ, [hl]
 	inc hl
 	res ROUTE_1_NUZ, [hl]
-	res ROUTE_2_NUZ, [hl]
+	inc hl
+	inc hl
+	res ROUTE_22_NUZ, [hl]
 .noNuzlockeReset
-ENDC
 	ret
 
 OaksLabScript17:

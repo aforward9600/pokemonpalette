@@ -1,4 +1,7 @@
 setNuzlockeFlag::
+;	ld a, [wUnusedCD3D]
+;	and a
+;	jr z, .EndSet
 	ld hl, wNuzlockeRegions
 	ld a, [wCurMap]
 	cp INDIGO_PLATEAU
@@ -21,7 +24,8 @@ setNuzlockeFlag::
 	jr z, .nuzCinnabarIslandFlag
 	
 .nuzPalletTownFlag
-	set PALLET_TOWN_NUZ, [hl]	
+	set PALLET_TOWN_NUZ, [hl]
+.EndSet
 	ret
 .nuzViridianCityFlag
 	set VIRIDIAN_CITY_NUZ, [hl]	
@@ -259,6 +263,9 @@ setNuzlockeFlag::
 	ret
 
 DuplicateCheckNuzlocke::
+;	ld a, [wUnusedCD3D]
+;	and a
+;	jr z, .EndDuplicate
 	ld a, [wEnemyMonSpecies2]
 	ld [wd11e], a
 	ld hl, IndexToPokedex
@@ -272,32 +279,32 @@ DuplicateCheckNuzlocke::
 	predef FlagActionPredef
 	ld a, c
 	and a
-	jp nz, .Owned
+	ret nz
 	jp setNuzlockeFlag
-.Owned
+.EndDuplicate
 	ret
 
 checkNuzlockeStatus::
-        ld hl, wNuzlockeRegions
-        ld a, [wCurMap]
-        cp INDIGO_PLATEAU
-        jr nc, .routeRegion1
-        cp PALLET_TOWN
-        jr z, .nuzPalletTown
-        cp VIRIDIAN_CITY
-        jr z, .nuzViridianCity
-        cp CERULEAN_CITY
-        jr z, .nuzCeruleanCity
-        cp VERMILION_CITY
-        jr z, .nuzVermilionCity
-        cp VERMILION_DOCK
-        jr z, .nuzVermilionCity
-        cp CELADON_CITY
-        jr z, .nuzCeladonCity
+    ld hl, wNuzlockeRegions
+    ld a, [wCurMap]
+    cp INDIGO_PLATEAU
+    jr nc, .routeRegion1
+    cp PALLET_TOWN
+    jr z, .nuzPalletTown
+    cp VIRIDIAN_CITY
+    jr z, .nuzViridianCity
+    cp CERULEAN_CITY
+    jr z, .nuzCeruleanCity
+    cp VERMILION_CITY
+    jr z, .nuzVermilionCity
+    cp VERMILION_DOCK
+    jr z, .nuzVermilionCity
+    cp CELADON_CITY
+    jr z, .nuzCeladonCity
 	cp FUCHSIA_CITY
 	jr z, .nuzFuchsiaCity
-        cp CINNABAR_ISLAND
-        jr z, .nuzCinnabarIsland
+    cp CINNABAR_ISLAND
+    jr z, .nuzCinnabarIsland
         
 .nuzPalletTown
 	bit PALLET_TOWN_NUZ, [hl]	
@@ -414,25 +421,25 @@ checkNuzlockeStatus::
 	ret
 
 .routeRegion3
-        inc hl
-        cp ROUTE_24
-        jr nc, .routeRegion4
+    inc hl
+    cp ROUTE_24
+    jr nc, .routeRegion4
 	cp ROUTE_16
-        jr z, .nuzRoute16
-        cp ROUTE_17
-        jr z, .nuzRoute17
-        cp ROUTE_18
-        jr z, .nuzRoute18
-        cp ROUTE_19
-        jr z, .nuzRoute19
-        cp ROUTE_20
-        jr z, .nuzRoute20
-        cp ROUTE_21
-        jr z, .nuzRoute21
-        cp ROUTE_22
-        jr z, .nuzRoute22
-        cp ROUTE_23
-        jr z, .nuzRoute23
+    jr z, .nuzRoute16
+    cp ROUTE_17
+    jr z, .nuzRoute17
+    cp ROUTE_18
+    jr z, .nuzRoute18
+    cp ROUTE_19
+    jr z, .nuzRoute19
+    cp ROUTE_20
+    jr z, .nuzRoute20
+    cp ROUTE_21
+    jr z, .nuzRoute21
+    cp ROUTE_22
+    jr z, .nuzRoute22
+    cp ROUTE_23
+    jr z, .nuzRoute23
        
 .nuzRoute16
 	bit ROUTE_16_NUZ, [hl]
@@ -460,26 +467,26 @@ checkNuzlockeStatus::
 	ret
 
 .routeRegion4
-        inc hl
-        cp LAVENDER_HOUSE_1
-        jr nc, .finalRegion
+    inc hl
+    cp LAVENDER_HOUSE_1
+    jr nc, .finalRegion
 	cp ROUTE_24
-        jr z, .nuzRoute24
-        cp ROUTE_25
-        jr z, .nuzRoute25
-        cp VIRIDIAN_FOREST
-        jr z, .nuzViridianForest
-        cp TRASHED_HOUSE ; This will check all the Mt. Moon floors
-        jr c, .nuzMtMoon
-        cp CERULEAN_GYM ; The gym counts for Cerulean city
-        jp z, .nuzCeruleanCity
-        cp ROCK_TUNNEL_1
-        jr z, .nuzRockTunnel
-        cp POWER_PLANT
-        jr z, .nuzPowerPlant
-        cp VICTORY_ROAD_1
-        jr z, .nuzVictoryRoad
-        jr .nuzPokemonTower  ; Last remaining option is Pokemon Tower
+    jr z, .nuzRoute24
+    cp ROUTE_25
+    jr z, .nuzRoute25
+    cp VIRIDIAN_FOREST
+    jr z, .nuzViridianForest
+    cp TRASHED_HOUSE ; This will check all the Mt. Moon floors
+    jr c, .nuzMtMoon
+    cp CERULEAN_GYM ; The gym counts for Cerulean city
+    jp z, .nuzCeruleanCity
+    cp ROCK_TUNNEL_1
+    jr z, .nuzRockTunnel
+    cp POWER_PLANT
+    jr z, .nuzPowerPlant
+    cp VICTORY_ROAD_1
+    jr z, .nuzVictoryRoad
+    jr .nuzPokemonTower  ; Last remaining option is Pokemon Tower
 
 .nuzRoute24
 	bit ROUTE_24_NUZ, [hl]

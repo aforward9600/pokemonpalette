@@ -51,23 +51,6 @@ AddItemToInventory_:
 	ld b, 0
 	add hl, bc ; hl = address to store the item
 	ld a, [wcf91]
-;IF DEF(_NUZLOCKE)
-;	cp POKE_BALL
-;	push hl
-;	jr nz, .noNuzlockeReset
-;
-;.startNuzlocke
-;	ld hl, wNuzlockeRegions
-;	bit RESET_ROUTES_NUZ, [hl]
-;	jr nz, .noNuzlockeReset
-;	set RESET_ROUTES_NUZ, [hl]
-;	inc hl
-;	res ROUTE_1_NUZ, [hl]
-;	res ROUTE_2_NUZ, [hl]
-;
-;.noNuzlockeReset
-;	pop hl
-;ENDC
 	ld [hli], a ; store item ID
 	ld a, [wItemQuantity]
 	ld [hli], a ; store item quantity
