@@ -651,10 +651,10 @@ GravelerEvosMoves:
 	db EV_ITEM, LINK_CABLE, 1, GOLEM
 	db 0
 ; Learnset
-	db 11, DEFENSE_CURL
-	db 16, ROCK_THROW
-	db 21, SELFDESTRUCT
-	db 29, HARDEN
+	db 9, DEFENSE_CURL
+	db 12, ROCK_THROW
+	db 19, SELFDESTRUCT
+	db 29, BODY_SLAM
 	db 36, EARTHQUAKE
 	db 43, ROCK_SLIDE
 	db 50, EXPLOSION
@@ -779,10 +779,10 @@ GolemEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 11, DEFENSE_CURL
-	db 16, ROCK_THROW
-	db 21, SELFDESTRUCT
-	db 29, HARDEN
+	db 9, DEFENSE_CURL
+	db 12, ROCK_THROW
+	db 19, SELFDESTRUCT
+	db 29, BODY_SLAM
 	db 36, EARTHQUAKE
 	db 43, ROCK_SLIDE
 	db 50, EXPLOSION
@@ -1430,6 +1430,7 @@ KakunaEvosMoves:
 	db EV_LEVEL, 10, BEEDRILL
 	db 0
 ; Learnset
+	db 7, HARDEN
 	db 0
 
 BeedrillEvosMoves:
@@ -1536,6 +1537,7 @@ MetapodEvosMoves:
 	db EV_LEVEL, 10, BUTTERFREE
 	db 0
 ; Learnset
+	db 7, HARDEN
 	db 0
 
 ButterfreeEvosMoves:
@@ -1991,10 +1993,10 @@ GeodudeEvosMoves:
 	db EV_LEVEL, 25, GRAVELER
 	db 0
 ; Learnset
-	db 11, DEFENSE_CURL
-	db 16, ROCK_THROW
-	db 21, SELFDESTRUCT
-	db 26, HARDEN
+	db 9, DEFENSE_CURL
+	db 12, ROCK_THROW
+	db 19, SELFDESTRUCT
+	db 26, BODY_SLAM
 	db 31, EARTHQUAKE
 	db 36, ROCK_SLIDE
 	db 45, EXPLOSION

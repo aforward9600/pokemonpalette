@@ -9,9 +9,21 @@ _Route24AfterBattleText1::
 	cont "bridge scared me!"
 	done
 
+_Route24RematchText::
+	text "Care for a"
+	line "rematch?"
+	done
+
 _Route24BattleText2::
 	text "OK! I'm No. 5!"
 	line "I'll stomp you!"
+	done
+
+_Route24BattleText7::
+	text "I'm still No. 5!"
+
+	para "And I'll stomp"
+	line "you!"
 	done
 
 _Route24EndBattleText2::
@@ -70,8 +82,8 @@ _Route24AfterBattleText5::
 	done
 
 _Route24BattleText6::
-	text "This is NUGGET"
-	line "BRIDGE! Beat us 5"
+	text "This is Nugget"
+	line "Bridge! Beat us 5"
 	cont "trainers and win"
 	cont "a fabulous prize!"
 

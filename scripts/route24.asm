@@ -218,8 +218,36 @@ Route24Text2:
 
 Route24Text3:
 	TX_ASM
+	CheckEvent EVENT_BEAT_ROUTE_24_TRAINER_1
+	jr nz, .Rematch
 	ld hl, Route24TrainerHeader1
 	call TalkToTrainer
+	jp TextScriptEnd
+
+.Rematch
+	ld hl, Route24RematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ld hl, Route24AfterBattleText2
+	jr nz, .PrintText
+	ld hl, Route24BattleText7
+	call PrintText
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, Route24EndBattleText2
+	ld de, Route24EndBattleText2
+	call SaveEndBattleTextPointers
+	ld a, [H_SPRITEINDEX]
+	ld [wSpriteIndex], a
+	call EngageMapTrainer
+	call InitBattleEnemyParameters
+	jp TextScriptEnd
+
+.PrintText
+	call PrintText
 	jp TextScriptEnd
 
 Route24Text4:
@@ -268,6 +296,14 @@ Route24EndBattleText2:
 
 Route24AfterBattleText2:
 	TX_FAR _Route24AfterBattleText2
+	db "@"
+
+Route24RematchText:
+	TX_FAR _Route24RematchText
+	db "@"
+
+Route24BattleText7:
+	TX_FAR _Route24BattleText7
 	db "@"
 
 Route24BattleText3:

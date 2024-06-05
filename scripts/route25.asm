@@ -186,10 +186,37 @@ Route25Text8:
 
 Route25Text9:
 	TX_ASM
+	CheckEvent EVENT_BEAT_ROUTE_25_TRAINER_8
+	jr nz, .Rematch
 	ld hl, Route25TrainerHeader8
 	call TalkToTrainer
 	jp TextScriptEnd
-	
+
+.Rematch
+	ld hl, Route25RematchText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ld hl, Route25AfterBattleText9
+	jr nz, .PrintText
+	ld hl, Route25Rematch2Text
+	call PrintText
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, Route25EndBattleText9
+	ld de, Route25EndBattleText9
+	call SaveEndBattleTextPointers
+	ld a, [H_SPRITEINDEX]
+	ld [wSpriteIndex], a
+	call EngageMapTrainer
+	call InitBattleEnemyParameters
+	jp TextScriptEnd
+
+.PrintText
+	call PrintText
+	jp TextScriptEnd
 
 Route25BattleText1:
 	TX_FAR _Route25BattleText1
@@ -297,6 +324,14 @@ Route25EndBattleText9:
 
 Route25AfterBattleText9:
 	TX_FAR _Route25AfterBattleText9
+	db "@"
+
+Route25RematchText:
+	TX_FAR _Route25RematchText
+	db "@"
+
+Route25Rematch2Text:
+	TX_FAR _Route25Rematch2Text
 	db "@"
 
 Route25Text11:

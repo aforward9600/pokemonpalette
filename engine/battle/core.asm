@@ -742,8 +742,7 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 	rr c
 	srl b
 	rr c
-	srl c
-	srl c         ; c = max HP/16 (assumption: HP < 1024)
+	srl c         ; c = max HP/8 (assumption: HP < 1024)
 	ld a, c
 	and a
 	jr nz, .nonZeroDamage
@@ -2150,6 +2149,9 @@ DrawEnemyHUDAndHPBar:
 	call ClearScreenArea
 	callab PlaceEnemyHUDTiles
 	push hl
+	ld a, [wIsInBattle]
+	dec a
+	jr nz, .notOwned
 	ld a, [wEnemyMonSpecies2]
 	ld [wd11e], a
 	ld hl, IndexToPokedex
@@ -5291,25 +5293,27 @@ HandleCounterMove:
 ; check if the move the target last selected was Normal or Fighting type
 	inc de
 	ld a, [de]
+	cp FIRE
+	jr c, .counterableType
 ;;;;;;;;;joenote - counter will work on BIRD type since it's now typeless for STRUGGLE instead of normal type
-	and a ; normal type
-	jr z, .counterableType
-	cp FIGHTING
-	jr z, .counterableType
-	cp BIRD
-	jr z, .counterableType
-	cp ROCK
-	jr z, .counterableType
-	cp GROUND
-	jr z, .counterableType
-	cp BUG
-	jr z, .counterableType
-	cp POISON
-	jr z, .counterableType
-	cp FLYING
-	jr z, .counterableType
-	cp GHOST
-	jr z, .counterableType
+;	and a ; normal type
+;	jr z, .counterableType
+;	cp FIGHTING
+;	jr z, .counterableType
+;	cp BIRD
+;	jr z, .counterableType
+;	cp ROCK
+;	jr z, .counterableType
+;	cp GROUND
+;	jr z, .counterableType
+;	cp BUG
+;	jr z, .counterableType
+;	cp POISON
+;	jr z, .counterableType
+;	cp FLYING
+;	jr z, .counterableType
+;	cp GHOST
+;	jr z, .counterableType
 ;;;;;;;;;
 ; if the move wasn't a valid counterable type, miss
 	xor a
@@ -7455,84 +7459,6 @@ HalveAttackDueToBurn:
 	ret
 
 ApplyBadgeStatBoosts:
-	ret
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jr z, .return ; return if link battle
-	ld a, [wObtainedBadges]
-	ld b, a
-	call .selectiveBadgeBoost	;joenote - jump down and run new section
-	ld hl, wBattleMonAttack
-	ld c, $4
-; the boost is applied for badges whose bit position is even
-; the order of boosts matches the order they are laid out in RAM
-; Boulder (bit 0) - attack
-; Thunder (bit 2) - defense
-; Soul (bit 4) - speed
-; Volcano (bit 6) - special
-.loop
-	srl b
-	call c, .applyBoostToStat
-	inc hl
-	inc hl
-	srl b
-	dec c
-	jr nz, .loop
-.return	;joenote - clear out stat mod address offset backup
-	xor a
-	ld [wUnusedD71B], a
-	ret
-; multiply stat at hl by 1.125
-; cap stat at 999
-.applyBoostToStat
-	ld a, [hli]
-	ld d, a
-	ld e, [hl]
-	srl d
-	rr e
-	srl d
-	rr e
-	srl d
-	rr e
-	ld a, [hl]
-	add e
-	ld [hld], a
-	ld a, [hl]
-	adc d
-	ld [hli], a
-	ld a, [hld]
-	sub 999 % $100
-	ld a, [hl]
-	sbc 999 / $100
-	ret c
-	ld a, 999 / $100
-	ld [hli], a
-	ld a, 999 % $100
-	ld [hld], a
-	ret
-;joenote - check for backed up stat mod address offset to selectively apply badge boosts
-.selectiveBadgeBoost
-	;b holds the obtained badge bits that are used to apply boosts
-	ld a, [wUnusedD71B]	;get the backed-up offset into 'a'
-	and a
-	ret z	;kick out if zero so the function will apply all normal badge boosts
-	ld c, $5	;load a value of 5 into c
-	cp c	;set carry  flag if the offset in a is < c's value (stat being affected is neither accuracy or evasion)
-	ret nc 	;kick out if carry flag not set so the function will apply all normal badge boosts
-	ld c, b	;put the badge bits into c and push onto stack
-	push bc
-	ld c, a	;put the offset value into c. it should be 1, 2, 3, or 4. use it as a loop counter.
-	ld a, $80	;set an initial bit that gets rolled around
-.selectloop
-	rla
-	rla
-	dec c
-	jr nz, .selectloop
-	pop bc	;get the badge bits back into c
-	ld b, a	;put the selected badge boost into b
-	ld a, c ;put badge bits into 'a'
-	and b	;AND a with b to clear the badge boost if you don't have that badge
-	ld b, a	;store it back into b
 	ret
 
 LoadHudAndHpBarAndStatusTilePatterns:

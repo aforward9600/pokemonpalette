@@ -12,8 +12,8 @@ Route1Text1:
 	jr nz, .asm_1cada
 	ld hl, Route1ViridianMartSampleText
 	call PrintText
-;	lb bc, POTION, 1
-	lb bc, RARE_CANDY, 1
+	lb bc, POTION, 1
+;	lb bc, RARE_CANDY, 1
 	call GiveItem
 	jr nc, .BagFull
 	ld hl, Route1Text_1cae8

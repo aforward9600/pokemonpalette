@@ -14,13 +14,14 @@ CeruleanCityObject:
 	warp 9, 9, 0, CERULEAN_HOUSE_2
 	warp 9, 12, 0, CERULEAN_CITY_OLD_ROD_HOUSE
 
-	db 6 ; signs
+	db 7 ; signs
 	sign 23, 19, 12 ; CeruleanCityText12
 	sign 17, 29, 13 ; CeruleanCityText13
 	sign 26, 25, 14 ; MartSignText
 	sign 20, 17, 15 ; PokeCenterSignText
 	sign 11, 25, 16 ; CeruleanCityText16
 	sign 27, 21, 17 ; CeruleanCityText17
+	sign 22, 10, 18 ; CeruleanCityNuggetBridgeSign
 
 	db 11 ; objects
 	object SPRITE_BLUE, 20, 2, STAY, DOWN, 1 ; person

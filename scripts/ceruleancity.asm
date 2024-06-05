@@ -245,6 +245,7 @@ CeruleanCityTextPointers:
 	dw PokeCenterSignText
 	dw CeruleanCityText16
 	dw CeruleanCityText17
+	dw CeruleanCityNuggetBridgeSign
 
 CeruleanCityText1:
 	TX_ASM
@@ -451,4 +452,8 @@ CeruleanCityText16:
 
 CeruleanCityText17:
 	TX_FAR _CeruleanCityText17
+	db "@"
+
+CeruleanCityNuggetBridgeSign:
+	TX_FAR _CeruleanCityNuggetBridgeSignText
 	db "@"

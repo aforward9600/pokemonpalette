@@ -230,3 +230,15 @@ _CeruleanCityText17::
 	para "The Tomboyish"
 	line "Mermaid!"
 	done
+
+_CeruleanCityNuggetBridgeSignText::
+	text "North to Nugget"
+	line "Bridge"
+
+	para "Fight 5 trainers"
+	line "and earn a prize!"
+
+	para "Jr. Trainer at"
+	line "the end of the"
+	cont "bridge"
+	done

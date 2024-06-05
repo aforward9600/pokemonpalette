@@ -61,7 +61,10 @@ _CeruleanGymText_5c7d8::
 
 	para "You can have the"
 	line "BlueBadge to"
-	cont "show you beat me!@@"
+	cont "show you beat me!"
+
+	para "<PLAYER> received"
+	line "the BlueBadge!@@"
 
 _CeruleanGymBattleText1::
 	text "I'm more than good"
