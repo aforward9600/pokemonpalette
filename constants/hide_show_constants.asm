@@ -56,9 +56,11 @@ const_value = 0
 	const HS_POKEDEX_1                    ; 2F
 	const HS_POKEDEX_2                    ; 30
 	const HS_OAKS_LAB_OAK_2               ; 31
+	const HS_VIRIDIAN_MART_CLERK          ; E5
 	const HS_VIRIDIAN_GYM_GIOVANNI        ; 32
 	const HS_VIRIDIAN_GYM_ITEM            ; 33 X
 	const HS_OLD_AMBER                    ; 34
+	const HS_PEWTER_MART_CLERK            ; E6
 	const HS_UNKNOWN_DUNGEON_1_ITEM_1     ; 35 X
 	const HS_UNKNOWN_DUNGEON_1_ITEM_2     ; 36 X
 	const HS_UNKNOWN_DUNGEON_1_ITEM_3     ; 37 X
@@ -75,13 +77,17 @@ const_value = 0
 	const HS_POKEMONTOWER_7_ROCKET_3      ; 42 X
 	const HS_POKEMONTOWER_7_MR_FUJI       ; 43
 	const HS_LAVENDER_HOUSE_1_MR_FUJI     ; 44
+	const HS_LAVENDER_MART_CLERK          ; E9
+	const HS_FUCHSIA_MART_CLERK           ; EB
 	const HS_CELADON_MANSION_5_GIFT       ; 45
 	const HS_GAME_CORNER_ROCKET           ; 46
 	const HS_FUCHSIA_HOUSE_2_ITEM         ; 47 X
 	const HS_MANSION_1_ITEM_1             ; 48 X
 	const HS_MANSION_1_ITEM_2             ; 49 X
+	const HS_CINNABAR_MART_CLERK          ; EC
 	const HS_FIGHTING_DOJO_GIFT_1         ; 4A
 	const HS_FIGHTING_DOJO_GIFT_2         ; 4B
+	const HS_SAFFRON_MART_CLERK           ; EA
 	const HS_SILPH_CO_1F_RECEPTIONIST     ; 4C
 	const HS_VOLTORB_1                    ; 4D X
 	const HS_VOLTORB_2                    ; 4E X
@@ -106,6 +112,7 @@ const_value = 0
 	const HS_BILL_POKEMON                 ; 61
 	const HS_BILL_1                       ; 62
 	const HS_BILL_2                       ; 63
+	const HS_VERMILION_MART_CLERK         ; E8
 	const HS_VIRIDIAN_FOREST_ITEM_1       ; 64 X
 	const HS_VIRIDIAN_FOREST_ITEM_2       ; 65 X
 	const HS_VIRIDIAN_FOREST_ITEM_3       ; 66 X
@@ -115,10 +122,12 @@ const_value = 0
 	const HS_MT_MOON_1_ITEM_4             ; 6A X
 	const HS_MT_MOON_1_ITEM_5             ; 6B X
 	const HS_MT_MOON_1_ITEM_6             ; 6C X
+	const HS_MT_MOON_SUPER_NERD           ; E4
 	const HS_MT_MOON_3_FOSSIL_1           ; 6D
 	const HS_MT_MOON_3_FOSSIL_2           ; 6E
 	const HS_MT_MOON_3_ITEM_1             ; 6F X
 	const HS_MT_MOON_3_ITEM_2             ; 70 X
+	const HS_CERULEAN_MART_CLERK          ; E7
 	const HS_SS_ANNE_2_RIVAL              ; 71
 	const HS_SS_ANNE_8_ITEM               ; 72 X
 	const HS_SS_ANNE_9_ITEM_1             ; 73 X
@@ -234,12 +243,3 @@ const_value = 0
 	const HS_SEAFOAM_ISLANDS_5_BOULDER_1  ; E1
 	const HS_SEAFOAM_ISLANDS_5_BOULDER_2  ; E2
 	const HS_ARTICUNO                     ; E3 X
-	const HS_MT_MOON_SUPER_NERD           ; E4
-	const HS_VIRIDIAN_MART_CLERK          ; E5
-	const HS_PEWTER_MART_CLERK            ; E6
-	const HS_CERULEAN_MART_CLERK          ; E7
-	const HS_VERMILION_MART_CLERK         ; E8
-	const HS_LAVENDER_MART_CLERK          ; E9
-	const HS_SAFFRON_MART_CLERK           ; EA
-	const HS_FUCHSIA_MART_CLERK           ; EB
-	const HS_CINNABAR_MART_CLERK          ; EC

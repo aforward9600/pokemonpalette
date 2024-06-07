@@ -585,7 +585,7 @@ OnixEvosMoves:
 	db 10, HARDEN
 	db 15, BIND
 	db 20, ROCK_THROW
-	db 25, RAGE
+	db 25, SAND_TOMB
 	db 30, SLAM
 	db 35, ROCK_SLIDE
 	db 40, EARTHQUAKE
@@ -1226,9 +1226,9 @@ SandshrewEvosMoves:
 	db 0
 ; Learnset
 	db 10, SAND_ATTACK
-	db 15, DIG
+	db 15, SAND_TOMB
 	db 20, SLASH
-	db 24, SWIFT
+	db 24, DIG
 	db 31, EARTHQUAKE
 	db 38, FURY_SWIPES
 	db 0
@@ -1238,9 +1238,9 @@ SandslashEvosMoves:
 	db 0
 ; Learnset
 	db 10, SAND_ATTACK
-	db 15, DIG
+	db 15, SAND_TOMB
 	db 20, SLASH
-	db 27, SWIFT
+	db 27, DIG
 	db 36, EARTHQUAKE
 	db 47, FURY_SWIPES
 	db 0
@@ -1483,6 +1483,7 @@ DugtrioEvosMoves:
 	db 15, GROWL
 	db 19, DIG
 	db 24, SAND_ATTACK
+	db 26, SAND_TOMB
 	db 35, SLASH
 	db 47, EARTHQUAKE
 	db 0

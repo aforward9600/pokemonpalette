@@ -135,3 +135,14 @@ _CeruleanGymText_5c82f::
 	line "we make a pretty"
 	cont "darn good team!"
 	done
+
+_CeruleanGymRematchText::
+	text "Misty: Looking to"
+	line "battle my blue"
+	cont "#mon again?"
+	done
+
+_CeruleanGymRematchDefeatText::
+	text "My poor blue"
+	line "#mon..."
+	done

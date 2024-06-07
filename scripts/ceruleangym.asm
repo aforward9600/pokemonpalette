@@ -112,6 +112,9 @@ CeruleanGymText1:
 	call DisableWaitingAfterTextDisplay
 	jr .asm_5c7bb
 .asm_5c785
+	CheckEventReuseA EVENT_BEAT_POKEMON_LEAGUE
+	jr nz, .PossibleMistyRematch
+.AfterRematch
 	ld hl, CeruleanGymText_5c7c3
 	call PrintText
 	jr .asm_5c7bb
@@ -134,6 +137,34 @@ CeruleanGymText1:
 	ld [hJoyHeld], a
 	ld a, $3
 	ld [wCeruleanGymCurScript], a
+	jr .asm_5c7bb
+.PossibleMistyRematch
+	CheckEventReuseA EVENT_BEAT_MISTY_POST
+	jr nz, .AfterRematch
+	ld hl, CeruleanGymRematchText
+	call PrintText
+	ld hl, wd72d
+	set 6, [hl]
+	set 7, [hl]
+	ld hl, CeruleanGymRematchDefeatText
+	ld de, CeruleanGymRematchDefeatText
+	call SaveEndBattleTextPointers
+;	ld a, [H_SPRITEINDEX]
+;	ld [wSpriteIndex], a
+;	call EngageMapTrainer
+;	call InitBattleEnemyParameters
+	ld a, OPP_MISTY
+	ld [wCurOpponent], a
+	ld a, $2
+	ld [wTrainerNo], a
+	xor a
+	ld [hJoyHeld], a
+	ld a, $1
+	ld [wGymLeaderNo], a
+	ld a, $3
+	ld [wCeruleanGymCurScript], a
+	ld [wCurMapScript], a
+	SetEvent EVENT_BEAT_MISTY_POST
 .asm_5c7bb
 	jp TextScriptEnd
 
@@ -163,6 +194,14 @@ CeruleanGymText_5c7d8:
 	;joenote - now plays an unused item sfx for getting a badge
 	TX_SFX_KEY_ITEM ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
 	TX_BLINK
+	db "@"
+
+CeruleanGymRematchText:
+	TX_FAR _CeruleanGymRematchText
+	db "@"
+
+CeruleanGymRematchDefeatText:
+	TX_FAR _CeruleanGymRematchDefeatText
 	db "@"
 
 CeruleanGymText2:

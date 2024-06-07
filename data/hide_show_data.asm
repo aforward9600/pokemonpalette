@@ -437,6 +437,7 @@ MapHS3D:
 	db MT_MOON_3,$07,Show
 	db MT_MOON_3,$08,Show
 	db MT_MOON_3,$09,Show
+;	db MT_MOON_3,$01,Show
 MapCeruleanMart:
 	db CERULEAN_MART,$04,Hide
 MapHS60:

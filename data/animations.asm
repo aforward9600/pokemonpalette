@@ -166,6 +166,7 @@ AttackAnimationPointers:
 	dw ShadowBallAnim
 	dw SludgeBombAnim
 	dw DragonbreathAnim
+	dw SandTombAnim
 	dw StruggleAnim
 	dw ShowPicAnim
 	dw EnemyFlashAnim
@@ -853,6 +854,7 @@ LightScreenAnim:
 	db SE_RESET_SCREEN_PALETTE, $FF
 	db $FF
 
+SandTombAnim:
 HazeAnim:
 	db SE_DARKEN_MON_PALETTE, $FF
 	db SE_WATER_DROPLETS_EVERYWHERE, $38

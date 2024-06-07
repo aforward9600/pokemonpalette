@@ -101,7 +101,7 @@ MoveEnd:
 	move ROCK_THROW,   NO_ADDITIONAL_EFFECT,        50, ROCK,      90, 15
 	move EARTHQUAKE,   NO_ADDITIONAL_EFFECT,       100, GROUND,   100, 10
 	move FISSURE,      OHKO_EFFECT,                  1, GROUND,    30,  5
-	move DIG,          CHARGE_EFFECT,              100, GROUND,   100, 10
+	move DIG,          CHARGE_EFFECT,               80, GROUND,   100, 10
 	move TOXIC,        POISON_EFFECT,                0, POISON,    85, 10
 	move CONFUSION,    CONFUSION_SIDE_EFFECT,       50, PSYCHIC,  100, 25
 	move PSYCHIC_M,    SPECIAL_DOWN_SIDE_EFFECT,    90, PSYCHIC,  100, 10
@@ -178,4 +178,5 @@ MoveEnd:
 	move SHADOW_BALL,  SPECIAL_DOWN_SIDE_EFFECT,    80, GHOST,    100, 15
 	move SLUDGE_BOMB,  POISON_SIDE_EFFECT2,         90, POISON,   100, 10
 	move DRAGONBREATH, PARALYZE_SIDE_EFFECT2,       60, DRAGON,   100, 20
+	move SAND_TOMB,    TRAPPING_EFFECT,             35, GROUND,    85, 15
 	move STRUGGLE,     RECOIL_EFFECT,               50, BIRD,   100, 10	;joenote - changed from normal to BIRD type (acts as typless)
